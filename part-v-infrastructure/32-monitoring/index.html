@@ -1,0 +1,402 @@
+<!doctype html><html lang=en dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-part-v-infrastructure/32-monitoring" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>Chapter 32: Monitoring | Building a Personal AI Cloud</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://68thandMaine.github.io/hermes-on-aws-guide/img/social-card.svg /><meta data-rh=true name=twitter:image content=https://68thandMaine.github.io/hermes-on-aws-guide/img/social-card.svg /><meta data-rh=true property=og:url content=https://68thandMaine.github.io/hermes-on-aws-guide/part-v-infrastructure/32-monitoring /><meta data-rh=true property=og:locale content=en /><meta data-rh=true name=docusaurus_locale content=en /><meta data-rh=true name=docsearch:language content=en /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="Chapter 32: Monitoring | Building a Personal AI Cloud"/><meta data-rh=true name=description content="Platform monitoring — Prometheus, Grafana, metrics, and alerts on k3s."/><meta data-rh=true property=og:description content="Platform monitoring — Prometheus, Grafana, metrics, and alerts on k3s."/><link data-rh=true rel=icon href=/hermes-on-aws-guide/img/favicon.ico /><link data-rh=true rel=canonical href=https://68thandMaine.github.io/hermes-on-aws-guide/part-v-infrastructure/32-monitoring /><link data-rh=true rel=alternate href=https://68thandMaine.github.io/hermes-on-aws-guide/part-v-infrastructure/32-monitoring hreflang=en /><link data-rh=true rel=alternate href=https://68thandMaine.github.io/hermes-on-aws-guide/part-v-infrastructure/32-monitoring hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://68thandMaine.github.io/hermes-on-aws-guide/part-v-infrastructure/32-monitoring","name":"Chapter 32: Monitoring","position":1}]}</script><link rel=stylesheet href=/hermes-on-aws-guide/assets/css/styles.56f47aec.css /><script src=/hermes-on-aws-guide/assets/js/runtime~main.5ab3fffc.js defer></script><script src=/hermes-on-aws-guide/assets/js/main.4573ddba.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-ce0")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id=__docusaurus><link rel=preload as=image href=/hermes-on-aws-guide/img/logo.svg /><div role=region aria-label="Skip to main content"><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>Skip to main content</a></div><nav aria-label=Main class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/hermes-on-aws-guide/><div class=navbar__logo><img src=/hermes-on-aws-guide/img/logo.svg alt="Personal AI Cloud" class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/hermes-on-aws-guide/img/logo.svg alt="Personal AI Cloud" class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">Personal AI Cloud</b></a><a aria-current=page class="navbar__item navbar__link guides-top-header navbar__link--active" href=/hermes-on-aws-guide/>Guides</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/68thandMaine/hermes-on-aws-guide target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=Search aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/hermes-on-aws-guide/preface/00-preface><span title=Preface class=linkLabel_WmDU>Preface</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=true href=/hermes-on-aws-guide/part-i-foundations/01-introduction><span title="Part I — Foundations" class=categoryLinkLabel_W154>Part I — Foundations</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/01-introduction><span title="Chapter 1: Introduction" class=linkLabel_WmDU>Chapter 1: Introduction</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/02-how-computers-work><span title="Chapter 2: How Computers Actually Work" class=linkLabel_WmDU>Chapter 2: How Computers Actually Work</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/03-linux><span title="Chapter 3: Linux — The Operating System of the Cloud" class=linkLabel_WmDU>Chapter 3: Linux — The Operating System of the Cloud</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/04-networking><span title="Chapter 4: Networking Fundamentals" class=linkLabel_WmDU>Chapter 4: Networking Fundamentals</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/05-virtualization><span title="Chapter 5: Virtualization" class=linkLabel_WmDU>Chapter 5: Virtualization</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/06-designing-the-hermes-platform><span title="Chapter 6: Designing the Hermes Platform" class=linkLabel_WmDU>Chapter 6: Designing the Hermes Platform</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-ii-aws/07-provisioning-aws-account><span title="Part II — AWS & Platform" class=categoryLinkLabel_W154>Part II — AWS & Platform</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-iii-containers/16-docker><span title="Part III — Containers" class=categoryLinkLabel_W154>Part III — Containers</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-iv-kubernetes/19-why-kubernetes-exists><span title="Part IV — Kubernetes" class=categoryLinkLabel_W154>Part IV — Kubernetes</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role=button aria-expanded=true href=/hermes-on-aws-guide/part-v-infrastructure/29-terraform><span title="Part V — Infrastructure" class=categoryLinkLabel_W154>Part V — Infrastructure</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-v-infrastructure/29-terraform><span title="Chapter 29: Terraform" class=linkLabel_WmDU>Chapter 29: Terraform</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-v-infrastructure/30-github-actions><span title="Chapter 30: GitHub Actions" class=linkLabel_WmDU>Chapter 30: GitHub Actions</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-v-infrastructure/31-secrets-management><span title="Chapter 31: Secrets Management" class=linkLabel_WmDU>Chapter 31: Secrets Management</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/hermes-on-aws-guide/part-v-infrastructure/32-monitoring><span title="Chapter 32: Monitoring" class=linkLabel_WmDU>Chapter 32: Monitoring</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-v-infrastructure/33-logging><span title="Chapter 33: Logging & Tracing" class=linkLabel_WmDU>Chapter 33: Logging & Tracing</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-vi-ai/34-running-hermes><span title="Part VI — AI Infrastructure" class=categoryLinkLabel_W154>Part VI — AI Infrastructure</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-vii-hermes/39-distributed-cognitive-execution><span title="Part VII — Hermes Agent Platform" class=categoryLinkLabel_W154>Part VII — Hermes Agent Platform</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/appendices/glossary><span title=Appendices class=categoryLinkLabel_W154>Appendices</span></a></div></ul></nav><button type=button title="Collapse sidebar" aria-label="Collapse sidebar" class="button button--secondary button--outline collapseSidebarButton_PEFL"><svg width=20 height=20 aria-hidden=true class=collapseSidebarButtonIcon_kv0_><g fill=#7a7a7a><path d="M9.992 10.023c0 .2-.062.399-.172.547l-4.996 7.492a.982.982 0 01-.828.454H1c-.55 0-1-.453-1-1 0-.2.059-.403.168-.551l4.629-6.942L.168 3.078A.939.939 0 010 2.528c0-.548.45-.997 1-.997h2.996c.352 0 .649.18.828.45L9.82 9.472c.11.148.172.347.172.55zm0 0"/><path d="M19.98 10.023c0 .2-.058.399-.168.547l-4.996 7.492a.987.987 0 01-.828.454h-3c-.547 0-.996-.453-.996-1 0-.2.059-.403.168-.551l4.625-6.942-4.625-6.945a.939.939 0 01-.168-.55 1 1 0 01.996-.997h3c.348 0 .649.18.828.45l4.996 7.492c.11.148.168.347.168.55zm0 0"/></g></svg></button></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=Breadcrumbs><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label="Home page" class=breadcrumbs__link href=/hermes-on-aws-guide/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><span class=breadcrumbs__link>Part V — Infrastructure</span><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>Chapter 32: Monitoring</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Chapter 32: Monitoring</h1></header>
+<blockquote>
+<p>A system you cannot observe is a system you cannot trust.</p>
+</blockquote>
+<hr/>
+<p><a class="" href=/hermes-on-aws-guide/part-v-infrastructure/31-secrets-management>Chapter 31</a> externalized credentials. The platform can now <strong>deploy</strong>, <strong>scale</strong>, and <strong>authenticate</strong>—but you still cannot answer:</p>
+<blockquote>
+<p>What is happening right now?</p>
+</blockquote>
+<p>Without structured visibility, failures cascade silently, scaling is blind, and debugging becomes guesswork. This chapter adds the first <strong>visibility layer</strong> over your distributed system.</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Before:  kubectl get pods → binary "Running" vs "Not Running"</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">After:   metrics → dashboards → alerts → informed scaling and debugging</span><br/></div></code></pre></div></div>
+<p>No new mental model—monitoring maps to <strong>State Layers</strong>: scrape signals from Nodes and Pods, store time series, compare against thresholds, feed HPA and humans.</p>
+<p>:::note Why this matters for Hermes</p>
+<p>Hermes is API + workers + inference + tools + memory. "All Pods Running" does not mean healthy latency, empty queues, or successful tool calls. Monitoring is how you distinguish <strong>running</strong> from <strong>healthy</strong> before users notice.</p>
+<p>:::</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=learning-objectives>Learning Objectives<a href=#learning-objectives class=hash-link aria-label="Direct link to Learning Objectives" title="Direct link to Learning Objectives" translate=no>​</a></h2>
+<p>After completing this chapter, you will be able to:</p>
+<ul class="contains-task-list containsTaskList_mC6p">
+<li class=task-list-item><input type=checkbox disabled/> Distinguish monitoring, observability, metrics, logs, and traces</li>
+<li class=task-list-item><input type=checkbox disabled/> Install kube-prometheus-stack on k3s via Helm</li>
+<li class=task-list-item><input type=checkbox disabled/> Access Grafana and use Kubernetes dashboards</li>
+<li class=task-list-item><input type=checkbox disabled/> Relate Prometheus metrics to <a class="" href=/hermes-on-aws-guide/part-iv-kubernetes/28-scaling>Chapter 28</a> HPA behavior</li>
+<li class=task-list-item><input type=checkbox disabled/> Define a PrometheusRule alert for lab workloads</li>
+<li class=task-list-item><input type=checkbox disabled/> Describe k3s single-node monitoring limitations honestly</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=prerequisites>Prerequisites<a href=#prerequisites class=hash-link aria-label="Direct link to Prerequisites" title="Direct link to Prerequisites" translate=no>​</a></h2>
+<ul>
+<li class=""><a class="" href=/hermes-on-aws-guide/part-iv-kubernetes/25-helm>Chapter 25</a> — Helm installed</li>
+<li class=""><a class="" href=/hermes-on-aws-guide/part-iv-kubernetes/28-scaling>Chapter 28</a> — HPA + metrics-server (<code>kubectl top</code>)</li>
+<li class=""><a class="" href=/hermes-on-aws-guide/part-v-infrastructure/31-secrets-management>Chapter 31</a> — secrets externalized (monitoring stack is separate)</li>
+<li class="">k3s cluster with sufficient RAM (monitoring adds ~1–2 GiB)</li>
+</ul>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token builtin class-name">export</span><span class="token plain"> </span><span class="token assign-left variable" style=color:#36acaa>KUBECONFIG</span><span class="token operator" style=color:#393A34>=~</span><span class="token plain">/.kube/hermes-k3s.yaml</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">kubectl get nodes</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">helm version</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">kubectl </span><span class="token function" style=color:#d73a49>top</span><span class="token plain"> nodes    </span><span class="token comment" style=color:#999988;font-style:italic># metrics-server from Ch 28</span><br/></div></code></pre></div></div>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=estimated-time>Estimated Time<a href=#estimated-time class=hash-link aria-label="Direct link to Estimated Time" title="Direct link to Estimated Time" translate=no>​</a></h2>
+<p><strong>90 minutes</strong> — 25 minutes reading, 65 minutes install + Grafana + alert lab.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=background>Background<a href=#background class=hash-link aria-label="Direct link to Background" title="Direct link to Background" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=the-problem>The Problem<a href=#the-problem class=hash-link aria-label="Direct link to The Problem" title="Direct link to The Problem" translate=no>​</a></h3>
+<p>At this point:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Capability<th>Status<tbody><tr><td>Provision (Terraform + CI)<td>✓<tr><td>Run workloads (Kubernetes)<td>✓<tr><td>Scale (HPA)<td>✓<tr><td>Secure credentials (Secrets Manager + ESO)<td>✓<tr><td><strong>See system behavior under load</strong><td>✗</table>
+<p>Failures become visible only when Ingress returns 502 or SSH shows a full disk. Performance degradation stays anecdotal ("felt slow yesterday").</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=monitoring-vs-observability>Monitoring vs Observability<a href=#monitoring-vs-observability class=hash-link aria-label="Direct link to Monitoring vs Observability" title="Direct link to Monitoring vs Observability" translate=no>​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Term<th>Meaning<tbody><tr><td><strong>Monitoring</strong><td>Predefined signals, dashboards, alerts you expect<tr><td><strong>Observability</strong><td>Ability to infer internal state from outputs (includes ad-hoc questions)</table>
+<p>This chapter is <strong>monitoring</strong>—the foundation. <a class="" href=/hermes-on-aws-guide/part-v-infrastructure/33-logging>Chapter 33</a> adds logs (and tracing concepts) for event reconstruction.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=the-three-pillars>The Three Pillars<a href=#the-three-pillars class=hash-link aria-label="Direct link to The Three Pillars" title="Direct link to The Three Pillars" translate=no>​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Pillar<th>Form<th>This chapter<tbody><tr><td><strong>Metrics</strong><td>Numeric time series (CPU, latency, QPS)<td><strong>Primary focus</strong> — Prometheus<tr><td><strong>Logs</strong><td>Discrete event streams<td>Chapter 33<tr><td><strong>Traces</strong><td>Request path across services<td>Chapter 33 (intro)</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=metrics-server-vs-prometheus>metrics-server vs Prometheus<a href=#metrics-server-vs-prometheus class=hash-link aria-label="Direct link to metrics-server vs Prometheus" title="Direct link to metrics-server vs Prometheus" translate=no>​</a></h3>
+<p>Both appear in a healthy cluster—they are <strong>not duplicates</strong>:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th><th>metrics-server<th>Prometheus<tbody><tr><td><strong>Purpose</strong><td>Short-term metrics for <code>kubectl top</code> and <strong>HPA</strong><td>Long-term TSDB, dashboards, alerts<tr><td><strong>Retention</strong><td>Minutes<td>Days/weeks (configurable)<tr><td><strong>Introduced</strong><td><a class="" href=/hermes-on-aws-guide/part-iv-kubernetes/28-scaling>Chapter 28</a><td>This chapter</table>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">metrics-server  →  HPA decisions (Ch 28)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Prometheus      →  human + alert visibility (Ch 32)</span><br/></div></code></pre></div></div>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=architecture>Architecture<a href=#architecture class=hash-link aria-label="Direct link to Architecture" title="Direct link to Architecture" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=stack-overview>Stack Overview<a href=#stack-overview class=hash-link aria-label="Direct link to Stack Overview" title="Direct link to Stack Overview" translate=no>​</a></h3>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Kubernetes (k3s)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">node-exporter + kube-state-metrics + cAdvisor (via kubelet)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Prometheus (scrape + store)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Grafana (visualize)     Alertmanager (notify)</span><br/></div></code></pre></div></div>
+<p><strong>kube-prometheus-stack</strong> (Helm chart) installs the above as one unit—same packaging pattern as <a class="" href=/hermes-on-aws-guide/part-iv-kubernetes/25-helm>Chapter 25</a>.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=extended-system>Extended System<a href=#extended-system class=hash-link aria-label="Direct link to Extended System" title="Direct link to Extended System" translate=no>​</a></h3>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Terraform → GitHub Actions → AWS → Secrets Manager</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">k3s → Kubernetes workloads</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Monitoring (Prometheus / Grafana)  ← this chapter</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Hermes (application metrics — Part VI)</span><br/></div></code></pre></div></div>
+<p>AWS-level visibility (<a class="" href=/hermes-on-aws-guide/part-ii-aws/15-observing-hermes-platform>Chapter 15</a> CloudWatch) complements this; <strong>in-cluster metrics</strong> are the focus here because Hermes runs on Kubernetes.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=k3s-reality>k3s Reality<a href=#k3s-reality class=hash-link aria-label="Direct link to k3s Reality" title="Direct link to k3s Reality" translate=no>​</a></h3>
+<p>On single-node EC2 + k3s:</p>
+<ul>
+<li class="">Metrics are <strong>coarse-grained</strong> (one node = entire cluster)</li>
+<li class="">Prometheus competes for CPU/RAM with Hermes and inference</li>
+<li class=""><strong>Best-effort truth</strong>, not datacenter-grade precision</li>
+<li class="">Persistence requires explicit PVC strategy (<a class="" href=/hermes-on-aws-guide/part-iv-kubernetes/24-kubernetes-storage>Chapter 24</a> <code>local-path</code>)</li>
+</ul>
+<p>Plan monitoring footprint when sizing the control plane (<a class="" href=/hermes-on-aws-guide/part-ii-aws/09-provisioning-hermes-server>Chapter 9</a>).</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=walkthrough>Walkthrough<a href=#walkthrough class=hash-link aria-label="Direct link to Walkthrough" title="Direct link to Walkthrough" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-1--install-kube-prometheus-stack>Step 1 — Install kube-prometheus-stack<a href=#step-1--install-kube-prometheus-stack class=hash-link aria-label="Direct link to Step 1 — Install kube-prometheus-stack" title="Direct link to Step 1 — Install kube-prometheus-stack" translate=no>​</a></h3>
+<p>The repo ships lab-tuned values at <code>infrastructure/helm/monitoring/values-k3s-lab.yaml</code>:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">helm repo </span><span class="token function" style=color:#d73a49>add</span><span class="token plain"> prometheus-community https://prometheus-community.github.io/helm-charts</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">helm repo update</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">helm upgrade </span><span class="token parameter variable" style=color:#36acaa>--install</span><span class="token plain"> monitoring prometheus-community/kube-prometheus-stack </span><span class="token punctuation" style=color:#393A34>\</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token parameter variable" style=color:#36acaa>-n</span><span class="token plain"> monitoring </span><span class="token punctuation" style=color:#393A34>\</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  --create-namespace </span><span class="token punctuation" style=color:#393A34>\</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token parameter variable" style=color:#36acaa>-f</span><span class="token plain"> infrastructure/helm/monitoring/values-k3s-lab.yaml</span><br/></div></code></pre></div></div>
+<p>Wait for pods:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">kubectl get pods </span><span class="token parameter variable" style=color:#36acaa>-n</span><span class="token plain"> monitoring</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">kubectl get servicemonitor </span><span class="token parameter variable" style=color:#36acaa>-A</span><span class="token plain"> </span><span class="token operator" style=color:#393A34>|</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>head</span><br/></div></code></pre></div></div>
+<p>Installed components include Prometheus, Grafana, Alertmanager, node-exporter, and kube-state-metrics.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-2--access-grafana>Step 2 — Access Grafana<a href=#step-2--access-grafana class=hash-link aria-label="Direct link to Step 2 — Access Grafana" title="Direct link to Step 2 — Access Grafana" translate=no>​</a></h3>
+<p>Port-forward (lab pattern—Ingress optional later):</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">kubectl port-forward </span><span class="token parameter variable" style=color:#36acaa>-n</span><span class="token plain"> monitoring svc/monitoring-grafana </span><span class="token number" style=color:#36acaa>3000</span><span class="token plain">:80</span><br/></div></code></pre></div></div>
+<p>Open <a href=http://localhost:3000 target=_blank rel="noopener noreferrer" class="">http://localhost:3000</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Field<th>Value<tbody><tr><td>User<td><code>admin</code><tr><td>Password<td>From Helm values, or retrieve:</table>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">kubectl get secret </span><span class="token parameter variable" style=color:#36acaa>-n</span><span class="token plain"> monitoring monitoring-grafana </span><span class="token punctuation" style=color:#393A34>\</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token parameter variable" style=color:#36acaa>-o</span><span class="token plain"> </span><span class="token assign-left variable" style=color:#36acaa>jsonpath</span><span class="token operator" style=color:#393A34>=</span><span class="token string" style=color:#e3116c>"{.data.admin-password}"</span><span class="token plain"> </span><span class="token operator" style=color:#393A34>|</span><span class="token plain"> base64 -d</span><span class="token punctuation" style=color:#393A34>;</span><span class="token plain"> </span><span class="token builtin class-name">echo</span><br/></div></code></pre></div></div>
+<p>Change the default password in production—lab values use a placeholder in <code>values-k3s-lab.yaml</code>.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-3--explore-cluster-dashboards>Step 3 — Explore Cluster Dashboards<a href=#step-3--explore-cluster-dashboards class=hash-link aria-label="Direct link to Step 3 — Explore Cluster Dashboards" title="Direct link to Step 3 — Explore Cluster Dashboards" translate=no>​</a></h3>
+<p>In Grafana → <strong>Dashboards</strong> → browse Kubernetes / Node / Pod dashboards.</p>
+<p>Verify against known state:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Dashboard signal<th>Cross-check<tbody><tr><td>Node CPU/memory<td><code>kubectl top nodes</code><tr><td>Pod count for nginx-demo<td><code>kubectl get pods -l app=nginx</code><tr><td>HPA current replicas<td><code>kubectl get hpa nginx-hpa</code></table>
+<p>You are learning to read <strong>time series</strong>, not snapshots.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-4--connect-to-chapter-28-scaling>Step 4 — Connect to Chapter 28 Scaling<a href=#step-4--connect-to-chapter-28-scaling class=hash-link aria-label="Direct link to Step 4 — Connect to Chapter 28 Scaling" title="Direct link to Step 4 — Connect to Chapter 28 Scaling" translate=no>​</a></h3>
+<p>Re-run the <a class="" href=/hermes-on-aws-guide/part-iv-kubernetes/28-scaling>Chapter 28</a> load lab while watching Grafana:</p>
+<ol>
+<li class="">Deploy or ensure <code>nginx-hpa</code> and load generator exist</li>
+<li class="">Open <strong>Kubernetes / Compute Resources / Pod</strong> dashboard</li>
+<li class="">Filter to <code>nginx-demo</code> Pods</li>
+<li class="">Start load; watch CPU rise, HPA scale out, replica count climb</li>
+</ol>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Metrics (Prometheus)  →  confirm what HPA (metrics-server) decided</span><br/></div></code></pre></div></div>
+<p>Without monitoring, scaling is <strong>blind automation</strong>—replicas change but you do not see saturation or contention on the node.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-5--application-metrics-hermes-bridge>Step 5 — Application Metrics (Hermes Bridge)<a href=#step-5--application-metrics-hermes-bridge class=hash-link aria-label="Direct link to Step 5 — Application Metrics (Hermes Bridge)" title="Direct link to Step 5 — Application Metrics (Hermes Bridge)" translate=no>​</a></h3>
+<p>Infrastructure metrics (CPU, memory, restarts) are necessary—not sufficient. Hermes will expose <strong>application metrics</strong> on <code>/metrics</code> (Prometheus exposition format):</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">hermes_request_duration_seconds</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">hermes_active_tasks</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">hermes_tool_invocations_total</span><br/></div></code></pre></div></div>
+<p>Pattern (Part VI):</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Hermes API Pod :9090/metrics  →  ServiceMonitor  →  Prometheus scrape</span><br/></div></code></pre></div></div>
+<p>Example template: <code>infrastructure/kubernetes/ch32-servicemonitor-hermes-bridge.example.yaml</code></p>
+<p>nginx-demo does not export app metrics by default—use cluster dashboards for this lab; wire ServiceMonitors when Hermes lands.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-6--alerting-failure-detection>Step 6 — Alerting (Failure Detection)<a href=#step-6--alerting-failure-detection class=hash-link aria-label="Direct link to Step 6 — Alerting (Failure Detection)" title="Direct link to Step 6 — Alerting (Failure Detection)" translate=no>​</a></h3>
+<p>Apply lab rules linking monitoring to HPA:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">kubectl apply </span><span class="token parameter variable" style=color:#36acaa>-f</span><span class="token plain"> infrastructure/kubernetes/ch32-prometheusrule-hermes-lab.yaml</span><br/></div></code></pre></div></div>
+<p>Example rule (from manifest):</p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token punctuation" style=color:#393A34>-</span><span class="token plain"> </span><span class="token key atrule" style=color:#00a4db>alert</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> NginxDemoHighCPU</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token key atrule" style=color:#00a4db>expr</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>|</span><span class="token scalar string" style=color:#e3116c></span><br/></div><div class=token-line style=color:#393A34><span class="token scalar string" style=color:#e3116c>    sum by (namespace, pod) (</span><br/></div><div class=token-line style=color:#393A34><span class="token scalar string" style=color:#e3116c>      rate(container_cpu_usage_seconds_total{namespace="default", pod=~"nginx-demo.*"}[5m])</span><br/></div><div class=token-line style=color:#393A34><span class="token scalar string" style=color:#e3116c>    ) > 0.5</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token key atrule" style=color:#00a4db>for</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> 2m</span><br/></div></code></pre></div></div>
+<p>Alerts flow: <strong>Prometheus → Alertmanager → (notification channel)</strong></p>
+<p>Notification channels (Slack, PagerDuty, email) are configuration—not required for the lab. View firing alerts in Alertmanager UI:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">kubectl port-forward </span><span class="token parameter variable" style=color:#36acaa>-n</span><span class="token plain"> monitoring svc/monitoring-kube-prometheus-alertmanager </span><span class="token number" style=color:#36acaa>9093</span><span class="token plain">:9093</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-7--prometheus-ui-optional>Step 7 — Prometheus UI (Optional)<a href=#step-7--prometheus-ui-optional class=hash-link aria-label="Direct link to Step 7 — Prometheus UI (Optional)" title="Direct link to Step 7 — Prometheus UI (Optional)" translate=no>​</a></h3>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">kubectl port-forward </span><span class="token parameter variable" style=color:#36acaa>-n</span><span class="token plain"> monitoring svc/monitoring-kube-prometheus-prometheus </span><span class="token number" style=color:#36acaa>9090</span><span class="token plain">:9090</span><br/></div></code></pre></div></div>
+<p>Run PromQL—for example, node memory pressure:</p>
+<div class="language-promql codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-promql codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes</span><br/></div></code></pre></div></div>
+<p>Prometheus is the <strong>source of truth for metrics</strong>; Grafana is the human layer.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=hands-on-lab>Hands-on Lab<a href=#hands-on-lab class=hash-link aria-label="Direct link to Hands-on Lab" title="Direct link to Hands-on Lab" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=lab-32-platform-visibility>Lab 32: Platform Visibility<a href=#lab-32-platform-visibility class=hash-link aria-label="Direct link to Lab 32: Platform Visibility" title="Direct link to Lab 32: Platform Visibility" translate=no>​</a></h3>
+<p><strong>Estimated Time:</strong> 65 minutes</p>
+<p><strong>Goal:</strong> Install monitoring stack; correlate Grafana metrics with HPA scale event.</p>
+<p><strong>Steps:</strong></p>
+<ol>
+<li class="">Install kube-prometheus-stack with <code>values-k3s-lab.yaml</code></li>
+<li class="">Port-forward Grafana; log in; open Node and Pod dashboards</li>
+<li class="">Record baseline CPU for nginx-demo at idle</li>
+<li class="">Run Ch 28 load generator; watch HPA and Grafana concurrently</li>
+<li class="">Apply <code>ch32-prometheusrule-hermes-lab.yaml</code>; trigger high CPU; check Alertmanager</li>
+<li class="">Document one metric you would watch for Hermes API latency (future)</li>
+</ol>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=verification>Verification<a href=#verification class=hash-link aria-label="Direct link to Verification" title="Direct link to Verification" translate=no>​</a></h2>
+<ul class="contains-task-list containsTaskList_mC6p">
+<li class=task-list-item><input type=checkbox disabled/> All <code>monitoring</code> namespace pods Running</li>
+<li class=task-list-item><input type=checkbox disabled/> Grafana accessible via port-forward</li>
+<li class=task-list-item><input type=checkbox disabled/> Node and Pod CPU visible during load test</li>
+<li class=task-list-item><input type=checkbox disabled/> HPA scale-out visible in kube-state-metrics / Grafana</li>
+<li class=task-list-item><input type=checkbox disabled/> PrometheusRule applied; alert visible when threshold exceeded</li>
+<li class=task-list-item><input type=checkbox disabled/> You can explain metrics-server vs Prometheus</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=troubleshooting>Troubleshooting<a href=#troubleshooting class=hash-link aria-label="Direct link to Troubleshooting" title="Direct link to Troubleshooting" translate=no>​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Problem<th>Cause<th>Fix<tbody><tr><td>Pods Pending in <code>monitoring</code><td>Insufficient node RAM<td>Reduce Prometheus limits in values; bigger instance<tr><td>Grafana login fails<td>Wrong secret<td>Retrieve password from K8s secret (Step 2)<tr><td>Empty dashboards<td>Scrape not ready<td>Wait 2–3 min; check <code>kubectl get prometheus -n monitoring</code><tr><td>Alerts not firing<td>Wrong <code>release</code> label on PrometheusRule<td>Label <code>release: monitoring</code> must match Helm release name<tr><td>Prometheus OOMKilled<td>Retention/cardinality too high<td>Lower retention; avoid high-cardinality labels<tr><td>"Healthy" but users unhappy<td>No app-level metrics<td>Add <code>/metrics</code> + ServiceMonitor for Hermes</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=failure-modes>Failure Modes<a href=#failure-modes class=hash-link aria-label="Direct link to Failure Modes" title="Direct link to Failure Modes" translate=no>​</a></h3>
+<p><strong>Missing metrics</strong> — ServiceMonitor selector mismatch or Pod not exposing <code>/metrics</code>.</p>
+<p><strong>Overloaded Prometheus</strong> — High-cardinality labels (per-user IDs) explode TSDB size. Keep labels low-cardinality.</p>
+<p><strong>False confidence</strong> — All probes green while queue depth grows—infra metrics without app metrics.</p>
+<p><strong>Single-node blind spot</strong> — Node metrics look fine while disk I/O on <code>/data</code> saturates—instrument EBS and app SLOs (<a class="" href=/hermes-on-aws-guide/part-ii-aws/11-persistent-storage>Chapter 11</a>).</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=review-questions>Review Questions<a href=#review-questions class=hash-link aria-label="Direct link to Review Questions" title="Direct link to Review Questions" translate=no>​</a></h2>
+<ol>
+<li class="">What is the difference between monitoring and observability?</li>
+<li class="">Why keep metrics-server if Prometheus is installed?</li>
+<li class="">How does monitoring make HPA less "blind"?</li>
+<li class="">What Hermes signals would you add beyond CPU and memory?</li>
+<li class="">Why is k3s single-node monitoring "best-effort truth"?</li>
+</ol>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=key-takeaways>Key Takeaways<a href=#key-takeaways class=hash-link aria-label="Direct link to Key Takeaways" title="Direct link to Key Takeaways" translate=no>​</a></h2>
+<ul>
+<li class=""><strong>Monitoring</strong> provides structured visibility—running ≠ healthy</li>
+<li class=""><strong>Prometheus</strong> is the metrics engine; <strong>Grafana</strong> is the human interface</li>
+<li class=""><strong>metrics-server</strong> feeds HPA; <strong>Prometheus</strong> feeds humans and alerts</li>
+<li class=""><strong>Alerts</strong> encode failure detection as code</li>
+<li class=""><strong>k3s on EC2</strong> limits precision—size and scope accordingly</li>
+<li class=""><strong>Hermes</strong> needs application metrics on <code>/metrics</code>, not just kube-state-metrics</li>
+<li class="">Observability spans <strong>Kubernetes + infrastructure</strong> (<a class="" href=/hermes-on-aws-guide/part-ii-aws/15-observing-hermes-platform>Chapter 15</a> AWS + this chapter in-cluster)</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=glossary-additions>Glossary Additions<a href=#glossary-additions class=hash-link aria-label="Direct link to Glossary Additions" title="Direct link to Glossary Additions" translate=no>​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Term<th>Definition<tbody><tr><td><strong>Metric</strong><td>Numeric measurement over time (counter, gauge, histogram).<tr><td><strong>Prometheus</strong><td>Pull-based TSDB that scrapes <code>/metrics</code> endpoints.<tr><td><strong>Grafana</strong><td>Dashboard and visualization layer over Prometheus (and others).<tr><td><strong>ServiceMonitor</strong><td>CRD telling Prometheus which Services to scrape.<tr><td><strong>PrometheusRule</strong><td>CRD defining recording and alerting rules.<tr><td><strong>Alertmanager</strong><td>Routes and deduplicates alerts from Prometheus.</table>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=further-reading>Further Reading<a href=#further-reading class=hash-link aria-label="Direct link to Further Reading" title="Direct link to Further Reading" translate=no>​</a></h2>
+<ul>
+<li class=""><a href=https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack target=_blank rel="noopener noreferrer" class="">kube-prometheus-stack Helm chart</a></li>
+<li class=""><a href=https://prometheus.io/docs/ target=_blank rel="noopener noreferrer" class="">Prometheus documentation</a></li>
+<li class=""><a href=https://grafana.com/grafana/dashboards/ target=_blank rel="noopener noreferrer" class="">Grafana Kubernetes dashboards</a></li>
+<li class=""><a class="" href=/hermes-on-aws-guide/part-iv-kubernetes/28-scaling>Chapter 28: Scaling</a></li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=hermes-platform-status>Hermes Platform Status<a href=#hermes-platform-status class=hash-link aria-label="Direct link to Hermes Platform Status" title="Direct link to Hermes Platform Status" translate=no>​</a></h2>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">───────────────────────────────────────────────</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        HERMES PLATFORM STATUS</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">AWS + Terraform + CI     ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Secrets (external)       ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Kubernetes platform      ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Prometheus + Grafana     ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">App metrics (Hermes)     ◐ (Part VI)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Centralized logging      ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Tracing (OTel/Tempo)     ◐ (lab / Part VI)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Hermes application       ✗</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">───────────────────────────────────────────────</span><br/></div></code></pre></div></div>
+<p>Part V: codify → automate → secure → <strong>observe</strong>.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=whats-next>What's Next<a href=#whats-next class=hash-link aria-label="Direct link to What's Next" title="Direct link to What's Next" translate=no>​</a></h2>
+<p><a class="" href=/hermes-on-aws-guide/part-v-infrastructure/33-logging>Chapter 33: Logging</a> — centralized logs and request-flow reconstruction (tracing concepts) so you can debug individual events, not only aggregate metrics.</p>
+<hr/>
+<p><a class="" href=/hermes-on-aws-guide/part-v-infrastructure/31-secrets-management>← Chapter 31: Secrets Management</a> | <a class="" href=/hermes-on-aws-guide/part-v-infrastructure/33-logging>Next: Chapter 33 — Logging →</a></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/68thandMaine/hermes-on-aws-guide/tree/main/docs/part-v-infrastructure/32-monitoring.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href=/hermes-on-aws-guide/part-v-infrastructure/31-secrets-management><div class=pagination-nav__sublabel>Previous</div><div class=pagination-nav__label>Chapter 31: Secrets Management</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/hermes-on-aws-guide/part-v-infrastructure/33-logging><div class=pagination-nav__sublabel>Next</div><div class=pagination-nav__label>Chapter 33: Logging & Tracing</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#learning-objectives class="table-of-contents__link toc-highlight">Learning Objectives</a><li><a href=#prerequisites class="table-of-contents__link toc-highlight">Prerequisites</a><li><a href=#estimated-time class="table-of-contents__link toc-highlight">Estimated Time</a><li><a href=#background class="table-of-contents__link toc-highlight">Background</a><ul><li><a href=#the-problem class="table-of-contents__link toc-highlight">The Problem</a><li><a href=#monitoring-vs-observability class="table-of-contents__link toc-highlight">Monitoring vs Observability</a><li><a href=#the-three-pillars class="table-of-contents__link toc-highlight">The Three Pillars</a><li><a href=#metrics-server-vs-prometheus class="table-of-contents__link toc-highlight">metrics-server vs Prometheus</a></ul><li><a href=#architecture class="table-of-contents__link toc-highlight">Architecture</a><ul><li><a href=#stack-overview class="table-of-contents__link toc-highlight">Stack Overview</a><li><a href=#extended-system class="table-of-contents__link toc-highlight">Extended System</a><li><a href=#k3s-reality class="table-of-contents__link toc-highlight">k3s Reality</a></ul><li><a href=#walkthrough class="table-of-contents__link toc-highlight">Walkthrough</a><ul><li><a href=#step-1--install-kube-prometheus-stack class="table-of-contents__link toc-highlight">Step 1 — Install kube-prometheus-stack</a><li><a href=#step-2--access-grafana class="table-of-contents__link toc-highlight">Step 2 — Access Grafana</a><li><a href=#step-3--explore-cluster-dashboards class="table-of-contents__link toc-highlight">Step 3 — Explore Cluster Dashboards</a><li><a href=#step-4--connect-to-chapter-28-scaling class="table-of-contents__link toc-highlight">Step 4 — Connect to Chapter 28 Scaling</a><li><a href=#step-5--application-metrics-hermes-bridge class="table-of-contents__link toc-highlight">Step 5 — Application Metrics (Hermes Bridge)</a><li><a href=#step-6--alerting-failure-detection class="table-of-contents__link toc-highlight">Step 6 — Alerting (Failure Detection)</a><li><a href=#step-7--prometheus-ui-optional class="table-of-contents__link toc-highlight">Step 7 — Prometheus UI (Optional)</a></ul><li><a href=#hands-on-lab class="table-of-contents__link toc-highlight">Hands-on Lab</a><ul><li><a href=#lab-32-platform-visibility class="table-of-contents__link toc-highlight">Lab 32: Platform Visibility</a></ul><li><a href=#verification class="table-of-contents__link toc-highlight">Verification</a><li><a href=#troubleshooting class="table-of-contents__link toc-highlight">Troubleshooting</a><ul><li><a href=#failure-modes class="table-of-contents__link toc-highlight">Failure Modes</a></ul><li><a href=#review-questions class="table-of-contents__link toc-highlight">Review Questions</a><li><a href=#key-takeaways class="table-of-contents__link toc-highlight">Key Takeaways</a><li><a href=#glossary-additions class="table-of-contents__link toc-highlight">Glossary Additions</a><li><a href=#further-reading class="table-of-contents__link toc-highlight">Further Reading</a><li><a href=#hermes-platform-status class="table-of-contents__link toc-highlight">Hermes Platform Status</a><li><a href=#whats-next class="table-of-contents__link toc-highlight">What's Next</a></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>Book</div><ul class="footer__items clean-list"><li class=footer__item><a class=footer__link-item href=/hermes-on-aws-guide/>Table of Contents</a><li class=footer__item><a href=https://github.com/68thandMaine/hermes-on-aws-guide/blob/main/CONTRIBUTING.md target=_blank rel="noopener noreferrer" class=footer__link-item>Contributing<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>Author</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/crudnicky target=_blank rel="noopener noreferrer" class=footer__link-item>Christopher Rudnicky<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 Christopher Rudnicky. MIT License.</div></div></div></footer></div></body>

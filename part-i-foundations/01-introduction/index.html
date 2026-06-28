@@ -1,0 +1,471 @@
+<!doctype html><html lang=en dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-part-i-foundations/01-introduction" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>Chapter 1: Introduction | Building a Personal AI Cloud</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://68thandMaine.github.io/hermes-on-aws-guide/img/social-card.svg /><meta data-rh=true name=twitter:image content=https://68thandMaine.github.io/hermes-on-aws-guide/img/social-card.svg /><meta data-rh=true property=og:url content=https://68thandMaine.github.io/hermes-on-aws-guide/part-i-foundations/01-introduction /><meta data-rh=true property=og:locale content=en /><meta data-rh=true name=docusaurus_locale content=en /><meta data-rh=true name=docsearch:language content=en /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="Chapter 1: Introduction | Building a Personal AI Cloud"/><meta data-rh=true name=description content="Why build a cloud environment instead of buying a bigger laptop."/><meta data-rh=true property=og:description content="Why build a cloud environment instead of buying a bigger laptop."/><link data-rh=true rel=icon href=/hermes-on-aws-guide/img/favicon.ico /><link data-rh=true rel=canonical href=https://68thandMaine.github.io/hermes-on-aws-guide/part-i-foundations/01-introduction /><link data-rh=true rel=alternate href=https://68thandMaine.github.io/hermes-on-aws-guide/part-i-foundations/01-introduction hreflang=en /><link data-rh=true rel=alternate href=https://68thandMaine.github.io/hermes-on-aws-guide/part-i-foundations/01-introduction hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://68thandMaine.github.io/hermes-on-aws-guide/part-i-foundations/01-introduction","name":"Chapter 1: Introduction","position":1}]}</script><link rel=stylesheet href=/hermes-on-aws-guide/assets/css/styles.56f47aec.css /><script src=/hermes-on-aws-guide/assets/js/runtime~main.5ab3fffc.js defer></script><script src=/hermes-on-aws-guide/assets/js/main.4573ddba.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-ce0")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id=__docusaurus><link rel=preload as=image href=/hermes-on-aws-guide/img/logo.svg /><div role=region aria-label="Skip to main content"><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>Skip to main content</a></div><nav aria-label=Main class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/hermes-on-aws-guide/><div class=navbar__logo><img src=/hermes-on-aws-guide/img/logo.svg alt="Personal AI Cloud" class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/hermes-on-aws-guide/img/logo.svg alt="Personal AI Cloud" class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">Personal AI Cloud</b></a><a aria-current=page class="navbar__item navbar__link guides-top-header navbar__link--active" href=/hermes-on-aws-guide/>Guides</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/68thandMaine/hermes-on-aws-guide target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=Search aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/hermes-on-aws-guide/preface/00-preface><span title=Preface class=linkLabel_WmDU>Preface</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role=button aria-expanded=true href=/hermes-on-aws-guide/part-i-foundations/01-introduction><span title="Part I — Foundations" class=categoryLinkLabel_W154>Part I — Foundations</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/01-introduction><span title="Chapter 1: Introduction" class=linkLabel_WmDU>Chapter 1: Introduction</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/02-how-computers-work><span title="Chapter 2: How Computers Actually Work" class=linkLabel_WmDU>Chapter 2: How Computers Actually Work</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/03-linux><span title="Chapter 3: Linux — The Operating System of the Cloud" class=linkLabel_WmDU>Chapter 3: Linux — The Operating System of the Cloud</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/04-networking><span title="Chapter 4: Networking Fundamentals" class=linkLabel_WmDU>Chapter 4: Networking Fundamentals</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/05-virtualization><span title="Chapter 5: Virtualization" class=linkLabel_WmDU>Chapter 5: Virtualization</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/06-designing-the-hermes-platform><span title="Chapter 6: Designing the Hermes Platform" class=linkLabel_WmDU>Chapter 6: Designing the Hermes Platform</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-ii-aws/07-provisioning-aws-account><span title="Part II — AWS & Platform" class=categoryLinkLabel_W154>Part II — AWS & Platform</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-iii-containers/16-docker><span title="Part III — Containers" class=categoryLinkLabel_W154>Part III — Containers</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-iv-kubernetes/19-why-kubernetes-exists><span title="Part IV — Kubernetes" class=categoryLinkLabel_W154>Part IV — Kubernetes</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-v-infrastructure/29-terraform><span title="Part V — Infrastructure" class=categoryLinkLabel_W154>Part V — Infrastructure</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-vi-ai/34-running-hermes><span title="Part VI — AI Infrastructure" class=categoryLinkLabel_W154>Part VI — AI Infrastructure</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-vii-hermes/39-distributed-cognitive-execution><span title="Part VII — Hermes Agent Platform" class=categoryLinkLabel_W154>Part VII — Hermes Agent Platform</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/appendices/glossary><span title=Appendices class=categoryLinkLabel_W154>Appendices</span></a></div></ul></nav><button type=button title="Collapse sidebar" aria-label="Collapse sidebar" class="button button--secondary button--outline collapseSidebarButton_PEFL"><svg width=20 height=20 aria-hidden=true class=collapseSidebarButtonIcon_kv0_><g fill=#7a7a7a><path d="M9.992 10.023c0 .2-.062.399-.172.547l-4.996 7.492a.982.982 0 01-.828.454H1c-.55 0-1-.453-1-1 0-.2.059-.403.168-.551l4.629-6.942L.168 3.078A.939.939 0 010 2.528c0-.548.45-.997 1-.997h2.996c.352 0 .649.18.828.45L9.82 9.472c.11.148.172.347.172.55zm0 0"/><path d="M19.98 10.023c0 .2-.058.399-.168.547l-4.996 7.492a.987.987 0 01-.828.454h-3c-.547 0-.996-.453-.996-1 0-.2.059-.403.168-.551l4.625-6.942-4.625-6.945a.939.939 0 01-.168-.55 1 1 0 01.996-.997h3c.348 0 .649.18.828.45l4.996 7.492c.11.148.168.347.168.55zm0 0"/></g></svg></button></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=Breadcrumbs><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label="Home page" class=breadcrumbs__link href=/hermes-on-aws-guide/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><span class=breadcrumbs__link>Part I — Foundations</span><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>Chapter 1: Introduction</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Chapter 1: Introduction</h1></header>
+<blockquote>
+<p>Why build a cloud environment instead of buying a bigger laptop or using GitHub Codespaces?</p>
+</blockquote>
+<hr/>
+<blockquote>
+<p><em>"The cloud is just someone else's computer."</em></p>
+</blockquote>
+<p>You've probably heard this phrase before. It's catchy, memorable, and technically correct—but it leaves out almost everything that matters.</p>
+<p>The cloud isn't magic. It isn't a single computer. It isn't even a single data center.</p>
+<p>It's an enormous collection of computers, networks, storage systems, and software that work together to provide computing resources on demand. Companies like Amazon, Microsoft, and Google have spent decades building infrastructure so reliable that millions of developers can treat computing power as something they request instead of purchasing, assembling, and maintaining themselves.</p>
+<p>This book isn't about learning AWS.</p>
+<p>It's about understanding <strong>why</strong> cloud infrastructure exists and <strong>how</strong> to use it as a software engineer.</p>
+<p>By the end of this book, you'll have built your own production-inspired cloud development environment—one you understand from the hardware up to AI agents.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=learning-objectives>Learning Objectives<a href=#learning-objectives class=hash-link aria-label="Direct link to Learning Objectives" title="Direct link to Learning Objectives" translate=no>​</a></h2>
+<p>After completing this chapter, you will be able to:</p>
+<ul class="contains-task-list containsTaskList_mC6p">
+<li class=task-list-item><input type=checkbox disabled/> Explain why a remote cloud environment solves problems a laptop cannot</li>
+<li class=task-list-item><input type=checkbox disabled/> Compare three realistic options—bigger laptop, managed dev environment, own cloud—and articulate why this book chooses the third</li>
+<li class=task-list-item><input type=checkbox disabled/> Describe the end-state architecture of your personal platform</li>
+<li class=task-list-item><input type=checkbox disabled/> Map the major technologies in this book to the engineering problems they solve</li>
+<li class=task-list-item><input type=checkbox disabled/> Identify prerequisites and prepare your local toolchain for the labs ahead</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=prerequisites>Prerequisites<a href=#prerequisites class=hash-link aria-label="Direct link to Prerequisites" title="Direct link to Prerequisites" translate=no>​</a></h2>
+<p>None. This is the starting point.</p>
+<p>You will need the following before <strong>Chapter 7 (Provisioning Your AWS Account)</strong>, when you begin provisioning cloud resources:</p>
+<ul>
+<li class="">Basic programming experience</li>
+<li class="">Familiarity with a terminal</li>
+<li class="">A GitHub account</li>
+<li class="">An AWS account (we create and secure one together in Part II—after <a class="" href=/hermes-on-aws-guide/part-i-foundations/06-designing-the-hermes-platform>Chapter 6: Designing the Hermes Platform</a>)</li>
+<li class="">A laptop capable of running SSH and a code editor</li>
+</ul>
+<p>No previous cloud, Linux, or Kubernetes experience is required.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=estimated-time>Estimated Time<a href=#estimated-time class=hash-link aria-label="Direct link to Estimated Time" title="Direct link to Estimated Time" translate=no>​</a></h2>
+<p><strong>60 minutes</strong> — 30 minutes reading, 30 minutes for Lab 1.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=background>Background<a href=#background class=hash-link aria-label="Direct link to Background" title="Direct link to Background" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=why-this-book-exists>Why This Book Exists<a href=#why-this-book-exists class=hash-link aria-label="Direct link to Why This Book Exists" title="Direct link to Why This Book Exists" translate=no>​</a></h3>
+<p>Software development has changed dramatically over the last decade.</p>
+<p>A modern engineer is expected to understand far more than programming languages. Today's engineers regularly interact with:</p>
+<ul>
+<li class="">Linux servers</li>
+<li class="">Docker containers</li>
+<li class="">Kubernetes clusters</li>
+<li class="">Cloud networking</li>
+<li class="">Identity and access management</li>
+<li class="">Infrastructure as Code</li>
+<li class="">CI/CD pipelines</li>
+<li class="">Observability</li>
+<li class="">AI services</li>
+<li class="">Distributed systems</li>
+</ul>
+<p>Many excellent resources exist for each of these subjects individually. Very few explain how they fit together into a cohesive system. Even fewer walk you through building one yourself.</p>
+<p>This book attempts to bridge that gap.</p>
+<p>Rather than teaching isolated technologies, we assemble them into a complete working platform—<strong>your</strong> platform. At the center is <strong>Hermes</strong>, an AI agent that runs on the infrastructure you build: messaging, tool use, local models, PostgreSQL, Redis, and the cloud foundation underneath. Nothing is a throwaway exercise. Every lab adds to an environment you keep.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=the-problem-were-solving>The Problem We're Solving<a href=#the-problem-were-solving class=hash-link aria-label="Direct link to The Problem We're Solving" title="Direct link to The Problem We're Solving" translate=no>​</a></h3>
+<p>Like many developers, you work from a laptop.</p>
+<p>Laptops are excellent for writing code. They are not ideal for:</p>
+<ul>
+<li class="">Running multiple databases simultaneously</li>
+<li class="">Hosting APIs that must stay reachable</li>
+<li class="">Running Kubernetes clusters</li>
+<li class="">Executing background workers around the clock</li>
+<li class="">Serving AI models with large memory footprints</li>
+<li class="">Long-running automation and scheduled jobs</li>
+<li class="">Persistent development environments that survive a reboot</li>
+</ul>
+<p>As projects grow, your laptop becomes both your workstation and your server. Those responsibilities compete for CPU, memory, storage, battery life, and thermal headroom. Eventually, development becomes constrained by hardware instead of ideas.</p>
+<p>At that point, most engineers reach for one of three solutions.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=option-1-buy-a-bigger-laptop>Option 1: Buy a Bigger Laptop<a href=#option-1-buy-a-bigger-laptop class=hash-link aria-label="Direct link to Option 1: Buy a Bigger Laptop" title="Direct link to Option 1: Buy a Bigger Laptop" translate=no>​</a></h3>
+<p>A more powerful machine removes some immediate limits. More RAM means PostgreSQL and Redis can coexist with your IDE. More cores mean Docker containers stop feeling sluggish.</p>
+<p>But a bigger laptop does not solve the underlying problem: <strong>your development environment is still tied to a single physical device.</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Advantage<th>Limitation<tbody><tr><td>No monthly cloud bill<td>Capital expense upfront<tr><td>Works offline<td>Cannot simulate real cloud networking (VPCs, load balancers, IAM)<tr><td>Familiar workflow<td>Still competes with daily driver duties (battery, sleep, travel)<tr><td>Fast local iteration<td>Does not teach operations skills employers expect</table>
+<p>A workstation helps you write code faster. It does not teach you to operate infrastructure—and it cannot run 24/7 without leaving your desk.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=option-2-use-a-managed-dev-environment-github-codespaces-etc>Option 2: Use a Managed Dev Environment (GitHub Codespaces, etc.)<a href=#option-2-use-a-managed-dev-environment-github-codespaces-etc class=hash-link aria-label="Direct link to Option 2: Use a Managed Dev Environment (GitHub Codespaces, etc.)" title="Direct link to Option 2: Use a Managed Dev Environment (GitHub Codespaces, etc.)" translate=no>​</a></h3>
+<p>Services like <strong>GitHub Codespaces</strong>, <strong>Gitpod</strong>, and <strong>Cursor Cloud</strong> give you a remote development machine in minutes. You open a repository, get a VS Code session in the browser, and start coding. Someone else manages the hardware.</p>
+<p>This is a genuine improvement over a constrained laptop for many workflows.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Advantage<th>Limitation<tbody><tr><td>Provisions in minutes<td>Environment is optimized for <em>editing</em>, not <em>operating</em><tr><td>No hardware maintenance<td>Limited control over networking, storage, and OS-level configuration<tr><td>Scales up for compiles<td>Not designed for long-running production-like services<tr><td>Integrated with GitHub<td>Teaches vendor workflow, not transferable cloud architecture</table>
+<p>Codespaces excels at <strong>writing code in a remote editor</strong>. It does not excel at <strong>running the platform this book builds</strong>: a VPC with public and private subnets, a Kubernetes cluster that stays up for weeks, PostgreSQL with persistent volumes, CI/CD pipelines that deploy to <em>your</em> infrastructure, or AI model serving with GPU options you control.</p>
+<p>You learn GitHub's product. You do not learn why a NAT Gateway exists.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=option-3-build-your-own-cloud-environment-this-book>Option 3: Build Your Own Cloud Environment (This Book)<a href=#option-3-build-your-own-cloud-environment-this-book class=hash-link aria-label="Direct link to Option 3: Build Your Own Cloud Environment (This Book)" title="Direct link to Option 3: Build Your Own Cloud Environment (This Book)" translate=no>​</a></h3>
+<p>The third option is to provision infrastructure in a public cloud—primarily AWS—and treat it as your personal development and learning platform.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Advantage<th>Limitation<tbody><tr><td>Full control over architecture<td>Requires learning curve<tr><td>Production-like topology<td>Costs money (manageable with alerts and cleanup)<tr><td>Skills transfer directly to industry work<td>You are responsible for security and cost<tr><td>Persistent services that outlive your laptop<td>Mistakes can have real consequences (which is how you learn)<tr><td>Can run Kubernetes, databases, AI workloads concurrently<td>Takes time to build correctly</table>
+<p><strong>This is the option we choose—and the reason this book exists.</strong></p>
+<p>We are not building a cloud environment because AWS is fashionable. We are building one because the act of building it <strong>is</strong> the education. When you wire a Security Group, you understand firewalls. When you attach an EBS volume, you understand block storage. When you deploy Hermes to k3s, you understand how production SaaS platforms actually run.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=how-to-read-this-book>How to Read This Book<a href=#how-to-read-this-book class=hash-link aria-label="Direct link to How to Read This Book" title="Direct link to How to Read This Book" translate=no>​</a></h3>
+<p>This book is intentionally sequential. Later chapters assume you completed earlier labs. If you already know Linux or AWS, skim—but do not skip entirely. Examples build on prior chapters.</p>
+<p>Every chapter follows the same structure defined in <a href=https://github.com/crudnicky/agent-to-aws-guide/blob/main/STYLE_GUIDE.md target=_blank rel="noopener noreferrer" class="">STYLE_GUIDE.md</a>. Consistency is intentional. You always know where to find objectives, theory, architecture, labs, and troubleshooting.</p>
+<p>Labs are mandatory. They are not optional exercises at the end of a lesson—they are the lesson. If you skip a lab, the next chapter assumes resources and knowledge you do not have.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=theory>Theory<a href=#theory class=hash-link aria-label="Direct link to Theory" title="Direct link to Theory" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=what-the-cloud-actually-is>What "The Cloud" Actually Is<a href=#what-the-cloud-actually-is class=hash-link aria-label='Direct link to What "The Cloud" Actually Is' title='Direct link to What "The Cloud" Actually Is' translate=no>​</a></h3>
+<p>Strip away the marketing, and a public cloud is three things:</p>
+<ol>
+<li class=""><strong>Virtualized compute</strong> — CPU and memory sold in units (instances), not machines</li>
+<li class=""><strong>Programmable infrastructure</strong> — Networks, storage, and permissions exposed as APIs</li>
+<li class=""><strong>Economies of scale</strong> — Data centers shared across thousands of customers, priced per second</li>
+</ol>
+<p>When you launch an EC2 instance, AWS does not hand you a physical server. It allocates capacity from a pool of machines in a specific availability zone, attaches virtual networking, and bills you for the hours you use. The API call triggers a orchestration layer—schedulers, hypervisors, storage backends—that has been refined over nearly two decades.</p>
+<p>That is what "someone else's computer" really means: not one computer, but an <strong>automated factory</strong> for producing computers on demand.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=why-cloud-infrastructure-was-invented>Why Cloud Infrastructure Was Invented<a href=#why-cloud-infrastructure-was-invented class=hash-link aria-label="Direct link to Why Cloud Infrastructure Was Invented" title="Direct link to Why Cloud Infrastructure Was Invented" translate=no>​</a></h3>
+<p>Before cloud computing, running a web application meant:</p>
+<ol>
+<li class="">Spec hardware months in advance</li>
+<li class="">Wait for delivery and rack installation</li>
+<li class="">Configure networking manually</li>
+<li class="">Over-provision for peak load</li>
+<li class="">Pay for idle capacity during quiet periods</li>
+</ol>
+<p>Amazon built internal infrastructure to solve this for their own retail operation. In 2006, they productized it: <strong>S3</strong> for object storage, <strong>EC2</strong> for virtual machines. The insight was that software engineers needed <strong>elastic capacity</strong> and <strong>API-driven provisioning</strong> more than they needed to own hardware.</p>
+<p>Every service we use in this book descends from that idea:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Service<th>Problem it solves<tbody><tr><td>IAM<td>Who is allowed to call which API<tr><td>VPC<td>Isolated network topology you design<tr><td>EC2<td>Compute without buying servers<tr><td>EBS / S3<td>Persistent storage with different tradeoffs<tr><td>Load Balancers<td>Distribute traffic across instances<tr><td>Kubernetes (on EC2)<td>Orchestrate containers at scale</table>
+<p>We build on AWS not because it is the only cloud, but because it is the most documented, the most widely used in industry, and the best environment for learning concepts that transfer to Azure, GCP, and private data centers.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=how-the-three-options-compare-internally>How the Three Options Compare Internally<a href=#how-the-three-options-compare-internally class=hash-link aria-label="Direct link to How the Three Options Compare Internally" title="Direct link to How the Three Options Compare Internally" translate=no>​</a></h3>
+<!-- -->
+<p>The fundamental difference is <strong>where the complexity lives</strong>.</p>
+<ul>
+<li class="">On a laptop, complexity is hidden in thermal throttling and <code>docker compose down</code> when you close the lid.</li>
+<li class="">In Codespaces, complexity is hidden in GitHub's control plane—you never see the VPC because there isn't one you control.</li>
+<li class="">In your own cloud, complexity is <strong>visible and yours</strong>. That visibility is the point.</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=architecture>Architecture<a href=#architecture class=hash-link aria-label="Direct link to Architecture" title="Direct link to Architecture" translate=no>​</a></h2>
+<p>By the end of this journey, your secure cloud environment looks like this:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">                 Internet</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                      │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">             AWS Account</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                      │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                Virtual Private Cloud</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                      │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">             ┌─────────────────────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">             │ Ubuntu EC2 Instance │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">             └─────────────────────┘</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                      │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                 Docker Engine</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                      │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                Kubernetes (k3s)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                      │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      ┌───────────────┼───────────────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      │               │               │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   Hermes Agent   PostgreSQL       Redis</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"> Agent Tools (e.g. weather)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"> Local Models (llama.cpp)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"> Production Operations</span><br/></div></code></pre></div></div>
+<p>Every component serves <strong>Hermes</strong>—the agent you deploy, operate, and extend. Optional data backends (such as ULLR) appear only as integrations the agent calls, not as parallel platforms you build for their own sake.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=what-youll-provision>What You'll Provision<a href=#what-youll-provision class=hash-link aria-label="Direct link to What You'll Provision" title="Direct link to What You'll Provision" translate=no>​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Component<th>Purpose<th>Chapter<tbody><tr><td>AWS account + IAM<td>Secure identity foundation<td>7–8<tr><td>VPC + subnets<td>Isolated network topology<td>11<tr><td>EC2 (Ubuntu)<td>Compute for your platform<td>9<tr><td>EBS + S3<td>Block and object storage<td>10<tr><td>Docker + Compose<td>Container runtime<td>16–17<tr><td>Kubernetes (k3s)<td>Workload orchestration<td>19–27<tr><td>Terraform<td>Infrastructure as Code<td>28<tr><td>GitHub Actions<td>CI/CD automation<td>29<tr><td>Secrets management<td>Credentials without hardcoding<td>30<tr><td>Monitoring + logging<td>Observability<td>14, 31–32<tr><td>Hermes agent<td>AI agent runtime and API<td>33–43<tr><td>Model serving<td>llama.cpp inference (<code>llama-server</code>)<td>36–37<tr><td>Agent tools<td>Weather, data, external APIs<td>39</table>
+<p>The final result resembles a production SaaS platform more closely than a tutorial project.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=how-the-book-parts-fit-together>How the Book Parts Fit Together<a href=#how-the-book-parts-fit-together class=hash-link aria-label="Direct link to How the Book Parts Fit Together" title="Direct link to How the Book Parts Fit Together" translate=no>​</a></h3>
+<!-- -->
+<p>Each part solves the next layer of the problem. You cannot deploy Hermes to Kubernetes until you understand pods. You cannot configure a pod until you understand Docker. You cannot run Docker on EC2 until you understand Linux and networking.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=walkthrough>Walkthrough<a href=#walkthrough class=hash-link aria-label="Direct link to Walkthrough" title="Direct link to Walkthrough" translate=no>​</a></h2>
+<p><em>Not applicable to this chapter.</em></p>
+<p>Chapter 1 is conceptual—it frames the problem before any infrastructure exists. Lab 1 below verifies your <strong>local</strong> toolchain. You will define the Hermes platform in <a class="" href=/hermes-on-aws-guide/part-i-foundations/06-designing-the-hermes-platform>Chapter 6</a> before your first AWS walkthrough in <a class="" href=/hermes-on-aws-guide/part-ii-aws/07-provisioning-aws-account>Chapter 7: Provisioning Your AWS Account</a>.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=hands-on-lab>Hands-on Lab<a href=#hands-on-lab class=hash-link aria-label="Direct link to Hands-on Lab" title="Direct link to Hands-on Lab" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=lab-1-prepare-your-development-environment>Lab 1: Prepare Your Development Environment<a href=#lab-1-prepare-your-development-environment class=hash-link aria-label="Direct link to Lab 1: Prepare Your Development Environment" title="Direct link to Lab 1: Prepare Your Development Environment" translate=no>​</a></h3>
+<p><strong>Estimated Time:</strong> 30 minutes</p>
+<p><strong>Goal:</strong> Install and verify the local tools you need to work through this book. Your laptop remains your <strong>control plane</strong>—the place you edit code, run <code>kubectl</code>, and SSH into cloud resources. The heavy workloads move to AWS in later chapters.</p>
+<p><strong>Prerequisites:</strong> macOS, Linux, or Windows with WSL2</p>
+<p><strong>Steps:</strong></p>
+<ol>
+<li class="">Open a terminal and confirm your shell: <code>echo $SHELL</code></li>
+<li class="">Install Git and verify: <code>git --version</code></li>
+<li class="">Install AWS CLI v2 and verify: <code>aws --version</code></li>
+<li class="">Install Terraform and verify: <code>terraform --version</code></li>
+<li class="">Install Docker Desktop (macOS/Windows) or Docker Engine (Linux) and verify: <code>docker --version</code></li>
+<li class="">Install <code>kubectl</code> and verify: <code>kubectl version --client</code></li>
+<li class="">Clone this repository (or pull latest if already cloned):
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token function" style=color:#d73a49>git</span><span class="token plain"> clone </span><span class="token operator" style=color:#393A34>&lt;</span><span class="token plain">repo-url</span><span class="token operator" style=color:#393A34>></span><span class="token plain"> </span><span class="token operator" style=color:#393A34>&&</span><span class="token plain"> </span><span class="token builtin class-name">cd</span><span class="token plain"> agent-to-aws-guide</span><br/></div></code></pre></div></div>
+</li>
+<li class="">Run the prerequisites checker:
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">./scripts/setup/check-prerequisites.sh</span><br/></div></code></pre></div></div>
+</li>
+<li class="">Create a working directory for lab artifacts:
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token function" style=color:#d73a49>mkdir</span><span class="token plain"> </span><span class="token parameter variable" style=color:#36acaa>-p</span><span class="token plain"> labs/local</span><br/></div></code></pre></div></div>
+</li>
+<li class="">Optional: install the GitHub CLI for later CI/CD chapters: <code>gh --version</code></li>
+</ol>
+<p><strong>Verification:</strong></p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">./scripts/setup/check-prerequisites.sh</span><br/></div></code></pre></div></div>
+<p><strong>Expected output:</strong></p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Checking prerequisites for Building a Personal AI Cloud...</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">✓ Git: git version 2.x.x</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">✓ AWS CLI: aws-cli/2.x.x</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">✓ Terraform: Terraform v1.x.x</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">✓ Docker: Docker version 2x.x.x</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">✓ kubectl: Client Version: v1.x.x</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">All prerequisites met. Ready for Lab 1.</span><br/></div></code></pre></div></div>
+<p><strong>Troubleshooting:</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Problem<th>Cause<th>Fix<tbody><tr><td><code>command not found: aws</code><td>AWS CLI not installed or not in PATH<td>Install from <a href=https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html target=_blank rel="noopener noreferrer" class="">AWS CLI docs</a><tr><td>Docker daemon not running<td>Docker Desktop not started<td>Launch Docker Desktop; wait for "running" status<tr><td>Permission denied on Docker (Linux)<td>User not in <code>docker</code> group<td><code>sudo usermod -aG docker $USER</code> then log out and back in<tr><td><code>kubectl: command not found</code><td>kubectl not installed<td>Install via package manager or <a href=https://kubernetes.io/docs/tasks/tools/ target=_blank rel="noopener noreferrer" class="">kubernetes.io</a><tr><td>Prerequisites script not executable<td>Missing chmod<td>Run <code>chmod +x scripts/setup/check-prerequisites.sh</code></table>
+<p><strong>Cleanup:</strong> Nothing to clean up. Keep these tools installed.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=verification>Verification<a href=#verification class=hash-link aria-label="Direct link to Verification" title="Direct link to Verification" translate=no>​</a></h2>
+<p>Run <code>./scripts/setup/check-prerequisites.sh</code>. All five core tools (Git, AWS CLI, Terraform, Docker, kubectl) must report a version with no errors.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=troubleshooting>Troubleshooting<a href=#troubleshooting class=hash-link aria-label="Direct link to Troubleshooting" title="Direct link to Troubleshooting" translate=no>​</a></h2>
+<p>See the Lab 1 troubleshooting table above. For issues not covered there, open an issue in the repository with your OS version and the full error output.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=review-questions>Review Questions<a href=#review-questions class=hash-link aria-label="Direct link to Review Questions" title="Direct link to Review Questions" translate=no>​</a></h2>
+<ol>
+<li class="">Why does a more powerful laptop fail to teach cloud infrastructure skills?</li>
+<li class="">What is GitHub Codespaces optimized for, and what is it <em>not</em> designed to replace?</li>
+<li class="">What does "the cloud is someone else's computer" leave out?</li>
+<li class="">Name three responsibilities that compete when your laptop is both workstation and server.</li>
+<li class="">What are the seven parts of this book, and what order are they read in?</li>
+<li class="">Why are labs mandatory rather than optional?</li>
+<li class="">What role does Hermes play in the target architecture, and what counts as an "agent tool"?</li>
+</ol>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=key-takeaways>Key Takeaways<a href=#key-takeaways class=hash-link aria-label="Direct link to Key Takeaways" title="Direct link to Key Takeaways" translate=no>​</a></h2>
+<ul>
+<li class="">The cloud is infrastructure, not magic—it is virtualized compute, programmable APIs, and shared data centers priced on demand.</li>
+<li class="">Modern software engineering requires understanding systems as well as code.</li>
+<li class="">A bigger laptop scales RAM; a managed dev environment scales editing sessions; <strong>your own cloud scales architectural understanding</strong>.</li>
+<li class="">GitHub Codespaces solves remote editing. This book solves remote <strong>operation</strong>—networks, clusters, databases, CI/CD, and AI workloads running on infrastructure you design.</li>
+<li class="">Every technology introduced later exists to solve a specific engineering problem.</li>
+<li class="">By the end, you will understand not only <em>how</em> to build your platform, but <em>why</em> it was designed that way.</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=glossary-additions>Glossary Additions<a href=#glossary-additions class=hash-link aria-label="Direct link to Glossary Additions" title="Direct link to Glossary Additions" translate=no>​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Term<th>Definition<tbody><tr><td><strong>Cloud computing</strong><td>Delivery of compute, storage, and networking over the internet on a pay-as-you-go basis, without owning physical hardware.<tr><td><strong>Control plane</strong><td>The tools and environment you use to manage infrastructure (your laptop, terminal, Git, Terraform)—distinct from the <strong>data plane</strong> where workloads run.<tr><td><strong>Dev environment</strong><td>A configured space for writing and testing code; may be local, remote, or cloud-hosted.<tr><td><strong>Data plane</strong><td>Where application workloads actually execute—in this book, EC2 instances, containers, and pods in AWS.<tr><td><strong>Infrastructure as Code (IaC)</strong><td>Defining servers, networks, and services in version-controlled files rather than manual console clicks.<tr><td><strong>Production-inspired</strong><td>Architecture that mirrors real SaaS patterns (VPC isolation, orchestration, observability) without claiming production SLA guarantees.</table>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=further-reading>Further Reading<a href=#further-reading class=hash-link aria-label="Direct link to Further Reading" title="Direct link to Further Reading" translate=no>​</a></h2>
+<ul>
+<li class=""><a href=https://aws.amazon.com/architecture/well-architected/ target=_blank rel="noopener noreferrer" class="">AWS Well-Architected Framework</a> — how AWS thinks about reliable systems</li>
+<li class=""><a href=https://12factor.net/ target=_blank rel="noopener noreferrer" class="">The Twelve-Factor App</a> — design principles for modern deployable applications</li>
+<li class=""><a href=https://github.com/cncf/trailmap target=_blank rel="noopener noreferrer" class="">CNCF Cloud Native Trail Map</a> — how cloud-native technologies relate</li>
+<li class=""><a href=https://docs.github.com/en/codespaces target=_blank rel="noopener noreferrer" class="">GitHub Codespaces Documentation</a> — understand what managed dev environments provide (and omit)</li>
+<li class=""><a href=https://aws.amazon.com/what-is-cloud-computing/ target=_blank rel="noopener noreferrer" class="">On the Evolution of Cloud Computing</a> — AWS's framing of the problem cloud computing solves</li>
+</ul>
+<hr/>
+<p><a class="" href=/hermes-on-aws-guide/preface/00-preface>← Preface</a> | <a class="" href=/hermes-on-aws-guide/part-i-foundations/02-how-computers-work>Next: Chapter 2 — How Computers Actually Work →</a></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/68thandMaine/hermes-on-aws-guide/tree/main/docs/part-i-foundations/01-introduction.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href=/hermes-on-aws-guide/preface/00-preface><div class=pagination-nav__sublabel>Previous</div><div class=pagination-nav__label>Preface</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/hermes-on-aws-guide/part-i-foundations/02-how-computers-work><div class=pagination-nav__sublabel>Next</div><div class=pagination-nav__label>Chapter 2: How Computers Actually Work</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#learning-objectives class="table-of-contents__link toc-highlight">Learning Objectives</a><li><a href=#prerequisites class="table-of-contents__link toc-highlight">Prerequisites</a><li><a href=#estimated-time class="table-of-contents__link toc-highlight">Estimated Time</a><li><a href=#background class="table-of-contents__link toc-highlight">Background</a><ul><li><a href=#why-this-book-exists class="table-of-contents__link toc-highlight">Why This Book Exists</a><li><a href=#the-problem-were-solving class="table-of-contents__link toc-highlight">The Problem We're Solving</a><li><a href=#option-1-buy-a-bigger-laptop class="table-of-contents__link toc-highlight">Option 1: Buy a Bigger Laptop</a><li><a href=#option-2-use-a-managed-dev-environment-github-codespaces-etc class="table-of-contents__link toc-highlight">Option 2: Use a Managed Dev Environment (GitHub Codespaces, etc.)</a><li><a href=#option-3-build-your-own-cloud-environment-this-book class="table-of-contents__link toc-highlight">Option 3: Build Your Own Cloud Environment (This Book)</a><li><a href=#how-to-read-this-book class="table-of-contents__link toc-highlight">How to Read This Book</a></ul><li><a href=#theory class="table-of-contents__link toc-highlight">Theory</a><ul><li><a href=#what-the-cloud-actually-is class="table-of-contents__link toc-highlight">What "The Cloud" Actually Is</a><li><a href=#why-cloud-infrastructure-was-invented class="table-of-contents__link toc-highlight">Why Cloud Infrastructure Was Invented</a><li><a href=#how-the-three-options-compare-internally class="table-of-contents__link toc-highlight">How the Three Options Compare Internally</a></ul><li><a href=#architecture class="table-of-contents__link toc-highlight">Architecture</a><ul><li><a href=#what-youll-provision class="table-of-contents__link toc-highlight">What You'll Provision</a><li><a href=#how-the-book-parts-fit-together class="table-of-contents__link toc-highlight">How the Book Parts Fit Together</a></ul><li><a href=#walkthrough class="table-of-contents__link toc-highlight">Walkthrough</a><li><a href=#hands-on-lab class="table-of-contents__link toc-highlight">Hands-on Lab</a><ul><li><a href=#lab-1-prepare-your-development-environment class="table-of-contents__link toc-highlight">Lab 1: Prepare Your Development Environment</a></ul><li><a href=#verification class="table-of-contents__link toc-highlight">Verification</a><li><a href=#troubleshooting class="table-of-contents__link toc-highlight">Troubleshooting</a><li><a href=#review-questions class="table-of-contents__link toc-highlight">Review Questions</a><li><a href=#key-takeaways class="table-of-contents__link toc-highlight">Key Takeaways</a><li><a href=#glossary-additions class="table-of-contents__link toc-highlight">Glossary Additions</a><li><a href=#further-reading class="table-of-contents__link toc-highlight">Further Reading</a></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>Book</div><ul class="footer__items clean-list"><li class=footer__item><a class=footer__link-item href=/hermes-on-aws-guide/>Table of Contents</a><li class=footer__item><a href=https://github.com/68thandMaine/hermes-on-aws-guide/blob/main/CONTRIBUTING.md target=_blank rel="noopener noreferrer" class=footer__link-item>Contributing<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>Author</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/crudnicky target=_blank rel="noopener noreferrer" class=footer__link-item>Christopher Rudnicky<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 Christopher Rudnicky. MIT License.</div></div></div></footer></div></body>

@@ -1,0 +1,389 @@
+<!doctype html><html lang=en dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-part-v-infrastructure/30-github-actions" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>Chapter 30: GitHub Actions | Building a Personal AI Cloud</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://68thandMaine.github.io/hermes-on-aws-guide/img/social-card.svg /><meta data-rh=true name=twitter:image content=https://68thandMaine.github.io/hermes-on-aws-guide/img/social-card.svg /><meta data-rh=true property=og:url content=https://68thandMaine.github.io/hermes-on-aws-guide/part-v-infrastructure/30-github-actions /><meta data-rh=true property=og:locale content=en /><meta data-rh=true name=docusaurus_locale content=en /><meta data-rh=true name=docsearch:language content=en /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="Chapter 30: GitHub Actions | Building a Personal AI Cloud"/><meta data-rh=true name=description content="Event-driven Terraform execution — GitHub Actions as the infrastructure control plane."/><meta data-rh=true property=og:description content="Event-driven Terraform execution — GitHub Actions as the infrastructure control plane."/><link data-rh=true rel=icon href=/hermes-on-aws-guide/img/favicon.ico /><link data-rh=true rel=canonical href=https://68thandMaine.github.io/hermes-on-aws-guide/part-v-infrastructure/30-github-actions /><link data-rh=true rel=alternate href=https://68thandMaine.github.io/hermes-on-aws-guide/part-v-infrastructure/30-github-actions hreflang=en /><link data-rh=true rel=alternate href=https://68thandMaine.github.io/hermes-on-aws-guide/part-v-infrastructure/30-github-actions hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://68thandMaine.github.io/hermes-on-aws-guide/part-v-infrastructure/30-github-actions","name":"Chapter 30: GitHub Actions","position":1}]}</script><link rel=stylesheet href=/hermes-on-aws-guide/assets/css/styles.56f47aec.css /><script src=/hermes-on-aws-guide/assets/js/runtime~main.5ab3fffc.js defer></script><script src=/hermes-on-aws-guide/assets/js/main.4573ddba.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-ce0")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id=__docusaurus><link rel=preload as=image href=/hermes-on-aws-guide/img/logo.svg /><div role=region aria-label="Skip to main content"><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>Skip to main content</a></div><nav aria-label=Main class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/hermes-on-aws-guide/><div class=navbar__logo><img src=/hermes-on-aws-guide/img/logo.svg alt="Personal AI Cloud" class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/hermes-on-aws-guide/img/logo.svg alt="Personal AI Cloud" class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">Personal AI Cloud</b></a><a aria-current=page class="navbar__item navbar__link guides-top-header navbar__link--active" href=/hermes-on-aws-guide/>Guides</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/68thandMaine/hermes-on-aws-guide target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=Search aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/hermes-on-aws-guide/preface/00-preface><span title=Preface class=linkLabel_WmDU>Preface</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=true href=/hermes-on-aws-guide/part-i-foundations/01-introduction><span title="Part I — Foundations" class=categoryLinkLabel_W154>Part I — Foundations</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/01-introduction><span title="Chapter 1: Introduction" class=linkLabel_WmDU>Chapter 1: Introduction</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/02-how-computers-work><span title="Chapter 2: How Computers Actually Work" class=linkLabel_WmDU>Chapter 2: How Computers Actually Work</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/03-linux><span title="Chapter 3: Linux — The Operating System of the Cloud" class=linkLabel_WmDU>Chapter 3: Linux — The Operating System of the Cloud</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/04-networking><span title="Chapter 4: Networking Fundamentals" class=linkLabel_WmDU>Chapter 4: Networking Fundamentals</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/05-virtualization><span title="Chapter 5: Virtualization" class=linkLabel_WmDU>Chapter 5: Virtualization</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/06-designing-the-hermes-platform><span title="Chapter 6: Designing the Hermes Platform" class=linkLabel_WmDU>Chapter 6: Designing the Hermes Platform</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-ii-aws/07-provisioning-aws-account><span title="Part II — AWS & Platform" class=categoryLinkLabel_W154>Part II — AWS & Platform</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-iii-containers/16-docker><span title="Part III — Containers" class=categoryLinkLabel_W154>Part III — Containers</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-iv-kubernetes/19-why-kubernetes-exists><span title="Part IV — Kubernetes" class=categoryLinkLabel_W154>Part IV — Kubernetes</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role=button aria-expanded=true href=/hermes-on-aws-guide/part-v-infrastructure/29-terraform><span title="Part V — Infrastructure" class=categoryLinkLabel_W154>Part V — Infrastructure</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-v-infrastructure/29-terraform><span title="Chapter 29: Terraform" class=linkLabel_WmDU>Chapter 29: Terraform</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/hermes-on-aws-guide/part-v-infrastructure/30-github-actions><span title="Chapter 30: GitHub Actions" class=linkLabel_WmDU>Chapter 30: GitHub Actions</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-v-infrastructure/31-secrets-management><span title="Chapter 31: Secrets Management" class=linkLabel_WmDU>Chapter 31: Secrets Management</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-v-infrastructure/32-monitoring><span title="Chapter 32: Monitoring" class=linkLabel_WmDU>Chapter 32: Monitoring</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-v-infrastructure/33-logging><span title="Chapter 33: Logging & Tracing" class=linkLabel_WmDU>Chapter 33: Logging & Tracing</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-vi-ai/34-running-hermes><span title="Part VI — AI Infrastructure" class=categoryLinkLabel_W154>Part VI — AI Infrastructure</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-vii-hermes/39-distributed-cognitive-execution><span title="Part VII — Hermes Agent Platform" class=categoryLinkLabel_W154>Part VII — Hermes Agent Platform</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/appendices/glossary><span title=Appendices class=categoryLinkLabel_W154>Appendices</span></a></div></ul></nav><button type=button title="Collapse sidebar" aria-label="Collapse sidebar" class="button button--secondary button--outline collapseSidebarButton_PEFL"><svg width=20 height=20 aria-hidden=true class=collapseSidebarButtonIcon_kv0_><g fill=#7a7a7a><path d="M9.992 10.023c0 .2-.062.399-.172.547l-4.996 7.492a.982.982 0 01-.828.454H1c-.55 0-1-.453-1-1 0-.2.059-.403.168-.551l4.629-6.942L.168 3.078A.939.939 0 010 2.528c0-.548.45-.997 1-.997h2.996c.352 0 .649.18.828.45L9.82 9.472c.11.148.172.347.172.55zm0 0"/><path d="M19.98 10.023c0 .2-.058.399-.168.547l-4.996 7.492a.987.987 0 01-.828.454h-3c-.547 0-.996-.453-.996-1 0-.2.059-.403.168-.551l4.625-6.942-4.625-6.945a.939.939 0 01-.168-.55 1 1 0 01.996-.997h3c.348 0 .649.18.828.45l4.996 7.492c.11.148.168.347.168.55zm0 0"/></g></svg></button></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=Breadcrumbs><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label="Home page" class=breadcrumbs__link href=/hermes-on-aws-guide/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><span class=breadcrumbs__link>Part V — Infrastructure</span><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>Chapter 30: GitHub Actions</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Chapter 30: GitHub Actions</h1></header>
+<blockquote>
+<p>Infrastructure does not change because you decide.</p>
+<p>It changes because the system decides it is time.</p>
+</blockquote>
+<hr/>
+<p><a class="" href=/hermes-on-aws-guide/part-v-infrastructure/29-terraform>Chapter 29</a> made infrastructure <strong>declarative</strong>. This chapter makes infrastructure changes <strong>event-driven</strong>.</p>
+<p>Until now, Terraform ran on your laptop. That works for learning—it does not scale for teams, audit trails, or Hermes evolving through Git.</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Before:  Human → terraform apply → AWS</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">After:   Git event → GitHub Actions → terraform apply → AWS</span><br/></div></code></pre></div></div>
+<p>This is the first <strong>non-human execution actor</strong> in the Hermes platform: CI becomes part of the control plane.</p>
+<p>:::note Why this matters for Hermes</p>
+<p>Hermes evolves through model updates, scaling changes, and new integrations. The platform beneath it must evolve through <strong>Git events</strong>, not ad-hoc terminal sessions. GitHub Actions is the delivery layer that connects repository changes to AWS reality.</p>
+<p>:::</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=learning-objectives>Learning Objectives<a href=#learning-objectives class=hash-link aria-label="Direct link to Learning Objectives" title="Direct link to Learning Objectives" translate=no>​</a></h2>
+<p>After completing this chapter, you will be able to:</p>
+<ul class="contains-task-list containsTaskList_mC6p">
+<li class=task-list-item><input type=checkbox disabled/> Explain GitHub Actions as an event-driven execution layer on Git</li>
+<li class=task-list-item><input type=checkbox disabled/> Wire a Terraform pipeline: validate → plan → apply</li>
+<li class=task-list-item><input type=checkbox disabled/> Store AWS credentials in GitHub Secrets (never in the repo)</li>
+<li class=task-list-item><input type=checkbox disabled/> Restrict <code>terraform apply</code> to the <code>main</code> branch</li>
+<li class=task-list-item><input type=checkbox disabled/> Recognize CI as a <strong>privileged infrastructure actor</strong></li>
+<li class=task-list-item><input type=checkbox disabled/> Draw the full stack: Git → Actions → Terraform → k3s → Kubernetes → Hermes</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=prerequisites>Prerequisites<a href=#prerequisites class=hash-link aria-label="Direct link to Prerequisites" title="Direct link to Prerequisites" translate=no>​</a></h2>
+<ul>
+<li class=""><a class="" href=/hermes-on-aws-guide/part-v-infrastructure/29-terraform>Chapter 29</a> complete (network module applied locally at least once)</li>
+<li class="">GitHub repository with push access</li>
+<li class="">AWS account (<a class="" href=/hermes-on-aws-guide/part-ii-aws/07-provisioning-aws-account>Chapter 7</a>)</li>
+<li class="">Existing <a href=/hermes-on-aws-guide/assets/files/book-ci-08e914bd86f2819538e2f2c2bb601603.yml target=_blank class="">Book CI</a> workflow (markdownlint, build)—unchanged by this chapter</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=estimated-time>Estimated Time<a href=#estimated-time class=hash-link aria-label="Direct link to Estimated Time" title="Direct link to Estimated Time" translate=no>​</a></h2>
+<p><strong>75 minutes</strong> — 25 minutes reading, 50 minutes secrets + workflow verification.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=background>Background<a href=#background class=hash-link aria-label="Direct link to Background" title="Direct link to Background" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=the-problem>The Problem<a href=#the-problem class=hash-link aria-label="Direct link to The Problem" title="Direct link to The Problem" translate=no>​</a></h3>
+<p>After Chapter 29:</p>
+<ul>
+<li class="">Terraform code lives in Git</li>
+<li class=""><strong>Execution</strong> still depends on your machine and memory</li>
+<li class="">No automatic plan on pull requests</li>
+<li class="">No branch policy for who can mutate infrastructure</li>
+</ul>
+<p>Gap:</p>
+<blockquote>
+<p><strong>Infrastructure exists as code, but changes are still human-driven</strong></p>
+</blockquote>
+<p>We close that gap by attaching an execution layer to Git.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=github-actions-mental-model>GitHub Actions Mental Model<a href=#github-actions-mental-model class=hash-link aria-label="Direct link to GitHub Actions Mental Model" title="Direct link to GitHub Actions Mental Model" translate=no>​</a></h3>
+<p>GitHub Actions is:</p>
+<blockquote>
+<p>an event-driven execution system attached to the repository</p>
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Trigger<th>Typical use<tbody><tr><td><code>push</code><td>Run plan/apply after merge<tr><td><code>pull_request</code><td>Plan only—show diff before merge<tr><td><code>workflow_dispatch</code><td>Manual re-run</table>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Git commit / PR</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Workflow trigger (.github/workflows/*.yml)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Runner (ubuntu-latest)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Steps (checkout, terraform init, plan, apply)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">AWS API (via injected credentials)</span><br/></div></code></pre></div></div>
+<p>Same declarative pattern as Kubernetes—<strong>desired state in Git, reconciler executes</strong>.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=pipeline-phases>Pipeline Phases<a href=#pipeline-phases class=hash-link aria-label="Direct link to Pipeline Phases" title="Direct link to Pipeline Phases" translate=no>​</a></h3>
+<p>Formalize every infrastructure change:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Validate → Plan → Apply</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Phase<th>Purpose<th>Needs AWS creds?<tbody><tr><td><strong>Validate</strong><td>Syntax and provider config<td>No<tr><td><strong>Plan</strong><td>Compute diff vs state<td>Yes<tr><td><strong>Apply</strong><td>Mutate AWS<td>Yes</table>
+<p>On pull requests: <strong>validate + plan only</strong>. On <code>main</code>: <strong>apply</strong> after plan succeeds.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=architecture>Architecture<a href=#architecture class=hash-link aria-label="Direct link to Architecture" title="Direct link to Architecture" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=repository-layout>Repository Layout<a href=#repository-layout class=hash-link aria-label="Direct link to Repository Layout" title="Direct link to Repository Layout" translate=no>​</a></h3>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">.github/</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  workflows/</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    book-ci.yml       ← docs site (existing)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    terraform.yml     ← Chapter 30 — AWS infrastructure</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">infrastructure/aws/terraform/</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  modules/network/</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  environments/dev/</span><br/></div></code></pre></div></div>
+<p>Path filters limit runs to Terraform changes—book edits do not trigger AWS API calls.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=execution-flow>Execution Flow<a href=#execution-flow class=hash-link aria-label="Direct link to Execution Flow" title="Direct link to Execution Flow" translate=no>​</a></h3>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Developer commits .tf change</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">GitHub event triggers terraform.yml</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">terraform init + validate</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">terraform plan (diff computed)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Merge to main (if approved)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">terraform apply (main only)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">AWS infrastructure updated</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">k3s / Kubernetes reconcile downstream</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Hermes reflects new platform state</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=system-shift>System Shift<a href=#system-shift class=hash-link aria-label="Direct link to System Shift" title="Direct link to System Shift" translate=no>​</a></h3>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Before:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Human → Terraform → AWS → k3s → Kubernetes</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">After:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Git Event → GitHub Actions → Terraform → AWS → k3s → Kubernetes → Hermes</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=trust-boundary>Trust Boundary<a href=#trust-boundary class=hash-link aria-label="Direct link to Trust Boundary" title="Direct link to Trust Boundary" translate=no>​</a></h3>
+<p>GitHub Actions is now a <strong>privileged actor</strong>:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Component<th>Role<tbody><tr><td>GitHub Secrets<td>Credential vault (runtime injection)<tr><td>Actions runner<td>Ephemeral execution environment<tr><td>Terraform<td>Infrastructure mutator<tr><td><code>main</code> branch<td>Apply gate</table>
+<p>CI is part of the infrastructure control plane—not “just CI.”</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=walkthrough>Walkthrough<a href=#walkthrough class=hash-link aria-label="Direct link to Walkthrough" title="Direct link to Walkthrough" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-1--create-a-ci-iam-user-least-privilege-path>Step 1 — Create a CI IAM User (Least Privilege Path)<a href=#step-1--create-a-ci-iam-user-least-privilege-path class=hash-link aria-label="Direct link to Step 1 — Create a CI IAM User (Least Privilege Path)" title="Direct link to Step 1 — Create a CI IAM User (Least Privilege Path)" translate=no>​</a></h3>
+<p>Do <strong>not</strong> reuse <code>hermes-admin</code> access keys in GitHub. Create a dedicated identity:</p>
+<ol>
+<li class="">IAM → Users → <strong>Create user</strong> → <code>hermes-terraform-ci</code></li>
+<li class="">Attach a scoped policy (start narrow; expand as modules grow):</li>
+</ol>
+<div class="language-json codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-json codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token property" style=color:#36acaa>"Version"</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"2012-10-17"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token property" style=color:#36acaa>"Statement"</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>[</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      </span><span class="token property" style=color:#36acaa>"Effect"</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"Allow"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      </span><span class="token property" style=color:#36acaa>"Action"</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>[</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token string" style=color:#e3116c>"ec2:Describe*"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token string" style=color:#e3116c>"ec2:CreateVpc"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token string" style=color:#e3116c>"ec2:DeleteVpc"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token string" style=color:#e3116c>"ec2:ModifyVpcAttribute"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token string" style=color:#e3116c>"ec2:CreateSubnet"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token string" style=color:#e3116c>"ec2:DeleteSubnet"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token string" style=color:#e3116c>"ec2:CreateInternetGateway"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token string" style=color:#e3116c>"ec2:DeleteInternetGateway"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token string" style=color:#e3116c>"ec2:AttachInternetGateway"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token string" style=color:#e3116c>"ec2:DetachInternetGateway"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token string" style=color:#e3116c>"ec2:CreateRouteTable"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token string" style=color:#e3116c>"ec2:DeleteRouteTable"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token string" style=color:#e3116c>"ec2:CreateRoute"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token string" style=color:#e3116c>"ec2:DeleteRoute"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token string" style=color:#e3116c>"ec2:AssociateRouteTable"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token string" style=color:#e3116c>"ec2:DisassociateRouteTable"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token string" style=color:#e3116c>"ec2:CreateTags"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token string" style=color:#e3116c>"ec2:DeleteTags"</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      </span><span class="token punctuation" style=color:#393A34>]</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      </span><span class="token property" style=color:#36acaa>"Resource"</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"*"</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token punctuation" style=color:#393A34>}</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token punctuation" style=color:#393A34>]</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><br/></div></code></pre></div></div>
+<ol start=3>
+<li class="">Create <strong>access keys</strong> for programmatic use only</li>
+<li class="">Store keys in a password manager—never commit them</li>
+</ol>
+<p>For early labs, some readers use <code>AdministratorAccess</code> temporarily; tighten before production Hermes.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-2--configure-github-secrets>Step 2 — Configure GitHub Secrets<a href=#step-2--configure-github-secrets class=hash-link aria-label="Direct link to Step 2 — Configure GitHub Secrets" title="Direct link to Step 2 — Configure GitHub Secrets" translate=no>​</a></h3>
+<p>Repository → <strong>Settings</strong> → <strong>Secrets and variables</strong> → <strong>Actions</strong> → <strong>New repository secret</strong>:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Secret<th>Value<tbody><tr><td><code>AWS_ACCESS_KEY_ID</code><td>CI user access key<tr><td><code>AWS_SECRET_ACCESS_KEY</code><td>CI user secret key</table>
+<p>Region is set in the workflow (<code>us-east-1</code>)—same as <a class="" href=/hermes-on-aws-guide/part-ii-aws/08-creating-network-for-hermes>Chapter 8</a>.</p>
+<p>:::warning Never commit credentials</p>
+<p>Keys in Git history are permanent exposure. Use Secrets only. <a class="" href=/hermes-on-aws-guide/part-v-infrastructure/31-secrets-management>Chapter 31</a> covers external vaults and rotation.</p>
+<p>:::</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-3--review-the-workflow>Step 3 — Review the Workflow<a href=#step-3--review-the-workflow class=hash-link aria-label="Direct link to Step 3 — Review the Workflow" title="Direct link to Step 3 — Review the Workflow" translate=no>​</a></h3>
+<p>The repo ships <a href=https://github.com/crudnicky/agent-to-aws-guide/blob/main/.github/workflows/terraform.yml target=_blank rel="noopener noreferrer" class=""><code>.github/workflows/terraform.yml</code></a> with three jobs:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Job<th>Branch / event<th>AWS creds?<tbody><tr><td><code>validate</code><td>All triggers<td>No<tr><td><code>plan</code><td>All triggers<td>Yes<tr><td><code>apply</code><td><code>main</code> push / dispatch only<td>Yes</table>
+<p>Core steps:</p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token key atrule" style=color:#00a4db>jobs</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token key atrule" style=color:#00a4db>validate</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token key atrule" style=color:#00a4db>steps</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      </span><span class="token punctuation" style=color:#393A34>-</span><span class="token plain"> </span><span class="token key atrule" style=color:#00a4db>run</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> terraform init </span><span class="token important">&&</span><span class="token plain"> terraform validate</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token key atrule" style=color:#00a4db>plan</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token key atrule" style=color:#00a4db>steps</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      </span><span class="token punctuation" style=color:#393A34>-</span><span class="token plain"> </span><span class="token key atrule" style=color:#00a4db>run</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> terraform plan </span><span class="token punctuation" style=color:#393A34>-</span><span class="token plain">out=tfplan</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        </span><span class="token key atrule" style=color:#00a4db>env</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">          </span><span class="token key atrule" style=color:#00a4db>AWS_ACCESS_KEY_ID</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> $</span><span class="token punctuation" style=color:#393A34>{</span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"> secrets.AWS_ACCESS_KEY_ID </span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>}</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">          </span><span class="token key atrule" style=color:#00a4db>AWS_SECRET_ACCESS_KEY</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> $</span><span class="token punctuation" style=color:#393A34>{</span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"> secrets.AWS_SECRET_ACCESS_KEY </span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>}</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token key atrule" style=color:#00a4db>apply</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token key atrule" style=color:#00a4db>if</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> github.ref == 'refs/heads/main' </span><span class="token important">&&</span><span class="token plain"> github.event_name </span><span class="token tag" style=color:#00009f>!=</span><span class="token plain"> 'pull_request'</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token key atrule" style=color:#00a4db>environment</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> terraform</span><span class="token punctuation" style=color:#393A34>-</span><span class="token plain">dev</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token key atrule" style=color:#00a4db>steps</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      </span><span class="token punctuation" style=color:#393A34>-</span><span class="token plain"> </span><span class="token key atrule" style=color:#00a4db>run</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> terraform apply </span><span class="token punctuation" style=color:#393A34>-</span><span class="token plain">auto</span><span class="token punctuation" style=color:#393A34>-</span><span class="token plain">approve tfplan</span><br/></div></code></pre></div></div>
+<p>Key rules encoded:</p>
+<ul>
+<li class=""><strong>Plan on every PR</strong> that touches Terraform</li>
+<li class=""><strong>Apply only on <code>main</code></strong>, never on PR events</li>
+<li class=""><strong><code>workflow_dispatch</code></strong> for manual re-runs</li>
+<li class=""><strong><code>concurrency</code> group</strong> prevents overlapping applies to the same environment</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-4--local-vs-ci-credentials>Step 4 — Local vs CI Credentials<a href=#step-4--local-vs-ci-credentials class=hash-link aria-label="Direct link to Step 4 — Local vs CI Credentials" title="Direct link to Step 4 — Local vs CI Credentials" translate=no>​</a></h3>
+<p>Local (<a class="" href=/hermes-on-aws-guide/part-v-infrastructure/29-terraform>Chapter 29</a>) uses AWS profile <code>hermes</code>:</p>
+<div class="language-hcl codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-hcl codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic># terraform.tfvars</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token property" style=color:#36acaa>aws_profile</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>=</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"hermes"</span><br/></div></code></pre></div></div>
+<p>CI has no <code>~/.aws/credentials</code> profile. The dev environment supports both:</p>
+<div class="language-hcl codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-hcl codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic># environments/dev/main.tf — profile omitted when empty</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token property" style=color:#36acaa>profile</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>=</span><span class="token plain"> var.aws_profile !</span><span class="token punctuation" style=color:#393A34>=</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>""</span><span class="token plain"> ? var.aws_profile : null</span><br/></div></code></pre></div></div>
+<p>In GitHub Actions, <code>AWS_ACCESS_KEY_ID</code> and <code>AWS_SECRET_ACCESS_KEY</code> satisfy the provider. Leave <code>aws_profile</code> unset in CI.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-5--trigger-a-plan-pull-request>Step 5 — Trigger a Plan (Pull Request)<a href=#step-5--trigger-a-plan-pull-request class=hash-link aria-label="Direct link to Step 5 — Trigger a Plan (Pull Request)" title="Direct link to Step 5 — Trigger a Plan (Pull Request)" translate=no>​</a></h3>
+<ol>
+<li class="">Create a branch: <code>git checkout -b ch30-terraform-ci-test</code></li>
+<li class="">Make a harmless change (e.g. add a tag in <code>modules/network/main.tf</code>)</li>
+<li class="">Open a pull request</li>
+<li class="">Open <strong>Actions</strong> → <strong>Terraform Infrastructure Pipeline</strong></li>
+<li class="">Confirm: <strong>Validate</strong> and <strong>Plan</strong> succeed; <strong>Apply</strong> is skipped</li>
+</ol>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-6--merge-and-apply>Step 6 — Merge and Apply<a href=#step-6--merge-and-apply class=hash-link aria-label="Direct link to Step 6 — Merge and Apply" title="Direct link to Step 6 — Merge and Apply" translate=no>​</a></h3>
+<p>After review, merge to <code>main</code>. The workflow runs again with apply enabled.</p>
+<p>Monitor:</p>
+<ul>
+<li class="">Plan output in the job log (no secrets printed)</li>
+<li class="">AWS console or CLI for expected resources</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-7--remote-state-production-note>Step 7 — Remote State (Production Note)<a href=#step-7--remote-state-production-note class=hash-link aria-label="Direct link to Step 7 — Remote State (Production Note)" title="Direct link to Step 7 — Remote State (Production Note)" translate=no>​</a></h3>
+<p>Local state (<code>terraform.tfstate</code>) on your laptop does not work for team CI. Before shared apply:</p>
+<ul>
+<li class="">Store state in S3</li>
+<li class="">Lock with DynamoDB</li>
+</ul>
+<p>This book introduces the pattern here; full remote backend setup is a follow-on lab when the controlplane module lands.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=hands-on-lab>Hands-on Lab<a href=#hands-on-lab class=hash-link aria-label="Direct link to Hands-on Lab" title="Direct link to Hands-on Lab" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=lab-30-event-driven-terraform>Lab 30: Event-Driven Terraform<a href=#lab-30-event-driven-terraform class=hash-link aria-label="Direct link to Lab 30: Event-Driven Terraform" title="Direct link to Lab 30: Event-Driven Terraform" translate=no>​</a></h3>
+<p><strong>Estimated Time:</strong> 50 minutes</p>
+<p><strong>Goal:</strong> GitHub Actions runs validate + plan on PR; apply on <code>main</code>.</p>
+<p><strong>Steps:</strong></p>
+<ol>
+<li class="">Create <code>hermes-terraform-ci</code> IAM user and access keys</li>
+<li class="">Add <code>AWS_ACCESS_KEY_ID</code> and <code>AWS_SECRET_ACCESS_KEY</code> to GitHub Secrets</li>
+<li class="">Push a branch with a trivial Terraform tag change</li>
+<li class="">Open PR — verify plan in Actions log</li>
+<li class="">Merge to <code>main</code> — verify apply (or plan-only if you disable apply initially)</li>
+<li class="">Document workflow URL in <code>~/hermes-platform/notes/ci-terraform.md</code></li>
+</ol>
+<p><strong>Safety:</strong> For first run, comment out the Apply step until plan output looks correct.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=verification>Verification<a href=#verification class=hash-link aria-label="Direct link to Verification" title="Direct link to Verification" translate=no>​</a></h2>
+<ul class="contains-task-list containsTaskList_mC6p">
+<li class=task-list-item><input type=checkbox disabled/> Workflow file exists at <code>.github/workflows/terraform.yml</code></li>
+<li class=task-list-item><input type=checkbox disabled/> PR triggers validate + plan without apply</li>
+<li class=task-list-item><input type=checkbox disabled/> Merge to <code>main</code> can apply (when secrets configured)</li>
+<li class=task-list-item><input type=checkbox disabled/> No credentials in repo or workflow logs</li>
+<li class=task-list-item><input type=checkbox disabled/> You can explain CI as a privileged control-plane actor</li>
+<li class=task-list-item><input type=checkbox disabled/> You can draw Git → Actions → Terraform → AWS → k3s → Hermes</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=troubleshooting>Troubleshooting<a href=#troubleshooting class=hash-link aria-label="Direct link to Troubleshooting" title="Direct link to Troubleshooting" translate=no>​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Problem<th>Cause<th>Fix<tbody><tr><td>Plan fails: No credentials<td>Secrets missing<td>Add GitHub Secrets; re-run workflow<tr><td><code>error configuring Terraform AWS Provider: no valid credential sources</code><td>Empty profile + no env vars<td>Set secrets; ensure <code>aws_profile = ""</code> not <code>"hermes"</code> in CI<tr><td>Apply on wrong branch<td>Workflow <code>if</code> misconfigured<td>Apply only when <code>github.ref == refs/heads/main</code><tr><td>State conflict<td>Local + CI both applying<td>Use one state backend; avoid dual apply<tr><td>Secrets in logs<td><code>echo $AWS_SECRET_ACCESS_KEY</code><td>Never print env vars; GitHub masks secrets<tr><td>Workflow never runs<td>Path filter<td>Change files under <code>infrastructure/aws/terraform/</code></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=failure-modes>Failure Modes<a href=#failure-modes class=hash-link aria-label="Direct link to Failure Modes" title="Direct link to Failure Modes" translate=no>​</a></h3>
+<p><strong>Credential exposure</strong> — Keys in Git, logs, or fork PRs. Use Secrets; restrict fork workflows; prefer OIDC over long-lived keys (<a class="" href=/hermes-on-aws-guide/part-v-infrastructure/31-secrets-management>Chapter 31</a>).</p>
+<p><strong>State drift</strong> — Manual console edits while CI owns apply. All changes via <code>.tf</code> + pipeline.</p>
+<p><strong>Partial apply</strong> — Interrupted apply leaves half-provisioned infra. Re-run plan; fix errors; use concurrency locks.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=review-questions>Review Questions<a href=#review-questions class=hash-link aria-label="Direct link to Review Questions" title="Direct link to Review Questions" translate=no>​</a></h2>
+<ol>
+<li class="">Why is plan-on-PR without apply a safety mechanism?</li>
+<li class="">What makes GitHub Actions a control plane actor, not just “CI”?</li>
+<li class="">How does CI authentication differ from local <code>AWS_PROFILE=hermes</code>?</li>
+<li class="">Why create <code>hermes-terraform-ci</code> instead of reusing <code>hermes-admin</code> keys?</li>
+<li class="">What happens downstream when Terraform changes a subnet or security group?</li>
+</ol>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=key-takeaways>Key Takeaways<a href=#key-takeaways class=hash-link aria-label="Direct link to Key Takeaways" title="Direct link to Key Takeaways" translate=no>​</a></h2>
+<ul>
+<li class=""><strong>GitHub Actions is event-driven infrastructure execution</strong></li>
+<li class=""><strong>Validate → Plan → Apply</strong> mirrors Terraform locally, remotely</li>
+<li class=""><strong>Git triggers provisioning</strong> — repository becomes control plane input</li>
+<li class=""><strong>CI is privileged</strong> — new trust boundary alongside IAM and RBAC</li>
+<li class=""><strong>Only <code>main</code> mutates infrastructure</strong> — branch policy as safety gate</li>
+<li class=""><strong>Hermes inherits automation</strong> — platform can evolve through merges</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=glossary-additions>Glossary Additions<a href=#glossary-additions class=hash-link aria-label="Direct link to Glossary Additions" title="Direct link to Glossary Additions" translate=no>​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Term<th>Definition<tbody><tr><td><strong>GitHub Actions</strong><td>Event-driven workflow runner attached to a Git repository.<tr><td><strong>Workflow</strong><td>YAML-defined pipeline triggered by Git events.<tr><td><strong>GitHub Secrets</strong><td>Encrypted repository variables injected at runtime.<tr><td><strong>Plan-only PR</strong><td>CI computes Terraform diff without applying—review before merge.</table>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=further-reading>Further Reading<a href=#further-reading class=hash-link aria-label="Direct link to Further Reading" title="Direct link to Further Reading" translate=no>​</a></h2>
+<ul>
+<li class=""><a href=https://docs.github.com/en/actions target=_blank rel="noopener noreferrer" class="">GitHub Actions docs</a></li>
+<li class=""><a href=https://github.com/hashicorp/setup-terraform target=_blank rel="noopener noreferrer" class="">HashiCorp setup-terraform action</a></li>
+<li class=""><a href=https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html target=_blank rel="noopener noreferrer" class="">AWS IAM best practices</a></li>
+<li class=""><a class="" href=/hermes-on-aws-guide/part-v-infrastructure/29-terraform>Chapter 29: Terraform</a></li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=hermes-platform-status>Hermes Platform Status<a href=#hermes-platform-status class=hash-link aria-label="Direct link to Hermes Platform Status" title="Direct link to Hermes Platform Status" translate=no>​</a></h2>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">───────────────────────────────────────────────</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        HERMES PLATFORM STATUS</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">AWS Account              ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Network (Terraform)      ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">EC2 / k3s                ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Kubernetes platform      ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Terraform network module ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Terraform CI pipeline    ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Remote state / OIDC      ◐ (hardening)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Hermes application       ✗</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">───────────────────────────────────────────────</span><br/></div></code></pre></div></div>
+<p>Part V: codify → <strong>automate</strong> → harden.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=whats-next>What's Next<a href=#whats-next class=hash-link aria-label="Direct link to What's Next" title="Direct link to What's Next" translate=no>​</a></h2>
+<p><a class="" href=/hermes-on-aws-guide/part-v-infrastructure/31-secrets-management>Chapter 31: Secrets Management</a> — external secret stores, rotation, and auditability beyond Kubernetes Secrets (<a class="" href=/hermes-on-aws-guide/part-iv-kubernetes/26-configuration-configmaps-secrets>Chapter 26</a>).</p>
+<hr/>
+<p><a class="" href=/hermes-on-aws-guide/part-v-infrastructure/29-terraform>← Chapter 29: Terraform</a> | <a class="" href=/hermes-on-aws-guide/part-v-infrastructure/31-secrets-management>Next: Chapter 31 — Secrets Management →</a></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/68thandMaine/hermes-on-aws-guide/tree/main/docs/part-v-infrastructure/30-github-actions.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href=/hermes-on-aws-guide/part-v-infrastructure/29-terraform><div class=pagination-nav__sublabel>Previous</div><div class=pagination-nav__label>Chapter 29: Terraform</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/hermes-on-aws-guide/part-v-infrastructure/31-secrets-management><div class=pagination-nav__sublabel>Next</div><div class=pagination-nav__label>Chapter 31: Secrets Management</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#learning-objectives class="table-of-contents__link toc-highlight">Learning Objectives</a><li><a href=#prerequisites class="table-of-contents__link toc-highlight">Prerequisites</a><li><a href=#estimated-time class="table-of-contents__link toc-highlight">Estimated Time</a><li><a href=#background class="table-of-contents__link toc-highlight">Background</a><ul><li><a href=#the-problem class="table-of-contents__link toc-highlight">The Problem</a><li><a href=#github-actions-mental-model class="table-of-contents__link toc-highlight">GitHub Actions Mental Model</a><li><a href=#pipeline-phases class="table-of-contents__link toc-highlight">Pipeline Phases</a></ul><li><a href=#architecture class="table-of-contents__link toc-highlight">Architecture</a><ul><li><a href=#repository-layout class="table-of-contents__link toc-highlight">Repository Layout</a><li><a href=#execution-flow class="table-of-contents__link toc-highlight">Execution Flow</a><li><a href=#system-shift class="table-of-contents__link toc-highlight">System Shift</a><li><a href=#trust-boundary class="table-of-contents__link toc-highlight">Trust Boundary</a></ul><li><a href=#walkthrough class="table-of-contents__link toc-highlight">Walkthrough</a><ul><li><a href=#step-1--create-a-ci-iam-user-least-privilege-path class="table-of-contents__link toc-highlight">Step 1 — Create a CI IAM User (Least Privilege Path)</a><li><a href=#step-2--configure-github-secrets class="table-of-contents__link toc-highlight">Step 2 — Configure GitHub Secrets</a><li><a href=#step-3--review-the-workflow class="table-of-contents__link toc-highlight">Step 3 — Review the Workflow</a><li><a href=#step-4--local-vs-ci-credentials class="table-of-contents__link toc-highlight">Step 4 — Local vs CI Credentials</a><li><a href=#step-5--trigger-a-plan-pull-request class="table-of-contents__link toc-highlight">Step 5 — Trigger a Plan (Pull Request)</a><li><a href=#step-6--merge-and-apply class="table-of-contents__link toc-highlight">Step 6 — Merge and Apply</a><li><a href=#step-7--remote-state-production-note class="table-of-contents__link toc-highlight">Step 7 — Remote State (Production Note)</a></ul><li><a href=#hands-on-lab class="table-of-contents__link toc-highlight">Hands-on Lab</a><ul><li><a href=#lab-30-event-driven-terraform class="table-of-contents__link toc-highlight">Lab 30: Event-Driven Terraform</a></ul><li><a href=#verification class="table-of-contents__link toc-highlight">Verification</a><li><a href=#troubleshooting class="table-of-contents__link toc-highlight">Troubleshooting</a><ul><li><a href=#failure-modes class="table-of-contents__link toc-highlight">Failure Modes</a></ul><li><a href=#review-questions class="table-of-contents__link toc-highlight">Review Questions</a><li><a href=#key-takeaways class="table-of-contents__link toc-highlight">Key Takeaways</a><li><a href=#glossary-additions class="table-of-contents__link toc-highlight">Glossary Additions</a><li><a href=#further-reading class="table-of-contents__link toc-highlight">Further Reading</a><li><a href=#hermes-platform-status class="table-of-contents__link toc-highlight">Hermes Platform Status</a><li><a href=#whats-next class="table-of-contents__link toc-highlight">What's Next</a></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>Book</div><ul class="footer__items clean-list"><li class=footer__item><a class=footer__link-item href=/hermes-on-aws-guide/>Table of Contents</a><li class=footer__item><a href=https://github.com/68thandMaine/hermes-on-aws-guide/blob/main/CONTRIBUTING.md target=_blank rel="noopener noreferrer" class=footer__link-item>Contributing<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>Author</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/crudnicky target=_blank rel="noopener noreferrer" class=footer__link-item>Christopher Rudnicky<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 Christopher Rudnicky. MIT License.</div></div></div></footer></div></body>

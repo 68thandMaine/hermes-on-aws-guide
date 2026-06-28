@@ -1,0 +1,487 @@
+<!doctype html><html lang=en dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-part-vii-hermes/42-extending-hermes" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>Chapter 42: Extending Hermes | Building a Personal AI Cloud</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://68thandMaine.github.io/hermes-on-aws-guide/img/social-card.svg /><meta data-rh=true name=twitter:image content=https://68thandMaine.github.io/hermes-on-aws-guide/img/social-card.svg /><meta data-rh=true property=og:url content=https://68thandMaine.github.io/hermes-on-aws-guide/part-vii-hermes/42-extending-hermes /><meta data-rh=true property=og:locale content=en /><meta data-rh=true name=docusaurus_locale content=en /><meta data-rh=true name=docsearch:language content=en /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="Chapter 42: Extending Hermes | Building a Personal AI Cloud"/><meta data-rh=true name=description content="Extending Hermes — tools, agent roles, and capabilities without changing the platform."/><meta data-rh=true property=og:description content="Extending Hermes — tools, agent roles, and capabilities without changing the platform."/><link data-rh=true rel=icon href=/hermes-on-aws-guide/img/favicon.ico /><link data-rh=true rel=canonical href=https://68thandMaine.github.io/hermes-on-aws-guide/part-vii-hermes/42-extending-hermes /><link data-rh=true rel=alternate href=https://68thandMaine.github.io/hermes-on-aws-guide/part-vii-hermes/42-extending-hermes hreflang=en /><link data-rh=true rel=alternate href=https://68thandMaine.github.io/hermes-on-aws-guide/part-vii-hermes/42-extending-hermes hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://68thandMaine.github.io/hermes-on-aws-guide/part-vii-hermes/42-extending-hermes","name":"Chapter 42: Extending Hermes","position":1}]}</script><link rel=stylesheet href=/hermes-on-aws-guide/assets/css/styles.56f47aec.css /><script src=/hermes-on-aws-guide/assets/js/runtime~main.5ab3fffc.js defer></script><script src=/hermes-on-aws-guide/assets/js/main.4573ddba.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-ce0")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id=__docusaurus><link rel=preload as=image href=/hermes-on-aws-guide/img/logo.svg /><div role=region aria-label="Skip to main content"><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>Skip to main content</a></div><nav aria-label=Main class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/hermes-on-aws-guide/><div class=navbar__logo><img src=/hermes-on-aws-guide/img/logo.svg alt="Personal AI Cloud" class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/hermes-on-aws-guide/img/logo.svg alt="Personal AI Cloud" class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">Personal AI Cloud</b></a><a aria-current=page class="navbar__item navbar__link guides-top-header navbar__link--active" href=/hermes-on-aws-guide/>Guides</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/68thandMaine/hermes-on-aws-guide target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=Search aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/hermes-on-aws-guide/preface/00-preface><span title=Preface class=linkLabel_WmDU>Preface</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=true href=/hermes-on-aws-guide/part-i-foundations/01-introduction><span title="Part I — Foundations" class=categoryLinkLabel_W154>Part I — Foundations</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/01-introduction><span title="Chapter 1: Introduction" class=linkLabel_WmDU>Chapter 1: Introduction</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/02-how-computers-work><span title="Chapter 2: How Computers Actually Work" class=linkLabel_WmDU>Chapter 2: How Computers Actually Work</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/03-linux><span title="Chapter 3: Linux — The Operating System of the Cloud" class=linkLabel_WmDU>Chapter 3: Linux — The Operating System of the Cloud</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/04-networking><span title="Chapter 4: Networking Fundamentals" class=linkLabel_WmDU>Chapter 4: Networking Fundamentals</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/05-virtualization><span title="Chapter 5: Virtualization" class=linkLabel_WmDU>Chapter 5: Virtualization</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/06-designing-the-hermes-platform><span title="Chapter 6: Designing the Hermes Platform" class=linkLabel_WmDU>Chapter 6: Designing the Hermes Platform</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-ii-aws/07-provisioning-aws-account><span title="Part II — AWS & Platform" class=categoryLinkLabel_W154>Part II — AWS & Platform</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-iii-containers/16-docker><span title="Part III — Containers" class=categoryLinkLabel_W154>Part III — Containers</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-iv-kubernetes/19-why-kubernetes-exists><span title="Part IV — Kubernetes" class=categoryLinkLabel_W154>Part IV — Kubernetes</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-v-infrastructure/29-terraform><span title="Part V — Infrastructure" class=categoryLinkLabel_W154>Part V — Infrastructure</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-vi-ai/34-running-hermes><span title="Part VI — AI Infrastructure" class=categoryLinkLabel_W154>Part VI — AI Infrastructure</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role=button aria-expanded=true href=/hermes-on-aws-guide/part-vii-hermes/39-distributed-cognitive-execution><span title="Part VII — Hermes Agent Platform" class=categoryLinkLabel_W154>Part VII — Hermes Agent Platform</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-vii-hermes/39-distributed-cognitive-execution><span title="Chapter 39: Distributed Cognitive Execution" class=linkLabel_WmDU>Chapter 39: Distributed Cognitive Execution</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-vii-hermes/40-operating-hermes-in-production><span title="Chapter 40: Operating Hermes in Production" class=linkLabel_WmDU>Chapter 40: Operating Hermes in Production</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-vii-hermes/41-platform-governance><span title="Chapter 41: Security, Governance, and Trust" class=linkLabel_WmDU>Chapter 41: Security, Governance, and Trust</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/hermes-on-aws-guide/part-vii-hermes/42-extending-hermes><span title="Chapter 42: Extending Hermes" class=linkLabel_WmDU>Chapter 42: Extending Hermes</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-vii-hermes/43-from-development-to-production><span title="Chapter 43: From Development to Production" class=linkLabel_WmDU>Chapter 43: From Development to Production</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-vii-hermes/44-the-platform-you-built><span title="Chapter 44: The Platform You Built" class=linkLabel_WmDU>Chapter 44: The Platform You Built</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/appendices/glossary><span title=Appendices class=categoryLinkLabel_W154>Appendices</span></a></div></ul></nav><button type=button title="Collapse sidebar" aria-label="Collapse sidebar" class="button button--secondary button--outline collapseSidebarButton_PEFL"><svg width=20 height=20 aria-hidden=true class=collapseSidebarButtonIcon_kv0_><g fill=#7a7a7a><path d="M9.992 10.023c0 .2-.062.399-.172.547l-4.996 7.492a.982.982 0 01-.828.454H1c-.55 0-1-.453-1-1 0-.2.059-.403.168-.551l4.629-6.942L.168 3.078A.939.939 0 010 2.528c0-.548.45-.997 1-.997h2.996c.352 0 .649.18.828.45L9.82 9.472c.11.148.172.347.172.55zm0 0"/><path d="M19.98 10.023c0 .2-.058.399-.168.547l-4.996 7.492a.987.987 0 01-.828.454h-3c-.547 0-.996-.453-.996-1 0-.2.059-.403.168-.551l4.625-6.942-4.625-6.945a.939.939 0 01-.168-.55 1 1 0 01.996-.997h3c.348 0 .649.18.828.45l4.996 7.492c.11.148.168.347.168.55zm0 0"/></g></svg></button></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=Breadcrumbs><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label="Home page" class=breadcrumbs__link href=/hermes-on-aws-guide/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><span class=breadcrumbs__link>Part VII — Hermes Agent Platform</span><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>Chapter 42: Extending Hermes</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Chapter 42: Extending Hermes</h1></header>
+<blockquote>
+<p>Great systems are not defined by the features they have.</p>
+<p>They are defined by how safely they can gain new ones.</p>
+</blockquote>
+<hr/>
+<p><a class="" href=/hermes-on-aws-guide/part-vii-hermes/41-platform-governance>Chapter 41</a> established <strong>how to run Hermes responsibly</strong>. <strong>Chapter 42 is where the book becomes yours</strong>: most AI guides end with "here's how agents work." This one ends with <strong>how to build new capabilities without changing the platform</strong>.</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Finished application:  add features → redeploy the monolith</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Hermes platform:       add capabilities → register tools → assign roles → observe</span><br/></div></code></pre></div></div>
+<p>Hermes can execute, reason, remember, coordinate, observe, secure, and recover. The question is no longer <em>can it solve this problem?</em> It is:</p>
+<blockquote>
+<p><strong>Can Hermes learn a new capability without redesigning itself?</strong></p>
+</blockquote>
+<p>:::note Extension philosophy</p>
+<p>A <strong>capability</strong> is something Hermes can do that it could not do yesterday. The platform stays stable. Only capabilities grow.</p>
+<p>:::</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=learning-objectives>Learning Objectives<a href=#learning-objectives class=hash-link aria-label="Direct link to Learning Objectives" title="Direct link to Learning Objectives" translate=no>​</a></h2>
+<p>After completing this chapter, you will be able to:</p>
+<ul class="contains-task-list containsTaskList_mC6p">
+<li class=task-list-item><input type=checkbox disabled/> Add a new tool using a schema contract and worker implementation</li>
+<li class=task-list-item><input type=checkbox disabled/> Register tools in the registry without changing the reasoning loop (<a class="" href=/hermes-on-aws-guide/part-vi-ai/38-ai-agent-architecture>Ch 38</a>)</li>
+<li class=task-list-item><input type=checkbox disabled/> Create new <code>agent_role</code> specializations and assign tools via policy (<a class="" href=/hermes-on-aws-guide/part-vii-hermes/41-platform-governance>Ch 41</a>)</li>
+<li class=task-list-item><input type=checkbox disabled/> Wire credentials through ESO—not prompts (<a class="" href=/hermes-on-aws-guide/part-v-infrastructure/31-secrets-management>Ch 31</a>)</li>
+<li class=task-list-item><input type=checkbox disabled/> Validate extensions with unit, integration, and end-to-end reasoning tests</li>
+<li class=task-list-item><input type=checkbox disabled/> Deploy capability changes via ConfigMap + policy—not platform rebuild</li>
+<li class=task-list-item><input type=checkbox disabled/> Version tools during migration without breaking running tasks</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=prerequisites>Prerequisites<a href=#prerequisites class=hash-link aria-label="Direct link to Prerequisites" title="Direct link to Prerequisites" translate=no>​</a></h2>
+<ul>
+<li class="">Hermes reasoning loop (<a class="" href=/hermes-on-aws-guide/part-vi-ai/38-ai-agent-architecture>Chapter 38</a>)</li>
+<li class="">Distributed agents (<a class="" href=/hermes-on-aws-guide/part-vii-hermes/39-distributed-cognitive-execution>Chapter 39</a>)</li>
+<li class="">Governance + tool policy (<a class="" href=/hermes-on-aws-guide/part-vii-hermes/41-platform-governance>Chapter 41</a>)</li>
+<li class="">Observability (<a class="" href=/hermes-on-aws-guide/part-v-infrastructure/32-monitoring>Chapters 32–33</a>)</li>
+</ul>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token builtin class-name">export</span><span class="token plain"> </span><span class="token assign-left variable" style=color:#36acaa>KUBECONFIG</span><span class="token operator" style=color:#393A34>=~</span><span class="token plain">/.kube/hermes-k3s.yaml</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">kubectl get configmap </span><span class="token parameter variable" style=color:#36acaa>-n</span><span class="token plain"> hermes</span><br/></div></code></pre></div></div>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=estimated-time>Estimated Time<a href=#estimated-time class=hash-link aria-label="Direct link to Estimated Time" title="Direct link to Estimated Time" translate=no>​</a></h2>
+<p><strong>90 minutes</strong> — 35 minutes reading, 55 minutes GitHub tool extension lab.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=background>Background<a href=#background class=hash-link aria-label="Direct link to Background" title="Direct link to Background" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=the-layer-stack>The Layer Stack<a href=#the-layer-stack class=hash-link aria-label="Direct link to The Layer Stack" title="Direct link to The Layer Stack" translate=no>​</a></h3>
+<p>Throughout this book you separated concerns:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Infrastructure   →  AWS, Terraform, k3s (Parts II, IV, V)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Platform         →  Hermes runtime: API, workers, Postgres, Redis, Qdrant, llama-server</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Application      →  Coordinator + agent roles (Ch 39)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Capability       →  Tools Hermes can invoke (this chapter)</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Layer<th>Changes when you add GitHub?<th>Example artifact<tbody><tr><td>Infrastructure<td>No<td>Terraform modules unchanged<tr><td>Platform<td>No<td>Same Deployments, same loop<tr><td>Application<td>Maybe<td>New <code>agent_role: project</code> in coordinator<tr><td><strong>Capability</strong><td><strong>Yes</strong><td><code>github.create_issue</code> tool</table>
+<p>Kubernetes, PostgreSQL, Redis, Qdrant, llama.cpp, monitoring, logging, security, and the reasoning loop <strong>do not change</strong>. You add a contract, an implementation, a registry entry, and a policy line.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=what-stays-fixed>What Stays Fixed<a href=#what-stays-fixed class=hash-link aria-label="Direct link to What Stays Fixed" title="Direct link to What Stays Fixed" translate=no>​</a></h3>
+<p>The Ch 38 loop is the platform kernel:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Request → task (Postgres) → worker claims (Redis)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">       → context (Postgres + Qdrant + Config)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">       → infer (llama-server)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">       → tool proposal → gateway (validate → authorize → execute)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">       → persist step → loop until complete</span><br/></div></code></pre></div></div>
+<p>Extensions plug into the <strong>tool proposal → gateway</strong> step only. The model never talks to GitHub. The worker does—after validation and authorization.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=the-extension-pipeline>The Extension Pipeline<a href=#the-extension-pipeline class=hash-link aria-label="Direct link to The Extension Pipeline" title="Direct link to The Extension Pipeline" translate=no>​</a></h3>
+<p>Every capability follows the same lifecycle:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Idea</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Tool contract (JSON Schema)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Implementation (worker handler)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Validation (tests)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Registration (tool-registry ConfigMap)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Authorization (tool-policy per agent_role)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Deployment (ConfigMap apply / Helm upgrade)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Observation (logs, metrics, traces, audit rows)</span><br/></div></code></pre></div></div>
+<p>Because the process is repeatable, Hermes grows <strong>predictably</strong>—like loading a driver into an OS, not rewriting the kernel.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=walkthrough>Walkthrough<a href=#walkthrough class=hash-link aria-label="Direct link to Walkthrough" title="Direct link to Walkthrough" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-1--define-the-capability>Step 1 — Define the Capability<a href=#step-1--define-the-capability class=hash-link aria-label="Direct link to Step 1 — Define the Capability" title="Direct link to Step 1 — Define the Capability" translate=no>​</a></h3>
+<p>Suppose Hermes should open GitHub issues from a project-management workflow.</p>
+<p>Do not ask the model to "figure out GitHub." Define a <strong>tool contract</strong>—the boundary between reasoning and execution.</p>
+<p>Schema: <a href=https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/tools/github.create-issue.schema.json target=_blank rel="noopener noreferrer" class=""><code>github.create-issue.schema.json</code></a></p>
+<div class="language-json codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-json codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token property" style=color:#36acaa>"type"</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"object"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token property" style=color:#36acaa>"required"</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>[</span><span class="token string" style=color:#e3116c>"owner"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"repository"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"title"</span><span class="token punctuation" style=color:#393A34>]</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token property" style=color:#36acaa>"properties"</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token property" style=color:#36acaa>"owner"</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"> </span><span class="token property" style=color:#36acaa>"type"</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"string"</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token property" style=color:#36acaa>"repository"</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"> </span><span class="token property" style=color:#36acaa>"type"</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"string"</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token property" style=color:#36acaa>"title"</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"> </span><span class="token property" style=color:#36acaa>"type"</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"string"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token property" style=color:#36acaa>"maxLength"</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token number" style=color:#36acaa>256</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token property" style=color:#36acaa>"body"</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"> </span><span class="token property" style=color:#36acaa>"type"</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"string"</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>}</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token property" style=color:#36acaa>"additionalProperties"</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token boolean" style=color:#36acaa>false</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Contract element<th>Platform mapping<tbody><tr><td>Required fields<td>Worker rejects malformed proposals before any API call<tr><td><code>maxLength</code><td>Resource governance (<a class="" href=/hermes-on-aws-guide/part-vii-hermes/41-platform-governance>Ch 41</a>)<tr><td><code>additionalProperties: false</code><td>Prevents injection of unexpected parameters</table>
+<p>The prompt may describe <em>when</em> to create issues. The schema defines <em>what shape</em> is executable.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-2--implement-the-tool>Step 2 — Implement the Tool<a href=#step-2--implement-the-tool class=hash-link aria-label="Direct link to Step 2 — Implement the Tool" title="Direct link to Step 2 — Implement the Tool" translate=no>​</a></h3>
+<p>Implementation lives in the <strong>worker</strong>, not the model Pod.</p>
+<p>Example handler: <a href=https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/tools/github.create-issue.example.py target=_blank rel="noopener noreferrer" class=""><code>github.create-issue.example.py</code></a></p>
+<p>Worker responsibilities:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Responsibility<th>Where<tbody><tr><td>Authentication<td><code>GITHUB_TOKEN</code> from <code>ExternalSecret</code> (<a class="" href=/hermes-on-aws-guide/part-v-infrastructure/31-secrets-management>Ch 31</a>)<tr><td>HTTP call<td>Worker process only<tr><td>Retries<td>Bounded per <code>tool-registry</code> entry<tr><td>Error normalization<td>Stable JSON for the reasoning loop<tr><td>Secret handling<td>Never log token; redact in <code>hermes_task_steps</code></table>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic># Lab smoke test (sandbox token)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token builtin class-name">export</span><span class="token plain"> </span><span class="token assign-left variable" style=color:#36acaa>GITHUB_TOKEN</span><span class="token operator" style=color:#393A34>=</span><span class="token string" style=color:#e3116c>"</span><span class="token string variable" style=color:#36acaa>$(</span><span class="token string variable" style=color:#36acaa>kubectl get secret hermes-github-token </span><span class="token string variable parameter variable" style=color:#36acaa>-n</span><span class="token string variable" style=color:#36acaa> hermes </span><span class="token string variable parameter variable" style=color:#36acaa>-o</span><span class="token string variable" style=color:#36acaa> </span><span class="token string variable assign-left variable" style=color:#36acaa>jsonpath</span><span class="token string variable operator" style=color:#393A34>=</span><span class="token string variable string" style=color:#e3116c>'{.data.token}'</span><span class="token string variable" style=color:#36acaa> </span><span class="token string variable operator" style=color:#393A34>|</span><span class="token string variable" style=color:#36acaa> base64 </span><span class="token string variable parameter variable" style=color:#36acaa>-d</span><span class="token string variable" style=color:#36acaa>)</span><span class="token string" style=color:#e3116c>"</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token builtin class-name">echo</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>'{"owner":"my-org","repository":"hermes","title":"Extension lab"}'</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>\</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token operator" style=color:#393A34>|</span><span class="token plain"> python3 infrastructure/hermes/tools/github.create-issue.example.py</span><br/></div></code></pre></div></div>
+<p>The language model <strong>never</strong> communicates with <code>api.github.com</code>.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-3--register-the-tool>Step 3 — Register the Tool<a href=#step-3--register-the-tool class=hash-link aria-label="Direct link to Step 3 — Register the Tool" title="Direct link to Step 3 — Register the Tool" translate=no>​</a></h3>
+<p>Registration makes a tool <strong>available</strong> to workers. It does <strong>not</strong> grant permission—that is policy (<a class="" href=/hermes-on-aws-guide/part-vii-hermes/41-platform-governance>Ch 41</a>).</p>
+<p>Registry: <a href=https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/tool-registry.example.yaml target=_blank rel="noopener noreferrer" class=""><code>tool-registry.example.yaml</code></a></p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token key atrule" style=color:#00a4db>tools</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token key atrule" style=color:#00a4db>github.create_issue</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token key atrule" style=color:#00a4db>version</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"1.0.0"</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token key atrule" style=color:#00a4db>schema</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> tools/github.create</span><span class="token punctuation" style=color:#393A34>-</span><span class="token plain">issue.schema.json</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token key atrule" style=color:#00a4db>secretRef</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> hermes/github</span><span class="token punctuation" style=color:#393A34>-</span><span class="token plain">token</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token key atrule" style=color:#00a4db>timeoutSeconds</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> </span><span class="token number" style=color:#36acaa>45</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token key atrule" style=color:#00a4db>observability</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      </span><span class="token key atrule" style=color:#00a4db>metricName</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> hermes_tool_github_create_issue_total</span><br/></div></code></pre></div></div>
+<p>Deploy as ConfigMap (same pattern as tool policy):</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">kubectl create configmap hermes-tool-registry </span><span class="token punctuation" style=color:#393A34>\</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  --from-file</span><span class="token operator" style=color:#393A34>=</span><span class="token plain">registry.yaml</span><span class="token operator" style=color:#393A34>=</span><span class="token plain">infrastructure/hermes/tool-registry.example.yaml </span><span class="token punctuation" style=color:#393A34>\</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token parameter variable" style=color:#36acaa>-n</span><span class="token plain"> hermes --dry-run</span><span class="token operator" style=color:#393A34>=</span><span class="token plain">client </span><span class="token parameter variable" style=color:#36acaa>-o</span><span class="token plain"> yaml </span><span class="token operator" style=color:#393A34>|</span><span class="token plain"> kubectl apply </span><span class="token parameter variable" style=color:#36acaa>-f</span><span class="token plain"> -</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Registry field<th>Purpose<tbody><tr><td><code>version</code><td>Capability versioning (see Step 7)<tr><td><code>schema</code><td>Path to JSON Schema for validation<tr><td><code>secretRef</code><td>AWS Secrets Manager key synced by ESO<tr><td><code>timeoutSeconds</code><td>Cognitive resource bound<tr><td><code>observability</code><td>Links to Ch 32–33 pipelines</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-4--assign-capabilities-to-agent-roles>Step 4 — Assign Capabilities to Agent Roles<a href=#step-4--assign-capabilities-to-agent-roles class=hash-link aria-label="Direct link to Step 4 — Assign Capabilities to Agent Roles" title="Direct link to Step 4 — Assign Capabilities to Agent Roles" translate=no>​</a></h3>
+<p>Not every agent should use every tool. Extend policy with new roles:</p>
+<p><a href=https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/agent-roles-extension.example.yaml target=_blank rel="noopener noreferrer" class=""><code>agent-roles-extension.example.yaml</code></a></p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token key atrule" style=color:#00a4db>agentRoles</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token key atrule" style=color:#00a4db>project</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token key atrule" style=color:#00a4db>allowedTools</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      </span><span class="token punctuation" style=color:#393A34>-</span><span class="token plain"> github.create_issue</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      </span><span class="token punctuation" style=color:#393A34>-</span><span class="token plain"> jira.create_issue</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token key atrule" style=color:#00a4db>research</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token key atrule" style=color:#00a4db>allowedTools</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      </span><span class="token punctuation" style=color:#393A34>-</span><span class="token plain"> docs.search</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      </span><span class="token punctuation" style=color:#393A34>-</span><span class="token plain"> qdrant.retrieve</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Agent<th>Tools<th>Risk profile<tbody><tr><td><code>weather</code> (<a class="" href=/hermes-on-aws-guide/part-vii-hermes/39-distributed-cognitive-execution>Ch 39</a>)<td>NOAA<td>Read-only external<tr><td><code>project</code><td>GitHub, Jira<td>Write external systems<tr><td><code>summary</code><td>none<td>Synthesis only<tr><td><code>admin</code><td>k8s, postgres<td>Requires approval</table>
+<p>A coordinator task (<a href=https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/coordinator-decomposition.example.json target=_blank rel="noopener noreferrer" class=""><code>coordinator-decomposition.example.json</code></a>) can add a <code>project</code> subtask without changing Kubernetes manifests—only policy and registry.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-5--observe-execution>Step 5 — Observe Execution<a href=#step-5--observe-execution class=hash-link aria-label="Direct link to Step 5 — Observe Execution" title="Direct link to Step 5 — Observe Execution" translate=no>​</a></h3>
+<p>Extensions inherit the platform observability stack. Every invocation should emit:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Signal<th>Artifact<tbody><tr><td>Structured log<td><code>{"event":"tool_executed","tool":"github.create_issue","authorization":"allowed"}</code> → Loki<tr><td>Metric<td><code>hermes_tool_github_create_issue_total{status="success"}</code> → Prometheus<tr><td>Trace<td><code>trace_id</code> span around HTTP call → Tempo<tr><td>Audit row<td><code>hermes_task_steps</code> with <code>step_type=tool</code>, redacted <code>payload_json</code></table>
+<p>Connect denied attempts to alerts (<a class="" href=/hermes-on-aws-guide/part-v-infrastructure/32-monitoring>Ch 32</a>)—a spike may indicate prompt injection probes (<a class="" href=/hermes-on-aws-guide/part-vii-hermes/41-platform-governance>Ch 41</a>).</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-6--test-before-production>Step 6 — Test Before Production<a href=#step-6--test-before-production class=hash-link aria-label="Direct link to Step 6 — Test Before Production" title="Direct link to Step 6 — Test Before Production" translate=no>​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Layer<th>What you verify<tbody><tr><td>Unit<td>Schema validation, handler mocks, error paths<tr><td>Integration<td>Real sandbox API with ESO-injected token<tr><td>Policy<td><code>summary</code> role <strong>cannot</strong> call <code>github.create_issue</code><tr><td>E2E reasoning<td>Coordinator task → worker loop → issue created → step persisted<tr><td>Kubernetes<td>ConfigMap mounted; worker SA unchanged (<a href=https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/kubernetes/ch41-rbac-hermes-worker.yaml target=_blank rel="noopener noreferrer" class="">Ch 41 RBAC</a>)</table>
+<p>Use <a href=https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/extension-checklist.example.yaml target=_blank rel="noopener noreferrer" class=""><code>extension-checklist.example.yaml</code></a> as a merge gate.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-7--version-capabilities>Step 7 — Version Capabilities<a href=#step-7--version-capabilities class=hash-link aria-label="Direct link to Step 7 — Version Capabilities" title="Direct link to Step 7 — Version Capabilities" translate=no>​</a></h3>
+<p>Capabilities evolve. Do not replace in place during active traffic:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">noaa.forecast v1  ──► workers route by task metadata</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">noaa.forecast v2  ──► compare latency + quality (Ch 40 model upgrade pattern)</span><br/></div></code></pre></div></div>
+<p>Register both versions in <code>tool-registry.example.yaml</code> under <code>versionedTools</code>. Deprecate v1 only after measurement—not on deploy day.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=example-personal-finance-domain>Example: Personal Finance Domain<a href=#example-personal-finance-domain class=hash-link aria-label="Direct link to Example: Personal Finance Domain" title="Direct link to Example: Personal Finance Domain" translate=no>​</a></h2>
+<p>Extend Hermes into finance without touching the platform:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">New capabilities:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  budget.estimate</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  investment.snapshot</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  tax.document_summary</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">New agent_roles:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  finance (already in Ch 39 ski-trip example)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  tax</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Unchanged:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Kubernetes, Postgres, Redis, Qdrant, llama-server</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Monitoring, logging, security, reasoning loop</span><br/></div></code></pre></div></div>
+<p>Add tools + schemas + policy lines. Optionally add Qdrant collections for tax document embeddings (<a class="" href=/hermes-on-aws-guide/part-vi-ai/35-vector-databases>Ch 35</a>)—that is <strong>data</strong>, not architecture.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=operational-checklist>Operational Checklist<a href=#operational-checklist class=hash-link aria-label="Direct link to Operational Checklist" title="Direct link to Operational Checklist" translate=no>​</a></h2>
+<p>Before enabling a capability in production, every answer must be <strong>yes</strong>:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Question<th>Platform check<tbody><tr><td>Clear contract?<td>JSON Schema in <code>infrastructure/hermes/tools/</code><tr><td>Authenticated?<td><code>secretRef</code> in registry + ESO <code>ExternalSecret</code><tr><td>Authorized?<td><code>agent_role</code> entry in tool-policy<tr><td>Observable?<td>Log event + metric + audit step<tr><td>Failure recoverable?<td>Task retry + durable state (Ch 38)<tr><td>Secrets protected?<td>Not in prompt, log, or Qdrant<tr><td>Tested?<td>Checklist complete</table>
+<p>If any answer is <strong>no</strong>, the capability is not ready—regardless of how well the model performs in a demo.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=design-principles>Design Principles<a href=#design-principles class=hash-link aria-label="Direct link to Design Principles" title="Direct link to Design Principles" translate=no>​</a></h2>
+<p>Hermes grows by rules, not ad hoc prompts:</p>
+<ol>
+<li class=""><strong>Extend through contracts</strong> — schemas, not prose instructions</li>
+<li class=""><strong>Separate reasoning from execution</strong> — model proposes; worker executes</li>
+<li class=""><strong>Reuse platform services</strong> — Postgres, Redis, ESO, Prometheus</li>
+<li class=""><strong>Observe every capability</strong> — extensions inherit Ch 32–33</li>
+<li class=""><strong>Test before deployment</strong> — checklist as merge gate</li>
+<li class=""><strong>Govern before enabling</strong> — register ≠ permit (<a class="" href=/hermes-on-aws-guide/part-vii-hermes/41-platform-governance>Ch 41</a>)</li>
+</ol>
+<p>These principles let you add NOAA, Jira, GitHub, AWS operations, or entirely new domains <strong>without accumulating architectural debt</strong>.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=hands-on-lab>Hands-on Lab<a href=#hands-on-lab class=hash-link aria-label="Direct link to Hands-on Lab" title="Direct link to Hands-on Lab" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=lab-42-add-a-github-capability>Lab 42: Add a GitHub Capability<a href=#lab-42-add-a-github-capability class=hash-link aria-label="Direct link to Lab 42: Add a GitHub Capability" title="Direct link to Lab 42: Add a GitHub Capability" translate=no>​</a></h3>
+<p><strong>Estimated Time:</strong> 55 minutes</p>
+<p><strong>Goal:</strong> Register and authorize <code>github.create_issue</code> without changing Hermes Deployments.</p>
+<p><strong>Steps:</strong></p>
+<ol>
+<li class="">Review <code>github.create-issue.schema.json</code> and example handler</li>
+<li class="">Create sandbox GitHub token in AWS Secrets Manager; add ESO <code>ExternalSecret</code> (pattern from <a class="" href=/hermes-on-aws-guide/part-v-infrastructure/31-secrets-management>Ch 31</a>)</li>
+<li class="">Apply <code>hermes-tool-registry</code> and <code>hermes-tool-policy</code> ConfigMaps including <code>project</code> role</li>
+<li class="">Validate denial: simulate <code>summary</code> role calling <code>github.create_issue</code> — expect <code>authorization: denied</code> in logs</li>
+<li class="">Validate allow: <code>project</code> role with valid params — expect audit row in <code>hermes_task_steps</code></li>
+<li class="">Complete <code>extension-checklist.example.yaml</code> for your lab</li>
+<li class=""><strong>Do not</strong> change API or worker Deployment images — confirm capability is config-only</li>
+</ol>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=verification>Verification<a href=#verification class=hash-link aria-label="Direct link to Verification" title="Direct link to Verification" translate=no>​</a></h2>
+<ul class="contains-task-list containsTaskList_mC6p">
+<li class=task-list-item><input type=checkbox disabled/> You can explain the four layers (infrastructure → capability)</li>
+<li class=task-list-item><input type=checkbox disabled/> New tool has JSON Schema + registry entry + policy assignment</li>
+<li class=task-list-item><input type=checkbox disabled/> Credentials flow ESO → env, not prompt</li>
+<li class=task-list-item><input type=checkbox disabled/> Denied and allowed invocations are both auditable</li>
+<li class=task-list-item><input type=checkbox disabled/> Capability deploy required no platform image change</li>
+<li class=task-list-item><input type=checkbox disabled/> Extension checklist completed</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=troubleshooting>Troubleshooting<a href=#troubleshooting class=hash-link aria-label="Direct link to Troubleshooting" title="Direct link to Troubleshooting" translate=no>​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Problem<th>Cause<th>Fix<tbody><tr><td>Tool "not found"<td>Missing registry ConfigMap mount<td>Mount <code>hermes-tool-registry</code> on worker<tr><td>401 from GitHub<td>Stale or missing ESO sync<td><code>kubectl describe externalsecret</code>; refresh SM<tr><td>Model hallucinates API calls<td>No schema validation<td>Reject proposals that fail JSON Schema<tr><td>Tool works in dev, denied in prod<td>Policy not updated<td>Add tool to <code>agent_role</code> allowlist<tr><td>Secrets in Loki<td>Handler logs request headers<td>Redact <code>Authorization</code> in log pipeline<tr><td>Coordinator ignores new role<td>Decomposition JSON unchanged<td>Add subtask with <code>agent_role: project</code></table>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=review-questions>Review Questions<a href=#review-questions class=hash-link aria-label="Direct link to Review Questions" title="Direct link to Review Questions" translate=no>​</a></h2>
+<ol>
+<li class="">Why is a capability not the same as a platform change?</li>
+<li class="">What is the difference between registration and authorization?</li>
+<li class="">Why must the model never call external APIs directly?</li>
+<li class="">How do extensions inherit security and observability?</li>
+<li class="">When would you run two versions of the same tool?</li>
+</ol>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=key-takeaways>Key Takeaways<a href=#key-takeaways class=hash-link aria-label="Direct link to Key Takeaways" title="Direct link to Key Takeaways" translate=no>​</a></h2>
+<ul>
+<li class=""><strong>Chapter 42 is the ownership graduation</strong>—Hermes becomes <em>your</em> platform</li>
+<li class=""><strong>Hermes is a platform for capabilities</strong>, not a collection of prompts</li>
+<li class=""><strong>New functionality enters through tools and contracts</strong>—the loop stays fixed</li>
+<li class=""><strong>Platform stability enables rapid feature growth</strong> without redeploying the kernel</li>
+<li class=""><strong>Extensions inherit</strong> security (Ch 41), observability (Ch 32–33), and operations (Ch 40)</li>
+<li class="">Most AI books stop at agents; <strong>this book shows how to grow the OS</strong></li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=glossary-additions>Glossary Additions<a href=#glossary-additions class=hash-link aria-label="Direct link to Glossary Additions" title="Direct link to Glossary Additions" translate=no>​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Term<th>Definition<tbody><tr><td><strong>Capability</strong><td>A tool or workflow Hermes can execute via the gateway.<tr><td><strong>Tool contract</strong><td>JSON Schema defining valid tool parameters.<tr><td><strong>Tool registry</strong><td>ConfigMap catalog of available tools and metadata.<tr><td><strong>Registration</strong><td>Making a tool known to workers (availability).<tr><td><strong>Authorization</strong><td>Permitting a tool for a specific <code>agent_role</code> (permission).</table>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=further-reading>Further Reading<a href=#further-reading class=hash-link aria-label="Direct link to Further Reading" title="Direct link to Further Reading" translate=no>​</a></h2>
+<ul>
+<li class=""><a class="" href=/hermes-on-aws-guide/part-vi-ai/38-ai-agent-architecture>Chapter 38: The Hermes Reasoning Loop</a></li>
+<li class=""><a class="" href=/hermes-on-aws-guide/part-vii-hermes/39-distributed-cognitive-execution>Chapter 39: Distributed Cognitive Execution</a></li>
+<li class=""><a class="" href=/hermes-on-aws-guide/part-vii-hermes/41-platform-governance>Chapter 41: Security, Governance, and Trust</a></li>
+<li class=""><a href=https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/tool-registry.example.yaml target=_blank rel="noopener noreferrer" class=""><code>tool-registry.example.yaml</code></a></li>
+<li class=""><a href=https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/extension-checklist.example.yaml target=_blank rel="noopener noreferrer" class=""><code>extension-checklist.example.yaml</code></a></li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=hermes-platform-status>Hermes Platform Status<a href=#hermes-platform-status class=hash-link aria-label="Direct link to Hermes Platform Status" title="Direct link to Hermes Platform Status" translate=no>​</a></h2>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">───────────────────────────────────────────────</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        HERMES PLATFORM STATUS</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Platform built (Ch 1–41)         ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Extensible (Ch 42)             ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Production operating model (Ch 43)   ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Capstone (Ch 44)                   ◐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">───────────────────────────────────────────────</span><br/></div></code></pre></div></div>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Infrastructure → Platform → Application → Capability</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                                         ↑ you are here</span><br/></div></code></pre></div></div>
+<p>Hermes is no longer a project you built once. It is a <strong>platform you can grow</strong>.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=whats-next>What's Next<a href=#whats-next class=hash-link aria-label="Direct link to What's Next" title="Direct link to What's Next" translate=no>​</a></h2>
+<p><a class="" href=/hermes-on-aws-guide/part-vii-hermes/43-from-development-to-production>Chapter 43: From Development to Production</a> — promote Hermes to production with evidence, not optimism. The payoff: <strong>you could actually run this.</strong></p>
+<hr/>
+<p><a class="" href=/hermes-on-aws-guide/part-vii-hermes/41-platform-governance>← Chapter 41: Security, Governance, and Trust</a> | <a class="" href=/hermes-on-aws-guide/part-vii-hermes/43-from-development-to-production>Next: Chapter 43 — Development to Production →</a></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/68thandMaine/hermes-on-aws-guide/tree/main/docs/part-vii-hermes/42-extending-hermes.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href=/hermes-on-aws-guide/part-vii-hermes/41-platform-governance><div class=pagination-nav__sublabel>Previous</div><div class=pagination-nav__label>Chapter 41: Security, Governance, and Trust</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/hermes-on-aws-guide/part-vii-hermes/43-from-development-to-production><div class=pagination-nav__sublabel>Next</div><div class=pagination-nav__label>Chapter 43: From Development to Production</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#learning-objectives class="table-of-contents__link toc-highlight">Learning Objectives</a><li><a href=#prerequisites class="table-of-contents__link toc-highlight">Prerequisites</a><li><a href=#estimated-time class="table-of-contents__link toc-highlight">Estimated Time</a><li><a href=#background class="table-of-contents__link toc-highlight">Background</a><ul><li><a href=#the-layer-stack class="table-of-contents__link toc-highlight">The Layer Stack</a><li><a href=#what-stays-fixed class="table-of-contents__link toc-highlight">What Stays Fixed</a><li><a href=#the-extension-pipeline class="table-of-contents__link toc-highlight">The Extension Pipeline</a></ul><li><a href=#walkthrough class="table-of-contents__link toc-highlight">Walkthrough</a><ul><li><a href=#step-1--define-the-capability class="table-of-contents__link toc-highlight">Step 1 — Define the Capability</a><li><a href=#step-2--implement-the-tool class="table-of-contents__link toc-highlight">Step 2 — Implement the Tool</a><li><a href=#step-3--register-the-tool class="table-of-contents__link toc-highlight">Step 3 — Register the Tool</a><li><a href=#step-4--assign-capabilities-to-agent-roles class="table-of-contents__link toc-highlight">Step 4 — Assign Capabilities to Agent Roles</a><li><a href=#step-5--observe-execution class="table-of-contents__link toc-highlight">Step 5 — Observe Execution</a><li><a href=#step-6--test-before-production class="table-of-contents__link toc-highlight">Step 6 — Test Before Production</a><li><a href=#step-7--version-capabilities class="table-of-contents__link toc-highlight">Step 7 — Version Capabilities</a></ul><li><a href=#example-personal-finance-domain class="table-of-contents__link toc-highlight">Example: Personal Finance Domain</a><li><a href=#operational-checklist class="table-of-contents__link toc-highlight">Operational Checklist</a><li><a href=#design-principles class="table-of-contents__link toc-highlight">Design Principles</a><li><a href=#hands-on-lab class="table-of-contents__link toc-highlight">Hands-on Lab</a><ul><li><a href=#lab-42-add-a-github-capability class="table-of-contents__link toc-highlight">Lab 42: Add a GitHub Capability</a></ul><li><a href=#verification class="table-of-contents__link toc-highlight">Verification</a><li><a href=#troubleshooting class="table-of-contents__link toc-highlight">Troubleshooting</a><li><a href=#review-questions class="table-of-contents__link toc-highlight">Review Questions</a><li><a href=#key-takeaways class="table-of-contents__link toc-highlight">Key Takeaways</a><li><a href=#glossary-additions class="table-of-contents__link toc-highlight">Glossary Additions</a><li><a href=#further-reading class="table-of-contents__link toc-highlight">Further Reading</a><li><a href=#hermes-platform-status class="table-of-contents__link toc-highlight">Hermes Platform Status</a><li><a href=#whats-next class="table-of-contents__link toc-highlight">What's Next</a></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>Book</div><ul class="footer__items clean-list"><li class=footer__item><a class=footer__link-item href=/hermes-on-aws-guide/>Table of Contents</a><li class=footer__item><a href=https://github.com/68thandMaine/hermes-on-aws-guide/blob/main/CONTRIBUTING.md target=_blank rel="noopener noreferrer" class=footer__link-item>Contributing<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>Author</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/crudnicky target=_blank rel="noopener noreferrer" class=footer__link-item>Christopher Rudnicky<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 Christopher Rudnicky. MIT License.</div></div></div></footer></div></body>

@@ -1,0 +1,439 @@
+<!doctype html><html lang=en dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-part-ii-aws/07-provisioning-aws-account" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>Chapter 7: Provisioning Your AWS Account | Building a Personal AI Cloud</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://68thandMaine.github.io/hermes-on-aws-guide/img/social-card.svg /><meta data-rh=true name=twitter:image content=https://68thandMaine.github.io/hermes-on-aws-guide/img/social-card.svg /><meta data-rh=true property=og:url content=https://68thandMaine.github.io/hermes-on-aws-guide/part-ii-aws/07-provisioning-aws-account /><meta data-rh=true property=og:locale content=en /><meta data-rh=true name=docusaurus_locale content=en /><meta data-rh=true name=docsearch:language content=en /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="Chapter 7: Provisioning Your AWS Account | Building a Personal AI Cloud"/><meta data-rh=true name=description content="Create and secure the AWS account that will host the Hermes platform."/><meta data-rh=true property=og:description content="Create and secure the AWS account that will host the Hermes platform."/><link data-rh=true rel=icon href=/hermes-on-aws-guide/img/favicon.ico /><link data-rh=true rel=canonical href=https://68thandMaine.github.io/hermes-on-aws-guide/part-ii-aws/07-provisioning-aws-account /><link data-rh=true rel=alternate href=https://68thandMaine.github.io/hermes-on-aws-guide/part-ii-aws/07-provisioning-aws-account hreflang=en /><link data-rh=true rel=alternate href=https://68thandMaine.github.io/hermes-on-aws-guide/part-ii-aws/07-provisioning-aws-account hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://68thandMaine.github.io/hermes-on-aws-guide/part-ii-aws/07-provisioning-aws-account","name":"Chapter 7: Provisioning Your AWS Account","position":1}]}</script><link rel=stylesheet href=/hermes-on-aws-guide/assets/css/styles.56f47aec.css /><script src=/hermes-on-aws-guide/assets/js/runtime~main.5ab3fffc.js defer></script><script src=/hermes-on-aws-guide/assets/js/main.4573ddba.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-ce0")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id=__docusaurus><link rel=preload as=image href=/hermes-on-aws-guide/img/logo.svg /><div role=region aria-label="Skip to main content"><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>Skip to main content</a></div><nav aria-label=Main class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/hermes-on-aws-guide/><div class=navbar__logo><img src=/hermes-on-aws-guide/img/logo.svg alt="Personal AI Cloud" class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/hermes-on-aws-guide/img/logo.svg alt="Personal AI Cloud" class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">Personal AI Cloud</b></a><a aria-current=page class="navbar__item navbar__link guides-top-header navbar__link--active" href=/hermes-on-aws-guide/>Guides</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/68thandMaine/hermes-on-aws-guide target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=Search aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/hermes-on-aws-guide/preface/00-preface><span title=Preface class=linkLabel_WmDU>Preface</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=true href=/hermes-on-aws-guide/part-i-foundations/01-introduction><span title="Part I — Foundations" class=categoryLinkLabel_W154>Part I — Foundations</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/01-introduction><span title="Chapter 1: Introduction" class=linkLabel_WmDU>Chapter 1: Introduction</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/02-how-computers-work><span title="Chapter 2: How Computers Actually Work" class=linkLabel_WmDU>Chapter 2: How Computers Actually Work</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/03-linux><span title="Chapter 3: Linux — The Operating System of the Cloud" class=linkLabel_WmDU>Chapter 3: Linux — The Operating System of the Cloud</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/04-networking><span title="Chapter 4: Networking Fundamentals" class=linkLabel_WmDU>Chapter 4: Networking Fundamentals</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/05-virtualization><span title="Chapter 5: Virtualization" class=linkLabel_WmDU>Chapter 5: Virtualization</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/06-designing-the-hermes-platform><span title="Chapter 6: Designing the Hermes Platform" class=linkLabel_WmDU>Chapter 6: Designing the Hermes Platform</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role=button aria-expanded=true href=/hermes-on-aws-guide/part-ii-aws/07-provisioning-aws-account><span title="Part II — AWS & Platform" class=categoryLinkLabel_W154>Part II — AWS & Platform</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/hermes-on-aws-guide/part-ii-aws/07-provisioning-aws-account><span title="Chapter 7: Provisioning Your AWS Account" class=linkLabel_WmDU>Chapter 7: Provisioning Your AWS Account</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-ii-aws/08-creating-network-for-hermes><span title="Chapter 8: Creating the Network for Hermes" class=linkLabel_WmDU>Chapter 8: Creating the Network for Hermes</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-ii-aws/09-provisioning-hermes-server><span title="Chapter 9: Provisioning the Hermes Server" class=linkLabel_WmDU>Chapter 9: Provisioning the Hermes Server</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-ii-aws/10-establishing-trust><span title="Chapter 10: Establishing Trust" class=linkLabel_WmDU>Chapter 10: Establishing Trust</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-ii-aws/11-persistent-storage><span title="Chapter 11: Persistent Storage for Models and Data" class=linkLabel_WmDU>Chapter 11: Persistent Storage for Models and Data</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-ii-aws/12-building-the-application-platform><span title="Chapter 12: Building the Application Platform" class=linkLabel_WmDU>Chapter 12: Building the Application Platform</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-ii-aws/13-the-first-control-plane><span title="Chapter 13: The First Control Plane" class=linkLabel_WmDU>Chapter 13: The First Control Plane</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-ii-aws/14-routing-traffic-to-hermes><span title="Chapter 14: Routing Traffic to Hermes" class=linkLabel_WmDU>Chapter 14: Routing Traffic to Hermes</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-ii-aws/15-observing-hermes-platform><span title="Chapter 15: Observing the Hermes Platform" class=linkLabel_WmDU>Chapter 15: Observing the Hermes Platform</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-ii-aws/16-managing-platform-costs><span title="Chapter 16: Managing Platform Costs" class=linkLabel_WmDU>Chapter 16: Managing Platform Costs</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-iii-containers/16-docker><span title="Part III — Containers" class=categoryLinkLabel_W154>Part III — Containers</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-iv-kubernetes/19-why-kubernetes-exists><span title="Part IV — Kubernetes" class=categoryLinkLabel_W154>Part IV — Kubernetes</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-v-infrastructure/29-terraform><span title="Part V — Infrastructure" class=categoryLinkLabel_W154>Part V — Infrastructure</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-vi-ai/34-running-hermes><span title="Part VI — AI Infrastructure" class=categoryLinkLabel_W154>Part VI — AI Infrastructure</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-vii-hermes/39-distributed-cognitive-execution><span title="Part VII — Hermes Agent Platform" class=categoryLinkLabel_W154>Part VII — Hermes Agent Platform</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/appendices/glossary><span title=Appendices class=categoryLinkLabel_W154>Appendices</span></a></div></ul></nav><button type=button title="Collapse sidebar" aria-label="Collapse sidebar" class="button button--secondary button--outline collapseSidebarButton_PEFL"><svg width=20 height=20 aria-hidden=true class=collapseSidebarButtonIcon_kv0_><g fill=#7a7a7a><path d="M9.992 10.023c0 .2-.062.399-.172.547l-4.996 7.492a.982.982 0 01-.828.454H1c-.55 0-1-.453-1-1 0-.2.059-.403.168-.551l4.629-6.942L.168 3.078A.939.939 0 010 2.528c0-.548.45-.997 1-.997h2.996c.352 0 .649.18.828.45L9.82 9.472c.11.148.172.347.172.55zm0 0"/><path d="M19.98 10.023c0 .2-.058.399-.168.547l-4.996 7.492a.987.987 0 01-.828.454h-3c-.547 0-.996-.453-.996-1 0-.2.059-.403.168-.551l4.625-6.942-4.625-6.945a.939.939 0 01-.168-.55 1 1 0 01.996-.997h3c.348 0 .649.18.828.45l4.996 7.492c.11.148.168.347.168.55zm0 0"/></g></svg></button></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=Breadcrumbs><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label="Home page" class=breadcrumbs__link href=/hermes-on-aws-guide/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><span class=breadcrumbs__link>Part II — AWS & Platform</span><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>Chapter 7: Provisioning Your AWS Account</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Chapter 7: Provisioning Your AWS Account</h1></header>
+<blockquote>
+<p>You are not learning AWS—you are provisioning infrastructure for Hermes.</p>
+</blockquote>
+<hr/>
+<p>Part I defined <strong>what</strong> you are building. Part II implements it.</p>
+<p>This chapter is the first time you log into AWS and perform meaningful work. By the end, you will have a secured account, an operator identity, billing guardrails, and a working AWS CLI—everything required before you create a VPC or EC2 instance for Hermes.</p>
+<p>We are not exploring the AWS console for its own sake. Every step exists because the <a class="" href=/hermes-on-aws-guide/part-i-foundations/06-designing-the-hermes-platform>Hermes platform design</a> depends on it.</p>
+<p>:::note Why this matters for Hermes</p>
+<p>We enable MFA and create a dedicated administrator <strong>before</strong> launching any infrastructure because this AWS account will eventually hold the entire Hermes platform—models under <code>/opt/models</code>, PostgreSQL data, Redis queues, and application secrets. A compromised root account could delete volumes, exfiltrate models, or leave you with a surprise bill. Strong account security now protects everything that follows.</p>
+<p>:::</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=learning-objectives>Learning Objectives<a href=#learning-objectives class=hash-link aria-label="Direct link to Learning Objectives" title="Direct link to Learning Objectives" translate=no>​</a></h2>
+<p>After completing this chapter, you will be able to:</p>
+<ul class="contains-task-list containsTaskList_mC6p">
+<li class=task-list-item><input type=checkbox disabled/> Create or access an AWS account dedicated to the Hermes platform</li>
+<li class=task-list-item><input type=checkbox disabled/> Secure the root user with MFA and confirm root is not used for daily work</li>
+<li class=task-list-item><input type=checkbox disabled/> Create an IAM administrator user with MFA for day-to-day operations</li>
+<li class=task-list-item><input type=checkbox disabled/> Configure a billing alarm before provisioning EC2 or storage</li>
+<li class=task-list-item><input type=checkbox disabled/> Install and verify the AWS CLI authenticated as your IAM administrator</li>
+<li class=task-list-item><input type=checkbox disabled/> Explain which Hermes platform components remain unprovisioned—and what comes next</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=prerequisites>Prerequisites<a href=#prerequisites class=hash-link aria-label="Direct link to Prerequisites" title="Direct link to Prerequisites" translate=no>​</a></h2>
+<ul>
+<li class=""><a class="" href=/hermes-on-aws-guide/part-i-foundations/06-designing-the-hermes-platform>Chapter 6: Designing the Hermes Platform</a> completed, including Lab 6 platform design worksheet</li>
+<li class="">Email address and payment method for AWS (credit card; Free Tier may apply to some services)</li>
+<li class="">Authenticator app (1Password, Authy, Google Authenticator, or hardware key supporting TOTP)</li>
+<li class="">Lab 1 from <a class="" href=/hermes-on-aws-guide/part-i-foundations/01-introduction>Chapter 1</a>: terminal, Git, and code editor ready</li>
+</ul>
+<p><strong>Linux note:</strong> You do not need to finish all of <a class="" href=/hermes-on-aws-guide/part-i-foundations/03-linux>Chapter 3</a> first. This book uses <strong>just-in-time Linux</strong>—you learn commands when the platform needs them. Chapter 7 requires only a working terminal.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=estimated-time>Estimated Time<a href=#estimated-time class=hash-link aria-label="Direct link to Estimated Time" title="Direct link to Estimated Time" translate=no>​</a></h2>
+<p><strong>90 minutes</strong> — 45 minutes reading and walkthrough, 45 minutes for Lab 7.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=background>Background<a href=#background class=hash-link aria-label="Direct link to Background" title="Direct link to Background" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=purpose-driven-provisioning>Purpose-Driven Provisioning<a href=#purpose-driven-provisioning class=hash-link aria-label="Direct link to Purpose-Driven Provisioning" title="Direct link to Purpose-Driven Provisioning" translate=no>​</a></h3>
+<p>In <a class="" href=/hermes-on-aws-guide/part-i-foundations/06-designing-the-hermes-platform>Chapter 6</a>, you mapped platform components to AWS resources. The first rows in that table are not EC2 or VPC—they are <strong>account, identity, and cost guardrails</strong>.</p>
+<p>Without those:</p>
+<ul>
+<li class="">Anyone with root credentials owns every future resource</li>
+<li class="">A forgotten GPU instance can run for weeks unnoticed</li>
+<li class="">You cannot audit who changed security groups or deleted EBS volumes</li>
+</ul>
+<p>Experienced operators secure the account <strong>before</strong> the first instance launches. You will follow the same order.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=what-aws-is-briefly>What AWS Is (Briefly)<a href=#what-aws-is-briefly class=hash-link aria-label="Direct link to What AWS Is (Briefly)" title="Direct link to What AWS Is (Briefly)" translate=no>​</a></h3>
+<p>Amazon Web Services is a collection of APIs backed by data-center infrastructure. When you "create an EC2 instance," you are calling an API that allocates a virtual machine, attaches network interfaces, and bills your account by the hour.</p>
+<p>You do not need to memorize every service name. For the Hermes platform, Part II focuses on a small set:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Service<th>Hermes platform role<tbody><tr><td><strong>IAM</strong><td>Who can create and manage resources<tr><td><strong>VPC</strong><td>Private network for your server<tr><td><strong>EC2</strong><td>Ubuntu server running k3s and Hermes stack<tr><td><strong>EBS / S3</strong><td>Model files, databases, backups<tr><td><strong>Route 53</strong><td>DNS for HTTPS access<tr><td><strong>CloudWatch</strong><td>Metrics, logs, billing alarms</table>
+<p>Everything else comes later—or never, if a simpler option serves Hermes.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=the-shared-responsibility-model>The Shared Responsibility Model<a href=#the-shared-responsibility-model class=hash-link aria-label="Direct link to The Shared Responsibility Model" title="Direct link to The Shared Responsibility Model" translate=no>​</a></h3>
+<p>AWS secures the <strong>cloud</strong> (physical data centers, hypervisors, core networking). You secure <strong>what you put in the cloud</strong> (OS patches, SSH keys, security groups, IAM policies, encryption choices).</p>
+<p>For Hermes, that means:</p>
+<ul>
+<li class="">AWS keeps the Nitro hypervisor patched</li>
+<li class=""><strong>You</strong> keep Ubuntu updated, restrict SSH, and scope IAM permissions</li>
+</ul>
+<p>Confusing the boundary leads to false confidence—"AWS is secure" does not mean "my Hermes deployment is secure."</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=theory>Theory<a href=#theory class=hash-link aria-label="Direct link to Theory" title="Direct link to Theory" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=root-user-vs-iam-identities>Root User vs IAM Identities<a href=#root-user-vs-iam-identities class=hash-link aria-label="Direct link to Root User vs IAM Identities" title="Direct link to Root User vs IAM Identities" translate=no>​</a></h3>
+<p>Every AWS account has exactly one <strong>root user</strong>—the email address used at signup. Root has unrestricted access to everything, including closing the account and changing billing.</p>
+<p><strong>Rule:</strong> Use root only for account-level tasks that require it (initial setup, changing payment method, enabling MFA on root). Never create access keys for root. Never deploy Hermes resources while authenticated as root.</p>
+<p><strong>IAM users and roles</strong> are how daily work should happen. An IAM user is a named identity with credentials and attached policies. A <strong>role</strong> is an identity assumed temporarily—common for EC2 instances and Terraform in CI (covered later).</p>
+<p>This chapter creates one IAM user: <strong><code>hermes-admin</code></strong>—your operator account for building the platform.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=mfa>MFA<a href=#mfa class=hash-link aria-label="Direct link to MFA" title="Direct link to MFA" translate=no>​</a></h3>
+<p>Multi-factor authentication requires something you know (password) plus something you have (TOTP code from an authenticator app or hardware key).</p>
+<p>Enable MFA on:</p>
+<ol>
+<li class=""><strong>Root</strong> — non-negotiable</li>
+<li class=""><strong><code>hermes-admin</code></strong> — non-negotiable</li>
+</ol>
+<p>If credentials leak, MFA often prevents account takeover.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=regions-and-availability-zones>Regions and Availability Zones<a href=#regions-and-availability-zones class=hash-link aria-label="Direct link to Regions and Availability Zones" title="Direct link to Regions and Availability Zones" translate=no>​</a></h3>
+<p>AWS partitions infrastructure into <strong>regions</strong> (e.g., <code>us-east-1</code> in Virginia). Each region contains multiple <strong>Availability Zones</strong> (isolated data centers).</p>
+<p>Pick one <strong>home region</strong> for the Hermes platform and stay consistent unless you have a reason to change. This book uses <strong><code>us-east-1</code></strong> as the default—broad service availability and documentation examples align with it. Your Lab 6 worksheet may specify a different region; if so, substitute your region in every command.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=billing-and-cost-guardrails>Billing and Cost Guardrails<a href=#billing-and-cost-guardrails class=hash-link aria-label="Direct link to Billing and Cost Guardrails" title="Direct link to Billing and Cost Guardrails" translate=no>​</a></h3>
+<p>The Hermes single-node design from Chapter 6 costs roughly <strong>$250–300/month</strong> on-demand for an <code>m7i.2xlarge</code> plus storage. That is manageable for a learning platform—but only if you <strong>notice</strong> when spend spikes.</p>
+<p>Before EC2 exists, configure:</p>
+<ol>
+<li class=""><strong>Billing preferences</strong> — enable IAM access to billing data (so <code>hermes-admin</code> can view costs)</li>
+<li class=""><strong>Billing alarm</strong> — CloudWatch alarm when estimated charges exceed a threshold you choose (e.g., $50 while learning, raised later)</li>
+</ol>
+<p>This is not optional for a platform you leave running.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=architecture>Architecture<a href=#architecture class=hash-link aria-label="Direct link to Architecture" title="Direct link to Architecture" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=account-structure-after-this-chapter>Account Structure After This Chapter<a href=#account-structure-after-this-chapter class=hash-link aria-label="Direct link to Account Structure After This Chapter" title="Direct link to Account Structure After This Chapter" translate=no>​</a></h3>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">AWS Account (Hermes platform)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">├── Root user</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│   ├── MFA enabled</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│   └── No access keys; not used for daily ops</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">├── IAM user: hermes-admin</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│   ├── AdministratorAccess (temporary; tightened in later chapters)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│   ├── MFA enabled</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│   └── Access keys for CLI (stored securely)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">├── Billing alarm (e.g., $50 threshold)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">└── (Not yet created)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ├── VPC</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ├── EC2</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ├── EBS volumes</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    └── S3 buckets</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=what-you-are-not-creating-yet>What You Are Not Creating Yet<a href=#what-you-are-not-creating-yet class=hash-link aria-label="Direct link to What You Are Not Creating Yet" title="Direct link to What You Are Not Creating Yet" translate=no>​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Resource<th>Chapter<tbody><tr><td>VPC, subnets, Internet Gateway<td><a class="" href=/hermes-on-aws-guide/part-ii-aws/08-creating-network-for-hermes>Chapter 8</a><tr><td>EC2 instance<td><a class="" href=/hermes-on-aws-guide/part-ii-aws/09-provisioning-hermes-server>Chapter 9</a><tr><td>Security groups for SSH/HTTPS<td><a class="" href=/hermes-on-aws-guide/part-ii-aws/09-provisioning-hermes-server>Chapter 9</a>, <a class="" href=/hermes-on-aws-guide/part-ii-aws/10-establishing-trust>Chapter 10</a><tr><td>EBS volumes, S3 buckets<td><a class="" href=/hermes-on-aws-guide/part-ii-aws/11-persistent-storage>Chapter 11</a><tr><td>Docker, k3s prerequisites<td><a class="" href=/hermes-on-aws-guide/part-ii-aws/12-building-the-application-platform>Chapter 12</a></table>
+<p>Resist launching an EC2 instance from the console today. The next chapters exist so each resource is created in the right order with the right dependencies.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=walkthrough>Walkthrough<a href=#walkthrough class=hash-link aria-label="Direct link to Walkthrough" title="Direct link to Walkthrough" translate=no>​</a></h2>
+<p>Complete these steps once. Use a dedicated AWS account for Hermes if possible—separate from production employer accounts.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-1--create-or-sign-in-to-your-aws-account>Step 1 — Create or Sign In to Your AWS Account<a href=#step-1--create-or-sign-in-to-your-aws-account class=hash-link aria-label="Direct link to Step 1 — Create or Sign In to Your AWS Account" title="Direct link to Step 1 — Create or Sign In to Your AWS Account" translate=no>​</a></h3>
+<p><strong>If you already have an account:</strong> Sign in at <a href=https://console.aws.amazon.com/ target=_blank rel="noopener noreferrer" class="">https://console.aws.amazon.com/</a> as root, then skip to Step 2.</p>
+<p><strong>If you need a new account:</strong></p>
+<ol>
+<li class="">Go to <a href=https://aws.amazon.com/ target=_blank rel="noopener noreferrer" class="">https://aws.amazon.com/</a> and choose <strong>Create an AWS Account</strong></li>
+<li class="">Enter email, password, and account name (e.g., <code>hermes-platform-dev</code>)</li>
+<li class="">Complete contact and payment verification</li>
+<li class="">Select the <strong>Basic Support</strong> plan (free)</li>
+</ol>
+<p>AWS may take a few minutes to activate the account. You will receive a confirmation email when ready.</p>
+<p>:::note Why this matters for Hermes</p>
+<p>A dedicated account isolates Hermes experiments from other workloads. Billing, IAM boundaries, and blast radius stay contained—if you tear down the platform, you do not affect unrelated projects.</p>
+<p>:::</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-2--secure-the-root-user>Step 2 — Secure the Root User<a href=#step-2--secure-the-root-user class=hash-link aria-label="Direct link to Step 2 — Secure the Root User" title="Direct link to Step 2 — Secure the Root User" translate=no>​</a></h3>
+<ol>
+<li class="">Sign in as <strong>root</strong></li>
+<li class="">Open <strong>IAM</strong> → <strong>Dashboard</strong></li>
+<li class="">Note any "security recommendations"—you will address them in this chapter</li>
+<li class="">Click your <strong>account name</strong> (top right) → <strong>Security credentials</strong></li>
+<li class="">Under <strong>Multi-factor authentication (MFA)</strong>, choose <strong>Assign MFA device</strong></li>
+<li class="">Select <strong>Authenticator app</strong>, follow the QR code setup, enter two consecutive codes</li>
+<li class="">Confirm MFA is <strong>Enabled</strong> for root</li>
+</ol>
+<p><strong>Do not</strong> create access keys for the root user. If access keys exist, delete them.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-3--enable-iam-access-to-billing>Step 3 — Enable IAM Access to Billing<a href=#step-3--enable-iam-access-to-billing class=hash-link aria-label="Direct link to Step 3 — Enable IAM Access to Billing" title="Direct link to Step 3 — Enable IAM Access to Billing" translate=no>​</a></h3>
+<p>Still signed in as root (one of the few tasks that require root):</p>
+<ol>
+<li class="">Open <strong>Billing and Cost Management</strong> → <strong>Billing preferences</strong></li>
+<li class="">Enable <strong>IAM user and role access to Billing information</strong></li>
+<li class="">Save preferences</li>
+</ol>
+<p>This allows <code>hermes-admin</code> to view invoices and set budgets—not strictly required for the alarm in Step 6, but essential for operating Hermes cost-consciously.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-4--create-the-hermes-admin-iam-user>Step 4 — Create the <code>hermes-admin</code> IAM User<a href=#step-4--create-the-hermes-admin-iam-user class=hash-link aria-label="Direct link to step-4--create-the-hermes-admin-iam-user" title="Direct link to step-4--create-the-hermes-admin-iam-user" translate=no>​</a></h3>
+<p>Remain as root for user creation, or use an existing admin if you already have one.</p>
+<ol>
+<li class="">Open <strong>IAM</strong> → <strong>Users</strong> → <strong>Create user</strong></li>
+<li class="">User name: <code>hermes-admin</code></li>
+<li class="">Select <strong>Provide user access to the AWS Management Console</strong> → <strong>I want to create an IAM user</strong></li>
+<li class="">Custom password or autogenerated—save it in a password manager</li>
+<li class="">Unselect <strong>Users must create a new password at next sign-in</strong> if you prefer (optional)</li>
+<li class="">Attach policy: <strong>AdministratorAccess</strong></li>
+</ol>
+<p>:::note Why this matters for Hermes</p>
+<p><code>hermes-admin</code> is the identity that will create VPCs, EC2 instances, and S3 buckets for Hermes. We start with <code>AdministratorAccess</code> to reduce friction while learning. <a class="" href=/hermes-on-aws-guide/part-ii-aws/10-establishing-trust>Chapter 10: Establishing Trust</a> and Part V (Terraform) tighten permissions to least privilege once the platform shape is stable.</p>
+<p>:::</p>
+<ol start=7>
+<li class="">Create the user</li>
+<li class="">Open the new user → <strong>Security credentials</strong></li>
+<li class="">Assign <strong>MFA</strong> (same authenticator app process as root—use a separate entry labeled <code>hermes-admin</code>)</li>
+</ol>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-5--create-access-keys-for-the-cli>Step 5 — Create Access Keys for the CLI<a href=#step-5--create-access-keys-for-the-cli class=hash-link aria-label="Direct link to Step 5 — Create Access Keys for the CLI" title="Direct link to Step 5 — Create Access Keys for the CLI" translate=no>​</a></h3>
+<ol>
+<li class="">Still on <code>hermes-admin</code> → <strong>Security credentials</strong></li>
+<li class="">Under <strong>Access keys</strong>, <strong>Create access key</strong></li>
+<li class="">Use case: <strong>Command Line Interface (CLI)</strong></li>
+<li class="">Confirm the warning, create the key</li>
+<li class=""><strong>Download the <code>.csv</code> file</strong> or copy Access key ID and Secret access key to your password manager</li>
+</ol>
+<p>You will not see the secret again. Never commit keys to Git.</p>
+<p>Sign out of root. <strong>From this point forward, use <code>hermes-admin</code> for all work</strong> (console and CLI).</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-6--configure-a-billing-alarm>Step 6 — Configure a Billing Alarm<a href=#step-6--configure-a-billing-alarm class=hash-link aria-label="Direct link to Step 6 — Configure a Billing Alarm" title="Direct link to Step 6 — Configure a Billing Alarm" translate=no>​</a></h3>
+<p>Sign in as <strong><code>hermes-admin</code></strong>.</p>
+<ol>
+<li class="">Confirm region selector shows <strong>US East (N. Virginia) <code>us-east-1</code></strong> (billing alarms for global billing are created here)</li>
+<li class="">Open <strong>CloudWatch</strong> → <strong>Alarms</strong> → <strong>Create alarm</strong></li>
+<li class="">Choose <strong>Select metric</strong> → <strong>Billing</strong> → <strong>Total Estimated Charge</strong></li>
+<li class="">If no billing metrics appear, wait up to 24 hours after account creation, or enable billing alerts in <strong>Billing</strong> → <strong>Billing preferences</strong> → <strong>Receive Billing Alerts</strong></li>
+<li class="">Set threshold: <strong>Static</strong> → <strong>Greater than</strong> → <code>50</code> (USD)—adjust if your budget differs</li>
+<li class="">Configure notification: create an <strong>SNS topic</strong> (e.g., <code>hermes-billing-alerts</code>) and subscribe your email; confirm the subscription from your inbox</li>
+<li class="">Alarm name: <code>hermes-estimated-charges-50usd</code></li>
+<li class="">Create alarm</li>
+</ol>
+<p>When estimated monthly charges exceed $50, you receive email. Raise the threshold after you intentionally launch the full Hermes server.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-7--install-and-configure-the-aws-cli>Step 7 — Install and Configure the AWS CLI<a href=#step-7--install-and-configure-the-aws-cli class=hash-link aria-label="Direct link to Step 7 — Install and Configure the AWS CLI" title="Direct link to Step 7 — Install and Configure the AWS CLI" translate=no>​</a></h3>
+<p>On your laptop:</p>
+<p><strong>macOS (Homebrew):</strong></p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">brew </span><span class="token function" style=color:#d73a49>install</span><span class="token plain"> awscli</span><br/></div></code></pre></div></div>
+<p><strong>Ubuntu / WSL:</strong></p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token function" style=color:#d73a49>sudo</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>apt</span><span class="token plain"> update </span><span class="token operator" style=color:#393A34>&&</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>sudo</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>apt</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>install</span><span class="token plain"> </span><span class="token parameter variable" style=color:#36acaa>-y</span><span class="token plain"> awscli</span><br/></div></code></pre></div></div>
+<p>Verify:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">aws </span><span class="token parameter variable" style=color:#36acaa>--version</span><br/></div></code></pre></div></div>
+<p>Configure a named profile for Hermes:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">aws configure </span><span class="token parameter variable" style=color:#36acaa>--profile</span><span class="token plain"> hermes</span><br/></div></code></pre></div></div>
+<p>Enter:</p>
+<ul>
+<li class=""><strong>AWS Access Key ID:</strong> from Step 5</li>
+<li class=""><strong>AWS Secret Access Key:</strong> from Step 5</li>
+<li class=""><strong>Default region name:</strong> <code>us-east-1</code> (or your chosen home region)</li>
+<li class=""><strong>Default output format:</strong> <code>json</code></li>
+</ul>
+<p>Test authentication:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">aws sts get-caller-identity </span><span class="token parameter variable" style=color:#36acaa>--profile</span><span class="token plain"> hermes</span><br/></div></code></pre></div></div>
+<p>Expected output includes <code>"Arn": "arn:aws:iam::ACCOUNT_ID:user/hermes-admin"</code>.</p>
+<p>Optional: set default profile for this project:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token builtin class-name">export</span><span class="token plain"> </span><span class="token assign-left variable" style=color:#36acaa>AWS_PROFILE</span><span class="token operator" style=color:#393A34>=</span><span class="token plain">hermes</span><br/></div></code></pre></div></div>
+<p>Add that line to your shell profile if you want it persistent.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-8--record-account-metadata>Step 8 — Record Account Metadata<a href=#step-8--record-account-metadata class=hash-link aria-label="Direct link to Step 8 — Record Account Metadata" title="Direct link to Step 8 — Record Account Metadata" translate=no>​</a></h3>
+<p>Create a local notes file (never commit secrets):</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token function" style=color:#d73a49>mkdir</span><span class="token plain"> </span><span class="token parameter variable" style=color:#36acaa>-p</span><span class="token plain"> ~/hermes-platform/notes</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token function" style=color:#d73a49>cat</span><span class="token plain"> </span><span class="token operator" style=color:#393A34>>></span><span class="token plain"> ~/hermes-platform/notes/aws-account.md </span><span class="token operator" style=color:#393A34>&lt;&lt;</span><span class="token string" style=color:#e3116c>'EOF'</span><br/></div><div class=token-line style=color:#393A34><span class="token string" style=color:#e3116c># Hermes AWS Account</span><br/></div><div class=token-line style=color:#393A34><span class="token string" style=color:#e3116c></span><br/></div><div class=token-line style=color:#393A34><span class="token string" style=color:#e3116c>- Account ID: (from sts get-caller-identity)</span><br/></div><div class=token-line style=color:#393A34><span class="token string" style=color:#e3116c>- Home region: us-east-1</span><br/></div><div class=token-line style=color:#393A34><span class="token string" style=color:#e3116c>- Operator IAM user: hermes-admin</span><br/></div><div class=token-line style=color:#393A34><span class="token string" style=color:#e3116c>- MFA: enabled on root and hermes-admin</span><br/></div><div class=token-line style=color:#393A34><span class="token string" style=color:#e3116c>- Billing alarm: hermes-estimated-charges-50usd @ $50</span><br/></div><div class=token-line style=color:#393A34><span class="token string" style=color:#e3116c>EOF</span><br/></div></code></pre></div></div>
+<p>Fill in your account ID from the <code>get-caller-identity</code> output.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=hands-on-lab>Hands-on Lab<a href=#hands-on-lab class=hash-link aria-label="Direct link to Hands-on Lab" title="Direct link to Hands-on Lab" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=lab-7-provision-and-secure-your-hermes-aws-account>Lab 7: Provision and Secure Your Hermes AWS Account<a href=#lab-7-provision-and-secure-your-hermes-aws-account class=hash-link aria-label="Direct link to Lab 7: Provision and Secure Your Hermes AWS Account" title="Direct link to Lab 7: Provision and Secure Your Hermes AWS Account" translate=no>​</a></h3>
+<p><strong>Estimated Time:</strong> 45 minutes</p>
+<p><strong>Goal:</strong> End with MFA-protected root and <code>hermes-admin</code>, a billing alarm, and a verified AWS CLI profile—ready for <a class="" href=/hermes-on-aws-guide/part-ii-aws/08-creating-network-for-hermes>Chapter 8</a>.</p>
+<p><strong>Prerequisites:</strong> Chapter 6 design worksheet; authenticator app installed</p>
+<p><strong>Steps:</strong></p>
+<ol>
+<li class="">Create or sign in to your AWS account</li>
+<li class="">Enable MFA on the root user; confirm no root access keys exist</li>
+<li class="">Enable IAM access to billing information (root)</li>
+<li class="">Create IAM user <code>hermes-admin</code> with <code>AdministratorAccess</code> and MFA</li>
+<li class="">Create CLI access keys; store in password manager only</li>
+<li class="">Sign out of root; sign in as <code>hermes-admin</code></li>
+<li class="">Create billing alarm <code>hermes-estimated-charges-50usd</code> at $50 with SNS email notification</li>
+<li class="">Install AWS CLI; configure profile <code>hermes</code></li>
+<li class="">Run <code>aws sts get-caller-identity --profile hermes</code> and save account ID to <code>~/hermes-platform/notes/aws-account.md</code></li>
+<li class="">Review your <a class="" href=/hermes-on-aws-guide/part-i-foundations/06-designing-the-hermes-platform#hands-on-lab>Chapter 6 platform design worksheet</a>—confirm no VPC or EC2 exists yet</li>
+</ol>
+<p><strong>Verification:</strong></p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">aws sts get-caller-identity </span><span class="token parameter variable" style=color:#36acaa>--profile</span><span class="token plain"> hermes</span><br/></div></code></pre></div></div>
+<p>Output shows <code>hermes-admin</code>. In the console, <strong>EC2 → Instances</strong> lists zero instances in your home region.</p>
+<p><strong>Expected output:</strong></p>
+<ul>
+<li class="">Root and <code>hermes-admin</code> both show MFA enabled in IAM</li>
+<li class="">CloudWatch alarm exists in <code>us-east-1</code></li>
+<li class="">CLI returns valid account ID and user ARN</li>
+</ul>
+<p><strong>Troubleshooting:</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Problem<th>Cause<th>Fix<tbody><tr><td>No billing metrics in CloudWatch<td>New account or alerts disabled<td>Enable <strong>Receive Billing Alerts</strong> in Billing preferences; wait up to 24 hours<tr><td><code>AccessDenied</code> on CLI<td>Wrong keys or profile<td>Re-run <code>aws configure --profile hermes</code>; verify keys belong to <code>hermes-admin</code><tr><td>MFA required on console login<td>Expected<td>Enter TOTP from authenticator app<tr><td>Cannot create IAM user<td>Signed in without admin rights<td>Sign in as root once to create <code>hermes-admin</code></table>
+<p><strong>Cleanup:</strong> Do not delete the account or users—you need them for the rest of the book. If you created duplicate test users, delete unused users in IAM.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=verification>Verification<a href=#verification class=hash-link aria-label="Direct link to Verification" title="Direct link to Verification" translate=no>​</a></h2>
+<p>Confirm before moving to Chapter 8:</p>
+<ul class="contains-task-list containsTaskList_mC6p">
+<li class=task-list-item><input type=checkbox disabled/> Root has MFA; no root access keys</li>
+<li class=task-list-item><input type=checkbox disabled/> <code>hermes-admin</code> exists with MFA and <code>AdministratorAccess</code></li>
+<li class=task-list-item><input type=checkbox disabled/> Billing alarm configured with confirmed SNS subscription</li>
+<li class=task-list-item><input type=checkbox disabled/> <code>aws sts get-caller-identity --profile hermes</code> succeeds</li>
+<li class=task-list-item><input type=checkbox disabled/> Account ID recorded in local notes</li>
+<li class=task-list-item><input type=checkbox disabled/> Zero EC2 instances in home region</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=troubleshooting>Troubleshooting<a href=#troubleshooting class=hash-link aria-label="Direct link to Troubleshooting" title="Direct link to Troubleshooting" translate=no>​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Problem<th>Cause<th>Fix<tbody><tr><td>AWS asks for phone verification repeatedly<td>Fraud prevention<td>Complete verification; use consistent billing address<tr><td>Lost MFA device<td>No backup<td>Root recovery requires AWS support; store backup codes if offered<tr><td>SNS email not received<td>Spam filter or unconfirmed subscription<td>Check spam; confirm subscription link in AWS email<tr><td><code>AdministratorAccess</code> feels too broad<td>Learning phase tradeoff<td>Document tightening for Part V; never share keys</table>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=review-questions>Review Questions<a href=#review-questions class=hash-link aria-label="Direct link to Review Questions" title="Direct link to Review Questions" translate=no>​</a></h2>
+<ol>
+<li class="">Why should you avoid using the root user after initial setup?</li>
+<li class="">What is the purpose of the <code>hermes-admin</code> IAM user?</li>
+<li class="">Why configure a billing alarm before launching EC2?</li>
+<li class="">What does <code>aws sts get-caller-identity</code> confirm?</li>
+<li class="">Which Hermes platform resources are intentionally <strong>not</strong> created in this chapter?</li>
+<li class="">What is the shared responsibility model, and who patches the Ubuntu OS on your future EC2 instance?</li>
+<li class="">Why does this book use a dedicated AWS profile named <code>hermes</code>?</li>
+</ol>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=key-takeaways>Key Takeaways<a href=#key-takeaways class=hash-link aria-label="Direct link to Key Takeaways" title="Direct link to Key Takeaways" translate=no>​</a></h2>
+<ul>
+<li class=""><strong>You are provisioning for Hermes</strong>, not studying AWS abstractly—every step maps to the Chapter 6 design</li>
+<li class=""><strong>Secure account first:</strong> MFA on root and operator, no root access keys, billing alarm before compute</li>
+<li class=""><strong><code>hermes-admin</code></strong> is your daily identity; CLI profile <code>hermes</code> connects your laptop to the account</li>
+<li class=""><strong>Nothing is deployed yet</strong>—no VPC, EC2, or storage until the next chapters, in dependency order</li>
+<li class=""><strong>Just-in-time Linux</strong> continues—you did not need advanced sysadmin skills to complete this chapter</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=glossary-additions>Glossary Additions<a href=#glossary-additions class=hash-link aria-label="Direct link to Glossary Additions" title="Direct link to Glossary Additions" translate=no>​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Term<th>Definition<tbody><tr><td><strong>Root user</strong><td>Original AWS account identity with full control; use only for account-level tasks.<tr><td><strong>IAM user</strong><td>Named identity in your account with credentials and policies (e.g., <code>hermes-admin</code>).<tr><td><strong>MFA</strong><td>Multi-factor authentication—password plus TOTP or hardware key.<tr><td><strong>AWS CLI profile</strong><td>Named set of credentials and region defaults (e.g., <code>--profile hermes</code>).<tr><td><strong>Region</strong><td>Geographic AWS partition where resources run (e.g., <code>us-east-1</code>).<tr><td><strong>SNS</strong><td>Simple Notification Service—delivers billing alarm emails.</table>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=further-reading>Further Reading<a href=#further-reading class=hash-link aria-label="Direct link to Further Reading" title="Direct link to Further Reading" translate=no>​</a></h2>
+<ul>
+<li class=""><a href=https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html target=_blank rel="noopener noreferrer" class="">AWS IAM Best Practices</a></li>
+<li class=""><a href=https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/monitor_estimated_charges_with_cloudwatch.html target=_blank rel="noopener noreferrer" class="">Creating a billing alarm</a></li>
+<li class=""><a href=https://aws.amazon.com/compliance/shared-responsibility-model/ target=_blank rel="noopener noreferrer" class="">AWS Shared Responsibility Model</a></li>
+<li class=""><a href=https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html target=_blank rel="noopener noreferrer" class="">Configure the AWS CLI</a></li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=hermes-platform-status>Hermes Platform Status<a href=#hermes-platform-status class=hash-link aria-label="Direct link to Hermes Platform Status" title="Direct link to Hermes Platform Status" translate=no>​</a></h2>
+<p>After completing this chapter, your platform progress looks like this:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">───────────────────────────────────────────────</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        HERMES PLATFORM STATUS</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">AWS Account            ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Billing Alerts         ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">MFA                    ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">IAM Administrator      ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">VPC                    ✗</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">EC2                    ✗</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Docker                 ✗</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">k3s                    ✗</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Hermes                 ✗</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">llama.cpp              ✗</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">PostgreSQL             ✗</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Redis                  ✗</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Overall Progress</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">██░░░░░░░░░░░░░░░░░ 10%</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">───────────────────────────────────────────────</span><br/></div></code></pre></div></div>
+<p>Every implementation chapter updates this dashboard. By the end of the book, every line shows ✓ and progress reaches 100%.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=whats-next>What's Next<a href=#whats-next class=hash-link aria-label="Direct link to What's Next" title="Direct link to What's Next" translate=no>​</a></h2>
+<p><a class="" href=/hermes-on-aws-guide/part-ii-aws/08-creating-network-for-hermes>Chapter 8: Creating the Network for Hermes</a> — VPC, subnets, and routing so your server has a place to live.</p>
+<p>You secured the account. Next you build the network.</p>
+<hr/>
+<p><a class="" href=/hermes-on-aws-guide/part-i-foundations/06-designing-the-hermes-platform>← Chapter 6: Designing the Hermes Platform</a> | <a class="" href=/hermes-on-aws-guide/part-ii-aws/08-creating-network-for-hermes>Next: Chapter 8 — Creating the Network for Hermes →</a></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/68thandMaine/hermes-on-aws-guide/tree/main/docs/part-ii-aws/07-provisioning-aws-account.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href=/hermes-on-aws-guide/part-i-foundations/06-designing-the-hermes-platform><div class=pagination-nav__sublabel>Previous</div><div class=pagination-nav__label>Chapter 6: Designing the Hermes Platform</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/hermes-on-aws-guide/part-ii-aws/08-creating-network-for-hermes><div class=pagination-nav__sublabel>Next</div><div class=pagination-nav__label>Chapter 8: Creating the Network for Hermes</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#learning-objectives class="table-of-contents__link toc-highlight">Learning Objectives</a><li><a href=#prerequisites class="table-of-contents__link toc-highlight">Prerequisites</a><li><a href=#estimated-time class="table-of-contents__link toc-highlight">Estimated Time</a><li><a href=#background class="table-of-contents__link toc-highlight">Background</a><ul><li><a href=#purpose-driven-provisioning class="table-of-contents__link toc-highlight">Purpose-Driven Provisioning</a><li><a href=#what-aws-is-briefly class="table-of-contents__link toc-highlight">What AWS Is (Briefly)</a><li><a href=#the-shared-responsibility-model class="table-of-contents__link toc-highlight">The Shared Responsibility Model</a></ul><li><a href=#theory class="table-of-contents__link toc-highlight">Theory</a><ul><li><a href=#root-user-vs-iam-identities class="table-of-contents__link toc-highlight">Root User vs IAM Identities</a><li><a href=#mfa class="table-of-contents__link toc-highlight">MFA</a><li><a href=#regions-and-availability-zones class="table-of-contents__link toc-highlight">Regions and Availability Zones</a><li><a href=#billing-and-cost-guardrails class="table-of-contents__link toc-highlight">Billing and Cost Guardrails</a></ul><li><a href=#architecture class="table-of-contents__link toc-highlight">Architecture</a><ul><li><a href=#account-structure-after-this-chapter class="table-of-contents__link toc-highlight">Account Structure After This Chapter</a><li><a href=#what-you-are-not-creating-yet class="table-of-contents__link toc-highlight">What You Are Not Creating Yet</a></ul><li><a href=#walkthrough class="table-of-contents__link toc-highlight">Walkthrough</a><ul><li><a href=#step-1--create-or-sign-in-to-your-aws-account class="table-of-contents__link toc-highlight">Step 1 — Create or Sign In to Your AWS Account</a><li><a href=#step-2--secure-the-root-user class="table-of-contents__link toc-highlight">Step 2 — Secure the Root User</a><li><a href=#step-3--enable-iam-access-to-billing class="table-of-contents__link toc-highlight">Step 3 — Enable IAM Access to Billing</a><li><a href=#step-4--create-the-hermes-admin-iam-user class="table-of-contents__link toc-highlight">Step 4 — Create the <code>hermes-admin</code> IAM User</a><li><a href=#step-5--create-access-keys-for-the-cli class="table-of-contents__link toc-highlight">Step 5 — Create Access Keys for the CLI</a><li><a href=#step-6--configure-a-billing-alarm class="table-of-contents__link toc-highlight">Step 6 — Configure a Billing Alarm</a><li><a href=#step-7--install-and-configure-the-aws-cli class="table-of-contents__link toc-highlight">Step 7 — Install and Configure the AWS CLI</a><li><a href=#step-8--record-account-metadata class="table-of-contents__link toc-highlight">Step 8 — Record Account Metadata</a></ul><li><a href=#hands-on-lab class="table-of-contents__link toc-highlight">Hands-on Lab</a><ul><li><a href=#lab-7-provision-and-secure-your-hermes-aws-account class="table-of-contents__link toc-highlight">Lab 7: Provision and Secure Your Hermes AWS Account</a></ul><li><a href=#verification class="table-of-contents__link toc-highlight">Verification</a><li><a href=#troubleshooting class="table-of-contents__link toc-highlight">Troubleshooting</a><li><a href=#review-questions class="table-of-contents__link toc-highlight">Review Questions</a><li><a href=#key-takeaways class="table-of-contents__link toc-highlight">Key Takeaways</a><li><a href=#glossary-additions class="table-of-contents__link toc-highlight">Glossary Additions</a><li><a href=#further-reading class="table-of-contents__link toc-highlight">Further Reading</a><li><a href=#hermes-platform-status class="table-of-contents__link toc-highlight">Hermes Platform Status</a><li><a href=#whats-next class="table-of-contents__link toc-highlight">What's Next</a></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>Book</div><ul class="footer__items clean-list"><li class=footer__item><a class=footer__link-item href=/hermes-on-aws-guide/>Table of Contents</a><li class=footer__item><a href=https://github.com/68thandMaine/hermes-on-aws-guide/blob/main/CONTRIBUTING.md target=_blank rel="noopener noreferrer" class=footer__link-item>Contributing<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>Author</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/crudnicky target=_blank rel="noopener noreferrer" class=footer__link-item>Christopher Rudnicky<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 Christopher Rudnicky. MIT License.</div></div></div></footer></div></body>

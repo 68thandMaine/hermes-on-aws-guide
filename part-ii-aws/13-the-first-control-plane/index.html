@@ -1,0 +1,464 @@
+<!doctype html><html lang=en dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-part-ii-aws/13-the-first-control-plane" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>Chapter 13: The First Control Plane | Building a Personal AI Cloud</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://68thandMaine.github.io/hermes-on-aws-guide/img/social-card.svg /><meta data-rh=true name=twitter:image content=https://68thandMaine.github.io/hermes-on-aws-guide/img/social-card.svg /><meta data-rh=true property=og:url content=https://68thandMaine.github.io/hermes-on-aws-guide/part-ii-aws/13-the-first-control-plane /><meta data-rh=true property=og:locale content=en /><meta data-rh=true name=docusaurus_locale content=en /><meta data-rh=true name=docsearch:language content=en /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="Chapter 13: The First Control Plane | Building a Personal AI Cloud"/><meta data-rh=true name=description content="Install k3s and give the Hermes platform its first Kubernetes control plane."/><meta data-rh=true property=og:description content="Install k3s and give the Hermes platform its first Kubernetes control plane."/><link data-rh=true rel=icon href=/hermes-on-aws-guide/img/favicon.ico /><link data-rh=true rel=canonical href=https://68thandMaine.github.io/hermes-on-aws-guide/part-ii-aws/13-the-first-control-plane /><link data-rh=true rel=alternate href=https://68thandMaine.github.io/hermes-on-aws-guide/part-ii-aws/13-the-first-control-plane hreflang=en /><link data-rh=true rel=alternate href=https://68thandMaine.github.io/hermes-on-aws-guide/part-ii-aws/13-the-first-control-plane hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://68thandMaine.github.io/hermes-on-aws-guide/part-ii-aws/13-the-first-control-plane","name":"Chapter 13: The First Control Plane","position":1}]}</script><link rel=stylesheet href=/hermes-on-aws-guide/assets/css/styles.56f47aec.css /><script src=/hermes-on-aws-guide/assets/js/runtime~main.5ab3fffc.js defer></script><script src=/hermes-on-aws-guide/assets/js/main.4573ddba.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-ce0")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id=__docusaurus><link rel=preload as=image href=/hermes-on-aws-guide/img/logo.svg /><div role=region aria-label="Skip to main content"><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>Skip to main content</a></div><nav aria-label=Main class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/hermes-on-aws-guide/><div class=navbar__logo><img src=/hermes-on-aws-guide/img/logo.svg alt="Personal AI Cloud" class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/hermes-on-aws-guide/img/logo.svg alt="Personal AI Cloud" class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">Personal AI Cloud</b></a><a aria-current=page class="navbar__item navbar__link guides-top-header navbar__link--active" href=/hermes-on-aws-guide/>Guides</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/68thandMaine/hermes-on-aws-guide target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=Search aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/hermes-on-aws-guide/preface/00-preface><span title=Preface class=linkLabel_WmDU>Preface</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=true href=/hermes-on-aws-guide/part-i-foundations/01-introduction><span title="Part I — Foundations" class=categoryLinkLabel_W154>Part I — Foundations</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/01-introduction><span title="Chapter 1: Introduction" class=linkLabel_WmDU>Chapter 1: Introduction</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/02-how-computers-work><span title="Chapter 2: How Computers Actually Work" class=linkLabel_WmDU>Chapter 2: How Computers Actually Work</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/03-linux><span title="Chapter 3: Linux — The Operating System of the Cloud" class=linkLabel_WmDU>Chapter 3: Linux — The Operating System of the Cloud</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/04-networking><span title="Chapter 4: Networking Fundamentals" class=linkLabel_WmDU>Chapter 4: Networking Fundamentals</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/05-virtualization><span title="Chapter 5: Virtualization" class=linkLabel_WmDU>Chapter 5: Virtualization</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/06-designing-the-hermes-platform><span title="Chapter 6: Designing the Hermes Platform" class=linkLabel_WmDU>Chapter 6: Designing the Hermes Platform</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role=button aria-expanded=true href=/hermes-on-aws-guide/part-ii-aws/07-provisioning-aws-account><span title="Part II — AWS & Platform" class=categoryLinkLabel_W154>Part II — AWS & Platform</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-ii-aws/07-provisioning-aws-account><span title="Chapter 7: Provisioning Your AWS Account" class=linkLabel_WmDU>Chapter 7: Provisioning Your AWS Account</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-ii-aws/08-creating-network-for-hermes><span title="Chapter 8: Creating the Network for Hermes" class=linkLabel_WmDU>Chapter 8: Creating the Network for Hermes</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-ii-aws/09-provisioning-hermes-server><span title="Chapter 9: Provisioning the Hermes Server" class=linkLabel_WmDU>Chapter 9: Provisioning the Hermes Server</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-ii-aws/10-establishing-trust><span title="Chapter 10: Establishing Trust" class=linkLabel_WmDU>Chapter 10: Establishing Trust</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-ii-aws/11-persistent-storage><span title="Chapter 11: Persistent Storage for Models and Data" class=linkLabel_WmDU>Chapter 11: Persistent Storage for Models and Data</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-ii-aws/12-building-the-application-platform><span title="Chapter 12: Building the Application Platform" class=linkLabel_WmDU>Chapter 12: Building the Application Platform</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/hermes-on-aws-guide/part-ii-aws/13-the-first-control-plane><span title="Chapter 13: The First Control Plane" class=linkLabel_WmDU>Chapter 13: The First Control Plane</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-ii-aws/14-routing-traffic-to-hermes><span title="Chapter 14: Routing Traffic to Hermes" class=linkLabel_WmDU>Chapter 14: Routing Traffic to Hermes</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-ii-aws/15-observing-hermes-platform><span title="Chapter 15: Observing the Hermes Platform" class=linkLabel_WmDU>Chapter 15: Observing the Hermes Platform</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-ii-aws/16-managing-platform-costs><span title="Chapter 16: Managing Platform Costs" class=linkLabel_WmDU>Chapter 16: Managing Platform Costs</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-iii-containers/16-docker><span title="Part III — Containers" class=categoryLinkLabel_W154>Part III — Containers</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-iv-kubernetes/19-why-kubernetes-exists><span title="Part IV — Kubernetes" class=categoryLinkLabel_W154>Part IV — Kubernetes</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-v-infrastructure/29-terraform><span title="Part V — Infrastructure" class=categoryLinkLabel_W154>Part V — Infrastructure</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-vi-ai/34-running-hermes><span title="Part VI — AI Infrastructure" class=categoryLinkLabel_W154>Part VI — AI Infrastructure</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-vii-hermes/39-distributed-cognitive-execution><span title="Part VII — Hermes Agent Platform" class=categoryLinkLabel_W154>Part VII — Hermes Agent Platform</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/appendices/glossary><span title=Appendices class=categoryLinkLabel_W154>Appendices</span></a></div></ul></nav><button type=button title="Collapse sidebar" aria-label="Collapse sidebar" class="button button--secondary button--outline collapseSidebarButton_PEFL"><svg width=20 height=20 aria-hidden=true class=collapseSidebarButtonIcon_kv0_><g fill=#7a7a7a><path d="M9.992 10.023c0 .2-.062.399-.172.547l-4.996 7.492a.982.982 0 01-.828.454H1c-.55 0-1-.453-1-1 0-.2.059-.403.168-.551l4.629-6.942L.168 3.078A.939.939 0 010 2.528c0-.548.45-.997 1-.997h2.996c.352 0 .649.18.828.45L9.82 9.472c.11.148.172.347.172.55zm0 0"/><path d="M19.98 10.023c0 .2-.058.399-.168.547l-4.996 7.492a.987.987 0 01-.828.454h-3c-.547 0-.996-.453-.996-1 0-.2.059-.403.168-.551l4.625-6.942-4.625-6.945a.939.939 0 01-.168-.55 1 1 0 01.996-.997h3c.348 0 .649.18.828.45l4.996 7.492c.11.148.168.347.168.55zm0 0"/></g></svg></button></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=Breadcrumbs><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label="Home page" class=breadcrumbs__link href=/hermes-on-aws-guide/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><span class=breadcrumbs__link>Part II — AWS & Platform</span><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>Chapter 13: The First Control Plane</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Chapter 13: The First Control Plane</h1></header>
+<blockquote>
+<p>We are now giving Hermes a scheduler.</p>
+</blockquote>
+<hr/>
+<p>Up to now, you have been assembling a <strong>capable Linux machine</strong>—network, trust, storage, Docker. Each chapter added a component. None of them, by themselves, <em>behaved</em> like a platform.</p>
+<p>After k3s, the machine becomes something else entirely:</p>
+<blockquote>
+<p><strong>A self-hosted compute platform that can schedule and run systems.</strong></p>
+</blockquote>
+<p>That transition is the real threshold—not Docker.</p>
+<p>Docker turned <code>hermes-controlplane-01</code> into a host that <strong>can</strong> run containers (<a class="" href=/hermes-on-aws-guide/part-ii-aws/12-building-the-application-platform>Chapter 12</a>).</p>
+<p><strong>k3s</strong> turns it into a host that <strong>schedules</strong> containers—automatically, declaratively, and repeatedly.</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Until Chapter 12     →  A capable Linux server</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">After Chapter 13   →  A self-hosted compute platform that can schedule and run systems</span><br/></div></code></pre></div></div>
+<p>You are not "installing Kubernetes" as a checklist item. You are <strong>installing a control plane</strong>—the brain that decides which containers run where, when they restart, and how they connect.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=the-big-idea>The Big Idea<a href=#the-big-idea class=hash-link aria-label="Direct link to The Big Idea" title="Direct link to The Big Idea" translate=no>​</a></h3>
+<p>Docker was <strong>preparation</strong>.</p>
+<p>k3s is the first chapter of the platform layer that <strong>produces behavior</strong>.</p>
+<p>After this chapter, <code>kubectl get nodes</code> returns Ready. System pods run. The machine is <strong>alive</strong>.</p>
+<p><strong>Hermes does not deploy yet.</strong> Learn Pods, Deployments, Services, and Ingress with simple examples in <a class="" href=/hermes-on-aws-guide/part-iv-kubernetes/20-pods>Part IV — Kubernetes</a> first. Applications come after the platform works.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=why-this-chapter-sits-here-pedagogically>Why This Chapter Sits Here (Pedagogically)<a href=#why-this-chapter-sits-here-pedagogically class=hash-link aria-label="Direct link to Why This Chapter Sits Here (Pedagogically)" title="Direct link to Why This Chapter Sits Here (Pedagogically)" translate=no>​</a></h3>
+<p>Most books introduce Kubernetes in a detached "Part IV"—theory first, install later, applications somewhere after that. That separates <strong>understanding</strong> from <strong>experience</strong> at exactly the moment the reader needs both.</p>
+<p>This book does the opposite:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Typical order<th>This book<tbody><tr><td>Learn K8s theory in abstract<td>Install the control plane on <em>your</em> server first<tr><td>Install a cluster in a lab chapter<td>See system pods Running on <code>hermes-controlplane-01</code><tr><td>Deploy an app to "learn Kubernetes"<td>Learn object types with simple examples—<strong>not</strong> Hermes</table>
+<p><strong>Why not wait for Part IV?</strong> Part IV teaches <em>what</em> to schedule (Pods, Deployments, Services). Chapter 13 gives you <em>something that schedules</em>. Without a live control plane, Part IV is vocabulary without a machine. With k3s installed, every object you create in Part IV has immediate, observable consequences—the book <strong>snaps into place</strong>.</p>
+<p><strong>Why not "Installing k3s"?</strong> Titles that name tools describe steps. Titles that name outcomes describe transformation. You are not checking a box; you are giving Hermes infrastructure that can <strong>reconcile desired state</strong>—the prerequisite for running an agent, an inference server, and two databases as cooperating services.</p>
+<p><strong>Why Docker is not the threshold:</strong> Docker answers <em>how</em> to run one container. Hermes needs <em>many</em> containers that stay running, find each other, and upgrade without SSH surgery. Docker prepares the runtime; k3s provides the <strong>agency</strong> to operate a system.</p>
+<p>:::note Why this matters for Hermes</p>
+<p>Hermes, llama.cpp, PostgreSQL, and Redis are separate services—they need restart policies, service discovery, and declarative config. Running them as ad-hoc <code>docker run</code> commands does not scale to production. Kubernetes is how you <strong>operate</strong> a multi-service agent platform; k3s is how you learn it on one node without EKS overhead (<a class="" href=/hermes-on-aws-guide/part-i-foundations/06-designing-the-hermes-platform>Chapter 6 design</a>).</p>
+<p>:::</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=learning-objectives>Learning Objectives<a href=#learning-objectives class=hash-link aria-label="Direct link to Learning Objectives" title="Direct link to Learning Objectives" translate=no>​</a></h2>
+<p>After completing this chapter, you will be able to:</p>
+<ul class="contains-task-list containsTaskList_mC6p">
+<li class=task-list-item><input type=checkbox disabled/> Explain what a Kubernetes control plane does (API, scheduler, controller manager, etcd)</li>
+<li class=task-list-item><input type=checkbox disabled/> Describe why k3s fits a single-node learning platform vs EKS</li>
+<li class=task-list-item><input type=checkbox disabled/> Install k3s server mode on <code>hermes-controlplane-01</code></li>
+<li class=task-list-item><input type=checkbox disabled/> Verify node Ready status and system pods Running</li>
+<li class=task-list-item><input type=checkbox disabled/> Use <code>kubectl</code> from the server and from your laptop</li>
+<li class=task-list-item><input type=checkbox disabled/> Articulate the before/during/after state change: machine → incomplete install → scheduler with state</li>
+<li class=task-list-item><input type=checkbox disabled/> Explain why application workloads wait until Part IV core objects are learned</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=prerequisites>Prerequisites<a href=#prerequisites class=hash-link aria-label="Direct link to Prerequisites" title="Direct link to Prerequisites" translate=no>​</a></h2>
+<ul>
+<li class=""><a class="" href=/hermes-on-aws-guide/part-ii-aws/12-building-the-application-platform>Chapter 12: Building the Application Platform</a> — Docker verified, <code>/data/docker</code> on <code>hermes-data</code></li>
+<li class="">SSH and <code>controlplane.env</code> / <code>platform.env</code></li>
+</ul>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token builtin class-name">export</span><span class="token plain"> </span><span class="token assign-left variable" style=color:#36acaa>AWS_PROFILE</span><span class="token operator" style=color:#393A34>=</span><span class="token plain">hermes</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token builtin class-name">source</span><span class="token plain"> ~/hermes-platform/notes/controlplane.env</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token builtin class-name">source</span><span class="token plain"> ~/hermes-platform/notes/platform.env </span><span class="token operator file-descriptor important" style=color:#393A34>2</span><span class="token operator" style=color:#393A34>></span><span class="token plain">/dev/null </span><span class="token operator" style=color:#393A34>||</span><span class="token plain"> </span><span class="token boolean" style=color:#36acaa>true</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token assign-left variable" style=color:#36acaa>KEY</span><span class="token operator" style=color:#393A34>=~</span><span class="token plain">/.ssh/</span><span class="token variable" style=color:#36acaa>${HERMES_KEY_NAME}</span><span class="token plain">.pem</span><br/></div></code></pre></div></div>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=estimated-time>Estimated Time<a href=#estimated-time class=hash-link aria-label="Direct link to Estimated Time" title="Direct link to Estimated Time" translate=no>​</a></h2>
+<p><strong>90 minutes</strong> — 40 minutes concept and design, 50 minutes install and verification.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=background>Background<a href=#background class=hash-link aria-label="Direct link to Background" title="Direct link to Background" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=concept--from-runtime-to-scheduler>Concept — From Runtime to Scheduler<a href=#concept--from-runtime-to-scheduler class=hash-link aria-label="Direct link to Concept — From Runtime to Scheduler" title="Direct link to Concept — From Runtime to Scheduler" translate=no>​</a></h3>
+<p>Docker answers: <strong>How do I run this container?</strong></p>
+<p>Kubernetes answers:</p>
+<ul>
+<li class="">Run <strong>three</strong> replicas of this container</li>
+<li class="">Keep them running if the node hiccups</li>
+<li class="">Expose them on a stable network name</li>
+<li class="">Roll out a new image without manual SSH</li>
+<li class="">Store configuration and secrets declaratively</li>
+</ul>
+<p>That requires a <strong>control plane</strong>:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">You / CI  →  kubectl  →  API Server</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                              │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                    ┌─────────┼─────────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                    ▼         ▼         ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">               Scheduler  Controller  etcd</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                    │         │      (state)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                    └────┬────┘</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                         ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                    kubelet (on node)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                         ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                    containerd → Pods</span><br/></div></code></pre></div></div>
+<p>Before k3s: you manually <code>docker run</code>.<br/>
+After k3s: you declare desired state; the platform reconciles reality.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=why-k3s-on-this-node>Why k3s on This Node?<a href=#why-k3s-on-this-node class=hash-link aria-label="Direct link to Why k3s on This Node?" title="Direct link to Why k3s on This Node?" translate=no>​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option<th>Role in this book<tbody><tr><td><strong>Amazon EKS</strong><td>Managed; hides control plane—learn later<tr><td><strong>kubeadm</strong><td>Full K8s; heavier install<tr><td><strong>k3s</strong><td>Single binary; production-capable; ideal for one-node Hermes platform</table>
+<p>k3s bundles control plane + kubelet + <strong>containerd</strong> (embedded). Docker from Chapter 12 remains for <strong>build and test</strong>; k3s pulls and runs workload images via its own containerd.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=what-changes-on-hermes-controlplane-01>What Changes on hermes-controlplane-01<a href=#what-changes-on-hermes-controlplane-01 class=hash-link aria-label="Direct link to What Changes on hermes-controlplane-01" title="Direct link to What Changes on hermes-controlplane-01" translate=no>​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Component<th>After install<tbody><tr><td><code>k3s.service</code><td>Runs control plane + agent<tr><td><code>/etc/rancher/k3s/k3s.yaml</code><td>Admin kubeconfig<tr><td><code>/var/lib/rancher/k3s/</code><td>Cluster state (etcd, data)<tr><td>System pods<td><code>coredns</code>, <code>metrics-server</code>, <code>local-path-provisioner</code>, etc.</table>
+<p>Disk: k3s state grows on <strong>root volume</strong>—monitor space; snapshots from <a class="" href=/hermes-on-aws-guide/part-ii-aws/11-persistent-storage>Chapter 11</a> protect you.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=theory>Theory<a href=#theory class=hash-link aria-label="Direct link to Theory" title="Direct link to Theory" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=control-plane-components-what-you-are-installing>Control Plane Components (What You Are Installing)<a href=#control-plane-components-what-you-are-installing class=hash-link aria-label="Direct link to Control Plane Components (What You Are Installing)" title="Direct link to Control Plane Components (What You Are Installing)" translate=no>​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Piece<th>Job<tbody><tr><td><strong>API server</strong><td>Front door for <code>kubectl</code> and controllers<tr><td><strong>Scheduler</strong><td>Assigns Pods to nodes<tr><td><strong>Controller manager</strong><td>Reconciles desired vs actual (Deployments, etc.)<tr><td><strong>etcd</strong><td>Cluster state database<tr><td><strong>kubelet</strong><td>Runs Pods on this node via containerd<tr><td><strong>Container runtime</strong><td>k3s embeds containerd for workloads</table>
+<p>You install one command (<code>curl get.k3s.io</code>). k3s wires these together—later Part IV chapters <strong>open the hood</strong> on each object type.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=single-node-server-mode>Single-Node Server Mode<a href=#single-node-server-mode class=hash-link aria-label="Direct link to Single-Node Server Mode" title="Direct link to Single-Node Server Mode" translate=no>​</a></h3>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">hermes-controlplane-01</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    k3s server (control plane + worker)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ├── System namespace (kube-system)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    └── (your Pods later — Part IV)</span><br/></div></code></pre></div></div>
+<p>No separate worker nodes yet. The scheduler always picks <strong>this</strong> node—correct for a personal platform.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=kubectl--your-platform-remote-control>kubectl — Your Platform Remote Control<a href=#kubectl--your-platform-remote-control class=hash-link aria-label="Direct link to kubectl — Your Platform Remote Control" title="Direct link to kubectl — Your Platform Remote Control" translate=no>​</a></h3>
+<p><code>kubectl</code> sends declarations to the API server:</p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic># Future chapter — not today</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token key atrule" style=color:#00a4db>kind</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> Deployment</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token key atrule" style=color:#00a4db>spec</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token key atrule" style=color:#00a4db>replicas</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> </span><span class="token number" style=color:#36acaa>2</span><br/></div></code></pre></div></div>
+<p>The cluster <strong>converges</strong> toward that declaration. Today you only verify the API is alive.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=architecture>Architecture<a href=#architecture class=hash-link aria-label="Direct link to Architecture" title="Direct link to Architecture" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=design--platform-layer-after-k3s>Design — Platform Layer After k3s<a href=#design--platform-layer-after-k3s class=hash-link aria-label="Direct link to Design — Platform Layer After k3s" title="Direct link to Design — Platform Layer After k3s" translate=no>​</a></h3>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Layer 1  Infrastructure (Ch 7–11)   AWS + EC2 + storage + trust</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Layer 2  Runtime (Ch 12)             Docker / OCI images</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Layer 3  Orchestration (Ch 13+)      k3s → Pods → Deployments → …</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Layer 4  Applications (Part VI+)     Hermes, llama.cpp, PostgreSQL, Redis</span><br/></div></code></pre></div></div>
+<p><strong>Reading order:</strong> Finish Layer 3 core objects before Layer 4.</p>
+<p>Optional AWS polish (<a class="" href=/hermes-on-aws-guide/part-ii-aws/14-routing-traffic-to-hermes>Chapter 14</a> DNS, <a class="" href=/hermes-on-aws-guide/part-ii-aws/15-observing-hermes-platform>15</a> observability, <a class="" href=/hermes-on-aws-guide/part-ii-aws/16-managing-platform-costs>16</a> cost) can wait until after Part IV or when you expose HTTPS.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=what-chapter-6-predicted>What Chapter 6 Predicted<a href=#what-chapter-6-predicted class=hash-link aria-label="Direct link to What Chapter 6 Predicted" title="Direct link to What Chapter 6 Predicted" translate=no>​</a></h3>
+<p>In <a class="" href=/hermes-on-aws-guide/part-i-foundations/06-designing-the-hermes-platform>Chapter 6</a>, you designed the Hermes platform on paper—before any AWS resources existed. Chapter 13 is where that design becomes <strong>physically observable</strong>:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Chapter 6 concept<th>What you see now<tbody><tr><td>Single-node architecture<td>k3s running locally on <code>hermes-controlplane-01</code><tr><td>Hermes as orchestrator<td>The Kubernetes API is now the real orchestrator—Hermes will register as a workload<tr><td>llama.cpp as separate service<td>Will become a <strong>scheduled</strong> Pod, not a manual <code>docker run</code><tr><td>PostgreSQL / Redis<td>Will become <strong>declarative</strong> StatefulSets or Deployments with persistent volumes<tr><td>Platform mindset (secure, observable, upgradeable)<td>Control plane state in etcd; rolling upgrades become possible in Part IV</table>
+<p>The book stops feeling linear here. It starts feeling <strong>designed</strong>—each infrastructure chapter was building toward a scheduler you can now touch.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=state-layers--a-lens-for-the-rest-of-the-book>State Layers — A Lens for the Rest of the Book<a href=#state-layers--a-lens-for-the-rest-of-the-book class=hash-link aria-label="Direct link to State Layers — A Lens for the Rest of the Book" title="Direct link to State Layers — A Lens for the Rest of the Book" translate=no>​</a></h3>
+<p>Every platform chapter from here forward explains <strong>where something lives</strong> in this stack:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Human Intent</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Kubernetes API (desired state)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Scheduler</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Containers</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Linux Kernel</span><br/></div></code></pre></div></div>
+<ul>
+<li class=""><strong>Part IV (Pods, Deployments, Services)</strong> — objects at the API and scheduler layers</li>
+<li class=""><strong>Part VI (Hermes, llama.cpp)</strong> — application intent expressed as declarations</li>
+<li class=""><strong>Infrastructure chapters (7–11)</strong> — everything below the API, still running underneath</li>
+</ul>
+<p>Return to this diagram when a new concept feels disconnected. Ask: <em>which layer am I operating at right now?</em></p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=walkthrough>Walkthrough<a href=#walkthrough class=hash-link aria-label="Direct link to Walkthrough" title="Direct link to Walkthrough" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=implementation--install-k3s>Implementation — Install k3s<a href=#implementation--install-k3s class=hash-link aria-label="Direct link to Implementation — Install k3s" title="Direct link to Implementation — Install k3s" translate=no>​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-1--pre-flight-on-the-server>Step 1 — Pre-flight on the Server<a href=#step-1--pre-flight-on-the-server class=hash-link aria-label="Direct link to Step 1 — Pre-flight on the Server" title="Direct link to Step 1 — Pre-flight on the Server" translate=no>​</a></h4>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token function" style=color:#d73a49>ssh</span><span class="token plain"> </span><span class="token parameter variable" style=color:#36acaa>-i</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"</span><span class="token string variable" style=color:#36acaa>$KEY</span><span class="token string" style=color:#e3116c>"</span><span class="token plain"> ubuntu@</span><span class="token variable" style=color:#36acaa>${HERMES_PUBLIC_IP}</span><span class="token plain"> </span><span class="token operator" style=color:#393A34>&lt;&lt;</span><span class="token string" style=color:#e3116c>'EOF'</span><br/></div><div class=token-line style=color:#393A34><span class="token string" style=color:#e3116c>docker run --rm hello-world | tail -1</span><br/></div><div class=token-line style=color:#393A34><span class="token string" style=color:#e3116c>df -h / /data | tail -2</span><br/></div><div class=token-line style=color:#393A34><span class="token string" style=color:#e3116c>free -h</span><br/></div><div class=token-line style=color:#393A34><span class="token string" style=color:#e3116c>EOF</span><br/></div></code></pre></div></div>
+<p>Ensure Docker still works and you have headroom (~32 GiB instance).</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=state-1--before-k3s-just-a-machine>State 1 — Before k3s: Just a Machine<a href=#state-1--before-k3s-just-a-machine class=hash-link aria-label="Direct link to State 1 — Before k3s: Just a Machine" title="Direct link to State 1 — Before k3s: Just a Machine" translate=no>​</a></h4>
+<p>Pause and name what you have <strong>before</strong> changing it. Run this mental snapshot—or save it in your platform notes:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">hermes-controlplane-01</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">- Linux:        running</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">- Docker:       installed</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">- Networking:   configured</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">- Kubernetes:   does not exist</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">This is still a single-node server.</span><br/></div></code></pre></div></div>
+<p>You SSH in, run commands, containers start when <strong>you</strong> start them. There is no cluster. There is no API that remembers desired state. There is no scheduler watching the node.</p>
+<p>Everything you built in Chapters 7–12 is real—and it is <strong>not yet a platform</strong>.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-2--install-k3s-server>Step 2 — Install k3s Server<a href=#step-2--install-k3s-server class=hash-link aria-label="Direct link to Step 2 — Install k3s Server" title="Direct link to Step 2 — Install k3s Server" translate=no>​</a></h4>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=state-2--during-install-incomplete>State 2 — During Install: Incomplete<a href=#state-2--during-install-incomplete class=hash-link aria-label="Direct link to State 2 — During Install: Incomplete" title="Direct link to State 2 — During Install: Incomplete" translate=no>​</a></h4>
+<p>:::warning The system is incomplete</p>
+<p>When the install script runs, hold this in mind:</p>
+<blockquote>
+<p>At this moment, there is no cluster.
+There is no API server you can trust yet.
+There is only a process being introduced into the system.</p>
+</blockquote>
+<p>Copy/paste install is not instant Kubernetes. The binary downloads, systemd starts <code>k3s</code>, etcd initializes, the API server binds to port 6443, controllers begin reconciling—<strong>in sequence</strong>. If you run <code>kubectl</code> too early, you will get connection errors. That is correct behavior for an incomplete transition, not a mistake on your part.</p>
+<p>:::</p>
+<p>From laptop (review script first):</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token function" style=color:#d73a49>bash</span><span class="token plain"> infrastructure/aws/cli/ch13-install-k3s.sh</span><br/></div></code></pre></div></div>
+<p>Or on the server:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token function" style=color:#d73a49>curl</span><span class="token plain"> </span><span class="token parameter variable" style=color:#36acaa>-sfL</span><span class="token plain"> https://get.k3s.io </span><span class="token operator" style=color:#393A34>|</span><span class="token plain"> </span><span class="token assign-left variable" style=color:#36acaa>INSTALL_K3S_EXEC</span><span class="token operator" style=color:#393A34>=</span><span class="token string" style=color:#e3116c>"server --write-kubeconfig-mode 644"</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>sh</span><span class="token plain"> -</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token function" style=color:#d73a49>sudo</span><span class="token plain"> systemctl </span><span class="token builtin class-name">enable</span><span class="token plain"> k3s</span><br/></div></code></pre></div></div>
+<p><code>--write-kubeconfig-mode 644</code> lets the <code>ubuntu</code> user read <code>/etc/rancher/k3s/k3s.yaml</code> without sudo for read-only kubectl (optional hardening later).</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-3--verify-on-the-server>Step 3 — Verify on the Server<a href=#step-3--verify-on-the-server class=hash-link aria-label="Direct link to Step 3 — Verify on the Server" title="Direct link to Step 3 — Verify on the Server" translate=no>​</a></h4>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token function" style=color:#d73a49>ssh</span><span class="token plain"> </span><span class="token parameter variable" style=color:#36acaa>-i</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"</span><span class="token string variable" style=color:#36acaa>$KEY</span><span class="token string" style=color:#e3116c>"</span><span class="token plain"> ubuntu@</span><span class="token variable" style=color:#36acaa>${HERMES_PUBLIC_IP}</span><span class="token plain"> </span><span class="token operator" style=color:#393A34>&lt;&lt;</span><span class="token string" style=color:#e3116c>'EOF'</span><br/></div><div class=token-line style=color:#393A34><span class="token string" style=color:#e3116c>sudo systemctl is-active k3s</span><br/></div><div class=token-line style=color:#393A34><span class="token string" style=color:#e3116c>sudo k3s kubectl get nodes -o wide</span><br/></div><div class=token-line style=color:#393A34><span class="token string" style=color:#e3116c>sudo k3s kubectl get pods -A</span><br/></div><div class=token-line style=color:#393A34><span class="token string" style=color:#e3116c>EOF</span><br/></div></code></pre></div></div>
+<p>Expected:</p>
+<ul>
+<li class="">Node <code>hermes-controlplane-01</code> (or similar) <strong>Ready</strong></li>
+<li class=""><code>kube-system</code> pods <strong>Running</strong> (coredns, metrics-server, local-path-provisioner, …)</li>
+</ul>
+<p>This is your first look at cluster state—from <strong>on the server</strong>. Step 4 is where the ontology shift lands from your laptop.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-4--kubectl-from-your-laptop>Step 4 — kubectl from Your Laptop<a href=#step-4--kubectl-from-your-laptop class=hash-link aria-label="Direct link to Step 4 — kubectl from Your Laptop" title="Direct link to Step 4 — kubectl from Your Laptop" translate=no>​</a></h4>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token function" style=color:#d73a49>mkdir</span><span class="token plain"> </span><span class="token parameter variable" style=color:#36acaa>-p</span><span class="token plain"> ~/.kube</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token function" style=color:#d73a49>scp</span><span class="token plain"> </span><span class="token parameter variable" style=color:#36acaa>-i</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"</span><span class="token string variable" style=color:#36acaa>$KEY</span><span class="token string" style=color:#e3116c>"</span><span class="token plain"> ubuntu@</span><span class="token variable" style=color:#36acaa>${HERMES_PUBLIC_IP}</span><span class="token plain">:/etc/rancher/k3s/k3s.yaml ~/.kube/hermes-k3s.yaml</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic># Replace localhost with public IP for remote access</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token function" style=color:#d73a49>sed</span><span class="token plain"> </span><span class="token parameter variable" style=color:#36acaa>-i.bak</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"s/127.0.0.1/</span><span class="token string variable" style=color:#36acaa>${HERMES_PUBLIC_IP}</span><span class="token string" style=color:#e3116c>/"</span><span class="token plain"> ~/.kube/hermes-k3s.yaml</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic># macOS: sed -i '' "s/127.0.0.1/${HERMES_PUBLIC_IP}/" ~/.kube/hermes-k3s.yaml</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token builtin class-name">export</span><span class="token plain"> </span><span class="token assign-left variable" style=color:#36acaa>KUBECONFIG</span><span class="token operator" style=color:#393A34>=~</span><span class="token plain">/.kube/hermes-k3s.yaml</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token builtin class-name">echo</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"export KUBECONFIG=~/.kube/hermes-k3s.yaml"</span><span class="token plain"> </span><span class="token operator" style=color:#393A34>>></span><span class="token plain"> ~/hermes-platform/notes/platform.env</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">kubectl get nodes</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">kubectl get pods </span><span class="token parameter variable" style=color:#36acaa>-A</span><br/></div></code></pre></div></div>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=state-3--after-first-kubectl-ontology-shift>State 3 — After First kubectl: Ontology Shift<a href=#state-3--after-first-kubectl-ontology-shift class=hash-link aria-label="Direct link to State 3 — After First kubectl: Ontology Shift" title="Direct link to State 3 — After First kubectl: Ontology Shift" translate=no>​</a></h4>
+<p>Run <code>kubectl get pods -A</code> and read the output differently than every command before it in this book.</p>
+<blockquote>
+<p>This is the first time you are not inspecting the machine.</p>
+<p>You are now inspecting a <strong>control plane that is managing the machine</strong>.</p>
+</blockquote>
+<p>You did not SSH in and start these pods. You did not run <code>docker run</code> for each one. The control plane declared them, scheduled them, and is reconciling them toward Running—continuously.</p>
+<p>Example output (names may vary slightly by k3s version):</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">NAMESPACE     NAME                                      READY   STATUS</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">kube-system   coredns-7b98449c4-xxxxx                     1/1     Running</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">kube-system   local-path-provisioner-84db5d44d9-xxxxx     1/1     Running</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">kube-system   metrics-server-67b6c879f5-xxxxx               1/1     Running</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">kube-system   traefik-c98fdf6fb-xxxxx                     1/1     Running</span><br/></div></code></pre></div></div>
+<p><strong>The system is no longer a server. It is now a scheduler with state.</strong></p>
+<p>That sentence is the click moment. Infrastructure chapters gave you pieces; this output is proof those pieces compose into <strong>a system that acts on its own</strong>. Everything in Part IV—and eventually Hermes—builds on this moment.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=declarative-reality>Declarative Reality<a href=#declarative-reality class=hash-link aria-label="Direct link to Declarative Reality" title="Direct link to Declarative Reality" translate=no>​</a></h3>
+<p>Until now, you <em>ran commands</em>:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token function" style=color:#d73a49>docker</span><span class="token plain"> run </span><span class="token punctuation" style=color:#393A34>..</span><span class="token plain">.</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token function" style=color:#d73a49>apt</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>install</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>..</span><span class="token plain">.</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">systemctl start </span><span class="token punctuation" style=color:#393A34>..</span><span class="token plain">.</span><br/></div></code></pre></div></div>
+<p>Each action was imperative—you told the machine what to do, once, directly.</p>
+<p>From here forward, you <em>describe desired state</em> and the system reconciles reality:</p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic># Future chapter — not today</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token key atrule" style=color:#00a4db>kind</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> Deployment</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token key atrule" style=color:#00a4db>spec</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token key atrule" style=color:#00a4db>replicas</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> </span><span class="token number" style=color:#36acaa>2</span><br/></div></code></pre></div></div>
+<p>You submit that declaration to the API. Controllers watch. The scheduler assigns. The kubelet runs containers. If a Pod dies, the control plane notices the gap between desired and actual—and fixes it.</p>
+<p>This is a different programming model. Kubernetes is not "another tool" like Docker. It is <strong>declarative infrastructure</strong>—the bridge to Deployments, ReplicaSets, Services, and eventually Hermes orchestrating tools and inference as cooperating scheduled workloads.</p>
+<p>Return to the <strong>State Layers</strong> diagram when this feels abstract: your intent enters at the top; reconciliation flows down to containers and the Linux kernel.</p>
+<p><strong>Security note:</strong> The API listens on 6443. For learning, kubectl over the public IP uses TLS with admin credentials—equivalent to root on the cluster. Restrict source IP in Security Group when possible; <a class="" href=/hermes-on-aws-guide/part-ii-aws/14-routing-traffic-to-hermes>Chapter 14</a> and hardening chapters tighten exposure.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-5--confirm-docker-still-works>Step 5 — Confirm Docker Still Works<a href=#step-5--confirm-docker-still-works class=hash-link aria-label="Direct link to Step 5 — Confirm Docker Still Works" title="Direct link to Step 5 — Confirm Docker Still Works" translate=no>​</a></h4>
+<p>k3s and Docker coexist:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token function" style=color:#d73a49>ssh</span><span class="token plain"> </span><span class="token parameter variable" style=color:#36acaa>-i</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"</span><span class="token string variable" style=color:#36acaa>$KEY</span><span class="token string" style=color:#e3116c>"</span><span class="token plain"> ubuntu@</span><span class="token variable" style=color:#36acaa>${HERMES_PUBLIC_IP}</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>'docker run --rm hello-world | tail -1'</span><br/></div></code></pre></div></div>
+<p>Both runtimes available—Docker for build, k3s containerd for orchestrated workloads.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-6--reboot-test>Step 6 — Reboot Test<a href=#step-6--reboot-test class=hash-link aria-label="Direct link to Step 6 — Reboot Test" title="Direct link to Step 6 — Reboot Test" translate=no>​</a></h4>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token function" style=color:#d73a49>ssh</span><span class="token plain"> </span><span class="token parameter variable" style=color:#36acaa>-i</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"</span><span class="token string variable" style=color:#36acaa>$KEY</span><span class="token string" style=color:#e3116c>"</span><span class="token plain"> ubuntu@</span><span class="token variable" style=color:#36acaa>${HERMES_PUBLIC_IP}</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>'sudo reboot'</span><span class="token plain"> </span><span class="token operator" style=color:#393A34>||</span><span class="token plain"> </span><span class="token boolean" style=color:#36acaa>true</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token function" style=color:#d73a49>sleep</span><span class="token plain"> </span><span class="token number" style=color:#36acaa>60</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token builtin class-name">export</span><span class="token plain"> </span><span class="token assign-left variable" style=color:#36acaa>KUBECONFIG</span><span class="token operator" style=color:#393A34>=~</span><span class="token plain">/.kube/hermes-k3s.yaml</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">kubectl get nodes</span><br/></div></code></pre></div></div>
+<p>Node should return <strong>Ready</strong> without manual intervention.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=hands-on-lab>Hands-on Lab<a href=#hands-on-lab class=hash-link aria-label="Direct link to Hands-on Lab" title="Direct link to Hands-on Lab" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=lab-13-install-the-first-control-plane>Lab 13: Install the First Control Plane<a href=#lab-13-install-the-first-control-plane class=hash-link aria-label="Direct link to Lab 13: Install the First Control Plane" title="Direct link to Lab 13: Install the First Control Plane" translate=no>​</a></h3>
+<p><strong>Estimated Time:</strong> 50 minutes</p>
+<p><strong>Goal:</strong> k3s running, node Ready, system pods healthy, kubectl works locally and from laptop.</p>
+<p><strong>Steps:</strong></p>
+<ol>
+<li class="">Record <strong>State 1</strong> snapshot (machine, no Kubernetes)</li>
+<li class="">Pre-flight Docker and disk</li>
+<li class="">Install k3s (script or manual)—notice <strong>State 2</strong> incompleteness while install runs</li>
+<li class="">Verify node and <code>kube-system</code> pods on the server</li>
+<li class="">Copy kubeconfig; run <code>kubectl get pods -A</code> from laptop—<strong>State 3</strong> ontology shift</li>
+<li class="">Reboot test</li>
+<li class="">Read <a href=https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/edr/EDR-0006-single-node-k3s-control-plane.md target=_blank rel="noopener noreferrer" class="">EDR-0006</a></li>
+</ol>
+<p><strong>Do not</strong> deploy Hermes, PostgreSQL, or llama.cpp in this lab.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=verification>Verification<a href=#verification class=hash-link aria-label="Direct link to Verification" title="Direct link to Verification" translate=no>​</a></h2>
+<ul class="contains-task-list containsTaskList_mC6p">
+<li class=task-list-item><input type=checkbox disabled/> <strong>State 1</strong> documented: server with Docker, no Kubernetes</li>
+<li class=task-list-item><input type=checkbox disabled/> <strong>State 2</strong> understood: install is a transition, not instant magic</li>
+<li class=task-list-item><input type=checkbox disabled/> <strong>State 3</strong> experienced: <code>kubectl get pods -A</code> shows control plane managing the node</li>
+<li class=task-list-item><input type=checkbox disabled/> <code>k3s.service</code> active and enabled</li>
+<li class=task-list-item><input type=checkbox disabled/> <code>kubectl get nodes</code> → <strong>Ready</strong></li>
+<li class=task-list-item><input type=checkbox disabled/> All <code>kube-system</code> pods <strong>Running</strong> (or Completed for jobs)</li>
+<li class=task-list-item><input type=checkbox disabled/> <code>kubectl</code> from laptop with <code>KUBECONFIG=~/.kube/hermes-k3s.yaml</code></li>
+<li class=task-list-item><input type=checkbox disabled/> Docker hello-world still succeeds</li>
+<li class=task-list-item><input type=checkbox disabled/> Cluster survives reboot</li>
+<li class=task-list-item><input type=checkbox disabled/> No application workloads deployed yet</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=troubleshooting>Troubleshooting<a href=#troubleshooting class=hash-link aria-label="Direct link to Troubleshooting" title="Direct link to Troubleshooting" translate=no>​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Problem<th>Cause<th>Fix<tbody><tr><td>k3s install fails<td>Insufficient memory or ports in use<td><code>free -h</code>; check 6443/10250 not bound<tr><td>Node NotReady<td>CNI or containerd starting<td>Wait 2 min; <code>sudo journalctl -u k3s -n 50</code><tr><td>kubectl connection refused<td>Wrong IP in kubeconfig<td>Replace <code>127.0.0.1</code> with <code>HERMES_PUBLIC_IP</code>; open SG 6443 from your IP if needed<tr><td>Docker broken after k3s<td>Rare socket conflict<td>Both should coexist; restart docker and k3s<tr><td>Pods pending<td>First install still pulling<td>Wait; check <code>kubectl describe pod</code></table>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=review-questions>Review Questions<a href=#review-questions class=hash-link aria-label="Direct link to Review Questions" title="Direct link to Review Questions" translate=no>​</a></h2>
+<ol>
+<li class="">What is the difference between Docker (Ch 12) and k3s (Ch 13)?</li>
+<li class="">What does the scheduler do?</li>
+<li class="">Why single-node k3s instead of EKS?</li>
+<li class="">Why defer Hermes until after Part IV core objects?</li>
+<li class="">Where is cluster state stored?</li>
+<li class="">Why two container runtimes (Docker + k3s containerd)?</li>
+<li class="">Why install k3s in Part II instead of waiting for Part IV?</li>
+<li class="">What changes in how you operate the platform after the "ontology shift"?</li>
+<li class="">Name each layer in the State Layers stack.</li>
+</ol>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=key-takeaways>Key Takeaways<a href=#key-takeaways class=hash-link aria-label="Direct link to Key Takeaways" title="Direct link to Key Takeaways" translate=no>​</a></h2>
+<ul>
+<li class=""><strong>Three states:</strong> before k3s = machine; during install = incomplete; after <code>kubectl</code> = scheduler with state</li>
+<li class=""><strong>k3s is the first control plane</strong>—the platform becomes alive, not just capable</li>
+<li class=""><strong>Ontology shift:</strong> <code>kubectl get pods -A</code> inspects a control plane managing the machine, not the machine itself</li>
+<li class=""><strong>Declarative reality:</strong> from here, describe desired state; the system reconciles—imperative SSH commands are no longer the primary model</li>
+<li class=""><strong>State Layers</strong> — Human Intent → API → Scheduler → Containers → Kernel (reuse in every Part IV+ chapter)</li>
+<li class=""><strong>Chapter 6 pays off</strong> — design on paper is now physically observable</li>
+<li class=""><strong>Applications wait</strong> — learn Pods, Deployments, Services, Ingress before Hermes</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=glossary-additions>Glossary Additions<a href=#glossary-additions class=hash-link aria-label="Direct link to Glossary Additions" title="Direct link to Glossary Additions" translate=no>​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Term<th>Definition<tbody><tr><td><strong>Control plane</strong><td>Kubernetes components that manage cluster state and scheduling.<tr><td><strong>k3s</strong><td>Lightweight certified Kubernetes distribution from Rancher/SUSE.<tr><td><strong>kubelet</strong><td>Node agent that runs Pods via the container runtime.<tr><td><strong>etcd</strong><td>Key-value store holding cluster configuration and state.<tr><td><strong>kubectl</strong><td>CLI for the Kubernetes API.<tr><td><strong>System pods</strong><td>Cluster infrastructure (DNS, metrics, storage provisioner).<tr><td><strong>Declarative infrastructure</strong><td>Describe desired state; controllers reconcile actual state toward it.<tr><td><strong>State Layers</strong><td>Human Intent → Kubernetes API → Scheduler → Containers → Linux Kernel.</table>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=further-reading>Further Reading<a href=#further-reading class=hash-link aria-label="Direct link to Further Reading" title="Direct link to Further Reading" translate=no>​</a></h2>
+<ul>
+<li class=""><a href=https://docs.k3s.io/quick-start target=_blank rel="noopener noreferrer" class="">k3s quick start</a></li>
+<li class=""><a href=https://kubernetes.io/docs/concepts/overview/components/ target=_blank rel="noopener noreferrer" class="">Kubernetes components</a></li>
+<li class=""><a class="" href=/hermes-on-aws-guide/part-iv-kubernetes/19-why-kubernetes-exists>Part IV — Kubernetes</a> — deepens theory while you work with objects</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=engineering-decision-record>Engineering Decision Record<a href=#engineering-decision-record class=hash-link aria-label="Direct link to Engineering Decision Record" title="Direct link to Engineering Decision Record" translate=no>​</a></h2>
+<p><strong><a href=https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/edr/EDR-0006-single-node-k3s-control-plane.md target=_blank rel="noopener noreferrer" class="">EDR-0006: Single-node k3s as the Hermes control plane</a></strong></p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=hermes-platform-status>Hermes Platform Status<a href=#hermes-platform-status class=hash-link aria-label="Direct link to Hermes Platform Status" title="Direct link to Hermes Platform Status" translate=no>​</a></h2>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">───────────────────────────────────────────────</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        HERMES PLATFORM STATUS</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">AWS Account            ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Network                ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">EC2                    ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Trust                  ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Persistent Storage     ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Docker Engine          ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Kubernetes (k3s)       ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Control Plane          ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Node Ready             ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Hermes                 ✗</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">llama.cpp              ✗</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">PostgreSQL             ✗</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Redis                  ✗</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Overall Progress</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">████████████░░░░░░░░░░ 65%</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">───────────────────────────────────────────────</span><br/></div></code></pre></div></div>
+<p>The platform schedules. Next: learn what to schedule—and which <strong>State Layer</strong> each object occupies.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=the-boundary>The Boundary<a href=#the-boundary class=hash-link aria-label="Direct link to The Boundary" title="Direct link to The Boundary" translate=no>​</a></h2>
+<blockquote>
+<p><strong>From this point forward, we are no longer configuring a machine. We are operating a system.</strong></p>
+</blockquote>
+<p>Chapter 13 is the only ontology shift at the platform layer. What follows <strong>exercises</strong> the control plane—visibility, manipulation, expansion—not new frameworks. Part IV begins by scheduling a Pod, not by re-explaining why Kubernetes exists.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=whats-next>What's Next<a href=#whats-next class=hash-link aria-label="Direct link to What's Next" title="Direct link to What's Next" translate=no>​</a></h2>
+<p><a class="" href=/hermes-on-aws-guide/part-iv-kubernetes/20-pods>Chapter 20: Pods</a> — exercise the scheduler. Deploy a simple container <strong>not</strong> Hermes; map the Pod to a <strong>State Layer</strong>. No second ignition moment—just hands-on control plane use.</p>
+<p>Optional anytime (execution and refinement only): <a class="" href=/hermes-on-aws-guide/part-ii-aws/14-routing-traffic-to-hermes>Chapter 14 — Routing Traffic to Hermes</a> (DNS/TLS), <a class="" href=/hermes-on-aws-guide/part-ii-aws/15-observing-hermes-platform>15 — Observing the Platform</a> (<em>how do I see what it is doing?</em>), <a class="" href=/hermes-on-aws-guide/part-ii-aws/16-managing-platform-costs>16 — Managing Platform Costs</a>.</p>
+<hr/>
+<p><a class="" href=/hermes-on-aws-guide/part-ii-aws/12-building-the-application-platform>← Chapter 12: Building the Application Platform</a> | <a class="" href=/hermes-on-aws-guide/part-iv-kubernetes/20-pods>Next: Chapter 20 — Pods →</a></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/68thandMaine/hermes-on-aws-guide/tree/main/docs/part-ii-aws/13-the-first-control-plane.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href=/hermes-on-aws-guide/part-ii-aws/12-building-the-application-platform><div class=pagination-nav__sublabel>Previous</div><div class=pagination-nav__label>Chapter 12: Building the Application Platform</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/hermes-on-aws-guide/part-ii-aws/14-routing-traffic-to-hermes><div class=pagination-nav__sublabel>Next</div><div class=pagination-nav__label>Chapter 14: Routing Traffic to Hermes</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#the-big-idea class="table-of-contents__link toc-highlight">The Big Idea</a><li><a href=#why-this-chapter-sits-here-pedagogically class="table-of-contents__link toc-highlight">Why This Chapter Sits Here (Pedagogically)</a><li><a href=#learning-objectives class="table-of-contents__link toc-highlight">Learning Objectives</a><li><a href=#prerequisites class="table-of-contents__link toc-highlight">Prerequisites</a><li><a href=#estimated-time class="table-of-contents__link toc-highlight">Estimated Time</a><li><a href=#background class="table-of-contents__link toc-highlight">Background</a><ul><li><a href=#concept--from-runtime-to-scheduler class="table-of-contents__link toc-highlight">Concept — From Runtime to Scheduler</a><li><a href=#why-k3s-on-this-node class="table-of-contents__link toc-highlight">Why k3s on This Node?</a><li><a href=#what-changes-on-hermes-controlplane-01 class="table-of-contents__link toc-highlight">What Changes on hermes-controlplane-01</a></ul><li><a href=#theory class="table-of-contents__link toc-highlight">Theory</a><ul><li><a href=#control-plane-components-what-you-are-installing class="table-of-contents__link toc-highlight">Control Plane Components (What You Are Installing)</a><li><a href=#single-node-server-mode class="table-of-contents__link toc-highlight">Single-Node Server Mode</a><li><a href=#kubectl--your-platform-remote-control class="table-of-contents__link toc-highlight">kubectl — Your Platform Remote Control</a></ul><li><a href=#architecture class="table-of-contents__link toc-highlight">Architecture</a><ul><li><a href=#design--platform-layer-after-k3s class="table-of-contents__link toc-highlight">Design — Platform Layer After k3s</a><li><a href=#what-chapter-6-predicted class="table-of-contents__link toc-highlight">What Chapter 6 Predicted</a><li><a href=#state-layers--a-lens-for-the-rest-of-the-book class="table-of-contents__link toc-highlight">State Layers — A Lens for the Rest of the Book</a></ul><li><a href=#walkthrough class="table-of-contents__link toc-highlight">Walkthrough</a><ul><li><a href=#implementation--install-k3s class="table-of-contents__link toc-highlight">Implementation — Install k3s</a><li><a href=#declarative-reality class="table-of-contents__link toc-highlight">Declarative Reality</a></ul><li><a href=#hands-on-lab class="table-of-contents__link toc-highlight">Hands-on Lab</a><ul><li><a href=#lab-13-install-the-first-control-plane class="table-of-contents__link toc-highlight">Lab 13: Install the First Control Plane</a></ul><li><a href=#verification class="table-of-contents__link toc-highlight">Verification</a><li><a href=#troubleshooting class="table-of-contents__link toc-highlight">Troubleshooting</a><li><a href=#review-questions class="table-of-contents__link toc-highlight">Review Questions</a><li><a href=#key-takeaways class="table-of-contents__link toc-highlight">Key Takeaways</a><li><a href=#glossary-additions class="table-of-contents__link toc-highlight">Glossary Additions</a><li><a href=#further-reading class="table-of-contents__link toc-highlight">Further Reading</a><li><a href=#engineering-decision-record class="table-of-contents__link toc-highlight">Engineering Decision Record</a><li><a href=#hermes-platform-status class="table-of-contents__link toc-highlight">Hermes Platform Status</a><li><a href=#the-boundary class="table-of-contents__link toc-highlight">The Boundary</a><li><a href=#whats-next class="table-of-contents__link toc-highlight">What's Next</a></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>Book</div><ul class="footer__items clean-list"><li class=footer__item><a class=footer__link-item href=/hermes-on-aws-guide/>Table of Contents</a><li class=footer__item><a href=https://github.com/68thandMaine/hermes-on-aws-guide/blob/main/CONTRIBUTING.md target=_blank rel="noopener noreferrer" class=footer__link-item>Contributing<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>Author</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/crudnicky target=_blank rel="noopener noreferrer" class=footer__link-item>Christopher Rudnicky<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 Christopher Rudnicky. MIT License.</div></div></div></footer></div></body>

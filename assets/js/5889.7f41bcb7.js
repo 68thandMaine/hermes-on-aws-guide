@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkagent_to_aws_guide=self.webpackChunkagent_to_aws_guide||[]).push([["5889"],{8488(e,t,a){a.d(t,{createArchitectureServices:()=>s.S});var s=a(9221);a(1400)}}]);
