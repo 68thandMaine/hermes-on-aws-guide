@@ -1,0 +1,8 @@
+{
+  "label": "Part II — AWS & Platform",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "Infrastructure on AWS, then Docker and k3s—the platform before Hermes."
+  }
+}

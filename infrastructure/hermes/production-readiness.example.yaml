@@ -1,0 +1,119 @@
+# Chapter 43 — Production readiness assessment (illustrative)
+# Complete with evidence before exposing Hermes to real users.
+# Maps each item to book chapters and artifacts.
+
+readiness:
+  infrastructure:
+    - id: terraform_managed
+      question: Can infrastructure be recreated from source?
+      evidence: terraform apply from environments/prod
+      chapter: 29
+      required: true
+
+    - id: ci_cd_pipeline
+      question: Are deployments automated through GitHub Actions?
+      evidence: .github/workflows/terraform.yml green on main
+      chapter: 30
+      required: true
+
+    - id: secrets_external
+      question: Are runtime secrets in AWS Secrets Manager via ESO?
+      evidence: externalsecret hermes-api-secret synced
+      chapter: 31
+      required: true
+
+  operations:
+    - id: zero_downtime_deploy
+      question: Can deployments run without user-visible outage?
+      evidence: values-production-rollout.yaml; rollout lab passed
+      chapter: 40
+      required: true
+
+    - id: rollback_tested
+      question: Can a failed release be rolled back?
+      evidence: kubectl rollout undo exercised
+      chapter: 40
+      required: true
+
+    - id: backups_validated
+      question: Can Postgres and Qdrant be restored?
+      evidence: restore drill log dated within 90 days
+      chapter: 40
+      required: true
+
+    - id: runbooks_linked
+      question: Do alerts route to documented procedures?
+      evidence: Alertmanager annotation → runbook URL
+      chapter: 40
+      required: true
+
+  observability:
+    - id: monitoring_live
+      question: Are dashboards and SLOs configured?
+      evidence: Grafana hermes dashboard; slo.example.yaml applied
+      chapter: 32
+      required: true
+
+    - id: alerts_tested
+      question: Have alerts been fired and acknowledged in a drill?
+      evidence: test alert received and resolved
+      chapter: 32
+      required: true
+
+    - id: logs_retained
+      question: Are structured logs retained centrally?
+      evidence: Loki query returns worker tool events
+      chapter: 33
+      required: true
+
+    - id: traces_correlated
+      question: Can a request be traced end-to-end?
+      evidence: root_request_id → trace_id in Tempo
+      chapter: 33
+      required: true
+
+  security:
+    - id: tool_policy_enforced
+      question: Is tool authorization default-deny?
+      evidence: tool-policy ConfigMap; denied attempt logged
+      chapter: 41
+      required: true
+
+    - id: network_segmented
+      question: Is model inference internal-only?
+      evidence: ch41-networkpolicy-hermes.yaml applied
+      chapter: 41
+      required: true
+
+    - id: audit_reconstructable
+      question: Can operators explain why the system acted?
+      evidence: hermes_task_steps query by trace_id
+      chapter: 41
+      required: true
+
+  evolution:
+    - id: capabilities_extensible
+      question: Can new tools be added without platform rebuild?
+      evidence: extension-checklist completed for one capability
+      chapter: 42
+      required: true
+
+  cost:
+    - id: budgets_set
+      question: Are cost budgets and alerts configured?
+      evidence: AWS Budgets or Cost Explorer review cadence
+      chapter: 16
+      required: false
+
+    - id: gpu_scheduled
+      question: Are GPU nodes scaled to demand?
+      evidence: dual-path inference; GPU node stop policy
+      chapter: 37
+      required: false
+
+# Production is demonstrated through evidence, not optimism.
+sign_off:
+  operator: ""
+  date: ""
+  environment: production
+  notes: ""

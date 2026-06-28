@@ -1,0 +1,50 @@
+# Chapter 26 — Pod demonstrating ConfigMap + Secret injection
+# Prerequisites: ch26-app-config-configmap.yaml, ch26-app-secret.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: config-demo
+  labels:
+    app: config-demo
+spec:
+  restartPolicy: Never
+  containers:
+    - name: demo
+      image: busybox:1.36
+      command:
+        - sh
+        - -c
+        - |
+          echo "LOG_LEVEL=$LOG_LEVEL"
+          echo "API_URL=$API_URL"
+          echo "API_KEY=$API_KEY"
+          echo "--- mounted config file ---"
+          cat /config/app.properties 2>/dev/null || true
+          sleep 3600
+      env:
+        - name: LOG_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: LOG_LEVEL
+        - name: API_URL
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: API_URL
+        - name: API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: app-secret
+              key: API_KEY
+      volumeMounts:
+        - name: config-volume
+          mountPath: /config
+          readOnly: true
+  volumes:
+    - name: config-volume
+      configMap:
+        name: app-config
+        items:
+          - key: LOG_LEVEL
+            path: app.properties

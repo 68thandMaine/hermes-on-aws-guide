@@ -1,0 +1,8 @@
+{
+  "label": "Part IV — Kubernetes",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "description": "From first principles through production operations."
+  }
+}

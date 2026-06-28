@@ -1,0 +1,8 @@
+{
+  "label": "Part V — Infrastructure",
+  "position": 5,
+  "link": {
+    "type": "generated-index",
+    "description": "Terraform, CI/CD, secrets, and platform observability."
+  }
+}

@@ -1,0 +1,11 @@
+flowchart LR
+    A[Developer Push] --> B[GitHub Actions]
+    B --> C{Event Type}
+    C -->|PR| D[terraform plan]
+    C -->|Merge to main| E[terraform apply]
+    C -->|App change| F[Build Docker Image]
+    F --> G[Push to Registry]
+    G --> H[Deploy to k3s]
+    D --> I[PR Comment with Plan]
+    E --> J[AWS Updated]
+    H --> K[Hermes / ULLR Updated]

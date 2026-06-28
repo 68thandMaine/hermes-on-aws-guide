@@ -1,0 +1,6 @@
+apiVersion: v2
+name: llama-server
+description: Chapter 36 — llama.cpp inference server for Hermes (local reasoning layer)
+type: application
+version: 0.1.0
+appVersion: "server"

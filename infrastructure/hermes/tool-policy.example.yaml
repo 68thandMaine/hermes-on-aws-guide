@@ -1,0 +1,60 @@
+# Chapter 41 — Hermes tool authorization policy (illustrative)
+# Workers load this at startup (ConfigMap mount). The model never reads this file.
+# Hermes enforces: model proposes tool calls; platform authorizes against agent_role.
+
+defaultAction: deny
+
+agentRoles:
+  weather:
+    description: NOAA and forecast APIs only
+    allowedTools:
+      - noaa.forecast
+      - noaa.historical
+    maxCallsPerMinute: 30
+
+  snow:
+    description: Avalanche bulletin and terrain references
+    allowedTools:
+      - avalanche.bulletin
+      - terrain.notes
+    maxCallsPerMinute: 20
+
+  equipment:
+    description: Read-only product catalog
+    allowedTools:
+      - catalog.search
+      - catalog.recommend
+    maxCallsPerMinute: 40
+
+  routing:
+    description: Maps and transit APIs
+    allowedTools:
+      - maps.directions
+      - transit.schedule
+    maxCallsPerMinute: 30
+
+  finance:
+    description: Internal budget service — no external spend
+    allowedTools:
+      - budget.estimate
+    maxCallsPerMinute: 10
+
+  summary:
+    description: Synthesis only — no external tools
+    allowedTools: []
+
+  admin:
+    description: Infrastructure operations — always requires human approval
+    allowedTools:
+      - k8s.scale
+      - k8s.rollout
+      - postgres.migrate
+    requiresApproval: true
+    maxCallsPerMinute: 5
+
+# Tools that never execute without an approval row in hermes_approvals
+sensitiveTools:
+  - postgres.delete
+  - k8s.delete
+  - budget.transfer
+  - secrets.read

@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hermes-redis
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: hermes-redis
+    app.kubernetes.io/part-of: hermes-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hermes-redis
+  template:
+    metadata:
+      labels:
+        app: hermes-redis
+        app.kubernetes.io/part-of: hermes-platform
+    spec:
+      containers:
+        - name: redis
+          image: "{{ .Values.redis.image.repository }}:{{ .Values.redis.image.tag }}"
+          ports:
+            - containerPort: 6379
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi

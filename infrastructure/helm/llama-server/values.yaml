@@ -1,0 +1,39 @@
+# Chapter 36 — llama.cpp server on k3s (CPU lab)
+# Requires GGUF at hostPath (default /models/model.gguf — see Ch 11 hermes-models volume)
+
+namespace: hermes
+
+image:
+  repository: ghcr.io/ggerganov/llama.cpp
+  tag: server
+  pullPolicy: IfNotPresent
+
+replicaCount: 1
+
+model:
+  # Path inside container (mount host /models here)
+  file: /models/model.gguf
+  hostPath: /models
+
+server:
+  port: 8080
+  # Lab context — raise for larger models in production
+  contextSize: 2048
+  parallel: 1
+
+service:
+  name: llama-server
+  port: 8080
+
+resources:
+  requests:
+    cpu: 500m
+    memory: 2Gi
+  limits:
+    cpu: 4000m
+    memory: 8Gi
+
+# k3s single-node — schedule on control plane EC2 where /models is mounted
+nodeSelector: {}
+
+tolerations: []

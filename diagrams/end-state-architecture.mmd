@@ -1,0 +1,10 @@
+graph TD
+    A[Your Laptop] --> B[AWS Account]
+    B --> C[VPC + EC2]
+    C --> D[Docker]
+    D --> E[k3s Cluster]
+    E --> F[Hermes Agent]
+    E --> H[llama.cpp / llama-server]
+    F --> I[Agent Tools]
+    H --> F
+    F --> K[Production Deployment]

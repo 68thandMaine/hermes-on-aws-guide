@@ -1,0 +1,20 @@
+# Hermes SLO examples (Chapter 40)
+# Tune for your deployment — these are lab starting points.
+
+slos:
+  - name: api_availability
+    target: 99.9
+    window: 30d
+    metric: sum(rate(http_requests_total{job="hermes-api",status!~"5.."}[5m])) / sum(rate(http_requests_total{job="hermes-api"}[5m]))
+
+  - name: api_latency_p50
+    target_ms: 300
+    metric: histogram_quantile(0.5, rate(http_request_duration_seconds_bucket{job="hermes-api"}[5m]))
+
+  - name: inference_latency_p95
+    target_ms: 2000
+    metric: histogram_quantile(0.95, rate(llama_completion_duration_seconds_bucket[5m]))
+
+  - name: task_success_rate
+    target_percent: 99
+    metric: sum(rate(hermes_tasks_completed_total{status="completed"}[1h])) / sum(rate(hermes_tasks_completed_total[1h]))

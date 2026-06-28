@@ -1,0 +1,138 @@
+---
+sidebar_position: 1
+description: "Appendix: glossary."
+---
+
+# Glossary
+
+Terms used throughout *Building a Personal AI Cloud*. Terms are added as chapters are written.
+
+| Term | Definition | First Appears |
+|------|------------|---------------|
+| **vCPU** | Virtual CPU—a core (or portion of a core) allocated to a virtual machine such as an EC2 instance. | Ch 2 |
+| **CPU core** | An independent execution unit on a processor; can run one thread at a time per core. | Ch 2 |
+| **Hypervisor** | Software that creates and runs virtual machines on physical hardware. | Ch 2 |
+| **Machine instruction** | The lowest-level command a CPU executes; all programming languages compile or interpret down to these. | Ch 2 |
+| **Process** | A running instance of a program, with its own memory space and OS-managed resources. | Ch 2 |
+| **RAM** | Random Access Memory; fast, volatile storage where running programs execute. | Ch 2 |
+| **Swap** | Using disk space as overflow when RAM is full; dramatically slower than RAM. | Ch 2 |
+| **Thread** | A lightweight execution path within a process; threads share the process's memory. | Ch 2 |
+| **Virtualization** | Running multiple isolated operating systems on one physical machine via a hypervisor. | Ch 2 |
+| **Daemon** | Background process without a controlling terminal, often started at boot. | Ch 3 |
+| **PID** | Process ID—unique numeric identifier for a running process. | Ch 3 |
+| **Signal** | Async notification to a process (e.g. SIGTERM to stop gracefully). | Ch 3 |
+| **Unit (systemd)** | Resource systemd manages—typically a `.service` for a daemon. | Ch 3 |
+| **sudo** | Command to run a single command as root after authorization check. | Ch 3 |
+| **Service account** | Non-human user (e.g. `www-data`, `postgres`) under which daemons run. | Ch 3 |
+| **Octal mode** | Three-digit chmod notation (e.g. 755) encoding owner/group/other rwx bits. | Ch 3 |
+| **UID** | User ID—numeric identifier the kernel uses for permission checks. | Ch 3 |
+| **Distribution (distro)** | Packaged Linux OS—kernel plus tools, package manager, and defaults. | Ch 3 |
+| **FHS** | Filesystem Hierarchy Standard—directory layout convention on Linux. | Ch 3 |
+| **Kernel** | Core of the OS; manages hardware and enforces permissions via system calls. | Ch 3 |
+| **SSH** | Secure Shell—encrypted remote login, typically on port 22. | Ch 3 |
+| **systemd** | Init system and service manager; PID 1 on modern Ubuntu. | Ch 3 |
+| **system call** | Request from a program to the kernel (read, write, allocate memory). | Ch 3 |
+| **Cloud computing** | Delivery of compute, storage, and networking over the internet on a pay-as-you-go basis, without owning physical hardware. | Ch 1 |
+| **Control plane** | The tools and environment you use to manage infrastructure (laptop, terminal, Git, Terraform)—distinct from the data plane. | Ch 1 |
+| **Data plane** | Where application workloads actually execute—in this book, EC2 instances, containers, and pods in AWS. | Ch 1 |
+| **Dev environment** | A configured space for writing and testing code; may be local, remote, or cloud-hosted. | Ch 1 |
+| **Infrastructure as Code (IaC)** | Defining servers, networks, and services in version-controlled files rather than manual console clicks. | Ch 1 |
+| **Production-inspired** | Architecture mirroring real SaaS patterns (VPC isolation, orchestration, observability) without production SLA guarantees. | Ch 1 |
+| **Availability Zone (AZ)** | An isolated location within an AWS region with independent power, networking, and cooling. | Ch 2 |
+| **AMI** | Amazon Machine Image — a template for EC2 instances containing OS and optional software. | Ch 7 |
+| **CIDR** | Classless Inter-Domain Routing — notation for IP address ranges (e.g., `10.0.0.0/16`). | Ch 4 |
+| **CNI** | Container Network Interface — plugin that configures network interfaces for Kubernetes pods. | Ch 11 |
+| **ConfigMap** | Kubernetes resource for storing non-sensitive configuration data. | Ch 11 |
+| **Container** | A lightweight, isolated process running on a shared kernel, packaged with its dependencies. | Ch 10 |
+| **Control Plane** | The Kubernetes components that manage the cluster (API server, etcd, scheduler, controller manager). | Ch 11 |
+| **CronJob** | Kubernetes resource that runs Jobs on a schedule. | Ch 18 |
+| **Deployment** | Kubernetes resource that manages stateless application replicas with rolling updates. | Ch 11 |
+| **EBS** | Elastic Block Store — persistent block storage volumes for EC2 instances. | Ch 9 |
+| **EC2** | Elastic Compute Cloud — AWS virtual machine service. | Ch 7 |
+| **etcd** | Distributed key-value store used by Kubernetes to store cluster state. | Ch 11 |
+| **gp3** | General Purpose SSD EBS volume type with independently configurable IOPS and throughput. | Ch 9 |
+| **IAM** | Identity and Access Management — AWS service for authentication and authorization. | Ch 6 |
+| **IGW** | Internet Gateway — VPC component allowing internet access for public subnets. | Ch 8 |
+| **Ingress** | Kubernetes resource defining external access to services, typically via HTTP/HTTPS routes. | Ch 12 |
+| **Instance Profile** | IAM role attached to an EC2 instance, providing temporary credentials via STS. | Ch 6 |
+| **k3s** | Lightweight Kubernetes distribution by Rancher, designed for edge and resource-constrained environments. | Ch 12 |
+| **kubectl** | Command-line tool for interacting with Kubernetes clusters. | Ch 11 |
+| **NAT Gateway** | AWS managed service allowing instances in private subnets to reach the internet. | Ch 8 |
+| **Nitro** | AWS hypervisor system offloading network, storage, and security to dedicated hardware. | Ch 7 |
+| **Node** | A worker machine in Kubernetes (virtual or physical) that runs pods. | Ch 11 |
+| **OIDC** | OpenID Connect — authentication protocol used for GitHub Actions → AWS federation. | Ch 14 |
+| **Ollama** | *(Not used in this book.)* Desktop-friendly model runner; we use **llama.cpp** directly for explicit GGUF control and Kubernetes-native serving ([Chapter 36](../part-vi-ai/36-model-serving.md)). | — |
+| **PersistentVolumeClaim (PVC)** | Kubernetes request for persistent storage, bound to a PersistentVolume. | Ch 16 |
+| **Pod** | The smallest deployable unit in Kubernetes — one or more containers sharing network and storage. | Ch 11 |
+| **Quantization** | Reducing model precision (e.g., FP16 → Q4) to decrease size and memory requirements. | Ch 17 |
+| **Route Table** | Set of rules determining where network traffic is directed within a VPC. | Ch 8 |
+| **S3** | Simple Storage Service — AWS object storage for files, backups, and static assets. | Ch 9 |
+| **Security Group** | Stateful virtual firewall controlling inbound and outbound traffic for AWS resources. | Ch 7 |
+| **StatefulSet** | Kubernetes resource for stateful applications requiring stable network identity and persistent storage. | Ch 16 |
+| **STS** | Security Token Service — AWS service issuing temporary credentials. | Ch 6 |
+| **Subnet** | A range of IP addresses within a VPC, tied to a single availability zone. | Ch 8 |
+| **Terraform** | Infrastructure as Code tool by HashiCorp using HCL configuration language. | Ch 13 |
+| **Traefik** | Open-source reverse proxy and ingress controller, bundled with k3s. | Ch 12 |
+| **VPC** | Virtual Private Cloud — isolated network environment within AWS. | Ch 8 |
+
+## Kubernetes operations (Part IV–V)
+
+| Term | Definition | First Appears |
+|------|------------|---------------|
+| **ClusterRole** | Cluster-scoped RBAC permissions binding. | Ch 27 |
+| **ClusterRoleBinding** | Links ClusterRole to users or ServiceAccounts cluster-wide. | Ch 27 |
+| **HPA** | Horizontal Pod Autoscaler — scales replicas based on metrics. | Ch 28 |
+| **LimitRange** | Namespace default/min/max for Pod resource requests and limits. | Ch 28 |
+| **NetworkPolicy** | Kubernetes resource controlling Pod ingress/egress traffic. | Ch 27 |
+| **ReplicaSet** | Controller maintaining a set of Pod replicas for a Deployment. | Ch 21 |
+| **ResourceQuota** | Namespace cap on aggregate resource consumption. | Ch 28 |
+| **Role** | Namespace-scoped RBAC permission set. | Ch 27 |
+| **RoleBinding** | Links Role to subjects within a namespace. | Ch 27 |
+| **Rolling update** | Incremental Pod replacement to maintain availability during deploys. | Ch 21 |
+| **ServiceAccount** | Kubernetes identity assigned to Pods for API and RBAC. | Ch 27 |
+| **ServiceMonitor** | Prometheus Operator CRD defining scrape targets. | Ch 32 |
+| **StorageClass** | Defines how PVCs are dynamically provisioned. | Ch 24 |
+
+## Platform engineering (Part V)
+
+| Term | Definition | First Appears |
+|------|------------|---------------|
+| **Alertmanager** | Routes Prometheus alerts to channels and on-call. | Ch 32 |
+| **External Secrets Operator (ESO)** | Syncs secrets from cloud stores into Kubernetes. | Ch 31 |
+| **ExternalSecret** | ESO CRD mapping remote secret to Kubernetes Secret. | Ch 31 |
+| **Grafana** | Dashboards and visualization for metrics and logs. | Ch 32 |
+| **LogQL** | Loki query language for log search. | Ch 33 |
+| **Loki** | Log aggregation system optimized for Kubernetes. | Ch 33 |
+| **PromQL** | Prometheus query language for metrics. | Ch 32 |
+| **Prometheus** | Time-series metrics database and alerting engine. | Ch 32 |
+| **PrometheusRule** | CRD defining alert and recording rules. | Ch 32 |
+| **Secrets Manager** | AWS service for storing and rotating secrets with IAM audit. | Ch 31 |
+| **SLO** | Service level objective — measurable reliability target. | Ch 40 |
+| **Tempo** | Distributed tracing backend (Grafana stack). | Ch 33 |
+| **trace_id** | Correlation ID linking logs, spans, and audit rows. | Ch 33 |
+
+## AI and Hermes (Parts VI–VII)
+
+| Term | Definition | First Appears |
+|------|------------|---------------|
+| **agent_role** | Task label selecting prompt template and tool allowlist. | Ch 39 |
+| **Capability** | Something Hermes can do via a registered tool—not a platform change. | Ch 42 |
+| **Coordinator** | Task/worker that decomposes objectives into subtasks. | Ch 39 |
+| **Default deny** | Tool policy: reject unless explicitly allowed for the role. | Ch 41 |
+| **Distributed cognitive execution** | Multiple reasoning loops coordinated via shared durable state. | Ch 39 |
+| **GGUF** | File format for quantized local LLM weights (llama.cpp). | Ch 36 |
+| **llama.cpp** | C++ inference engine; runs GGUF models with an HTTP server (`llama-server`). | Ch 36 |
+| **llama-server** | Kubernetes Deployment running the llama.cpp HTTP inference server. | Ch 36 |
+| **Prompt injection** | Attempt to override instructions via text—defeated by authorization architecture. | Ch 41 |
+| **Qdrant** | Vector database for semantic memory and RAG. | Ch 35 |
+| **RAG** | Retrieval-augmented generation — context from vector search before inference. | Ch 35 |
+| **Reasoning loop** | Hermes task cycle: claim → context → infer → tool → persist. | Ch 38 |
+| **root_request_id** | Correlation ID for all tasks in one user objective. | Ch 39 |
+| **State Layers** | Intent → API → Scheduler → Containers → Kernel mental model. | Ch 13 |
+| **Tool contract** | JSON Schema defining valid tool parameters. | Ch 42 |
+| **Tool gateway** | Worker-mediated validate → authorize → execute → audit path. | Ch 41 |
+| **Tool registry** | ConfigMap catalog of available tools and metadata. | Ch 42 |
+
+## Adding Terms
+
+When writing chapter content, add new terms to this table with the chapter where they are first defined. Keep definitions concise — one or two sentences.

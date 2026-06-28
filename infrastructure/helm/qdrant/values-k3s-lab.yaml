@@ -1,0 +1,40 @@
+# Chapter 35 — Qdrant on single-node k3s (Hermes semantic memory lab)
+# Install:
+#   helm repo add qdrant https://qdrant.github.io/qdrant-helm
+#   helm upgrade --install hermes-qdrant qdrant/qdrant \
+#     -n hermes --create-namespace \
+#     -f infrastructure/helm/qdrant/values-k3s-lab.yaml
+
+replicaCount: 1
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 1Gi
+
+persistence:
+  accessModes:
+    - ReadWriteOnce
+  size: 5Gi
+  storageClassName: local-path
+
+snapshotPersistence:
+  enabled: false
+
+service:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 6333
+      targetPort: 6333
+    - name: grpc
+      port: 6334
+      targetPort: 6334
+
+# Single-node lab — clustering disabled
+config:
+  cluster:
+    enabled: false

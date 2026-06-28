@@ -1,0 +1,7 @@
+# Chapter 34 — Hermes lab with llama-server (Ch 36)
+# Use after llama-server chart is installed
+
+model:
+  enabled: false
+  host: llama-server
+  port: "8080"

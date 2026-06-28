@@ -1,0 +1,24 @@
+# Chapter 42 — New agent_role: project management (extends Ch 41 tool-policy)
+# Merge into tool-policy ConfigMap or maintain as overlay.
+
+agentRoles:
+  project:
+    description: Jira and GitHub for engineering workflows
+    allowedTools:
+      - github.create_issue
+      - jira.create_issue
+    maxCallsPerMinute: 20
+
+  research:
+    description: Documentation search and vector memory — read-only external
+    allowedTools:
+      - docs.search
+      - qdrant.retrieve
+    maxCallsPerMinute: 60
+
+  infra:
+    description: AWS read-only inspection (write tools require approval)
+    allowedTools:
+      - aws.describe_instances
+      - aws.describe_volumes
+    maxCallsPerMinute: 15

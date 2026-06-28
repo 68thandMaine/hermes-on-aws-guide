@@ -1,0 +1,22 @@
+# Default values for nginx-demo (Chapter 25)
+replicaCount: 3
+
+image:
+  repository: nginx
+  tag: "1.27"
+  pullPolicy: IfNotPresent
+
+nameOverride: ""
+fullnameOverride: nginx-demo
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  className: traefik
+  host: nginx.local
+
+labels:
+  app: nginx

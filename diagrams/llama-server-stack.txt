@@ -1,0 +1,20 @@
+# llama.cpp inference stack (Chapter 36)
+# Hermes workers → llama-server (ClusterIP) → GGUF on hostPath /models
+
+  Hermes Workers
+        │
+        │  POST http://llama-server:8080/completion
+        ▼
+  ┌─────────────────┐
+  │  llama-server   │  Deployment (hermes namespace)
+  │  (llama.cpp)    │  ClusterIP — no Ingress
+  └────────┬────────┘
+           │
+           │  hostPath mount
+           ▼
+  /models/model.gguf          ← EBS volume hermes-models (Ch 11)
+           │
+  Optional GPU path (Ch 37):
+  llama-server-gpu on node with nvidia.com/gpu
+
+# Not used in this book: Ollama daemon / ollama pull workflow

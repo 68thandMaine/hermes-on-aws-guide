@@ -1,0 +1,9 @@
+flowchart TB
+    Client[Laptop / Client] -->|HTTPS 443| Traefik
+    Traefik --> Hermes[Hermes API]
+    Hermes --> Llama[llama.cpp]
+    Hermes --> PG[(PostgreSQL)]
+    Hermes --> Redis[(Redis)]
+    Hermes --> MCP[MCP Servers]
+    Hermes --> Future[Future Providers]
+    Llama --> Models["/opt/models"]

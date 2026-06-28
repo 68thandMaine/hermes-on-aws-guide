@@ -1,0 +1,37 @@
+# Chapter 32 — lab PrometheusRule (CPU pressure on nginx-demo namespace)
+# Apply after kube-prometheus-stack is running:
+#   kubectl apply -f infrastructure/kubernetes/ch32-prometheusrule-hermes-lab.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: hermes-lab-alerts
+  namespace: monitoring
+  labels:
+    release: monitoring
+spec:
+  groups:
+    - name: hermes.lab
+      rules:
+        - alert: NginxDemoHighCPU
+          expr: |
+            sum by (namespace, pod) (
+              rate(container_cpu_usage_seconds_total{namespace="default", pod=~"nginx-demo.*"}[5m])
+            ) > 0.5
+          for: 2m
+          labels:
+            severity: warning
+          annotations:
+            summary: "nginx-demo Pod CPU elevated"
+            description: "Pod {{ $labels.pod }} CPU rate > 0.5 cores for 2m — tie to HPA from Chapter 28."
+
+        - alert: KubeHpaMaxedOut
+          expr: |
+            kube_horizontalpodautoscaler_status_current_replicas{horizontalpodautoscaler="nginx-hpa"}
+            ==
+            kube_horizontalpodautoscaler_spec_max_replicas{horizontalpodautoscaler="nginx-hpa"}
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "nginx-hpa at max replicas"
+            description: "HPA nginx-hpa has been at max replicas for 5m — single-node k3s may be saturated."

@@ -1,0 +1,10 @@
+flowchart TD
+    A[IAM Request] --> B{Explicit Deny?}
+    B -->|Yes| C[DENY]
+    B -->|No| D{Organization SCP?}
+    D -->|Deny| C
+    D -->|Allow/None| E{Resource Policy?}
+    E -->|Deny| C
+    E -->|Allow/None| F{Identity Policy Allow?}
+    F -->|Yes| G[ALLOW]
+    F -->|No| C

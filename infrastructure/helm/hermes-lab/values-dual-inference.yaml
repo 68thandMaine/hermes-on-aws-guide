@@ -1,0 +1,14 @@
+# Chapter 37 — dual CPU + GPU inference paths for hermes-lab workers
+# Requires: llama-server (CPU, Ch 36) + llama-server-gpu (values-gpu.yaml)
+
+model:
+  enabled: false
+  host: llama-server
+  port: "8080"
+  gpuHost: llama-server-gpu
+  gpuPort: "8080"
+
+inference:
+  dualPath: true
+  # Lab placeholder — production Hermes routes by task metadata
+  gpuRouteHint: interactive

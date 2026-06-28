@@ -1,0 +1,56 @@
+---
+description: Docusaurus site, sidebar, and CI conventions
+globs:
+  - docusaurus.config.ts
+  - sidebars.ts
+  - docs/index.mdx
+  - src/**/*
+  - .github/workflows/**
+  - package.json
+alwaysApply: false
+---
+
+# Docusaurus & CI Rules
+
+## Site Structure
+
+- Docs plugin route base: `/` (site lives at `/agent-to-aws-guide/` on GitHub Pages)
+- Sidebar defined in `sidebars.ts` — must match `SUMMARY.md` chapter list
+- Landing page: `docs/index.mdx` (Guides hub with DocCard sections per Part)
+- Mermaid: enabled in `docusaurus.config.ts` via `@docusaurus/theme-mermaid`
+- Local search: `@easyops-cn/docusaurus-search-local`
+
+## Adding a New Chapter
+
+1. Create `docs/part-*/NN-slug.md` with frontmatter
+2. Add doc ID to `sidebars.ts` under correct Part category
+3. Add row to `SUMMARY.md` with status
+4. Optionally add DocCard to `docs/index.mdx`
+5. Run `npm run build` — `onBrokenLinks: 'throw'` will fail on bad links
+
+## Part Folder Names
+
+```
+part-i-foundations/
+part-ii-aws/
+part-iii-containers/
+part-iv-kubernetes/
+part-v-infrastructure/
+part-vi-ai/
+part-vii-hermes/          ← NOT part-vii-ullr
+preface/
+appendices/
+```
+
+## CI Pipeline (`.github/workflows/book-ci.yml`)
+
+1. Markdown lint (`.markdownlint.json`)
+2. `scripts/ci/validate-links.sh` (docs/, labs/, root meta files)
+3. `npm run build`
+4. Deploy to GitHub Pages on push to `main`
+
+## Do Not
+
+- Enable blog plugin (disabled intentionally)
+- Change `baseUrl` without updating all absolute `/agent-to-aws-guide/` paths
+- Commit `build/`, `.docusaurus/`, or `node_modules/`

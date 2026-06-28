@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hermes-postgres
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: hermes-postgres
+    app.kubernetes.io/part-of: hermes-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hermes-postgres
+  template:
+    metadata:
+      labels:
+        app: hermes-postgres
+        app.kubernetes.io/part-of: hermes-platform
+    spec:
+      containers:
+        - name: postgres
+          image: "{{ .Values.postgres.image.repository }}:{{ .Values.postgres.image.tag }}"
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - secretRef:
+                name: hermes-postgres
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+              subPath: pgdata
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: hermes-postgres-data

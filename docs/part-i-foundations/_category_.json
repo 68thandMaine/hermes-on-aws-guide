@@ -1,0 +1,8 @@
+{
+  "label": "Part I — Foundations",
+  "position": 1,
+  "link": {
+    "type": "generated-index",
+    "description": "Computer fundamentals, Linux for your Hermes server, networking, virtualization—then platform design before AWS."
+  }
+}

@@ -1,0 +1,45 @@
+# Local lab artifacts — never commit secrets
+labs/**/local/
+*.tfvars
+!*.tfvars.example
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# kubeconfig with credentials
+kubeconfig
+*-kubeconfig.yaml
+
+# SSH keys
+*.pem
+id_ed25519
+id_rsa
+
+# Logs and temp
+*.log
+tmp/
+
+# Node / Docusaurus
+node_modules/
+.docusaurus/
+build/
+.cache/

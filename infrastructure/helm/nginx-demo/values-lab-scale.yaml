@@ -1,0 +1,2 @@
+# Chapter 25 — override replica count for helm upgrade lab
+replicaCount: 2

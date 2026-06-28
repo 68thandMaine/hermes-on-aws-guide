@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hermes-workers
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: hermes-workers
+    app.kubernetes.io/part-of: hermes-platform
+    app.kubernetes.io/component: worker
+spec:
+  replicas: {{ .Values.worker.replicaCount }}
+  selector:
+    matchLabels:
+      app: hermes-workers
+  template:
+    metadata:
+      labels:
+        app: hermes-workers
+        app.kubernetes.io/part-of: hermes-platform
+        app.kubernetes.io/component: worker
+    spec:
+      containers:
+        - name: worker
+          image: "{{ .Values.worker.image.repository }}:{{ .Values.worker.image.tag }}"
+          command:
+            - sh
+            - -c
+            - |
+              while true; do
+                PONG=$(redis-cli -h hermes-redis ping 2>/dev/null || echo FAIL)
+                echo "{\"level\":\"info\",\"event\":\"worker_tick\",\"component\":\"worker\",\"redis\":\"$PONG\",\"llama\":\"$LLAMA_SERVER_URL\",\"llama_gpu\":\"${LLAMA_SERVER_GPU_URL:-none}\",\"trace_id\":\"worker-$(hostname)\"}"
+                sleep 5
+              done
+          env:
+            - name: LLAMA_SERVER_URL
+              value: "http://{{ .Values.model.host }}:{{ .Values.model.port }}"
+            {{- if and .Values.inference.dualPath .Values.model.gpuHost }}
+            - name: LLAMA_SERVER_GPU_URL
+              value: "http://{{ .Values.model.gpuHost }}:{{ .Values.model.gpuPort }}"
+            - name: INFERENCE_DUAL_PATH
+              value: "true"
+            {{- end }}
+          resources:
+            requests:
+              cpu: 25m
+              memory: 32Mi
+            limits:
+              cpu: 100m
+              memory: 64Mi

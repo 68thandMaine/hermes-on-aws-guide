@@ -1,0 +1,105 @@
+---
+slug: /
+title: Building a Personal AI Cloud
+description: >-
+  A guided journey from laptop to production Kubernetes—building a personal
+  cloud platform for the Hermes agent and local AI models.
+sidebar_position: 0
+sidebar_class_name: guide_sidebar_index
+---
+
+import DocCard from '@theme/DocCard';
+import PartSection from '@site/src/components/PartSection';
+
+# Guides
+
+Learn how to design, build, secure, and operate a personal cloud development environment capable of supporting modern software engineering and AI workloads.
+
+<PartSection
+  title="Part I — Foundations"
+  description="Computer fundamentals, Linux for your Hermes server, networking, virtualization—then platform design before AWS.">
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Introduction', href: '/part-i-foundations/01-introduction', description: 'Why build a cloud environment instead of buying a bigger laptop.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'How Computers Work', href: '/part-i-foundations/02-how-computers-work', description: 'CPU, memory, processes, and the machine underneath the cloud.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Linux', href: '/part-i-foundations/03-linux', description: 'The operating system every cloud engineer must know.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Networking', href: '/part-i-foundations/04-networking', description: 'TCP/IP, DNS, ports, and how packets move.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Virtualization', href: '/part-i-foundations/05-virtualization', description: 'Hypervisors, VMs, and why the cloud is possible.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Designing the Hermes Platform', href: '/part-i-foundations/06-designing-the-hermes-platform', description: 'What infrastructure you need before provisioning AWS.'}} />
+</PartSection>
+
+<PartSection
+  title="Part II — AWS & Platform"
+  description="Infrastructure on AWS, then Docker and k3s—the platform before Hermes.">
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Provisioning Your AWS Account', href: '/part-ii-aws/07-provisioning-aws-account', description: 'Secure account, MFA, billing alarms, and IAM administrator.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Creating the Network for Hermes', href: '/part-ii-aws/08-creating-network-for-hermes', description: 'VPC, subnets, and routing for your server.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Provisioning the Hermes Server', href: '/part-ii-aws/09-provisioning-hermes-server', description: 'Launch the Ubuntu EC2 instance for k3s and Hermes.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Establishing Trust', href: '/part-ii-aws/10-establishing-trust', description: 'Trust boundaries, SSH identity, SG + UFW defense in depth.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Persistent Storage', href: '/part-ii-aws/11-persistent-storage', description: 'EBS and S3 for models, databases, and backups.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Building the Application Platform', href: '/part-ii-aws/12-building-the-application-platform', description: 'Docker runtime—server becomes application platform.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'The First Control Plane', href: '/part-ii-aws/13-the-first-control-plane', description: 'Install k3s—the scheduler that makes the platform alive.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Routing Traffic to Hermes', href: '/part-ii-aws/14-routing-traffic-to-hermes', description: 'DNS, TLS, and HTTPS access (optional polish).'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Observing the Platform', href: '/part-ii-aws/15-observing-hermes-platform', description: 'CloudWatch metrics and logs (optional).'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Managing Platform Costs', href: '/part-ii-aws/16-managing-platform-costs', description: 'Ongoing cost optimization and budgets (optional).'}} />
+</PartSection>
+
+<PartSection
+  title="Part III — Containers"
+  description="Docker, Compose, and the Open Container Initiative.">
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Docker', href: '/part-iii-containers/16-docker', description: 'Images, containers, and registries.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Docker Compose', href: '/part-iii-containers/17-docker-compose', description: 'Multi-container local development.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'OCI', href: '/part-iii-containers/18-oci', description: 'Open standards for container images.'}} />
+</PartSection>
+
+<PartSection
+  title="Part IV — Kubernetes"
+  description="From first principles through production operations.">
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Why Kubernetes Exists', href: '/part-iv-kubernetes/19-why-kubernetes-exists', description: 'The problems orchestration solves.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Pods', href: '/part-iv-kubernetes/20-pods', description: 'The atomic unit of Kubernetes.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Deployments', href: '/part-iv-kubernetes/21-deployments', description: 'Rolling updates and replica management.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Services', href: '/part-iv-kubernetes/22-services', description: 'Cluster networking and discovery.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Ingress', href: '/part-iv-kubernetes/23-ingress', description: 'HTTP routing into the cluster.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Storage', href: '/part-iv-kubernetes/24-kubernetes-storage', description: 'Persistent volumes and storage classes.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Helm', href: '/part-iv-kubernetes/25-helm', description: 'Package Deployment, Service, and Ingress as a chart.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Configuration', href: '/part-iv-kubernetes/26-configuration-configmaps-secrets', description: 'ConfigMaps and Secrets for runtime config.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Security', href: '/part-iv-kubernetes/27-kubernetes-security', description: 'RBAC, network policies, and hardening.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Scaling', href: '/part-iv-kubernetes/28-scaling', description: 'Horizontal and vertical scaling.'}} />
+</PartSection>
+
+<PartSection
+  title="Part V — Infrastructure"
+  description="Terraform, CI/CD, secrets, and platform observability.">
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Terraform', href: '/part-v-infrastructure/29-terraform', description: 'Infrastructure as Code for reproducible environments.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'GitHub Actions', href: '/part-v-infrastructure/30-github-actions', description: 'CI/CD pipelines with OIDC to AWS.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Secrets Management', href: '/part-v-infrastructure/31-secrets-management', description: 'Production credential stores beyond K8s Secrets.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Monitoring', href: '/part-v-infrastructure/32-monitoring', description: 'Prometheus, Grafana, and alerting.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Logging', href: '/part-v-infrastructure/33-logging', description: 'Centralized log aggregation.'}} />
+</PartSection>
+
+<PartSection
+  title="Part VI — AI Infrastructure"
+  description="Hermes, vectors, model serving, GPUs, and agent architecture.">
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Running Hermes', href: '/part-vi-ai/34-running-hermes', description: 'Deploy Hermes on your platform.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Vector Databases', href: '/part-vi-ai/35-vector-databases', description: 'Embeddings and semantic search.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Model Serving', href: '/part-vi-ai/36-model-serving', description: 'Run local and remote models in production.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'GPU Instances', href: '/part-vi-ai/37-gpu-instances', description: 'Accelerated compute for AI workloads.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'The Hermes Reasoning Loop', href: '/part-vi-ai/38-ai-agent-architecture', description: 'Task-driven orchestration of memory, inference, and tools.'}} />
+</PartSection>
+
+<PartSection
+  title="Part VII — Hermes Agent Platform"
+  description="Operate, govern, extend, and promote the Hermes platform from lab to production.">
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Distributed Cognitive Execution', href: '/part-vii-hermes/39-distributed-cognitive-execution', description: 'Hermes as an operating system for agents.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Operating Hermes', href: '/part-vii-hermes/40-operating-hermes-in-production', description: 'Production operations — deploys, backups, SLOs.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Platform Governance', href: '/part-vii-hermes/41-platform-governance', description: 'Security and trust controls for Hermes.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Extending Hermes', href: '/part-vii-hermes/42-extending-hermes', description: 'Add capabilities without changing the platform.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Development to Production', href: '/part-vii-hermes/43-from-development-to-production', description: 'Promote Hermes with operational discipline.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'The Platform You Built', href: '/part-vii-hermes/44-the-platform-you-built', description: 'Capstone: full system running, State Layers from reality.'}} />
+</PartSection>
+
+<PartSection
+  title="Appendices"
+  description="Reference material, diagrams, and lab index.">
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Glossary', href: '/appendices/glossary', description: 'Term definitions used throughout the book.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'References', href: '/appendices/references', description: 'Bibliography and external documentation.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Diagram Index', href: '/appendices/diagrams', description: 'Architecture and flow diagrams.'}} />
+  <DocCard className="col col--4 margin-bottom--md" item={{type: 'link', label: 'Lab Index', href: '/appendices/labs', description: 'Hands-on lab worksheets and checklists.'}} />
+</PartSection>

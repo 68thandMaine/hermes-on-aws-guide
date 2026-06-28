@@ -1,0 +1,49 @@
+# Chapter 42 — Hermes tool registry (illustrative)
+# Mounted as ConfigMap alongside tool-policy.example.yaml (Ch 41).
+# Registration makes a tool *available*; agent_role policy grants *permission*.
+
+tools:
+  noaa.forecast:
+    version: "1.0.0"
+    description: NOAA forecast for a lat/lon and date range
+    schema: tools/noaa.forecast.schema.json
+    secretRef: hermes/noaa-api-key          # AWS SM key via ESO (Ch 31)
+    timeoutSeconds: 30
+    retries: 2
+
+  github.create_issue:
+    version: "1.0.0"
+    description: Open a GitHub issue in a repository
+    schema: tools/github.create-issue.schema.json
+    secretRef: hermes/github-token
+    timeoutSeconds: 45
+    retries: 1
+    observability:
+      logEvent: tool_github_create_issue
+      metricName: hermes_tool_github_create_issue_total
+
+  jira.create_issue:
+    version: "1.0.0"
+    description: Create a Jira work item via REST API
+    schema: tools/jira.create-issue.schema.json
+    secretRef: hermes/jira-api-token
+    timeoutSeconds: 45
+    retries: 1
+
+  budget.estimate:
+    version: "1.0.0"
+    description: Internal budget projection (no external spend)
+    schema: tools/budget.estimate.schema.json
+    secretRef: null                         # cluster-internal service
+    timeoutSeconds: 15
+
+# Versioned migration — register both during rollout; workers select by task metadata
+versionedTools:
+  noaa.forecast:
+    "1.0.0":
+      schema: tools/noaa.forecast.schema.json
+      deprecated: false
+    "2.0.0":
+      schema: tools/noaa.forecast.v2.schema.json
+      deprecated: false
+      notes: Adds hourly granularity

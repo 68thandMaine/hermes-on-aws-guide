@@ -1,0 +1,119 @@
+---
+description: Rules for writing or editing book chapters under docs/
+globs: docs/**/*.md
+alwaysApply: false
+---
+
+# Chapter Writing Rules
+
+Applies when editing files under `docs/`.
+
+## Mandatory Section Order
+
+Every chapter includes these 14 sections in order (see `STYLE_GUIDE.md`):
+
+Learning Objectives → Prerequisites → Estimated Time → Background → Theory → Architecture → Walkthrough → Hands-on Lab → Verification → Troubleshooting → Review Questions → Key Takeaways → Glossary Additions → Further Reading
+
+If a section does not apply, keep the header and explain why (e.g. Walkthrough N/A for conceptual chapters).
+
+## Frontmatter (required)
+
+```yaml
+---
+sidebar_position: N
+description: "One-line summary for search/SEO."
+---
+```
+
+## Hermes-Centric Framing
+
+- Lead with what **Hermes** (the agent) needs from this topic
+- Labs build toward running/operating the agent — not abstract exercises
+- ULLR: integration context only; document API/auth/data from the agent's perspective
+- Part VII folder is `docs/part-vii-hermes/` — titles use "Hermes agent," "agent tools," not "ULLR platform"
+
+## Hermes Callout and Platform Status
+
+**Every implementation chapter (Part II+)** must include:
+
+1. At least one `:::note Why this matters for Hermes` admonition in Background or Theory
+2. A **Hermes Platform Status** section before What's Next — update checkmarks and progress % (see `STYLE_GUIDE.md` template)
+3. An **Engineering Decision Record** section linking to `infrastructure/edr/EDR-NNNN-*.md`
+
+Part II chapter titles must be platform-first (e.g., "Provisioning Your AWS Account" not "AWS Overview").
+
+## Guided Build — Three Layers
+
+Implementation chapters (Part II+) follow **Concept → Design → Implementation**:
+
+1. **Concept** (Background, opening Theory) — what problem are we solving?
+2. **Design** (Architecture, tradeoffs in Theory) — why this approach for Hermes?
+3. **Implementation** (Walkthrough, Lab) — exact AWS steps *after* layers 1–2
+
+Never open the AWS console in Walkthrough until the reader understands why each resource exists.
+
+## AWS Resource Naming
+
+Use `hermes-` prefixed names: `hermes-vpc`, `hermes-public-use1a`, `hermes-igw`, `hermes-public-rt`, `hermes-controlplane-sg`, `hermes-controlplane-01`. See `STYLE_GUIDE.md`.
+
+## Infrastructure Artifacts
+
+Each implementation chapter adds under `infrastructure/aws/`:
+
+- `cloud-init/` — user-data scripts
+- `cli/` — reproducible CLI / chapter scripts  
+- `terraform/` — reserved until Part V
+- `edr/` — Engineering Decision Records (see below)
+
+Never commit `.pem` keys.
+
+## Engineering Decision Records (EDR)
+
+End each implementation chapter with an **Engineering Decision Record** section linking to `infrastructure/edr/EDR-NNNN-slug.md`. Format: Context, Decision, Consequences, Alternatives.
+
+## Just-in-Time Linux
+
+Do **not** require completing Chapter 3 Sections 3.4–3.7 before Part II. Teach `apt`, `journalctl`, `systemctl`, SSH, and `ufw` when the Hermes platform needs them (Ch 10, 12, Part III–IV). Sections 3.1–3.3 are sufficient to start building.
+
+## Chapter 3 Structure (reference)
+
+Sections 3.1–3.3 are core; 3.4–3.7 are reference / just-in-time:
+
+| Section | Topic | When needed |
+|---------|-------|-------------|
+| 3.1 | Filesystem | Before Ch 7 |
+| 3.2 | Users, groups, permissions | Before Ch 10 |
+| 3.3 | Processes, systemd | Ch 12, Part IV |
+| 3.4 | apt | Ch 12 |
+| 3.5 | Networking tools + logs | Ch 8, 10 |
+| 3.6 | SSH | Ch 10 |
+| 3.7 | Capstone hardening | Ch 10 |
+
+Readers may proceed to Chapter 6–7 after 3.3 if comfortable with a terminal.
+
+## Labs
+
+- Certification-guide format: Goal, Steps, Verification, Expected output, Troubleshooting, Cleanup
+- Assets in `labs/chNN/`
+- Test commands before marking chapter done
+- Never embed secrets
+
+## Diagrams
+
+- At least one diagram in Architecture
+- Mermaid enabled via Docusaurus — use fenced `mermaid` blocks
+- ASCII for network topology (≤80 cols)
+- Store reusable sources in `diagrams/`
+
+## After Editing
+
+1. Sync new glossary terms to `docs/appendices/glossary.md`
+2. Update status in `SUMMARY.md` if RFC step completed
+3. Run `npm run build` to catch broken links/anchors
+4. Note entry in `CHANGELOG.md` for meaningful changes
+
+## Internal Links
+
+- Cross-chapter: `[Chapter 9](../part-ii-aws/09-provisioning-hermes-server.md)` (relative from current file)
+- Same-chapter anchors must match Docusaurus slugified headings — verify with build
+- Do not link to repo-root files (STYLE_GUIDE.md) from docs unless using full GitHub URL

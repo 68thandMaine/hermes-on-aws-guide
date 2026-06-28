@@ -1,0 +1,38 @@
+{
+  "root_request_id": "req-ski-trip-2026-06",
+  "user_objective": "Plan a three-day ski trip to Mt. Hood with weather, lodging, equipment, avalanche conditions, and transportation.",
+  "coordinator_task_id": "00000000-0000-0000-0000-000000000001",
+  "subtasks": [
+    {
+      "agent_role": "weather",
+      "objective": "Forecast and historical conditions for Mt. Hood Meadows for trip window",
+      "priority": 2
+    },
+    {
+      "agent_role": "snow",
+      "objective": "Surface conditions, avalanche bulletin summary, terrain notes",
+      "priority": 2
+    },
+    {
+      "agent_role": "equipment",
+      "objective": "Clothing and gear recommendations given forecast and skill level",
+      "priority": 1
+    },
+    {
+      "agent_role": "routing",
+      "objective": "Transportation options from Portland to Meadows",
+      "priority": 1
+    },
+    {
+      "agent_role": "finance",
+      "objective": "Budget estimate: lift, lodging, gear rental",
+      "priority": 0
+    },
+    {
+      "agent_role": "summary",
+      "objective": "Synthesize subtask results into one actionable trip plan",
+      "priority": 3,
+      "depends_on_roles": ["weather", "snow", "equipment", "routing", "finance"]
+    }
+  ]
+}

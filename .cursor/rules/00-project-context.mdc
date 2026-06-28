@@ -1,0 +1,91 @@
+---
+description: Core context for Building a Personal AI Cloud — always read first
+alwaysApply: true
+---
+
+# Project Context
+
+This repository is **Building a Personal AI Cloud** — an O'Reilly-style technical book published with **Docusaurus**, not a flat Markdown repo or application codebase.
+
+## What We Are Building
+
+A hands-on book that teaches cloud engineering by building infrastructure to run the **Hermes AI agent** on AWS → Docker → k3s → production.
+
+**Platform focus (mandatory):**
+- All narrative, labs, and architecture are **Hermes-centric**
+- **ULLR** may appear only as an optional data backend Hermes integrates with — never as the primary product or chapter subject
+- Frame capstones as: *what does the Hermes agent need?*
+
+## Key Architecture Documents (read before writing)
+
+| File | Purpose |
+|------|---------|
+| `STYLE_GUIDE.md` | Voice, 14-section chapter template, quality bar, RFC workflow, Hermes rules |
+| `SUMMARY.md` | TOC + chapter status (source of truth for progress) |
+| `README.md` | Audience, journey arc, local dev |
+| `CONTRIBUTING.md` | Branch/PR conventions, CI checklist |
+| `CHANGELOG.md` | Meaningful revisions |
+
+## Repository Layout
+
+```
+docs/                    ← ALL chapter content lives here (Docusaurus)
+  part-i-foundations/    ← Ch 1–6 (Ch 6 = Hermes platform design before AWS)
+  part-ii-aws/           ← Ch 7–15
+  part-iii-containers/   ← Ch 16–18
+  part-iv-kubernetes/    ← Ch 19–27
+  part-v-infrastructure/ ← Ch 28–32
+  part-vi-ai/            ← Ch 33–37 (Hermes, models, agents)
+  part-vii-hermes/       ← Ch 38–43 (Hermes agent platform)
+  appendices/
+sidebars.ts              ← Sidebar navigation (keep in sync with SUMMARY)
+docusaurus.config.ts     ← Site config
+labs/                    ← Lab assets and worksheets (not published as chapters)
+diagrams/                ← Reusable diagram sources
+```
+
+**Do not** create or edit under a legacy `chapters/` path — it was removed during the Docusaurus migration.
+
+## Current Progress (update SUMMARY.md when status changes)
+
+| Status | Chapters |
+|--------|----------|
+| ✏️ Draft | … 9 Provisioning the Hermes Server, 10 Establishing Trust |
+| 📋 Outline | Preface, Ch 4 Networking, Ch 8–12 Part II scaffolds |
+| ⬜ Planned | Most of Parts III–VII |
+
+**Active work:** Part II implementation chapters (Ch 8+). **Just-in-time Linux**—do not block on Ch 3.4–3.7; teach commands when the platform needs them.
+
+## Technical Defaults
+
+- **OS on EC2:** Ubuntu Server LTS (user `ubuntu`)
+- **Orchestration target:** k3s on EC2
+- **IaC:** Terraform (Part V)
+- **Local inference:** **llama.cpp** (`llama-server` Helm chart)—not Ollama. GGUF on `/models`, HTTP `/completion` API, cluster-internal only.
+- **Published site:** https://crudnicky.github.io/agent-to-aws-guide/
+
+## Writing Workflow (RFC)
+
+1. Outline → 2. Review → 3. Expand sections → 4. Diagrams → 5. Lab (tested) → 6. Troubleshooting → 7. Glossary/refs → 8. Edit → 9. Mark done in SUMMARY.md
+
+Every chapter must answer: (1) what problem, (2) why invented, (3) how it works internally, (4) how to use it in *your* infrastructure.
+
+## CI Requirements
+
+PRs must pass: markdownlint, `scripts/ci/validate-links.sh`, `npm run build` (Docusaurus throws on broken links).
+
+Preview locally: `npm start`
+
+## Git / Commits
+
+- Do **not** commit unless the user explicitly asks
+- One branch per chapter: `chapter-NN-slug`
+- Commit format: `chNN: description`
+
+## AI Behavior
+
+- Prefer **why before how** — not command memorization lists
+- Match existing chapter voice (second person, present tense)
+- Minimize scope — don't refactor unrelated files
+- When editing chapters, follow `STYLE_GUIDE.md` section order exactly
+- Cross-link with relative paths: `[Chapter 9](../part-ii-aws/09-provisioning-hermes-server.md)`

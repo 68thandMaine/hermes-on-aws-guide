@@ -1,0 +1,58 @@
+# Chapter 34 — Hermes lab stack defaults (single-node k3s)
+# Replace stub images with real Hermes / llama.cpp in later chapters.
+
+namespace: hermes
+
+api:
+  replicaCount: 2
+  image:
+    repository: mendhak/http-https-echo
+    tag: "31"
+  service:
+    port: 80
+    targetPort: 8080
+
+worker:
+  replicaCount: 2
+  image:
+    repository: redis
+    tag: "7-alpine"
+
+model:
+  replicaCount: 1
+  enabled: true
+  host: hermes-model
+  port: "8080"
+  gpuHost: ""
+  gpuPort: "8080"
+  image:
+    repository: mendhak/http-https-echo
+    tag: "31"
+  service:
+    port: 8080
+
+inference:
+  dualPath: false
+
+redis:
+  image:
+    repository: redis
+    tag: "7-alpine"
+
+postgres:
+  image:
+    repository: postgres
+    tag: "16-alpine"
+  storage: 5Gi
+  storageClassName: local-path
+  database: hermes
+  username: hermes
+
+ingress:
+  enabled: true
+  className: traefik
+  host: hermes.local
+
+labels:
+  app.kubernetes.io/part-of: hermes-platform
+  app.kubernetes.io/managed-by: helm

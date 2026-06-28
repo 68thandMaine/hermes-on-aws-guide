@@ -1,0 +1,54 @@
+# Chapter 43 — Environment promotion (same artifacts, different configuration)
+# Application images and Helm charts do not fork per environment.
+# Terraform variables and Helm values layers capture differences.
+
+environments:
+  development:
+    description: Laptop or single-node k3s lab (Ch 13, Ch 34)
+    terraform: infrastructure/aws/terraform/environments/dev
+    kubeconfig: ~/.kube/hermes-k3s.yaml
+    helm_values:
+      - infrastructure/helm/hermes-lab/values.yaml
+      - infrastructure/helm/hermes-lab/values-with-llama.yaml
+    characteristics:
+      replicas: 1-2
+      ha: false
+      gpu: optional
+      backup_drill: recommended
+
+  staging:
+    description: Production-like validation before promotion
+    terraform: infrastructure/aws/terraform/environments/staging  # extend from dev module
+    helm_values:
+      - infrastructure/helm/hermes-lab/values.yaml
+      - infrastructure/helm/hermes-lab/values-with-llama.yaml
+      - infrastructure/helm/hermes-lab/values-production-rollout.yaml
+    characteristics:
+      replicas: 2-3
+      ha: partial
+      alerts: enabled
+      synthetic_traffic: true
+
+  production:
+    description: Real users, real SLOs, real on-call
+    terraform: infrastructure/aws/terraform/environments/prod
+    helm_values:
+      - infrastructure/helm/hermes-lab/values.yaml
+      - infrastructure/helm/hermes-lab/values-with-llama.yaml
+      - infrastructure/helm/hermes-lab/values-production-rollout.yaml
+      # - infrastructure/helm/hermes-lab/values-gpu.yaml  # when needed
+    characteristics:
+      replicas: 3+
+      ha: true
+      backups: automated
+      readiness: production-readiness.example.yaml signed
+
+promotion_flow:
+  - merge to main triggers GitHub Actions (Ch 30)
+  - terraform plan/apply per environment workspace
+  - helm upgrade with environment-specific -f chain
+  - smoke test + rollout status
+  - promote staging → production after checklist green
+
+# Hermes runtime code path is identical across environments.
+# Only configuration and operational guarantees change.

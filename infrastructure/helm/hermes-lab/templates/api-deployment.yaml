@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hermes-api
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: hermes-api
+    app.kubernetes.io/part-of: hermes-platform
+    app.kubernetes.io/component: api
+spec:
+  replicas: {{ .Values.api.replicaCount }}
+  {{- with .Values.api.strategy }}
+  strategy:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  selector:
+    matchLabels:
+      app: hermes-api
+  template:
+    metadata:
+      labels:
+        app: hermes-api
+        app.kubernetes.io/part-of: hermes-platform
+        app.kubernetes.io/component: api
+    spec:
+      containers:
+        - name: api
+          image: "{{ .Values.api.image.repository }}:{{ .Values.api.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.api.service.targetPort }}
+          env:
+            - name: HERMES_COMPONENT
+              value: api
+            - name: REDIS_HOST
+              value: hermes-redis
+            - name: POSTGRES_HOST
+              value: hermes-postgres
+            - name: MODEL_HOST
+              value: {{ .Values.model.host | quote }}
+            - name: MODEL_PORT
+              value: {{ .Values.model.port | quote }}
+            {{- if and .Values.inference.dualPath .Values.model.gpuHost }}
+            - name: LLAMA_SERVER_GPU_URL
+              value: "http://{{ .Values.model.gpuHost }}:{{ .Values.model.gpuPort }}"
+            {{- end }}
+            - name: QDRANT_HOST
+              value: hermes-qdrant
+            - name: QDRANT_PORT
+              value: "6333"
+            - name: HTTP_PORT
+              value: "{{ .Values.api.service.targetPort }}"
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 300m
+              memory: 128Mi

@@ -1,0 +1,16 @@
+{{- if .Values.model.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: hermes-model
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: hermes-model
+    app.kubernetes.io/component: model
+spec:
+  selector:
+    app: hermes-model
+  ports:
+    - port: {{ .Values.model.service.port }}
+      targetPort: {{ .Values.model.service.port }}
+{{- end }}

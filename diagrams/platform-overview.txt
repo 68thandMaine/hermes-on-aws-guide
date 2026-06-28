@@ -1,0 +1,24 @@
+# Internet
+#        │
+# Internet Gateway
+#        │
+# Public Subnet (10.0.1.0/24)
+#        │
+#  EC2 Instance (t3.medium)
+#        │
+#   Docker Engine
+#        │
+#     k3s Node
+#        │
+#  ┌─────┴─────┐
+#  │           │
+# Hermes    PostgreSQL
+# Agent         │
+#  │            │
+#  └─────┬──────┘
+#        │
+#  Agent Tools (weather, etc.)
+#        │
+#    llama.cpp (llama-server, GGUF on /models)
+#        │
+#  Production Operations

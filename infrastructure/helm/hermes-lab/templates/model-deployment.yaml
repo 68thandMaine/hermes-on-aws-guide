@@ -1,0 +1,40 @@
+{{- if .Values.model.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hermes-model
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: hermes-model
+    app.kubernetes.io/part-of: hermes-platform
+    app.kubernetes.io/component: model
+spec:
+  replicas: {{ .Values.model.replicaCount }}
+  selector:
+    matchLabels:
+      app: hermes-model
+  template:
+    metadata:
+      labels:
+        app: hermes-model
+        app.kubernetes.io/part-of: hermes-platform
+        app.kubernetes.io/component: model
+    spec:
+      containers:
+        - name: model
+          image: "{{ .Values.model.image.repository }}:{{ .Values.model.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.model.service.port }}
+          env:
+            - name: HERMES_COMPONENT
+              value: model
+            - name: HTTP_PORT
+              value: "{{ .Values.model.service.port }}"
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 1000m
+              memory: 512Mi
+{{- end }}
