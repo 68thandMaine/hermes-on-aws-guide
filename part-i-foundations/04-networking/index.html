@@ -1,4 +1,4 @@
-<!doctype html><html lang=en dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-part-i-foundations/04-networking" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>Chapter 4: Networking Fundamentals | Building a Personal AI Cloud</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://68thandMaine.github.io/hermes-on-aws-guide/img/social-card.svg /><meta data-rh=true name=twitter:image content=https://68thandMaine.github.io/hermes-on-aws-guide/img/social-card.svg /><meta data-rh=true property=og:url content=https://68thandMaine.github.io/hermes-on-aws-guide/part-i-foundations/04-networking /><meta data-rh=true property=og:locale content=en /><meta data-rh=true name=docusaurus_locale content=en /><meta data-rh=true name=docsearch:language content=en /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="Chapter 4: Networking Fundamentals | Building a Personal AI Cloud"/><meta data-rh=true name=description content="Networking concepts every cloud engineer needs."/><meta data-rh=true property=og:description content="Networking concepts every cloud engineer needs."/><link data-rh=true rel=icon href=/hermes-on-aws-guide/img/favicon.ico /><link data-rh=true rel=canonical href=https://68thandMaine.github.io/hermes-on-aws-guide/part-i-foundations/04-networking /><link data-rh=true rel=alternate href=https://68thandMaine.github.io/hermes-on-aws-guide/part-i-foundations/04-networking hreflang=en /><link data-rh=true rel=alternate href=https://68thandMaine.github.io/hermes-on-aws-guide/part-i-foundations/04-networking hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://68thandMaine.github.io/hermes-on-aws-guide/part-i-foundations/04-networking","name":"Chapter 4: Networking Fundamentals","position":1}]}</script><link rel=stylesheet href=/hermes-on-aws-guide/assets/css/styles.56f47aec.css /><script src=/hermes-on-aws-guide/assets/js/runtime~main.5ab3fffc.js defer></script><script src=/hermes-on-aws-guide/assets/js/main.4573ddba.js defer></script></head><body><svg style="display: none;"><defs>
+<!doctype html><html lang=en dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-part-i-foundations/04-networking" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>Chapter 4: Networking Fundamentals | Building a Personal AI Cloud</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://68thandMaine.github.io/hermes-on-aws-guide/img/social-card.svg /><meta data-rh=true name=twitter:image content=https://68thandMaine.github.io/hermes-on-aws-guide/img/social-card.svg /><meta data-rh=true property=og:url content=https://68thandMaine.github.io/hermes-on-aws-guide/part-i-foundations/04-networking /><meta data-rh=true property=og:locale content=en /><meta data-rh=true name=docusaurus_locale content=en /><meta data-rh=true name=docsearch:language content=en /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="Chapter 4: Networking Fundamentals | Building a Personal AI Cloud"/><meta data-rh=true name=description content="Networking concepts every cloud engineer needs."/><meta data-rh=true property=og:description content="Networking concepts every cloud engineer needs."/><link data-rh=true rel=icon href=/hermes-on-aws-guide/img/favicon.ico /><link data-rh=true rel=canonical href=https://68thandMaine.github.io/hermes-on-aws-guide/part-i-foundations/04-networking /><link data-rh=true rel=alternate href=https://68thandMaine.github.io/hermes-on-aws-guide/part-i-foundations/04-networking hreflang=en /><link data-rh=true rel=alternate href=https://68thandMaine.github.io/hermes-on-aws-guide/part-i-foundations/04-networking hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://68thandMaine.github.io/hermes-on-aws-guide/part-i-foundations/04-networking","name":"Chapter 4: Networking Fundamentals","position":1}]}</script><link rel=stylesheet href=/hermes-on-aws-guide/assets/css/styles.56f47aec.css /><script src=/hermes-on-aws-guide/assets/js/runtime~main.0d580d1e.js defer></script><script src=/hermes-on-aws-guide/assets/js/main.4573ddba.js defer></script></head><body><svg style="display: none;"><defs>
 <symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
 </defs></svg>
 <script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-ce0")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id=__docusaurus><link rel=preload as=image href=/hermes-on-aws-guide/img/logo.svg /><div role=region aria-label="Skip to main content"><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>Skip to main content</a></div><nav aria-label=Main class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/hermes-on-aws-guide/><div class=navbar__logo><img src=/hermes-on-aws-guide/img/logo.svg alt="Personal AI Cloud" class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/hermes-on-aws-guide/img/logo.svg alt="Personal AI Cloud" class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">Personal AI Cloud</b></a><a aria-current=page class="navbar__item navbar__link guides-top-header navbar__link--active" href=/hermes-on-aws-guide/>Guides</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/68thandMaine/hermes-on-aws-guide target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=Search aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/hermes-on-aws-guide/preface/00-preface><span title=Preface class=linkLabel_WmDU>Preface</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role=button aria-expanded=true href=/hermes-on-aws-guide/part-i-foundations/01-introduction><span title="Part I — Foundations" class=categoryLinkLabel_W154>Part I — Foundations</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/01-introduction><span title="Chapter 1: Introduction" class=linkLabel_WmDU>Chapter 1: Introduction</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/02-how-computers-work><span title="Chapter 2: How Computers Actually Work" class=linkLabel_WmDU>Chapter 2: How Computers Actually Work</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/03-linux><span title="Chapter 3: Linux — The Operating System of the Cloud" class=linkLabel_WmDU>Chapter 3: Linux — The Operating System of the Cloud</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/04-networking><span title="Chapter 4: Networking Fundamentals" class=linkLabel_WmDU>Chapter 4: Networking Fundamentals</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/05-virtualization><span title="Chapter 5: Virtualization" class=linkLabel_WmDU>Chapter 5: Virtualization</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/06-designing-the-hermes-platform><span title="Chapter 6: Designing the Hermes Platform" class=linkLabel_WmDU>Chapter 6: Designing the Hermes Platform</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-ii-aws/07-provisioning-aws-account><span title="Part II — AWS & Platform" class=categoryLinkLabel_W154>Part II — AWS & Platform</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-iii-containers/16-docker><span title="Part III — Containers" class=categoryLinkLabel_W154>Part III — Containers</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-iv-kubernetes/19-why-kubernetes-exists><span title="Part IV — Kubernetes" class=categoryLinkLabel_W154>Part IV — Kubernetes</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-v-infrastructure/29-terraform><span title="Part V — Infrastructure" class=categoryLinkLabel_W154>Part V — Infrastructure</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-vi-ai/34-running-hermes><span title="Part VI — AI Infrastructure" class=categoryLinkLabel_W154>Part VI — AI Infrastructure</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-vii-hermes/39-distributed-cognitive-execution><span title="Part VII — Hermes Agent Platform" class=categoryLinkLabel_W154>Part VII — Hermes Agent Platform</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/appendices/glossary><span title=Appendices class=categoryLinkLabel_W154>Appendices</span></a></div></ul></nav><button type=button title="Collapse sidebar" aria-label="Collapse sidebar" class="button button--secondary button--outline collapseSidebarButton_PEFL"><svg width=20 height=20 aria-hidden=true class=collapseSidebarButtonIcon_kv0_><g fill=#7a7a7a><path d="M9.992 10.023c0 .2-.062.399-.172.547l-4.996 7.492a.982.982 0 01-.828.454H1c-.55 0-1-.453-1-1 0-.2.059-.403.168-.551l4.629-6.942L.168 3.078A.939.939 0 010 2.528c0-.548.45-.997 1-.997h2.996c.352 0 .649.18.828.45L9.82 9.472c.11.148.172.347.172.55zm0 0"/><path d="M19.98 10.023c0 .2-.058.399-.168.547l-4.996 7.492a.987.987 0 01-.828.454h-3c-.547 0-.996-.453-.996-1 0-.2.059-.403.168-.551l4.625-6.942-4.625-6.945a.939.939 0 01-.168-.55 1 1 0 01.996-.997h3c.348 0 .649.18.828.45l4.996 7.492c.11.148.168.347.168.55zm0 0"/></g></svg></button></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=Breadcrumbs><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label="Home page" class=breadcrumbs__link href=/hermes-on-aws-guide/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><span class=breadcrumbs__link>Part I — Foundations</span><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>Chapter 4: Networking Fundamentals</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Chapter 4: Networking Fundamentals</h1></header>
@@ -6,55 +6,354 @@
 <p><em>How packets move—and why AWS networking looks the way it does.</em></p>
 </blockquote>
 <hr/>
+<p>In <a class="" href=/hermes-on-aws-guide/part-i-foundations/02-how-computers-work>Chapter 2</a>, networking was one of four fundamental computer resources. In <a class="" href=/hermes-on-aws-guide/part-i-foundations/03-linux>Chapter 3</a>, you met the tools that inspect it—<code>ip addr</code>, <code>ss</code>, <code>dig</code>, <code>curl</code>. This chapter explains <strong>what those tools are showing you</strong>.</p>
+<p>When you later send HTTPS to Hermes from your laptop, a chain of events crosses DNS, routing tables, TCP handshakes, and firewalls before a single byte reaches the agent. When something fails—<code>connection refused</code>, <code>timeout</code>, <code>could not resolve host</code>—you debug that chain layer by layer.</p>
+<p>You do not need to become a network engineer. You need a <strong>working mental model</strong> so <a class="" href=/hermes-on-aws-guide/part-ii-aws/08-creating-network-for-hermes>Chapter 8</a> (VPCs, subnets, route tables) and <a class="" href=/hermes-on-aws-guide/part-ii-aws/10-establishing-trust>Chapter 10</a> (security groups, UFW) feel like natural extensions—not magic AWS vocabulary.</p>
+<hr/>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=learning-objectives>Learning Objectives<a href=#learning-objectives class=hash-link aria-label="Direct link to Learning Objectives" title="Direct link to Learning Objectives" translate=no>​</a></h2>
 <p>After completing this chapter, you will be able to:</p>
 <ul class="contains-task-list containsTaskList_mC6p">
-<li class=task-list-item><input type=checkbox disabled/> Explain the OSI model and where TCP/IP fits</li>
+<li class=task-list-item><input type=checkbox disabled/> Explain the OSI model at a practical level and where TCP/IP fits</li>
 <li class=task-list-item><input type=checkbox disabled/> Describe how IP addresses, subnets, and CIDR notation work</li>
 <li class=task-list-item><input type=checkbox disabled/> Differentiate TCP and UDP and know when each is used</li>
 <li class=task-list-item><input type=checkbox disabled/> Explain DNS resolution from browser to IP address</li>
 <li class=task-list-item><input type=checkbox disabled/> Understand NAT, routing, and why private subnets exist</li>
+<li class=task-list-item><input type=checkbox disabled/> Use local diagnostic tools to trace connectivity problems</li>
 <li class=task-list-item><input type=checkbox disabled/> Map these concepts directly to AWS VPC components (preview of Chapter 8)</li>
 </ul>
 <hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=prerequisites>Prerequisites<a href=#prerequisites class=hash-link aria-label="Direct link to Prerequisites" title="Direct link to Prerequisites" translate=no>​</a></h2>
+<ul>
+<li class=""><a class="" href=/hermes-on-aws-guide/part-i-foundations/02-how-computers-work>Chapter 2: How Computers Actually Work</a> — the four resources model; networking as a shared resource</li>
+<li class=""><a class="" href=/hermes-on-aws-guide/part-i-foundations/03-linux>Chapter 3: Linux</a> — Sections 3.1–3.3 complete; Section 3.5 (networking tools) is helpful but taught here in depth</li>
+</ul>
+<p>No cloud account required. Lab 4 runs entirely on your laptop.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=estimated-time>Estimated Time<a href=#estimated-time class=hash-link aria-label="Direct link to Estimated Time" title="Direct link to Estimated Time" translate=no>​</a></h2>
+<p><strong>90 minutes</strong> — 60 minutes reading, 30 minutes for Lab 4.</p>
+<hr/>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=background>Background<a href=#background class=hash-link aria-label="Direct link to Background" title="Direct link to Background" translate=no>​</a></h2>
-<!-- -->
-<!-- -->
-<!-- -->
-<p><em>Content coming soon.</em></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=from-arpanet-to-the-internet>From ARPANET to the Internet<a href=#from-arpanet-to-the-internet class=hash-link aria-label="Direct link to From ARPANET to the Internet" title="Direct link to From ARPANET to the Internet" translate=no>​</a></h3>
+<p>Modern networking did not appear fully formed. In the late 1960s, <strong>ARPANET</strong> connected a handful of research computers so they could share resources. The breakthrough was not speed—it was a <strong>packet-switched</strong> design: break data into small <strong>packets</strong>, route each independently, reassemble at the destination.</p>
+<p>That design scaled. TCP/IP became the standard protocol suite. The internet is now billions of devices speaking a common language: IP addresses for location, routing for direction, TCP/UDP for delivery semantics, DNS for human-readable names.</p>
+<p>Cloud platforms—including AWS—do not replace this model. They <strong>virtualize</strong> it. A VPC is a private internet inside the public internet.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=public-vs-private-ip-addresses>Public vs Private IP Addresses<a href=#public-vs-private-ip-addresses class=hash-link aria-label="Direct link to Public vs Private IP Addresses" title="Direct link to Public vs Private IP Addresses" translate=no>​</a></h3>
+<p>Every device on a network needs an <strong>IP address</strong>—a numeric identifier so other devices know where to send packets.</p>
+<p><strong>IPv4</strong> addresses look like <code>203.0.113.42</code>—four numbers (0–255) separated by dots. There are roughly 4.3 billion possible IPv4 addresses. That sounded like plenty in the 1980s. It is not enough today.</p>
+<p>Two responses shaped the modern internet:</p>
+<ol>
+<li class=""><strong>NAT (Network Address Translation)</strong> — many devices share one public IP</li>
+<li class=""><strong>Private address ranges (RFC 1918)</strong> — addresses used only inside local networks, never routed on the public internet</li>
+</ol>
+<p>RFC 1918 defines three private ranges:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Range<th>CIDR<th>Typical use<tbody><tr><td><code>10.0.0.0</code> – <code>10.255.255.255</code><td><code>10.0.0.0/8</code><td>Large corporate and cloud VPCs<tr><td><code>172.16.0.0</code> – <code>172.31.255.255</code><td><code>172.16.0.0/12</code><td>Docker default bridges, some VPCs<tr><td><code>192.168.0.0</code> – <code>192.168.255.255</code><td><code>192.168.0.0/16</code><td>Home routers, small office networks</table>
+<p>Your home Wi-Fi probably assigns <code>192.168.1.x</code> addresses. Your Hermes EC2 instance will get a <code>10.0.x.x</code> address inside your VPC. Neither is directly reachable from the public internet—which is intentional.</p>
+<p>:::note Why this matters for Hermes</p>
+<p>Hermes runs PostgreSQL, Redis, and llama.cpp on the same server, but the <strong>principle</strong> still applies: internal services should not be exposed to the internet unless you deliberately open them. Private IP ranges and firewalls exist so you can run many services on one machine and expose only HTTPS (443) and SSH (22). When you build the VPC in Chapter 8, you are choosing which addresses live inside your isolated network—and which paths lead to the outside world.</p>
+<p>:::</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=how-aws-abstracts-networking>How AWS Abstracts Networking<a href=#how-aws-abstracts-networking class=hash-link aria-label="Direct link to How AWS Abstracts Networking" title="Direct link to How AWS Abstracts Networking" translate=no>​</a></h3>
+<p>AWS wraps the same concepts in named resources:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Concept (this chapter)<th>AWS resource (Chapter 8+)<tbody><tr><td>Isolated network<td>VPC<tr><td>Address range slice<td>Subnet (CIDR block)<tr><td>Connection to the internet<td>Internet Gateway<tr><td>"Where should this packet go?"<td>Route table<tr><td>Inbound/outbound traffic filter<td>Security Group<tr><td>Public-facing address mapping<td>Elastic IP (Chapter 9)</table>
+<p>You will create these resources hands-on in <a class="" href=/hermes-on-aws-guide/part-ii-aws/08-creating-network-for-hermes>Chapter 8</a>. This chapter builds the vocabulary so those steps make sense.</p>
 <hr/>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=theory>Theory<a href=#theory class=hash-link aria-label="Direct link to Theory" title="Direct link to Theory" translate=no>​</a></h2>
-<!-- -->
-<!-- -->
-<!-- -->
-<!-- -->
-<!-- -->
-<!-- -->
-<!-- -->
-<p><em>Content coming soon.</em></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=the-osi-model--a-practical-subset>The OSI Model — A Practical Subset<a href=#the-osi-model--a-practical-subset class=hash-link aria-label="Direct link to The OSI Model — A Practical Subset" title="Direct link to The OSI Model — A Practical Subset" translate=no>​</a></h3>
+<p>The <strong>OSI model</strong> divides networking into seven layers. Network engineers memorize all seven. Cloud engineers need a <strong>practical subset</strong>—enough to know where a problem lives when debugging.</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Layer   Name            What it does                    Example</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">─────   ─────────────   ─────────────────────────────   ─────────────────────</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  7     Application     Meaning of the data             HTTP, HTTPS, SSH</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  4     Transport       Reliable/unreliable delivery    TCP, UDP</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  3     Network         Routing between networks        IP, ICMP</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  2     Data Link       Frames on one physical link     Ethernet, Wi-Fi</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  1     Physical        Wires, radio, photons           Cable, fiber</span><br/></div></code></pre></div></div>
+<p>When you <code>curl https://aws.amazon.com</code>, you touch at least:</p>
+<ul>
+<li class=""><strong>Layer 7</strong> — HTTP request inside TLS</li>
+<li class=""><strong>Layer 4</strong> — TCP connection on port 443</li>
+<li class=""><strong>Layer 3</strong> — IP packets routed across the internet</li>
+<li class=""><strong>Layers 1–2</strong> — handled by your NIC, router, and ISP</li>
+</ul>
+<p><strong>Debugging by layer</strong> is the core skill:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Symptom<th>Likely layer<th>First tool<tbody><tr><td><code>Could not resolve host</code><td>7 (name resolution / DNS)<td><code>dig</code><tr><td><code>Connection timed out</code><td>3–4 (routing or firewall)<td><code>traceroute</code>, check SG/UFW<tr><td><code>Connection refused</code><td>4 (host reachable, nothing listening)<td><code>ss -tlnp</code><tr><td>TLS certificate error<td>7 (HTTPS)<td><code>curl -v</code>, check cert hostname</table>
+<p>You do not need to identify the exact OSI layer every time. The table gives you a <strong>search order</strong>.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=ip-addressing-and-cidr>IP Addressing and CIDR<a href=#ip-addressing-and-cidr class=hash-link aria-label="Direct link to IP Addressing and CIDR" title="Direct link to IP Addressing and CIDR" translate=no>​</a></h3>
+<p>An IPv4 address is 32 bits, written as four decimal octets. A <strong>subnet</strong> is a contiguous range of addresses sharing a network prefix.</p>
+<p><strong>CIDR</strong> (Classless Inter-Domain Routing) writes that prefix compactly:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">10.0.1.0/24</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│        │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│        └── /24 = first 24 bits fixed (network portion)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">└─────────── Network address</span><br/></div></code></pre></div></div>
+<p>For <code>10.0.1.0/24</code>:</p>
+<ul>
+<li class="">Network addresses: <code>10.0.1.0</code> through <code>10.0.1.255</code> (256 addresses)</li>
+<li class="">Usable host addresses: typically 254 (first address = network ID, last = broadcast—though AWS handles this slightly differently)</li>
+</ul>
+<p>Quick reference:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>CIDR<th>Addresses<th>Usable hosts (classic)<tbody><tr><td><code>/32</code><td>1<td>1 (single host)<tr><td><code>/28</code><td>16<td>14<tr><td><code>/24</code><td>256<td>254<tr><td><code>/16</code><td>65,536<td>65,534<tr><td><code>/8</code><td>16,777,216<td>—</table>
+<p><strong>Subnet mask</strong> expresses the same idea in dotted decimal: <code>/24</code> = <code>255.255.255.0</code> (first 24 bits are 1s).</p>
+<p>When you create <code>hermes-vpc</code> with <code>10.0.0.0/16</code> in Chapter 8, you are claiming 65,536 addresses for your platform. A <code>/24</code> subnet like <code>10.0.1.0/24</code> takes one slice for your EC2 instance.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=tcp-vs-udp>TCP vs UDP<a href=#tcp-vs-udp class=hash-link aria-label="Direct link to TCP vs UDP" title="Direct link to TCP vs UDP" translate=no>​</a></h3>
+<p>Both ride on IP. They differ in <strong>delivery guarantees</strong>.</p>
+<p><strong>TCP (Transmission Control Protocol)</strong> — connection-oriented, reliable, ordered:</p>
+<ol>
+<li class=""><strong>SYN</strong> — client initiates</li>
+<li class=""><strong>SYN-ACK</strong> — server acknowledges</li>
+<li class=""><strong>ACK</strong> — client confirms</li>
+</ol>
+<p>This <strong>three-way handshake</strong> establishes a connection before data flows. TCP retransmits lost packets and preserves order. Use TCP when correctness matters: HTTPS, SSH, PostgreSQL, Redis.</p>
+<p><strong>UDP (User Datagram Protocol)</strong> — connectionless, no guarantees:</p>
+<ul>
+<li class="">Sends datagrams without handshake</li>
+<li class="">Faster, lower overhead</li>
+<li class="">Packets may arrive out of order or not at all</li>
+</ul>
+<p>Use UDP when speed beats reliability: DNS queries (usually), video streaming, some monitoring protocols.</p>
+<p>For Hermes, almost everything you operate daily is <strong>TCP on a known port</strong>:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Service<th>Port<th>Protocol<tbody><tr><td>HTTPS<td>443<td>TCP<tr><td>SSH<td>22<td>TCP<tr><td>PostgreSQL<td>5432<td>TCP<tr><td>Redis<td>6379<td>TCP<tr><td>llama.cpp HTTP<td>8080 (typical)<td>TCP</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=dns--names-to-numbers>DNS — Names to Numbers<a href=#dns--names-to-numbers class=hash-link aria-label="Direct link to DNS — Names to Numbers" title="Direct link to DNS — Names to Numbers" translate=no>​</a></h3>
+<p>Humans remember <code>ec2.us-east-1.amazonaws.com</code>. Routers need <code>54.x.x.x</code>. <strong>DNS (Domain Name System)</strong> translates names to IP addresses.</p>
+<p>Resolution steps (simplified):</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Browser: "What is the IP for api.example.com?"</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">OS resolver (checks local cache)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Recursive resolver (often your ISP or 8.8.8.8)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Root → TLD (.com) → Authoritative nameserver for example.com</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Returns A record: 203.0.113.10</span><br/></div></code></pre></div></div>
+<p>Key terms:</p>
+<ul>
+<li class=""><strong>A record</strong> — name → IPv4 address</li>
+<li class=""><strong>TTL (Time To Live)</strong> — how long resolvers cache the answer</li>
+<li class=""><strong>Authoritative nameserver</strong> — the source of truth for a domain</li>
+</ul>
+<p>When DNS fails, nothing else matters—you cannot connect to an IP you do not have. That is why <code>dig</code> is step one in many debug flows.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=routing-and-default-gateways>Routing and Default Gateways<a href=#routing-and-default-gateways class=hash-link aria-label="Direct link to Routing and Default Gateways" title="Direct link to Routing and Default Gateways" translate=no>​</a></h3>
+<p>Every device maintains a <strong>routing table</strong>: rules that answer "given this destination IP, which interface do I send the packet out?"</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic># Linux</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token function" style=color:#d73a49>ip</span><span class="token plain"> route</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic># macOS</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token function" style=color:#d73a49>netstat</span><span class="token plain"> </span><span class="token parameter variable" style=color:#36acaa>-rn</span><br/></div></code></pre></div></div>
+<p>Typical home laptop entry:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">default via 192.168.1.1 dev wlan0</span><br/></div></code></pre></div></div>
+<p><strong>Default route</strong> (<code>0.0.0.0/0</code>) means "everything not matching a more specific rule goes here"—usually your router. The router then forwards toward the internet.</p>
+<p>In AWS, a <strong>route table</strong> attached to a subnet plays the same role. A public subnet's default route points to an <strong>Internet Gateway</strong>. A private subnet's default route might point to a <strong>NAT Gateway</strong> for outbound-only internet access.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=nat--sharing-public-addresses>NAT — Sharing Public Addresses<a href=#nat--sharing-public-addresses class=hash-link aria-label="Direct link to NAT — Sharing Public Addresses" title="Direct link to NAT — Sharing Public Addresses" translate=no>​</a></h3>
+<p><strong>NAT (Network Address Translation)</strong> rewrites addresses as packets pass through a gateway.</p>
+<ul>
+<li class=""><strong>SNAT (Source NAT)</strong> — private IP → public IP on outbound traffic (your laptop behind home router)</li>
+<li class=""><strong>DNAT (Destination NAT)</strong> — public IP → private IP on inbound traffic (Elastic IP → EC2 private IP)</li>
+</ul>
+<p>Why private subnets need NAT for outbound access: instances with only private IPs cannot be <strong>return destinations</strong> on the public internet. NAT gives them a shared public identity for outbound connections while blocking unsolicited inbound traffic.</p>
+<p>Hermes's initial design uses a <strong>public subnet</strong> with an Elastic IP—simpler for learning. Production hardening often moves databases to private subnets with NAT for package updates.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=firewalls-vs-security-groups>Firewalls vs Security Groups<a href=#firewalls-vs-security-groups class=hash-link aria-label="Direct link to Firewalls vs Security Groups" title="Direct link to Firewalls vs Security Groups" translate=no>​</a></h3>
+<p>A <strong>firewall</strong> filters traffic based on rules: source IP, destination IP, port, protocol, allow/deny.</p>
+<p>Linux <strong>UFW</strong> (Uncomplicated Firewall) on your EC2 instance is a host firewall—it runs on the server itself. AWS <strong>Security Groups</strong> are a virtual firewall attached to ENIs (network interfaces)—they filter before traffic reaches the instance.</p>
+<p>Important distinction for later chapters:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th><th>Traditional stateful firewall<th>AWS Security Group<tbody><tr><td>Default stance<td>Often deny-all, explicit allows<td>Deny-all inbound; allow outbound by default<tr><td>Stateful<td>Usually yes<td><strong>Yes</strong> — return traffic for allowed connections is automatically permitted<tr><td>Scope<td>One machine<td>Attached to instance ENI</table>
+<p>You will configure both in <a class="" href=/hermes-on-aws-guide/part-ii-aws/10-establishing-trust>Chapter 10</a>. The conceptual model is the same: <strong>expose minimum ports, from minimum sources</strong>.</p>
 <hr/>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=architecture>Architecture<a href=#architecture class=hash-link aria-label="Direct link to Architecture" title="Direct link to Architecture" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=vpc-topology-preview>VPC Topology (Preview)<a href=#vpc-topology-preview class=hash-link aria-label="Direct link to VPC Topology (Preview)" title="Direct link to VPC Topology (Preview)" translate=no>​</a></h3>
+<p>This diagram previews what you build in Chapter 8—not something you create today:</p>
 <div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Internet (0.0.0.0/0)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   ┌────▼────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   │   IGW   │  Internet Gateway</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   └────┬────┘</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"> ┌──────▼──────────────────────────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"> │  VPC 10.0.0.0/16                │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"> │  ┌─────────────────────────┐    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"> │  │ Public Subnet 10.0.1.0/24│    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"> │  │  EC2: 10.0.1.50          │    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"> │  │  Route: 0.0.0.0/0 → IGW  │    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"> │  └─────────────────────────┘    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"> │  ┌─────────────────────────┐    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"> │  │ Private Subnet 10.0.2.0/24│   │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"> │  │  RDS: 10.0.2.100         │    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"> │  │  Route: 0.0.0.0/0 → NAT  │    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"> │  └─────────────────────────┘    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"> └─────────────────────────────────┘</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=request-path-to-hermes-end-state>Request Path to Hermes (End State)<a href=#request-path-to-hermes-end-state class=hash-link aria-label="Direct link to Request Path to Hermes (End State)" title="Direct link to Request Path to Hermes (End State)" translate=no>​</a></h3>
+<p>When the platform is complete, a request from your browser follows a path like this:</p>
 <!-- -->
+<p>Each hop depends on concepts from this chapter: DNS resolution, public routing, TCP connection establishment, and firewall rules allowing port 443.</p>
 <hr/>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=aws-console-walkthrough>AWS Console Walkthrough<a href=#aws-console-walkthrough class=hash-link aria-label="Direct link to AWS Console Walkthrough" title="Direct link to AWS Console Walkthrough" translate=no>​</a></h2>
-<p><em>Deferred to <a class="" href=/hermes-on-aws-guide/part-ii-aws/08-creating-network-for-hermes>Chapter 8: Creating the Network for Hermes</a>.</em></p>
-<p>This chapter builds the conceptual foundation. You will create these resources hands-on in Chapter 8.</p>
-<hr/>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=cli-walkthrough>CLI Walkthrough<a href=#cli-walkthrough class=hash-link aria-label="Direct link to CLI Walkthrough" title="Direct link to CLI Walkthrough" translate=no>​</a></h2>
-<!-- -->
-<!-- -->
-<!-- -->
-<!-- -->
-<p><em>Content coming soon.</em></p>
-<hr/>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=terraform-walkthrough>Terraform Walkthrough<a href=#terraform-walkthrough class=hash-link aria-label="Direct link to Terraform Walkthrough" title="Direct link to Terraform Walkthrough" translate=no>​</a></h2>
-<p><em>Deferred to <a class="" href=/hermes-on-aws-guide/part-ii-aws/08-creating-network-for-hermes>Chapter 8: Creating the Network for Hermes</a>.</em></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=walkthrough>Walkthrough<a href=#walkthrough class=hash-link aria-label="Direct link to Walkthrough" title="Direct link to Walkthrough" translate=no>​</a></h2>
+<p>This chapter's walkthrough uses <strong>local diagnostic tools</strong> on your laptop—the same tools you will use on your Hermes server in Part II. AWS console steps are deferred to <a class="" href=/hermes-on-aws-guide/part-ii-aws/08-creating-network-for-hermes>Chapter 8</a>.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=your-public-ip>Your Public IP<a href=#your-public-ip class=hash-link aria-label="Direct link to Your Public IP" title="Direct link to Your Public IP" translate=no>​</a></h3>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token function" style=color:#d73a49>curl</span><span class="token plain"> </span><span class="token parameter variable" style=color:#36acaa>-s</span><span class="token plain"> https://checkip.amazonaws.com</span><br/></div></code></pre></div></div>
+<p>Returns the public IPv4 address your traffic presents to the internet—what AWS Security Groups and SSH allow-lists will reference.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=routing-table>Routing Table<a href=#routing-table class=hash-link aria-label="Direct link to Routing Table" title="Direct link to Routing Table" translate=no>​</a></h3>
+<p>See where packets go by default:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic># Linux</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token function" style=color:#d73a49>ip</span><span class="token plain"> route</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic># macOS</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token function" style=color:#d73a49>netstat</span><span class="token plain"> </span><span class="token parameter variable" style=color:#36acaa>-rn</span><br/></div></code></pre></div></div>
+<p>Look for a <code>default</code> or <code>0.0.0.0/0</code> entry—that is your default gateway (usually your router).</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=dns-resolution>DNS Resolution<a href=#dns-resolution class=hash-link aria-label="Direct link to DNS Resolution" title="Direct link to DNS Resolution" translate=no>​</a></h3>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token function" style=color:#d73a49>dig</span><span class="token plain"> ec2.us-east-1.amazonaws.com +short</span><br/></div></code></pre></div></div>
+<p>The <code>+short</code> flag prints only IP addresses. If this fails, the problem is DNS or upstream connectivity—not AWS.</p>
+<p>Query a specific resolver if your default fails:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token function" style=color:#d73a49>dig</span><span class="token plain"> @8.8.8.8 github.com +short</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=path-tracing>Path Tracing<a href=#path-tracing class=hash-link aria-label="Direct link to Path Tracing" title="Direct link to Path Tracing" translate=no>​</a></h3>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic># macOS / most Linux</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token function" style=color:#d73a49>traceroute</span><span class="token plain"> ec2.us-east-1.amazonaws.com</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic># Linux alternative if traceroute missing</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">tracepath ec2.us-east-1.amazonaws.com</span><br/></div></code></pre></div></div>
+<p>Each line is a <strong>hop</strong>—a router along the path. Timeouts (<code>* * *</code>) often mean ICMP is blocked; that is common and not always a problem.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=tcp-connectivity-and-http>TCP Connectivity and HTTP<a href=#tcp-connectivity-and-http class=hash-link aria-label="Direct link to TCP Connectivity and HTTP" title="Direct link to TCP Connectivity and HTTP" translate=no>​</a></h3>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token function" style=color:#d73a49>curl</span><span class="token plain"> </span><span class="token parameter variable" style=color:#36acaa>-v</span><span class="token plain"> https://aws.amazon.com </span><span class="token operator file-descriptor important" style=color:#393A34>2</span><span class="token operator" style=color:#393A34>></span><span class="token file-descriptor important">&1</span><span class="token plain"> </span><span class="token operator" style=color:#393A34>|</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>head</span><span class="token plain"> </span><span class="token parameter variable" style=color:#36acaa>-30</span><br/></div></code></pre></div></div>
+<p><code>-v</code> (verbose) shows DNS resolution, TCP connection, TLS handshake, and HTTP headers. This is Layer 7 debugging in one command.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=local-listening-ports>Local Listening Ports<a href=#local-listening-ports class=hash-link aria-label="Direct link to Local Listening Ports" title="Direct link to Local Listening Ports" translate=no>​</a></h3>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic># Linux</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">ss </span><span class="token parameter variable" style=color:#36acaa>-tlnp</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic># macOS</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token function" style=color:#d73a49>netstat</span><span class="token plain"> </span><span class="token parameter variable" style=color:#36acaa>-an</span><span class="token plain"> </span><span class="token operator" style=color:#393A34>|</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>grep</span><span class="token plain"> LISTEN</span><br/></div></code></pre></div></div>
+<p>Shows which processes are waiting for inbound TCP connections—equivalent to checking whether a service is actually running on the port you expect.</p>
 <hr/>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=lab>Lab<a href=#lab class=hash-link aria-label="Direct link to Lab" title="Direct link to Lab" translate=no>​</a></h2>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=lab-4-network-diagnostics>Lab 4: Network Diagnostics<a href=#lab-4-network-diagnostics class=hash-link aria-label="Direct link to Lab 4: Network Diagnostics" title="Direct link to Lab 4: Network Diagnostics" translate=no>​</a></h3>
 <p><strong>Estimated Time:</strong> 30 minutes</p>
-<p><strong>Goal:</strong> Use command-line tools to inspect network connectivity and DNS.</p>
+<p><strong>Goal:</strong> Use command-line tools to inspect network connectivity and DNS; document findings that will help when debugging Hermes connectivity later.</p>
 <p><strong>Prerequisites:</strong> Internet access, terminal</p>
 <p><strong>Steps:</strong></p>
 <ol>
@@ -70,7 +369,7 @@
 <li class="">Test TCP connectivity: <code>curl -v https://aws.amazon.com 2>&1 | head -30</code></li>
 <li class="">Check open ports locally: <code>ss -tlnp</code> (Linux) or <code>netstat -an | grep LISTEN</code> (macOS)</li>
 <li class="">Calculate a subnet: how many hosts in a <code>/24</code>? A <code>/28</code>?</li>
-<li class="">Document your answers in <code>labs/ch04-network-notes.md</code></li>
+<li class="">Document your answers in <code>labs/ch04/network-notes.md</code> (template provided in the repo)</li>
 </ol>
 <p><strong>Verification:</strong></p>
 <div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token function" style=color:#d73a49>curl</span><span class="token plain"> </span><span class="token parameter variable" style=color:#36acaa>-s</span><span class="token plain"> https://checkip.amazonaws.com</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token function" style=color:#d73a49>dig</span><span class="token plain"> ec2.us-east-1.amazonaws.com +short</span><br/></div></code></pre></div></div>
@@ -101,32 +400,141 @@
 
 
 
-<table><thead><tr><th>Problem<th>Cause<th>Fix<tbody><tr><td><code>traceroute: command not found</code><td>Not installed<td><code>brew install traceroute</code> or use <code>tracepath</code><tr><td>DNS timeout<td>Network or DNS issue<td>Try <code>dig @8.8.8.8 domain.com</code><tr><td><code>curl: (6) Could not resolve host</code><td>DNS failure<td>Check <code>/etc/resolv.conf</code> or network connection</table>
-<p><strong>Cleanup:</strong> Nothing to clean up.</p>
+
+
+
+
+
+<table><thead><tr><th>Problem<th>Cause<th>Fix<tbody><tr><td><code>traceroute: command not found</code><td>Not installed<td><code>brew install traceroute</code> or use <code>tracepath</code><tr><td>DNS timeout<td>Network or DNS issue<td>Try <code>dig @8.8.8.8 domain.com</code><tr><td><code>curl: (6) Could not resolve host</code><td>DNS failure<td>Check <code>/etc/resolv.conf</code> or network connection<tr><td><code>ss: command not found</code><td>iproute2 missing<td><code>sudo apt install -y iproute2</code> on Ubuntu</table>
+<p><strong>Cleanup:</strong> Nothing to clean up. Keep <code>labs/ch04/network-notes.md</code> for reference when configuring Security Groups in Chapter 10.</p>
 <hr/>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=verification>Verification<a href=#verification class=hash-link aria-label="Direct link to Verification" title="Direct link to Verification" translate=no>​</a></h2>
-<p>You can resolve DNS, trace routes, and identify your public IP from the command line.</p>
+<p>Confirm you can answer these without notes:</p>
+<ul>
+<li class="">Your public IP and default gateway</li>
+<li class="">The IP address <code>dig</code> returns for an AWS hostname</li>
+<li class="">How many usable addresses a <code>/24</code> contains</li>
+<li class="">The difference between TCP and UDP for Hermes services (all TCP)</li>
+</ul>
+<p>Re-run the verification commands from Lab 4 if any answer is uncertain.</p>
 <hr/>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=troubleshooting>Troubleshooting<a href=#troubleshooting class=hash-link aria-label="Direct link to Troubleshooting" title="Direct link to Troubleshooting" translate=no>​</a></h2>
 <p>See Lab 4 troubleshooting table above.</p>
+<p><strong>General debug order</strong> (memorize this—it applies on your laptop and on EC2):</p>
+<ol>
+<li class=""><strong>DNS</strong> — does the name resolve? (<code>dig</code>)</li>
+<li class=""><strong>Routing</strong> — is there a path? (<code>traceroute</code>, <code>ip route</code>)</li>
+<li class=""><strong>Reachability</strong> — does the host respond? (<code>ping</code>—may be blocked; do not rely on it alone)</li>
+<li class=""><strong>Port</strong> — is anything listening? (<code>ss -tlnp</code> on the server)</li>
+<li class=""><strong>Firewall</strong> — is traffic allowed? (Security Group, UFW—Chapters 8 and 10)</li>
+</ol>
+<p>Work top to bottom. Skipping DNS to tweak firewall rules wastes time when the real problem is a typo in the hostname.</p>
 <hr/>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=review-questions>Review Questions<a href=#review-questions class=hash-link aria-label="Direct link to Review Questions" title="Direct link to Review Questions" translate=no>​</a></h2>
 <ol>
 <li class="">How many usable host addresses are in a <code>/24</code> subnet?</li>
 <li class="">What is the difference between a public and private IP address?</li>
 <li class="">Why do instances in a private subnet need a NAT Gateway to reach the internet?</li>
-<li class="">What layer of the OSI model does DNS operate at?</li>
+<li class="">What layer of the OSI model does DNS operate at? (Hint: DNS is often described as an application-layer protocol that uses UDP for transport.)</li>
 <li class="">How does a Security Group differ from a traditional stateful firewall?</li>
+<li class="">Why does Hermes use TCP for PostgreSQL and HTTPS rather than UDP?</li>
+<li class="">What does a default route (<code>0.0.0.0/0</code>) in a route table mean?</li>
 </ol>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=key-takeaways>Key Takeaways<a href=#key-takeaways class=hash-link aria-label="Direct link to Key Takeaways" title="Direct link to Key Takeaways" translate=no>​</a></h2>
+<ul>
+<li class="">The internet is <strong>packet-switched</strong>: data travels in labeled chunks routed hop by hop.</li>
+<li class=""><strong>IP addresses</strong> identify endpoints; <strong>CIDR</strong> describes ranges; <strong>RFC 1918</strong> private ranges are not routable on the public internet.</li>
+<li class=""><strong>TCP</strong> is reliable and connection-oriented (HTTPS, SSH, databases); <strong>UDP</strong> is fast and best-effort (DNS queries, streaming).</li>
+<li class=""><strong>DNS</strong> translates names to IPs—always verify resolution before debugging connectivity.</li>
+<li class=""><strong>Routing tables</strong> decide the next hop; <strong>NAT</strong> lets private networks share public addresses.</li>
+<li class=""><strong>Firewalls</strong> (UFW, Security Groups) enforce least privilege—expose only the ports Hermes needs.</li>
+<li class="">AWS VPC components map directly to these concepts; Chapter 8 implements what this chapter explains.</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=glossary-additions>Glossary Additions<a href=#glossary-additions class=hash-link aria-label="Direct link to Glossary Additions" title="Direct link to Glossary Additions" translate=no>​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Term<th>Definition<tbody><tr><td><strong>CIDR</strong><td>Classless Inter-Domain Routing—notation for IP ranges (e.g., <code>10.0.0.0/16</code>).<tr><td><strong>DNS</strong><td>Domain Name System—hierarchical name-to-IP resolution.<tr><td><strong>Default route</strong><td>Catch-all routing rule (<code>0.0.0.0/0</code>) for destinations not matching other entries.<tr><td><strong>Elastic IP</strong><td>Static public IPv4 address assigned to an AWS account; maps to instance private IP.<tr><td><strong>Internet Gateway</strong><td>AWS VPC component allowing bidirectional traffic between VPC and the internet.<tr><td><strong>NAT</strong><td>Network Address Translation—rewrites IP addresses at a network boundary.<tr><td><strong>Packet</strong><td>A unit of data with source/destination headers, routed independently across networks.<tr><td><strong>Port</strong><td>A 16-bit number identifying a specific service on a host (e.g., 443 for HTTPS).<tr><td><strong>Route table</strong><td>Set of rules determining where packets are sent next.<tr><td><strong>Security Group</strong><td>AWS stateful virtual firewall attached to instance network interfaces.<tr><td><strong>Subnet</strong><td>A subdivision of a VPC CIDR block, tied to one Availability Zone.<tr><td><strong>TCP</strong><td>Transmission Control Protocol—reliable, connection-oriented transport.<tr><td><strong>UDP</strong><td>User Datagram Protocol—connectionless, unreliable transport.<tr><td><strong>VPC</strong><td>Virtual Private Cloud—isolated virtual network in AWS.</table>
 <hr/>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=further-reading>Further Reading<a href=#further-reading class=hash-link aria-label="Direct link to Further Reading" title="Direct link to Further Reading" translate=no>​</a></h2>
 <ul>
 <li class=""><a href=https://www.pearson.com/en-us/subject-catalog/p/tcp-ip-illustrated-volume-1/P200000003380 target=_blank rel="noopener noreferrer" class="">TCP/IP Illustrated — W. Richard Stevens</a></li>
 <li class=""><a href=https://www.pearson.com/en-us/subject-catalog/p/computer-networking/P200000003339 target=_blank rel="noopener noreferrer" class="">Computer Networking: A Top-Down Approach — Kurose & Ross</a></li>
 <li class=""><a href=https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html target=_blank rel="noopener noreferrer" class="">AWS VPC documentation</a></li>
+<li class=""><a href=https://www.rfc-editor.org/rfc/rfc1918 target=_blank rel="noopener noreferrer" class="">RFC 1918 — Address Allocation for Private Internets</a></li>
 </ul>
 <hr/>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=references>References<a href=#references class=hash-link aria-label="Direct link to References" title="Direct link to References" translate=no>​</a></h2>
-<p><em>To be added as content is written.</em></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=whats-next>What's Next<a href=#whats-next class=hash-link aria-label="Direct link to What's Next" title="Direct link to What's Next" translate=no>​</a></h2>
+<p><a class="" href=/hermes-on-aws-guide/part-i-foundations/05-virtualization>Chapter 5: Virtualization</a> explains how hypervisors turn one physical machine into many isolated environments—the foundation of EC2.</p>
+<p>If you are eager to build: <a class="" href=/hermes-on-aws-guide/part-i-foundations/06-designing-the-hermes-platform>Chapter 6</a> maps the Hermes platform design, then <a class="" href=/hermes-on-aws-guide/part-ii-aws/07-provisioning-aws-account>Chapter 7</a> opens your AWS account. <a class="" href=/hermes-on-aws-guide/part-ii-aws/08-creating-network-for-hermes>Chapter 8</a> implements the VPC diagram from this chapter.</p>
+<p><strong>Reading paths:</strong></p>
+<ul>
+<li class=""><strong>Path A (recommended):</strong> Ch 4 → Ch 6 (design) → Part II (build)—networking concepts fresh when you create the VPC.</li>
+<li class=""><strong>Path B:</strong> Ch 4 → Ch 5 → Ch 6 → Part II—full foundations before any AWS work.</li>
+</ul>
 <hr/>
-<p><a class="" href=/hermes-on-aws-guide/part-i-foundations/03-linux>← Chapter 3</a> | <a class="" href=/hermes-on-aws-guide/part-i-foundations/05-virtualization>Next: Chapter 5 — Virtualization →</a></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/68thandMaine/hermes-on-aws-guide/tree/main/docs/part-i-foundations/04-networking.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href=/hermes-on-aws-guide/part-i-foundations/03-linux><div class=pagination-nav__sublabel>Previous</div><div class=pagination-nav__label>Chapter 3: Linux — The Operating System of the Cloud</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/hermes-on-aws-guide/part-i-foundations/05-virtualization><div class=pagination-nav__sublabel>Next</div><div class=pagination-nav__label>Chapter 5: Virtualization</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#learning-objectives class="table-of-contents__link toc-highlight">Learning Objectives</a><li><a href=#background class="table-of-contents__link toc-highlight">Background</a><li><a href=#theory class="table-of-contents__link toc-highlight">Theory</a><li><a href=#architecture class="table-of-contents__link toc-highlight">Architecture</a><li><a href=#aws-console-walkthrough class="table-of-contents__link toc-highlight">AWS Console Walkthrough</a><li><a href=#cli-walkthrough class="table-of-contents__link toc-highlight">CLI Walkthrough</a><li><a href=#terraform-walkthrough class="table-of-contents__link toc-highlight">Terraform Walkthrough</a><li><a href=#lab class="table-of-contents__link toc-highlight">Lab</a><ul><li><a href=#lab-4-network-diagnostics class="table-of-contents__link toc-highlight">Lab 4: Network Diagnostics</a></ul><li><a href=#verification class="table-of-contents__link toc-highlight">Verification</a><li><a href=#troubleshooting class="table-of-contents__link toc-highlight">Troubleshooting</a><li><a href=#review-questions class="table-of-contents__link toc-highlight">Review Questions</a><li><a href=#further-reading class="table-of-contents__link toc-highlight">Further Reading</a><li><a href=#references class="table-of-contents__link toc-highlight">References</a></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>Book</div><ul class="footer__items clean-list"><li class=footer__item><a class=footer__link-item href=/hermes-on-aws-guide/>Table of Contents</a><li class=footer__item><a href=https://github.com/68thandMaine/hermes-on-aws-guide/blob/main/CONTRIBUTING.md target=_blank rel="noopener noreferrer" class=footer__link-item>Contributing<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>Author</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/crudnicky target=_blank rel="noopener noreferrer" class=footer__link-item>Christopher Rudnicky<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 Christopher Rudnicky. MIT License.</div></div></div></footer></div></body>
+<p><a class="" href=/hermes-on-aws-guide/part-i-foundations/03-linux>← Chapter 3: Linux</a> | <a class="" href=/hermes-on-aws-guide/part-i-foundations/05-virtualization>Next: Chapter 5 — Virtualization →</a></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/68thandMaine/hermes-on-aws-guide/tree/main/docs/part-i-foundations/04-networking.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href=/hermes-on-aws-guide/part-i-foundations/03-linux><div class=pagination-nav__sublabel>Previous</div><div class=pagination-nav__label>Chapter 3: Linux — The Operating System of the Cloud</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/hermes-on-aws-guide/part-i-foundations/05-virtualization><div class=pagination-nav__sublabel>Next</div><div class=pagination-nav__label>Chapter 5: Virtualization</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#learning-objectives class="table-of-contents__link toc-highlight">Learning Objectives</a><li><a href=#prerequisites class="table-of-contents__link toc-highlight">Prerequisites</a><li><a href=#estimated-time class="table-of-contents__link toc-highlight">Estimated Time</a><li><a href=#background class="table-of-contents__link toc-highlight">Background</a><ul><li><a href=#from-arpanet-to-the-internet class="table-of-contents__link toc-highlight">From ARPANET to the Internet</a><li><a href=#public-vs-private-ip-addresses class="table-of-contents__link toc-highlight">Public vs Private IP Addresses</a><li><a href=#how-aws-abstracts-networking class="table-of-contents__link toc-highlight">How AWS Abstracts Networking</a></ul><li><a href=#theory class="table-of-contents__link toc-highlight">Theory</a><ul><li><a href=#the-osi-model--a-practical-subset class="table-of-contents__link toc-highlight">The OSI Model — A Practical Subset</a><li><a href=#ip-addressing-and-cidr class="table-of-contents__link toc-highlight">IP Addressing and CIDR</a><li><a href=#tcp-vs-udp class="table-of-contents__link toc-highlight">TCP vs UDP</a><li><a href=#dns--names-to-numbers class="table-of-contents__link toc-highlight">DNS — Names to Numbers</a><li><a href=#routing-and-default-gateways class="table-of-contents__link toc-highlight">Routing and Default Gateways</a><li><a href=#nat--sharing-public-addresses class="table-of-contents__link toc-highlight">NAT — Sharing Public Addresses</a><li><a href=#firewalls-vs-security-groups class="table-of-contents__link toc-highlight">Firewalls vs Security Groups</a></ul><li><a href=#architecture class="table-of-contents__link toc-highlight">Architecture</a><ul><li><a href=#vpc-topology-preview class="table-of-contents__link toc-highlight">VPC Topology (Preview)</a><li><a href=#request-path-to-hermes-end-state class="table-of-contents__link toc-highlight">Request Path to Hermes (End State)</a></ul><li><a href=#walkthrough class="table-of-contents__link toc-highlight">Walkthrough</a><ul><li><a href=#your-public-ip class="table-of-contents__link toc-highlight">Your Public IP</a><li><a href=#routing-table class="table-of-contents__link toc-highlight">Routing Table</a><li><a href=#dns-resolution class="table-of-contents__link toc-highlight">DNS Resolution</a><li><a href=#path-tracing class="table-of-contents__link toc-highlight">Path Tracing</a><li><a href=#tcp-connectivity-and-http class="table-of-contents__link toc-highlight">TCP Connectivity and HTTP</a><li><a href=#local-listening-ports class="table-of-contents__link toc-highlight">Local Listening Ports</a></ul><li><a href=#lab class="table-of-contents__link toc-highlight">Lab</a><ul><li><a href=#lab-4-network-diagnostics class="table-of-contents__link toc-highlight">Lab 4: Network Diagnostics</a></ul><li><a href=#verification class="table-of-contents__link toc-highlight">Verification</a><li><a href=#troubleshooting class="table-of-contents__link toc-highlight">Troubleshooting</a><li><a href=#review-questions class="table-of-contents__link toc-highlight">Review Questions</a><li><a href=#key-takeaways class="table-of-contents__link toc-highlight">Key Takeaways</a><li><a href=#glossary-additions class="table-of-contents__link toc-highlight">Glossary Additions</a><li><a href=#further-reading class="table-of-contents__link toc-highlight">Further Reading</a><li><a href=#whats-next class="table-of-contents__link toc-highlight">What's Next</a></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>Book</div><ul class="footer__items clean-list"><li class=footer__item><a class=footer__link-item href=/hermes-on-aws-guide/>Table of Contents</a><li class=footer__item><a href=https://github.com/68thandMaine/hermes-on-aws-guide/blob/main/CONTRIBUTING.md target=_blank rel="noopener noreferrer" class=footer__link-item>Contributing<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>Author</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/crudnicky target=_blank rel="noopener noreferrer" class=footer__link-item>Christopher Rudnicky<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 Christopher Rudnicky. MIT License.</div></div></div></footer></div></body>
