@@ -10,6 +10,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
+- Chapter 4: Networking Fundamentals — full draft (TCP/IP, CIDR, DNS, NAT, routing, local diagnostics lab); was outline-only stub
 - Editorial: local inference standardized on **llama.cpp** (`llama-server`)—removed Ollama as primary path; Ch 36 "Why not Ollama"; glossary, diagrams, references, labs index updated
 - Appendices: Command Reference, Repository Walkthrough, Cost Estimates, Troubleshooting Guide — reference manual; glossary expanded
 - Chapter 44: The Platform You Built — retrospective capstone

@@ -41,6 +41,13 @@ Terms used throughout *Building a Personal AI Cloud*. Terms are added as chapter
 | **Availability Zone (AZ)** | An isolated location within an AWS region with independent power, networking, and cooling. | Ch 2 |
 | **AMI** | Amazon Machine Image — a template for EC2 instances containing OS and optional software. | Ch 7 |
 | **CIDR** | Classless Inter-Domain Routing — notation for IP address ranges (e.g., `10.0.0.0/16`). | Ch 4 |
+| **Default route** | Catch-all routing rule (`0.0.0.0/0`) for destinations not matching other entries. | Ch 4 |
+| **DNS** | Domain Name System — hierarchical service translating hostnames to IP addresses. | Ch 4 |
+| **NAT** | Network Address Translation — rewrites IP addresses at a network boundary (SNAT/DNAT). | Ch 4 |
+| **Packet** | Unit of network data with source/destination headers, routed independently. | Ch 4 |
+| **Port** | 16-bit number identifying a service on a host (e.g., 443 for HTTPS). | Ch 4 |
+| **TCP** | Transmission Control Protocol — reliable, connection-oriented transport. | Ch 4 |
+| **UDP** | User Datagram Protocol — connectionless, best-effort transport. | Ch 4 |
 | **CNI** | Container Network Interface — plugin that configures network interfaces for Kubernetes pods. | Ch 11 |
 | **ConfigMap** | Kubernetes resource for storing non-sensitive configuration data. | Ch 11 |
 | **Container** | A lightweight, isolated process running on a shared kernel, packaged with its dependencies. | Ch 10 |
