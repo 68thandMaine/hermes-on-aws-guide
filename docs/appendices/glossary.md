@@ -17,6 +17,8 @@ Terms used throughout *Building a Personal AI Cloud*. Terms are added as chapter
 | **RAM** | Random Access Memory; fast, volatile storage where running programs execute. | Ch 2 |
 | **Swap** | Using disk space as overflow when RAM is full; dramatically slower than RAM. | Ch 2 |
 | **Thread** | A lightweight execution path within a process; threads share the process's memory. | Ch 2 |
+| **Type 1 hypervisor** | Runs directly on hardware (KVM, Nitro, ESXi); used in data centers and EC2. | Ch 5 |
+| **Type 2 hypervisor** | Runs as an application on a host OS (VirtualBox, Multipass); used for local development VMs. | Ch 5 |
 | **Virtualization** | Running multiple isolated operating systems on one physical machine via a hypervisor. | Ch 2 |
 | **Daemon** | Background process without a controlling terminal, often started at boot. | Ch 3 |
 | **PID** | Process ID—unique numeric identifier for a running process. | Ch 3 |
@@ -39,12 +41,14 @@ Terms used throughout *Building a Personal AI Cloud*. Terms are added as chapter
 | **Infrastructure as Code (IaC)** | Defining servers, networks, and services in version-controlled files rather than manual console clicks. | Ch 1 |
 | **Production-inspired** | Architecture mirroring real SaaS patterns (VPC isolation, orchestration, observability) without production SLA guarantees. | Ch 1 |
 | **Availability Zone (AZ)** | An isolated location within an AWS region with independent power, networking, and cooling. | Ch 2 |
+| **Bare metal** | Physical server hardware without a hypervisor guest layer. | Ch 5 |
 | **AMI** | Amazon Machine Image — a template for EC2 instances containing OS and optional software. | Ch 7 |
 | **CIDR** | Classless Inter-Domain Routing — notation for IP address ranges (e.g., `10.0.0.0/16`). | Ch 4 |
 | **Default route** | Catch-all routing rule (`0.0.0.0/0`) for destinations not matching other entries. | Ch 4 |
 | **DNS** | Domain Name System — hierarchical service translating hostnames to IP addresses. | Ch 4 |
 | **NAT** | Network Address Translation — rewrites IP addresses at a network boundary (SNAT/DNAT). | Ch 4 |
 | **Packet** | Unit of network data with source/destination headers, routed independently. | Ch 4 |
+| **Paravirtualization** | Guest OS using hypervisor-aware drivers for faster I/O instead of emulating legacy devices. | Ch 5 |
 | **Port** | 16-bit number identifying a service on a host (e.g., 443 for HTTPS). | Ch 4 |
 | **TCP** | Transmission Control Protocol — reliable, connection-oriented transport. | Ch 4 |
 | **UDP** | User Datagram Protocol — connectionless, best-effort transport. | Ch 4 |
@@ -54,10 +58,12 @@ Terms used throughout *Building a Personal AI Cloud*. Terms are added as chapter
 | **Control Plane** | The Kubernetes components that manage the cluster (API server, etcd, scheduler, controller manager). | Ch 11 |
 | **CronJob** | Kubernetes resource that runs Jobs on a schedule. | Ch 18 |
 | **Deployment** | Kubernetes resource that manages stateless application replicas with rolling updates. | Ch 11 |
-| **EBS** | Elastic Block Store — persistent block storage volumes for EC2 instances. | Ch 9 |
-| **EC2** | Elastic Compute Cloud — AWS virtual machine service. | Ch 7 |
+| **EBS** | Elastic Block Store — persistent block storage volumes for EC2 instances. | Ch 5, 9 |
+| **EC2** | Elastic Compute Cloud — AWS virtual machine service. | Ch 5, 7 |
+| **ENI** | Elastic Network Interface — virtual NIC attached to an EC2 instance in a VPC. | Ch 5 |
 | **etcd** | Distributed key-value store used by Kubernetes to store cluster state. | Ch 11 |
 | **gp3** | General Purpose SSD EBS volume type with independently configurable IOPS and throughput. | Ch 9 |
+| **Guest OS** | Operating system running inside a virtual machine (e.g., Ubuntu on EC2). | Ch 5 |
 | **IAM** | Identity and Access Management — AWS service for authentication and authorization. | Ch 6 |
 | **IGW** | Internet Gateway — VPC component allowing internet access for public subnets. | Ch 8 |
 | **Ingress** | Kubernetes resource defining external access to services, typically via HTTP/HTTPS routes. | Ch 12 |
@@ -65,10 +71,11 @@ Terms used throughout *Building a Personal AI Cloud*. Terms are added as chapter
 | **k3s** | Lightweight Kubernetes distribution by Rancher, designed for edge and resource-constrained environments. | Ch 12 |
 | **kubectl** | Command-line tool for interacting with Kubernetes clusters. | Ch 11 |
 | **NAT Gateway** | AWS managed service allowing instances in private subnets to reach the internet. | Ch 8 |
-| **Nitro** | AWS hypervisor system offloading network, storage, and security to dedicated hardware. | Ch 7 |
+| **Nitro** | AWS hypervisor system offloading network, storage, and security to dedicated hardware. | Ch 5, 7 |
 | **Node** | A worker machine in Kubernetes (virtual or physical) that runs pods. | Ch 11 |
 | **OIDC** | OpenID Connect — authentication protocol used for GitHub Actions → AWS federation. | Ch 14 |
 | **Ollama** | *(Not used in this book.)* Desktop-friendly model runner; we use **llama.cpp** directly for explicit GGUF control and Kubernetes-native serving ([Chapter 36](../part-vi-ai/36-model-serving.md)). | — |
+| **Oversubscription** | Allocating more virtual resources than physical capacity, relying on average usage patterns. | Ch 5 |
 | **PersistentVolumeClaim (PVC)** | Kubernetes request for persistent storage, bound to a PersistentVolume. | Ch 16 |
 | **Pod** | The smallest deployable unit in Kubernetes — one or more containers sharing network and storage. | Ch 11 |
 | **Quantization** | Reducing model precision (e.g., FP16 → Q4) to decrease size and memory requirements. | Ch 17 |

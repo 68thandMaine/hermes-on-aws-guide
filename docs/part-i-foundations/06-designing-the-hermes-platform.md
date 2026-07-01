@@ -40,7 +40,7 @@ After completing this chapter, you will be able to:
 
 - [Chapter 1: Introduction](../part-i-foundations/01-introduction.md) — why you are building a cloud environment
 - [Chapter 2: How Computers Actually Work](../part-i-foundations/02-how-computers-work.md) — CPU, memory, storage, networking
-- Chapters 3–5 (Linux, networking, virtualization) — **in progress or skim if experienced**; you need enough context to administer an Ubuntu server, not encyclopedic Linux knowledge
+- [Chapter 3: Linux](03-linux.md), [Chapter 4: Networking](04-networking.md), and [Chapter 5: Virtualization](05-virtualization.md) — **skim if experienced**; you need enough context to administer an Ubuntu server and understand EC2 as a VM, not encyclopedic knowledge of every section
 
 No AWS account required yet. **Do not provision infrastructure until you finish this chapter.**
 

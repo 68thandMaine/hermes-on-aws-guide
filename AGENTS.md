@@ -49,6 +49,8 @@ This file orients AI coding agents working in **Building a Personal AI Cloud**.
 | 1 | `docs/part-i-foundations/01-introduction.md` | Laptop vs Codespaces vs own cloud |
 | 2 | `docs/part-i-foundations/02-how-computers-work.md` | CPU/RAM/storage/network mental model |
 | 3 | `docs/part-i-foundations/03-linux.md` | Server-first Linux; Sections 3.1–3.3 written; 3.4–3.7 + labs remain |
+| 4 | `docs/part-i-foundations/04-networking.md` | Full draft — OSI subset, TCP/UDP, DNS, CIDR, NAT, Lab 4 |
+| 5 | `docs/part-i-foundations/05-virtualization.md` | Full draft — hypervisors, VMs vs containers, EC2/EBS/AMI, Lab 5 |
 | 6 | `docs/part-i-foundations/06-designing-the-hermes-platform.md` | Platform design before AWS; Hermes/llama.cpp as separate services |
 | 7 | `docs/part-ii-aws/07-provisioning-aws-account.md` | Full draft — account, MFA, billing alarm, hermes-admin, CLI |
 | 8 | `docs/part-ii-aws/08-creating-network-for-hermes.md` | Full draft — Concept/Design/Implementation; VPC, IGW, subnet, routes |

@@ -51,7 +51,7 @@ See [Book Completion](STYLE_GUIDE.md#book-completion-design-done-execution-remai
 | 2 | [How Computers Actually Work](docs/part-i-foundations/02-how-computers-work.md) | `02-how-computers-work.md` | ✏️ Draft |
 | 3 | [Linux](docs/part-i-foundations/03-linux.md) | `03-linux.md` | ✏️ Draft |
 | 4 | [Networking](docs/part-i-foundations/04-networking.md) | `04-networking.md` | ✏️ Draft |
-| 5 | [Virtualization](docs/part-i-foundations/05-virtualization.md) | `05-virtualization.md` | ⬜ Planned |
+| 5 | [Virtualization](docs/part-i-foundations/05-virtualization.md) | `05-virtualization.md` | ✏️ Draft |
 | 6 | [Designing the Hermes Platform](docs/part-i-foundations/06-designing-the-hermes-platform.md) | `06-designing-the-hermes-platform.md` | ✏️ Draft |
 
 ---
