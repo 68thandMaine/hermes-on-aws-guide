@@ -1,8 +1,492 @@
-<!doctype html><html lang=en dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-part-i-foundations/05-virtualization" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>Chapter 5: Virtualization | Building a Personal AI Cloud</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://68thandMaine.github.io/hermes-on-aws-guide/img/social-card.svg /><meta data-rh=true name=twitter:image content=https://68thandMaine.github.io/hermes-on-aws-guide/img/social-card.svg /><meta data-rh=true property=og:url content=https://68thandMaine.github.io/hermes-on-aws-guide/part-i-foundations/05-virtualization /><meta data-rh=true property=og:locale content=en /><meta data-rh=true name=docusaurus_locale content=en /><meta data-rh=true name=docsearch:language content=en /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="Chapter 5: Virtualization | Building a Personal AI Cloud"/><meta data-rh=true name=description content="Virtualization from hypervisors to VMs."/><meta data-rh=true property=og:description content="Virtualization from hypervisors to VMs."/><link data-rh=true rel=icon href=/hermes-on-aws-guide/img/favicon.ico /><link data-rh=true rel=canonical href=https://68thandMaine.github.io/hermes-on-aws-guide/part-i-foundations/05-virtualization /><link data-rh=true rel=alternate href=https://68thandMaine.github.io/hermes-on-aws-guide/part-i-foundations/05-virtualization hreflang=en /><link data-rh=true rel=alternate href=https://68thandMaine.github.io/hermes-on-aws-guide/part-i-foundations/05-virtualization hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://68thandMaine.github.io/hermes-on-aws-guide/part-i-foundations/05-virtualization","name":"Chapter 5: Virtualization","position":1}]}</script><link rel=stylesheet href=/hermes-on-aws-guide/assets/css/styles.56f47aec.css /><script src=/hermes-on-aws-guide/assets/js/runtime~main.0d580d1e.js defer></script><script src=/hermes-on-aws-guide/assets/js/main.4573ddba.js defer></script></head><body><svg style="display: none;"><defs>
+<!doctype html><html lang=en dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-part-i-foundations/05-virtualization" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>Chapter 5: Virtualization | Building a Personal AI Cloud</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://68thandMaine.github.io/hermes-on-aws-guide/img/social-card.svg /><meta data-rh=true name=twitter:image content=https://68thandMaine.github.io/hermes-on-aws-guide/img/social-card.svg /><meta data-rh=true property=og:url content=https://68thandMaine.github.io/hermes-on-aws-guide/part-i-foundations/05-virtualization /><meta data-rh=true property=og:locale content=en /><meta data-rh=true name=docusaurus_locale content=en /><meta data-rh=true name=docsearch:language content=en /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="Chapter 5: Virtualization | Building a Personal AI Cloud"/><meta data-rh=true name=description content="Virtualization from hypervisors to VMs—and why EC2 exists."/><meta data-rh=true property=og:description content="Virtualization from hypervisors to VMs—and why EC2 exists."/><link data-rh=true rel=icon href=/hermes-on-aws-guide/img/favicon.ico /><link data-rh=true rel=canonical href=https://68thandMaine.github.io/hermes-on-aws-guide/part-i-foundations/05-virtualization /><link data-rh=true rel=alternate href=https://68thandMaine.github.io/hermes-on-aws-guide/part-i-foundations/05-virtualization hreflang=en /><link data-rh=true rel=alternate href=https://68thandMaine.github.io/hermes-on-aws-guide/part-i-foundations/05-virtualization hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://68thandMaine.github.io/hermes-on-aws-guide/part-i-foundations/05-virtualization","name":"Chapter 5: Virtualization","position":1}]}</script><link rel=stylesheet href=/hermes-on-aws-guide/assets/css/styles.56f47aec.css /><script src=/hermes-on-aws-guide/assets/js/runtime~main.8870bd6d.js defer></script><script src=/hermes-on-aws-guide/assets/js/main.4573ddba.js defer></script></head><body><svg style="display: none;"><defs>
 <symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
 </defs></svg>
-<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-ce0")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id=__docusaurus><link rel=preload as=image href=/hermes-on-aws-guide/img/logo.svg /><div role=region aria-label="Skip to main content"><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>Skip to main content</a></div><nav aria-label=Main class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/hermes-on-aws-guide/><div class=navbar__logo><img src=/hermes-on-aws-guide/img/logo.svg alt="Personal AI Cloud" class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/hermes-on-aws-guide/img/logo.svg alt="Personal AI Cloud" class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">Personal AI Cloud</b></a><a aria-current=page class="navbar__item navbar__link guides-top-header navbar__link--active" href=/hermes-on-aws-guide/>Guides</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/68thandMaine/hermes-on-aws-guide target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=Search aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/hermes-on-aws-guide/preface/00-preface><span title=Preface class=linkLabel_WmDU>Preface</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role=button aria-expanded=true href=/hermes-on-aws-guide/part-i-foundations/01-introduction><span title="Part I — Foundations" class=categoryLinkLabel_W154>Part I — Foundations</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/01-introduction><span title="Chapter 1: Introduction" class=linkLabel_WmDU>Chapter 1: Introduction</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/02-how-computers-work><span title="Chapter 2: How Computers Actually Work" class=linkLabel_WmDU>Chapter 2: How Computers Actually Work</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/03-linux><span title="Chapter 3: Linux — The Operating System of the Cloud" class=linkLabel_WmDU>Chapter 3: Linux — The Operating System of the Cloud</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/04-networking><span title="Chapter 4: Networking Fundamentals" class=linkLabel_WmDU>Chapter 4: Networking Fundamentals</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/05-virtualization><span title="Chapter 5: Virtualization" class=linkLabel_WmDU>Chapter 5: Virtualization</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/06-designing-the-hermes-platform><span title="Chapter 6: Designing the Hermes Platform" class=linkLabel_WmDU>Chapter 6: Designing the Hermes Platform</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-ii-aws/07-provisioning-aws-account><span title="Part II — AWS & Platform" class=categoryLinkLabel_W154>Part II — AWS & Platform</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-iii-containers/16-docker><span title="Part III — Containers" class=categoryLinkLabel_W154>Part III — Containers</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-iv-kubernetes/19-why-kubernetes-exists><span title="Part IV — Kubernetes" class=categoryLinkLabel_W154>Part IV — Kubernetes</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-v-infrastructure/29-terraform><span title="Part V — Infrastructure" class=categoryLinkLabel_W154>Part V — Infrastructure</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-vi-ai/34-running-hermes><span title="Part VI — AI Infrastructure" class=categoryLinkLabel_W154>Part VI — AI Infrastructure</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-vii-hermes/39-distributed-cognitive-execution><span title="Part VII — Hermes Agent Platform" class=categoryLinkLabel_W154>Part VII — Hermes Agent Platform</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/appendices/glossary><span title=Appendices class=categoryLinkLabel_W154>Appendices</span></a></div></ul></nav><button type=button title="Collapse sidebar" aria-label="Collapse sidebar" class="button button--secondary button--outline collapseSidebarButton_PEFL"><svg width=20 height=20 aria-hidden=true class=collapseSidebarButtonIcon_kv0_><g fill=#7a7a7a><path d="M9.992 10.023c0 .2-.062.399-.172.547l-4.996 7.492a.982.982 0 01-.828.454H1c-.55 0-1-.453-1-1 0-.2.059-.403.168-.551l4.629-6.942L.168 3.078A.939.939 0 010 2.528c0-.548.45-.997 1-.997h2.996c.352 0 .649.18.828.45L9.82 9.472c.11.148.172.347.172.55zm0 0"/><path d="M19.98 10.023c0 .2-.058.399-.168.547l-4.996 7.492a.987.987 0 01-.828.454h-3c-.547 0-.996-.453-.996-1 0-.2.059-.403.168-.551l4.625-6.942-4.625-6.945a.939.939 0 01-.168-.55 1 1 0 01.996-.997h3c.348 0 .649.18.828.45l4.996 7.492c.11.148.168.347.168.55zm0 0"/></g></svg></button></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=Breadcrumbs><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label="Home page" class=breadcrumbs__link href=/hermes-on-aws-guide/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><span class=breadcrumbs__link>Part I — Foundations</span><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>Chapter 5: Virtualization</span></ul></nav><div class="theme-doc-markdown markdown"><header><h1>Chapter 5: Virtualization</h1></header>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-ce0")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id=__docusaurus><link rel=preload as=image href=/hermes-on-aws-guide/img/logo.svg /><div role=region aria-label="Skip to main content"><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>Skip to main content</a></div><nav aria-label=Main class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/hermes-on-aws-guide/><div class=navbar__logo><img src=/hermes-on-aws-guide/img/logo.svg alt="Personal AI Cloud" class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/hermes-on-aws-guide/img/logo.svg alt="Personal AI Cloud" class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">Personal AI Cloud</b></a><a aria-current=page class="navbar__item navbar__link guides-top-header navbar__link--active" href=/hermes-on-aws-guide/>Guides</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/68thandMaine/hermes-on-aws-guide target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=Search aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/hermes-on-aws-guide/preface/00-preface><span title=Preface class=linkLabel_WmDU>Preface</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role=button aria-expanded=true href=/hermes-on-aws-guide/part-i-foundations/01-introduction><span title="Part I — Foundations" class=categoryLinkLabel_W154>Part I — Foundations</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/01-introduction><span title="Chapter 1: Introduction" class=linkLabel_WmDU>Chapter 1: Introduction</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/02-how-computers-work><span title="Chapter 2: How Computers Actually Work" class=linkLabel_WmDU>Chapter 2: How Computers Actually Work</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/03-linux><span title="Chapter 3: Linux — The Operating System of the Cloud" class=linkLabel_WmDU>Chapter 3: Linux — The Operating System of the Cloud</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/04-networking><span title="Chapter 4: Networking Fundamentals" class=linkLabel_WmDU>Chapter 4: Networking Fundamentals</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/05-virtualization><span title="Chapter 5: Virtualization" class=linkLabel_WmDU>Chapter 5: Virtualization</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/06-designing-the-hermes-platform><span title="Chapter 6: Designing the Hermes Platform" class=linkLabel_WmDU>Chapter 6: Designing the Hermes Platform</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-ii-aws/07-provisioning-aws-account><span title="Part II — AWS & Platform" class=categoryLinkLabel_W154>Part II — AWS & Platform</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-iii-containers/16-docker><span title="Part III — Containers" class=categoryLinkLabel_W154>Part III — Containers</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-iv-kubernetes/19-why-kubernetes-exists><span title="Part IV — Kubernetes" class=categoryLinkLabel_W154>Part IV — Kubernetes</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-v-infrastructure/29-terraform><span title="Part V — Infrastructure" class=categoryLinkLabel_W154>Part V — Infrastructure</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-vi-ai/34-running-hermes><span title="Part VI — AI Infrastructure" class=categoryLinkLabel_W154>Part VI — AI Infrastructure</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-vii-hermes/39-distributed-cognitive-execution><span title="Part VII — Hermes Agent Platform" class=categoryLinkLabel_W154>Part VII — Hermes Agent Platform</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/appendices/glossary><span title=Appendices class=categoryLinkLabel_W154>Appendices</span></a></div></ul></nav><button type=button title="Collapse sidebar" aria-label="Collapse sidebar" class="button button--secondary button--outline collapseSidebarButton_PEFL"><svg width=20 height=20 aria-hidden=true class=collapseSidebarButtonIcon_kv0_><g fill=#7a7a7a><path d="M9.992 10.023c0 .2-.062.399-.172.547l-4.996 7.492a.982.982 0 01-.828.454H1c-.55 0-1-.453-1-1 0-.2.059-.403.168-.551l4.629-6.942L.168 3.078A.939.939 0 010 2.528c0-.548.45-.997 1-.997h2.996c.352 0 .649.18.828.45L9.82 9.472c.11.148.172.347.172.55zm0 0"/><path d="M19.98 10.023c0 .2-.058.399-.168.547l-4.996 7.492a.987.987 0 01-.828.454h-3c-.547 0-.996-.453-.996-1 0-.2.059-.403.168-.551l4.625-6.942-4.625-6.945a.939.939 0 01-.168-.55 1 1 0 01.996-.997h3c.348 0 .649.18.828.45l4.996 7.492c.11.148.168.347.168.55zm0 0"/></g></svg></button></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=Breadcrumbs><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label="Home page" class=breadcrumbs__link href=/hermes-on-aws-guide/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><span class=breadcrumbs__link>Part I — Foundations</span><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>Chapter 5: Virtualization</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Chapter 5: Virtualization</h1></header>
 <blockquote>
-<p>⬜ <strong>Planned</strong> — RFC not started.</p>
+<p><em>How one physical server becomes many isolated machines—and why the cloud is possible.</em></p>
 </blockquote>
-<p>This chapter is listed in <a href=https://github.com/crudnicky/agent-to-aws-guide/blob/main/SUMMARY.md target=_blank rel="noopener noreferrer" class="">SUMMARY.md</a>. Content will be written following the RFC workflow in <a href=https://github.com/crudnicky/agent-to-aws-guide/blob/main/STYLE_GUIDE.md target=_blank rel="noopener noreferrer" class="">STYLE_GUIDE.md</a>.</div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/68thandMaine/hermes-on-aws-guide/tree/main/docs/part-i-foundations/05-virtualization.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href=/hermes-on-aws-guide/part-i-foundations/04-networking><div class=pagination-nav__sublabel>Previous</div><div class=pagination-nav__label>Chapter 4: Networking Fundamentals</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/hermes-on-aws-guide/part-i-foundations/06-designing-the-hermes-platform><div class=pagination-nav__sublabel>Next</div><div class=pagination-nav__label>Chapter 6: Designing the Hermes Platform</div></a></nav></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>Book</div><ul class="footer__items clean-list"><li class=footer__item><a class=footer__link-item href=/hermes-on-aws-guide/>Table of Contents</a><li class=footer__item><a href=https://github.com/68thandMaine/hermes-on-aws-guide/blob/main/CONTRIBUTING.md target=_blank rel="noopener noreferrer" class=footer__link-item>Contributing<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>Author</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/crudnicky target=_blank rel="noopener noreferrer" class=footer__link-item>Christopher Rudnicky<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 Christopher Rudnicky. MIT License.</div></div></div></footer></div></body>
+<hr/>
+<p>In <a class="" href=/hermes-on-aws-guide/part-i-foundations/02-how-computers-work>Chapter 2</a>, virtualization appeared as the reason EC2 can exist: a hypervisor maps real CPU, RAM, storage, and network to virtual machines. In <a class="" href=/hermes-on-aws-guide/part-i-foundations/04-networking>Chapter 4</a>, you saw AWS <strong>virtualize networking</strong>—a VPC is a private internet inside the public internet.</p>
+<p>This chapter completes the foundation. When you launch <code>hermes-controlplane-01</code> in <a class="" href=/hermes-on-aws-guide/part-ii-aws/09-provisioning-hermes-server>Chapter 9</a>, you are not renting a physical server in a rack. You are renting a <strong>virtual machine</strong>—an isolated environment that behaves like its own computer, carved from hardware you will never touch.</p>
+<p>Understanding that layer matters when you pick instance sizes, attach EBS volumes, debug performance, or later wonder why Docker containers are not the same thing as EC2 instances.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=learning-objectives>Learning Objectives<a href=#learning-objectives class=hash-link aria-label="Direct link to Learning Objectives" title="Direct link to Learning Objectives" translate=no>​</a></h2>
+<p>After completing this chapter, you will be able to:</p>
+<ul class="contains-task-list containsTaskList_mC6p">
+<li class=task-list-item><input type=checkbox disabled/> Explain why virtualization was invented and what problem it solves</li>
+<li class=task-list-item><input type=checkbox disabled/> Differentiate Type 1 and Type 2 hypervisors</li>
+<li class=task-list-item><input type=checkbox disabled/> Describe what a virtual machine includes (virtual CPU, RAM, disk, NIC)</li>
+<li class=task-list-item><input type=checkbox disabled/> Compare VMs and containers at a conceptual level</li>
+<li class=task-list-item><input type=checkbox disabled/> Map EC2, EBS, and AMI to the virtualization stack</li>
+<li class=task-list-item><input type=checkbox disabled/> Explain oversubscription and why instance sizing is a tradeoff</li>
+<li class=task-list-item><input type=checkbox disabled/> Trace the full Hermes stack from physical hardware to agent process</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=prerequisites>Prerequisites<a href=#prerequisites class=hash-link aria-label="Direct link to Prerequisites" title="Direct link to Prerequisites" translate=no>​</a></h2>
+<ul>
+<li class=""><a class="" href=/hermes-on-aws-guide/part-i-foundations/02-how-computers-work>Chapter 2: How Computers Actually Work</a> — the four resources model; brief introduction to hypervisors and EC2</li>
+<li class=""><a class="" href=/hermes-on-aws-guide/part-i-foundations/04-networking>Chapter 4: Networking</a> — helpful for understanding virtual NICs and VPC isolation; not required if you skimmed networking</li>
+</ul>
+<p>No cloud account required. Lab 5 runs on your laptop.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=estimated-time>Estimated Time<a href=#estimated-time class=hash-link aria-label="Direct link to Estimated Time" title="Direct link to Estimated Time" translate=no>​</a></h2>
+<p><strong>75 minutes</strong> — 45 minutes reading, 30 minutes for Lab 5.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=background>Background<a href=#background class=hash-link aria-label="Direct link to Background" title="Direct link to Background" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=before-virtualization--one-server-one-os>Before Virtualization — One Server, One OS<a href=#before-virtualization--one-server-one-os class=hash-link aria-label="Direct link to Before Virtualization — One Server, One OS" title="Direct link to Before Virtualization — One Server, One OS" translate=no>​</a></h3>
+<p>For decades, data centers worked like this: buy a physical server, install one operating system, run one application stack. If the server had 64 GB of RAM and your database needed 8 GB, the rest sat idle. If you needed a staging environment, you bought another server—or waited weeks for procurement.</p>
+<p>Three problems followed:</p>
+<ol>
+<li class=""><strong>Low utilization</strong> — most servers ran at 10–15% average CPU; capital sat wasted</li>
+<li class=""><strong>Slow provisioning</strong> — new environments meant hardware lead times, racking, cabling</li>
+<li class=""><strong>Weak isolation</strong> — multiple apps on one OS shared fate; one crash could destabilize neighbors</li>
+</ol>
+<p>Virtualization addresses all three by inserting a <strong>hypervisor</strong> between physical hardware and guest operating systems.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=what-the-cloud-sells>What the Cloud Sells<a href=#what-the-cloud-sells class=hash-link aria-label="Direct link to What the Cloud Sells" title="Direct link to What the Cloud Sells" translate=no>​</a></h3>
+<p>AWS does not sell you a specific physical machine. It sells <strong>capacity units</strong> backed by a massive pool of virtualized resources:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>What you think you are buying<th>What AWS actually provides<tbody><tr><td>A server<td>A VM slot on a host, sized by vCPU and GiB<tr><td>A hard drive<td>A virtual block device (EBS) mapped over the network<tr><td>A network card<td>A virtual NIC in a software-defined VPC<tr><td>An IP address<td>A routing and NAT abstraction on shared infrastructure</table>
+<p>The contract is <strong>behavioral</strong>: your instance behaves like a dedicated machine. The implementation is <strong>shared</strong>: thousands of customers' VMs may run on the same physical racks.</p>
+<p>:::note Why this matters for Hermes</p>
+<p>Hermes, PostgreSQL, Redis, and llama.cpp will all run on <strong>one EC2 instance</strong> in your initial design—a single VM with multiple services inside it. Later chapters add Docker and k3s, which add another isolation layer <em>inside</em> that VM. Knowing where the VM boundary sits helps you reason about failure domains: reboot the instance and everything inside it stops; restart a container and only that workload restarts.</p>
+<p>:::</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=theory>Theory<a href=#theory class=hash-link aria-label="Direct link to Theory" title="Direct link to Theory" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=hypervisors--the-control-layer>Hypervisors — The Control Layer<a href=#hypervisors--the-control-layer class=hash-link aria-label="Direct link to Hypervisors — The Control Layer" title="Direct link to Hypervisors — The Control Layer" translate=no>​</a></h3>
+<p>A <strong>hypervisor</strong> (virtual machine monitor) creates and runs virtual machines. It:</p>
+<ul>
+<li class="">Allocates slices of physical CPU, RAM, and I/O to each guest</li>
+<li class="">Traps privileged instructions so guests cannot escape isolation</li>
+<li class="">Presents <strong>virtual devices</strong>—disks, NICs, keyboards—that guests treat as real hardware</li>
+</ul>
+<p>Two categories matter:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Type<th>Runs on<th>Examples<th>Typical use<tbody><tr><td><strong>Type 1 (bare-metal)</strong><td>Hardware directly<td>KVM, Xen, VMware ESXi, <strong>AWS Nitro</strong><td>Data centers, EC2<tr><td><strong>Type 2 (hosted)</strong><td>Inside a host OS<td>VirtualBox, VMware Fusion, Parallels, UTM<td>Laptops, developer VMs</table>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Type 1 (data center / EC2):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">┌─────────────────────────────────────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  Guest OS   Guest OS   Guest OS     │  ← your EC2 instances</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">├─────────────────────────────────────┤</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│           Hypervisor (Nitro/KVM)    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">├─────────────────────────────────────┤</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│         Physical hardware           │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">└─────────────────────────────────────┘</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Type 2 (your laptop):</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">┌─────────────────────────────────────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│           Guest OS (Ubuntu VM)      │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">├─────────────────────────────────────┤</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  Hypervisor (VirtualBox / UTM)      │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">├─────────────────────────────────────┤</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│     Host OS (macOS / Windows)       │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">├─────────────────────────────────────┤</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│         Physical hardware           │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">└─────────────────────────────────────┘</span><br/></div></code></pre></div></div>
+<p>EC2 uses a <strong>Type 1</strong> hypervisor stack. When you launch an instance, AWS places your VM on a host you never see. That is why EC2 feels like "a remote computer"—each guest runs a full operating system with its own kernel.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=anatomy-of-a-virtual-machine>Anatomy of a Virtual Machine<a href=#anatomy-of-a-virtual-machine class=hash-link aria-label="Direct link to Anatomy of a Virtual Machine" title="Direct link to Anatomy of a Virtual Machine" translate=no>​</a></h3>
+<p>Each VM includes:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Virtual component<th>Physical backing<th>What the guest sees<tbody><tr><td><strong>vCPU</strong><td>Time slices on real CPU cores<td>One or more CPU cores<tr><td><strong>Memory</strong><td>Reserved or ballooned RAM pages<td>Fixed RAM size (e.g., 8 GiB)<tr><td><strong>Virtual disk</strong><td>Local NVMe, network-attached EBS, or file on SAN<td>Block device (<code>/dev/nvme0n1</code>)<tr><td><strong>Virtual NIC</strong><td>Software bridge to physical network<td><code>eth0</code> with MAC and IP<tr><td><strong>Firmware / BIOS</strong><td>Emulated or paravirtualized<td>Boot sequence, ACPI tables</table>
+<p>The guest OS—Ubuntu Server on your Hermes instance—runs <strong>unmodified</strong> (or with lightweight paravirtual drivers for performance). It schedules processes, manages memory, and mounts filesystems exactly as it would on bare metal.</p>
+<p><strong>Paravirtualization</strong> is an optimization: the guest uses hypervisor-aware drivers (for example, AWS's ENA network driver) instead of emulating legacy hardware. Faster I/O, same isolation guarantee.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=ec2-ami-and-ebs--aws-names-for-vm-concepts>EC2, AMI, and EBS — AWS Names for VM Concepts<a href=#ec2-ami-and-ebs--aws-names-for-vm-concepts class=hash-link aria-label="Direct link to EC2, AMI, and EBS — AWS Names for VM Concepts" title="Direct link to EC2, AMI, and EBS — AWS Names for VM Concepts" translate=no>​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Concept<th>AWS artifact<th>Chapter<tbody><tr><td>Virtual machine<td><strong>EC2 instance</strong><td><a class="" href=/hermes-on-aws-guide/part-ii-aws/09-provisioning-hermes-server>Chapter 9</a><tr><td>VM template (OS + disk image)<td><strong>AMI</strong> (Amazon Machine Image)<td>Chapter 9<tr><td>Virtual block storage<td><strong>EBS volume</strong><td><a class="" href=/hermes-on-aws-guide/part-ii-aws/11-persistent-storage>Chapter 11</a><tr><td>Virtual network interface<td><strong>ENI</strong> in a VPC subnet<td><a class="" href=/hermes-on-aws-guide/part-ii-aws/08-creating-network-for-hermes>Chapter 8</a><tr><td>Instance metadata<td><code>169.254.169.254</code> (link-local HTTP API)<td>Chapter 9</table>
+<p>When you pick <strong>Ubuntu Server 24.04 LTS</strong> as an AMI and attach a 100 GB <strong>gp3</strong> EBS volume for <code>/data</code>, you are defining a VM's boot disk and an additional virtual hard drive. Snapshots of EBS volumes are point-in-time copies of that virtual disk—critical for model and database backups in Chapter 11.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=aws-nitro--modern-hypervisor-design>AWS Nitro — Modern Hypervisor Design<a href=#aws-nitro--modern-hypervisor-design class=hash-link aria-label="Direct link to AWS Nitro — Modern Hypervisor Design" title="Direct link to AWS Nitro — Modern Hypervisor Design" translate=no>​</a></h3>
+<p>Early EC2 ran on Xen. Modern EC2 uses the <strong>Nitro System</strong>: a combination of lightweight hypervisor, custom hardware cards, and a separate Nitro security chip that handles storage and network I/O.</p>
+<p>Benefits relevant to Hermes:</p>
+<ul>
+<li class=""><strong>Near bare-metal performance</strong> — less emulation overhead for network and disk</li>
+<li class=""><strong>Stronger isolation</strong> — I/O offloaded from the main CPU; smaller attack surface</li>
+<li class=""><strong>Faster provisioning</strong> — new instance types ship without rewriting the entire stack</li>
+</ul>
+<p>You do not configure Nitro. Knowing it exists explains why <code>m7i</code> instances feel snappier than legacy generations and why EBS latency is predictable enough for PostgreSQL.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=oversubscription-and-instance-sizing>Oversubscription and Instance Sizing<a href=#oversubscription-and-instance-sizing class=hash-link aria-label="Direct link to Oversubscription and Instance Sizing" title="Direct link to Oversubscription and Instance Sizing" translate=no>​</a></h3>
+<p>Cloud providers <strong>oversubscribe</strong> physical resources: they sell more vCPUs and memory than any single host physically possesses, betting that not every VM peaks simultaneously.</p>
+<p>For you, that means:</p>
+<ul>
+<li class=""><strong>Burstable instances</strong> (<code>t3</code>, <code>t4g</code>) accumulate CPU credits; fine for intermittent Hermes traffic, risky for sustained llama.cpp inference</li>
+<li class=""><strong>Memory is harder to oversubscribe</strong> — if PostgreSQL and llama.cpp need 16 GiB, do not pick an 8 GiB instance hoping the hypervisor will compensate</li>
+<li class=""><strong>Noisy neighbors</strong> — another customer's VM on the same host can occasionally affect latency; dedicated hosts and larger instance sizes reduce this (at cost)</li>
+</ul>
+<p>When you choose <code>t3.medium</code> versus <code>m7i.large</code> in Chapter 9, you are choosing how much <strong>real</strong> hardware backs your virtual machine—and how much burst behavior you accept.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=virtual-machines-vs-containers>Virtual Machines vs Containers<a href=#virtual-machines-vs-containers class=hash-link aria-label="Direct link to Virtual Machines vs Containers" title="Direct link to Virtual Machines vs Containers" translate=no>​</a></h3>
+<p>Both provide isolation. They differ in <strong>what</strong> is isolated:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Virtual Machine                    Container (preview)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">┌─────────────────────┐           ┌─────────────────────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  App A    App B     │           │  App A    App B     │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">├─────────────────────┤           ├─────────────────────┤</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  Guest OS (Ubuntu)  │           │  Shared host kernel │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">├─────────────────────┤           ├─────────────────────┤</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│     Hypervisor      │           │  Container runtime  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">├─────────────────────┤           │  (Docker — Part III)│</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">│  Physical hardware  │           ├─────────────────────┤</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">└─────────────────────┘           │  Host OS / VM       │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                                  ├─────────────────────┤</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                                  │  Physical hardware  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                                  └─────────────────────┘</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th><th>Virtual machine<th>Container<tbody><tr><td><strong>Kernel</strong><td>One per VM<td>Shared with host<tr><td><strong>Boot time</strong><td>Minutes (full OS boot)<td>Seconds (process start)<tr><td><strong>Isolation strength</strong><td>Strong (hardware-assisted)<td>Good (namespaces, cgroups)<tr><td><strong>Density</strong><td>Lower (full OS each)<td>Higher (many per host)<tr><td><strong>Typical unit in this book</strong><td>EC2 instance<td>Docker container → k3s Pod</table>
+<p><strong>The stack for Hermes:</strong></p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Physical server (AWS data center)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  └── EC2 VM (Ubuntu)           ← this chapter</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        └── Docker engine       ← Chapter 12</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">              └── k3s cluster   ← Chapter 13</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                    └── Hermes Pod, PostgreSQL, Redis, llama.cpp</span><br/></div></code></pre></div></div>
+<p>Containers are not a replacement for VMs—they usually <strong>run inside</strong> VMs. Kubernetes (k3s) schedules containers across nodes; each node is an EC2 instance. Chapter 5 explains the VM layer; <a class="" href=/hermes-on-aws-guide/part-iii-containers/16-docker>Part III</a> explains containers.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=architecture>Architecture<a href=#architecture class=hash-link aria-label="Direct link to Architecture" title="Direct link to Architecture" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=the-hermes-virtualization-stack>The Hermes Virtualization Stack<a href=#the-hermes-virtualization-stack class=hash-link aria-label="Direct link to The Hermes Virtualization Stack" title="Direct link to The Hermes Virtualization Stack" translate=no>​</a></h3>
+<!-- -->
+<p>Each box is a <strong>boundary you can reboot, snapshot, or resize independently</strong>—at least in theory. In practice, your first deployment colocates everything on one VM for cost and simplicity; the diagram shows the layers you will unbundle as the platform matures.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=resource-mapping--laptop-to-ec2>Resource Mapping — Laptop to EC2<a href=#resource-mapping--laptop-to-ec2 class=hash-link aria-label="Direct link to Resource Mapping — Laptop to EC2" title="Direct link to Resource Mapping — Laptop to EC2" translate=no>​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Inspect locally<th>On Hermes EC2 (later)<th>Virtualization layer<tbody><tr><td><code>lscpu</code> / <code>sysctl -n hw.ncpu</code><td>Instance type vCPU count<td>Hypervisor CPU scheduling<tr><td><code>free -h</code> / Activity Monitor<td>Instance memory (GiB)<td>Memory balloon / reservation<tr><td>Disk utility / <code>df -h</code><td>EBS volume size and type<td>Virtual block device<tr><td><code>ip addr</code><td>ENI private IP in VPC<td>Virtual NIC</table>
+<p>The commands change names; the mental model does not.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=walkthrough>Walkthrough<a href=#walkthrough class=hash-link aria-label="Direct link to Walkthrough" title="Direct link to Walkthrough" translate=no>​</a></h2>
+<p>This chapter's walkthrough inspects <strong>your laptop's resources</strong> and optionally launches a <strong>local VM</strong>—the same pattern as running Ubuntu in Multipass before SSH-ing to EC2 in Part II.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=inspect-cpu-and-memory>Inspect CPU and Memory<a href=#inspect-cpu-and-memory class=hash-link aria-label="Direct link to Inspect CPU and Memory" title="Direct link to Inspect CPU and Memory" translate=no>​</a></h3>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic># Linux</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">lscpu </span><span class="token operator" style=color:#393A34>|</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>head</span><span class="token plain"> </span><span class="token parameter variable" style=color:#36acaa>-20</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token function" style=color:#d73a49>free</span><span class="token plain"> </span><span class="token parameter variable" style=color:#36acaa>-h</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic># macOS</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token function" style=color:#d73a49>sysctl</span><span class="token plain"> </span><span class="token parameter variable" style=color:#36acaa>-n</span><span class="token plain"> hw.ncpu hw.physicalcpu hw.logicalcpu</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token function" style=color:#d73a49>sysctl</span><span class="token plain"> hw.memsize</span><br/></div></code></pre></div></div>
+<p>Note <strong>physical vs logical CPUs</strong>. Hyper-threading exposes two logical CPUs per physical core. EC2 <strong>vCPUs</strong> map to logical processors on the host—<code>2 vCPU</code> usually means two hyper-threads or cores allocated to your VM.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=inspect-block-devices>Inspect Block Devices<a href=#inspect-block-devices class=hash-link aria-label="Direct link to Inspect Block Devices" title="Direct link to Inspect Block Devices" translate=no>​</a></h3>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic># Linux</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">lsblk</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token function" style=color:#d73a49>df</span><span class="token plain"> </span><span class="token parameter variable" style=color:#36acaa>-h</span><span class="token plain"> /</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic># macOS (APFS containers — different naming, same idea)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">diskutil list</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token function" style=color:#d73a49>df</span><span class="token plain"> </span><span class="token parameter variable" style=color:#36acaa>-h</span><span class="token plain"> /</span><br/></div></code></pre></div></div>
+<p>Your root filesystem sits on a partition backed by physical storage. On EC2, <code>lsblk</code> will show <code>nvme0n1</code> (root) and additional <code>nvme1n1</code> volumes for <code>/data</code>—virtual disks presented by the Nitro stack.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=optional--launch-a-local-ubuntu-vm>Optional — Launch a Local Ubuntu VM<a href=#optional--launch-a-local-ubuntu-vm class=hash-link aria-label="Direct link to Optional — Launch a Local Ubuntu VM" title="Direct link to Optional — Launch a Local Ubuntu VM" translate=no>​</a></h3>
+<p>If you want hands-on practice with a Type 2 hypervisor, install <strong>Multipass</strong> (free, cross-platform):</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic># macOS (Homebrew)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">brew </span><span class="token function" style=color:#d73a49>install</span><span class="token plain"> multipass</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic># Launch Ubuntu 24.04 with 2 GB RAM, 10 GB disk</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">multipass launch </span><span class="token number" style=color:#36acaa>24.04</span><span class="token plain"> </span><span class="token parameter variable" style=color:#36acaa>--name</span><span class="token plain"> hermes-practice </span><span class="token parameter variable" style=color:#36acaa>--memory</span><span class="token plain"> 2G </span><span class="token parameter variable" style=color:#36acaa>--disk</span><span class="token plain"> 10G</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic># Shell into the VM</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">multipass shell hermes-practice</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic># Inside the VM — compare to your host</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">lscpu </span><span class="token operator" style=color:#393A34>|</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>grep</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"CPU(s)"</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token function" style=color:#d73a49>free</span><span class="token plain"> </span><span class="token parameter variable" style=color:#36acaa>-h</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">lsblk</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token builtin class-name">exit</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic># Stop and delete when done</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">multipass stop hermes-practice</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">multipass delete hermes-practice</span><br/></div></code></pre></div></div>
+<p>Inside the VM, <code>lscpu</code> reports fewer CPUs and <code>free -h</code> shows only the RAM you allocated—exactly how EC2 presents a subset of host resources. This is optional; Lab 5 works without it.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=lab>Lab<a href=#lab class=hash-link aria-label="Direct link to Lab" title="Direct link to Lab" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=lab-5-map-the-virtualization-stack>Lab 5: Map the Virtualization Stack<a href=#lab-5-map-the-virtualization-stack class=hash-link aria-label="Direct link to Lab 5: Map the Virtualization Stack" title="Direct link to Lab 5: Map the Virtualization Stack" translate=no>​</a></h3>
+<p><strong>Estimated Time:</strong> 30 minutes</p>
+<p><strong>Goal:</strong> Document your machine's resources and draw the virtualization layers Hermes will use—from physical hardware to agent process.</p>
+<p><strong>Prerequisites:</strong> Terminal access; internet optional (Multipass install only)</p>
+<p><strong>Steps:</strong></p>
+<ol>
+<li class="">Record CPU and memory from your laptop:
+<ul>
+<li class="">Linux: <code>lscpu | head -15</code> and <code>free -h</code></li>
+<li class="">macOS: <code>sysctl -n hw.ncpu hw.memsize</code> and convert bytes to GiB</li>
+</ul>
+</li>
+<li class="">Record disk layout: <code>lsblk</code> (Linux) or <code>diskutil list</code> (macOS)</li>
+<li class=""><strong>Optional:</strong> Launch <code>hermes-practice</code> in Multipass (see Walkthrough) and compare <code>lscpu</code> / <code>free -h</code> inside vs outside the VM</li>
+<li class="">Complete the stack diagram in <code>labs/ch05/virtualization-notes.md</code></li>
+<li class="">Answer: if Hermes needs 8 GiB RAM for llama.cpp and 4 GiB for PostgreSQL/Redis/Hermes, what is the <strong>minimum</strong> EC2 memory you should consider? (Hint: leave headroom for the OS and k3s.)</li>
+<li class="">Answer: why is a container <strong>not</strong> a substitute for an EC2 instance in this architecture?</li>
+</ol>
+<p><strong>Verification:</strong></p>
+<p>You can explain each layer in this chain without notes:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Physical host → EC2 VM → Ubuntu → Docker → k3s → Hermes Pod</span><br/></div></code></pre></div></div>
+<p><strong>Expected output:</strong> Completed worksheet with host resource numbers and stack diagram filled in.</p>
+<p><strong>Troubleshooting:</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Problem<th>Cause<th>Fix<tbody><tr><td><code>multipass: command not found</code><td>Not installed<td>Skip optional step, or <code>brew install multipass</code><tr><td>Multipass launch fails on Apple Silicon<td>Virtualization framework disabled<td>System Settings → Privacy & Security → enable for Multipass<tr><td><code>lsblk: command not found</code><td>macOS<td>Use <code>diskutil list</code> instead<tr><td>VM feels slower than host<td>Normal — nested virtualization overhead<td>Expected; EC2 Type 1 hypervisors are faster than laptop Type 2</table>
+<p><strong>Cleanup:</strong> If you created a Multipass VM, run <code>multipass delete hermes-practice --purge</code>. Keep <code>labs/ch05/virtualization-notes.md</code> for reference when sizing your EC2 instance in Chapter 9.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=verification>Verification<a href=#verification class=hash-link aria-label="Direct link to Verification" title="Direct link to Verification" translate=no>​</a></h2>
+<p>Confirm you can answer without notes:</p>
+<ul>
+<li class="">The difference between Type 1 and Type 2 hypervisors</li>
+<li class="">What EC2, AMI, and EBS each represent in VM terms</li>
+<li class="">Where containers sit relative to VMs in the Hermes stack</li>
+<li class="">Why 12 GiB of workloads needs more than a 12 GiB instance</li>
+</ul>
+<p>Re-read the <strong>Virtual Machines vs Containers</strong> section if any answer is uncertain.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=troubleshooting>Troubleshooting<a href=#troubleshooting class=hash-link aria-label="Direct link to Troubleshooting" title="Direct link to Troubleshooting" translate=no>​</a></h2>
+<p>See Lab 5 troubleshooting table above.</p>
+<p><strong>Conceptual confusion — common mix-ups:</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Mistake<th>Correction<tbody><tr><td>"Docker replaces EC2"<td>Docker runs <em>on</em> EC2; the VM is still the isolation boundary for the whole platform<tr><td>"EBS is a physical disk in my rack"<td>EBS is network-attached <strong>virtual</strong> block storage; latency and IOPS are configurable<tr><td>"vCPU = physical core"<td>vCPU is a hypervisor allocation unit; compare instance specs, not socket counts<tr><td>"More containers = need more VMs automatically"<td>One VM can run many containers until CPU, RAM, or disk saturate—then scale vertically (bigger instance) or horizontally (more nodes)</table>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=review-questions>Review Questions<a href=#review-questions class=hash-link aria-label="Direct link to Review Questions" title="Direct link to Review Questions" translate=no>​</a></h2>
+<ol>
+<li class="">Why did data centers adopt virtualization instead of one OS per physical server?</li>
+<li class="">What is the difference between a Type 1 and Type 2 hypervisor?</li>
+<li class="">Name four virtual components every VM receives.</li>
+<li class="">How does an AMI relate to a virtual machine?</li>
+<li class="">Why does Hermes run containers <em>inside</em> an EC2 instance rather than replacing EC2 with containers alone?</li>
+<li class="">What is oversubscription, and how might it affect a latency-sensitive llama.cpp workload?</li>
+<li class="">What AWS technology offloads network and storage I/O from the main CPU on modern instances?</li>
+</ol>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=key-takeaways>Key Takeaways<a href=#key-takeaways class=hash-link aria-label="Direct link to Key Takeaways" title="Direct link to Key Takeaways" translate=no>​</a></h2>
+<ul>
+<li class=""><strong>Virtualization</strong> inserts a hypervisor between hardware and guest OSes—raising utilization, speeding provisioning, and isolating failures.</li>
+<li class=""><strong>EC2 instances are VMs</strong>; <strong>EBS volumes are virtual disks</strong>; <strong>AMIs are VM templates</strong>—the same four resources from Chapter 2, sold as managed units.</li>
+<li class=""><strong>Type 1 hypervisors</strong> (Nitro/KVM) run data centers; <strong>Type 2</strong> (VirtualBox, Multipass) helps you practice on a laptop.</li>
+<li class=""><strong>Containers share a kernel</strong>; <strong>VMs each have their own kernel</strong>—containers add density inside a VM; they do not replace it in the Hermes architecture.</li>
+<li class=""><strong>Instance sizing</strong> is a real tradeoff: memory for llama.cpp and PostgreSQL must fit inside the VM with OS overhead; burstable CPU has limits.</li>
+<li class="">The Hermes stack layers: <strong>physical → EC2 → Ubuntu → Docker → k3s → Pods</strong>—each chapter in Part II–IV activates the next layer.</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=glossary-additions>Glossary Additions<a href=#glossary-additions class=hash-link aria-label="Direct link to Glossary Additions" title="Direct link to Glossary Additions" translate=no>​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Term<th>Definition<tbody><tr><td><strong>AMI</strong><td>Amazon Machine Image—a template defining the OS and boot disk for an EC2 instance.<tr><td><strong>Bare metal</strong><td>Physical server hardware with no hypervisor guest layer; contrast with virtualized EC2.<tr><td><strong>EBS</strong><td>Elastic Block Store—network-attached virtual block storage for EC2 instances.<tr><td><strong>ENI</strong><td>Elastic Network Interface—a virtual NIC attached to an EC2 instance in a VPC.<tr><td><strong>Guest OS</strong><td>The operating system running inside a virtual machine (e.g., Ubuntu on EC2).<tr><td><strong>Nitro</strong><td>AWS hypervisor and hardware offload system powering modern EC2 instances.<tr><td><strong>Oversubscription</strong><td>Allocating more virtual resources than physical capacity, relying on average usage patterns.<tr><td><strong>Paravirtualization</strong><td>Guest OS using hypervisor-aware drivers for faster I/O instead of emulating legacy devices.<tr><td><strong>Type 1 hypervisor</strong><td>Runs directly on hardware (KVM, Nitro, ESXi); used in data centers and EC2.<tr><td><strong>Type 2 hypervisor</strong><td>Runs as an application on a host OS (VirtualBox, Multipass); used for local development VMs.</table>
+<p>Terms <strong>Hypervisor</strong>, <strong>Virtualization</strong>, and <strong>vCPU</strong> were introduced in <a class="" href=/hermes-on-aws-guide/part-i-foundations/02-how-computers-work>Chapter 2</a>.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=further-reading>Further Reading<a href=#further-reading class=hash-link aria-label="Direct link to Further Reading" title="Direct link to Further Reading" translate=no>​</a></h2>
+<ul>
+<li class=""><a href=https://pages.cs.wisc.edu/~remzi/OSTEP/ target=_blank rel="noopener noreferrer" class="">Operating Systems: Three Easy Pieces — Virtualization chapters</a> — free textbook; CPU, memory, and I/O virtualization</li>
+<li class=""><a href=https://aws.amazon.com/ec2/nitro/ target=_blank rel="noopener noreferrer" class="">AWS Nitro System</a> — official overview of EC2's hypervisor architecture</li>
+<li class=""><a href=https://aws.amazon.com/ec2/instance-types/ target=_blank rel="noopener noreferrer" class="">Amazon EC2 Instance Types</a> — how AWS packages vCPU and memory (Chapter 9)</li>
+<li class=""><a href=https://multipass.run/docs target=_blank rel="noopener noreferrer" class="">Multipass documentation</a> — local Ubuntu VMs for practice</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=whats-next>What's Next<a href=#whats-next class=hash-link aria-label="Direct link to What's Next" title="Direct link to What's Next" translate=no>​</a></h2>
+<p><a class="" href=/hermes-on-aws-guide/part-i-foundations/06-designing-the-hermes-platform>Chapter 6: Designing the Hermes Platform</a> defines <strong>what</strong> you will build on top of this virtualization layer—every component mapped to AWS resources before you open the console.</p>
+<p>If you skipped ahead earlier, return here before Part II so EC2, EBS, and AMI vocabulary feel grounded—not arbitrary AWS product names.</p>
+<p><strong>Reading paths:</strong></p>
+<ul>
+<li class=""><strong>Path A (recommended in Chapter 4):</strong> Ch 4 → Ch 6 (design) → Part II (build)</li>
+<li class=""><strong>Path B (full foundations):</strong> Ch 4 → Ch 5 → Ch 6 → Part II</li>
+</ul>
+<p>Both paths converge at <a class="" href=/hermes-on-aws-guide/part-ii-aws/07-provisioning-aws-account>Chapter 7</a>, where you create the AWS account that will host your first VM.</p>
+<hr/>
+<p><a class="" href=/hermes-on-aws-guide/part-i-foundations/04-networking>← Chapter 4: Networking</a> | <a class="" href=/hermes-on-aws-guide/part-i-foundations/06-designing-the-hermes-platform>Next: Chapter 6 — Designing the Hermes Platform →</a></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/68thandMaine/hermes-on-aws-guide/tree/main/docs/part-i-foundations/05-virtualization.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href=/hermes-on-aws-guide/part-i-foundations/04-networking><div class=pagination-nav__sublabel>Previous</div><div class=pagination-nav__label>Chapter 4: Networking Fundamentals</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/hermes-on-aws-guide/part-i-foundations/06-designing-the-hermes-platform><div class=pagination-nav__sublabel>Next</div><div class=pagination-nav__label>Chapter 6: Designing the Hermes Platform</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#learning-objectives class="table-of-contents__link toc-highlight">Learning Objectives</a><li><a href=#prerequisites class="table-of-contents__link toc-highlight">Prerequisites</a><li><a href=#estimated-time class="table-of-contents__link toc-highlight">Estimated Time</a><li><a href=#background class="table-of-contents__link toc-highlight">Background</a><ul><li><a href=#before-virtualization--one-server-one-os class="table-of-contents__link toc-highlight">Before Virtualization — One Server, One OS</a><li><a href=#what-the-cloud-sells class="table-of-contents__link toc-highlight">What the Cloud Sells</a></ul><li><a href=#theory class="table-of-contents__link toc-highlight">Theory</a><ul><li><a href=#hypervisors--the-control-layer class="table-of-contents__link toc-highlight">Hypervisors — The Control Layer</a><li><a href=#anatomy-of-a-virtual-machine class="table-of-contents__link toc-highlight">Anatomy of a Virtual Machine</a><li><a href=#ec2-ami-and-ebs--aws-names-for-vm-concepts class="table-of-contents__link toc-highlight">EC2, AMI, and EBS — AWS Names for VM Concepts</a><li><a href=#aws-nitro--modern-hypervisor-design class="table-of-contents__link toc-highlight">AWS Nitro — Modern Hypervisor Design</a><li><a href=#oversubscription-and-instance-sizing class="table-of-contents__link toc-highlight">Oversubscription and Instance Sizing</a><li><a href=#virtual-machines-vs-containers class="table-of-contents__link toc-highlight">Virtual Machines vs Containers</a></ul><li><a href=#architecture class="table-of-contents__link toc-highlight">Architecture</a><ul><li><a href=#the-hermes-virtualization-stack class="table-of-contents__link toc-highlight">The Hermes Virtualization Stack</a><li><a href=#resource-mapping--laptop-to-ec2 class="table-of-contents__link toc-highlight">Resource Mapping — Laptop to EC2</a></ul><li><a href=#walkthrough class="table-of-contents__link toc-highlight">Walkthrough</a><ul><li><a href=#inspect-cpu-and-memory class="table-of-contents__link toc-highlight">Inspect CPU and Memory</a><li><a href=#inspect-block-devices class="table-of-contents__link toc-highlight">Inspect Block Devices</a><li><a href=#optional--launch-a-local-ubuntu-vm class="table-of-contents__link toc-highlight">Optional — Launch a Local Ubuntu VM</a></ul><li><a href=#lab class="table-of-contents__link toc-highlight">Lab</a><ul><li><a href=#lab-5-map-the-virtualization-stack class="table-of-contents__link toc-highlight">Lab 5: Map the Virtualization Stack</a></ul><li><a href=#verification class="table-of-contents__link toc-highlight">Verification</a><li><a href=#troubleshooting class="table-of-contents__link toc-highlight">Troubleshooting</a><li><a href=#review-questions class="table-of-contents__link toc-highlight">Review Questions</a><li><a href=#key-takeaways class="table-of-contents__link toc-highlight">Key Takeaways</a><li><a href=#glossary-additions class="table-of-contents__link toc-highlight">Glossary Additions</a><li><a href=#further-reading class="table-of-contents__link toc-highlight">Further Reading</a><li><a href=#whats-next class="table-of-contents__link toc-highlight">What's Next</a></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>Book</div><ul class="footer__items clean-list"><li class=footer__item><a class=footer__link-item href=/hermes-on-aws-guide/>Table of Contents</a><li class=footer__item><a href=https://github.com/68thandMaine/hermes-on-aws-guide/blob/main/CONTRIBUTING.md target=_blank rel="noopener noreferrer" class=footer__link-item>Contributing<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>Author</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/crudnicky target=_blank rel="noopener noreferrer" class=footer__link-item>Christopher Rudnicky<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 Christopher Rudnicky. MIT License.</div></div></div></footer></div></body>
