@@ -26,7 +26,7 @@ Hermes:                 durable tasks + shared state + disposable workers
 
 This chapter introduces **distributed cognitive execution**—not as a buzzword, but as decomposition of work across independent reasoning processes coordinated through **durable state**.
 
-:::note No new ontology
+:::note[No new ontology]
 
 Same loop as Ch 38. Same stores. Same workers. **More tasks** with `parent_task_id`, `agent_role`, and a coordinator that decomposes—not a different runtime.
 

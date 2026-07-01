@@ -23,7 +23,7 @@ Chapter 22   Service     →  stable way to reach those Pods
 
 You are not learning a new model. You are **adding a network handle** to the stack you already operate.
 
-:::note Why this matters for Hermes
+:::note[Why this matters for Hermes]
 
 Hermes will call llama.cpp over a **Service DNS name**—not a Pod IP. PostgreSQL and Redis get Services too. The path `Hermes → llama.cpp Service → Pod` is the in-cluster half of `laptop → ingress → Hermes → model → response`.
 

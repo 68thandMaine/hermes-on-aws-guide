@@ -11,7 +11,7 @@ description: "The retrospective capstone — one coherent idea expressed at ever
 
 ---
 
-:::note Unlike every other chapter
+:::note[Unlike every other chapter]
 
 No labs. No YAML. No new commands. [Chapters 1–43](43-from-development-to-production.md) built the machine. **Chapter 44 explains why it works.**
 

@@ -26,7 +26,7 @@ Before HTTPS…
 
 You define that boundary here.
 
-:::note Why this matters for Hermes
+:::note[Why this matters for Hermes]
 
 Hermes will hold API keys, model weights, and conversation data. A compromised shell on `hermes-controlplane-01` is game over for the entire platform—not a single misconfigured bucket. Establishing trust now means every later chapter builds on a host whose **identity is verified** and whose **administrative surface is minimal**.
 

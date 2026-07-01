@@ -33,7 +33,7 @@ Not: "I clicked Launch Instance."
 
 This chapter follows **Concept → Design → Implementation**. The AWS console appears only after you understand every decision.
 
-:::note Why this matters for Hermes
+:::note[Why this matters for Hermes]
 
 A compromised or misconfigured server undermines everything built on top of it. Wrong instance sizing starves llama.cpp. A single undersized disk fills with GGUF models and crashes PostgreSQL. Password-based SSH invites brute force. This chapter establishes **trust in the machine itself**—correct AMI, evidence-based sizing, separated storage, automated bootstrap, SSH-only access from your IP—before Docker or k3s touch the host.
 

@@ -15,7 +15,7 @@ This chapter is the first time you log into AWS and perform meaningful work. By 
 
 We are not exploring the AWS console for its own sake. Every step exists because the [Hermes platform design](../part-i-foundations/06-designing-the-hermes-platform.md) depends on it.
 
-:::note Why this matters for Hermes
+:::note[Why this matters for Hermes]
 
 We enable MFA and create a dedicated administrator **before** launching any infrastructure because this AWS account will eventually hold the entire Hermes platform—models under `/opt/models`, PostgreSQL data, Redis queues, and application secrets. A compromised root account could delete volumes, exfiltrate models, or leave you with a surprise bill. Strong account security now protects everything that follows.
 
@@ -195,7 +195,7 @@ Complete these steps once. Use a dedicated AWS account for Hermes if possible—
 
 AWS may take a few minutes to activate the account. You will receive a confirmation email when ready.
 
-:::note Why this matters for Hermes
+:::note[Why this matters for Hermes]
 
 A dedicated account isolates Hermes experiments from other workloads. Billing, IAM boundaries, and blast radius stay contained—if you tear down the platform, you do not affect unrelated projects.
 
@@ -234,7 +234,7 @@ Remain as root for user creation, or use an existing admin if you already have o
 5. Unselect **Users must create a new password at next sign-in** if you prefer (optional)
 6. Attach policy: **AdministratorAccess**
 
-:::note Why this matters for Hermes
+:::note[Why this matters for Hermes]
 
 `hermes-admin` is the identity that will create VPCs, EC2 instances, and S3 buckets for Hermes. We start with `AdministratorAccess` to reduce friction while learning. [Chapter 10: Establishing Trust](10-establishing-trust.md) and Part V (Terraform) tighten permissions to least privilege once the platform shape is stable.
 

@@ -7,7 +7,7 @@ description: "Monthly AWS cost estimates — development, staging, and productio
 
 Order-of-magnitude monthly costs for the Hermes platform. **Verify with [AWS Pricing Calculator](https://calculator.aws/)** for your region and commitment level—these numbers are planning guides from [Chapter 6](../part-i-foundations/06-designing-the-hermes-platform.md) and operational chapters.
 
-:::warning Not a quote
+:::warning[Not a quote]
 
 On-demand US East (N. Virginia) estimates as of book writing. Reserved Instances, Savings Plans, and Spot change these materially. **Stop EC2 when not learning** to avoid continuous compute charges.
 

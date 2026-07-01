@@ -19,7 +19,7 @@ You have spent forty-two chapters building Hermes piece by piece—Linux, AWS, c
 
 It is no longer about Kubernetes, AWS, or AI individually. It is about taking the **complete system** from a laptop lab into a production environment you trust—with evidence, not optimism.
 
-:::note Last technical chapter
+:::note[Last technical chapter]
 
 Chapter 43 synthesizes everything into a **production operating model**. [Chapter 44](44-the-platform-you-built.md) steps back for the retrospective—connecting every layer from the first Linux process to the distributed cognitive platform you operate today.
 

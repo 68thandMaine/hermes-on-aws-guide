@@ -57,7 +57,7 @@ Apply the same pattern in later parts when naming chapters.
 Every implementation chapter includes **at least one** Docusaurus admonition tying decisions to the platform:
 
 ```markdown
-:::note Why this matters for Hermes
+:::note[Why this matters for Hermes]
 
 We're enabling MFA before creating infrastructure because this AWS account will eventually hold the entire Hermes platform...
 

@@ -21,7 +21,7 @@ This chapter follows the **guided build** model used throughout Part II:
 
 You will not be asked to click a console button until you understand what that button accomplishes.
 
-:::note Why this matters for Hermes
+:::note[Why this matters for Hermes]
 
 Every HTTPS request to Hermes crosses the public internet before it reaches Traefik on your server. The VPC, subnet, Internet Gateway, and route table you create here define **that path**—and what is *not* reachable. A well-designed network exposes only the ports Hermes needs (443, SSH from your IP) and keeps PostgreSQL, Redis, and llama.cpp off the public internet. Network mistakes are among the hardest production issues to debug; building the mental model now saves weeks later.
 
@@ -139,7 +139,7 @@ A **subnet** is a subdivision of your VPC tied to one Availability Zone (AZ). Su
 
 Later, you can evolve to private subnets for databases and NAT for outbound-only access. That is a production hardening step—not a prerequisite for understanding the platform.
 
-:::note Why this matters for Hermes
+:::note[Why this matters for Hermes]
 
 A personal Hermes platform on one node does not need a three-tier VPC on day one. Starting simple keeps cost down and makes every component visible. You still learn VPC concepts that transfer directly when you add a private subnet for RDS or a second node for GPU inference.
 

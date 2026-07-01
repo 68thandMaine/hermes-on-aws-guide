@@ -56,7 +56,7 @@ This book does the opposite:
 
 **Why Docker is not the threshold:** Docker answers *how* to run one container. Hermes needs *many* containers that stay running, find each other, and upgrade without SSH surgery. Docker prepares the runtime; k3s provides the **agency** to operate a system.
 
-:::note Why this matters for Hermes
+:::note[Why this matters for Hermes]
 
 Hermes, llama.cpp, PostgreSQL, and Redis are separate services—they need restart policies, service discovery, and declarative config. Running them as ad-hoc `docker run` commands does not scale to production. Kubernetes is how you **operate** a multi-service agent platform; k3s is how you learn it on one node without EKS overhead ([Chapter 6 design](../part-i-foundations/06-designing-the-hermes-platform.md)).
 
@@ -289,7 +289,7 @@ Everything you built in Chapters 7–12 is real—and it is **not yet a platform
 
 #### State 2 — During Install: Incomplete
 
-:::warning The system is incomplete
+:::warning[The system is incomplete]
 
 When the install script runs, hold this in mind:
 

@@ -31,7 +31,7 @@ Hermes:               task → worker → state + memory + inference + tools →
 
 The reasoning loop is **not the LLM**. It is orchestration of **state, memory, inference, tools, and persistence**.
 
-:::note Cognitive governance
+:::note[Cognitive governance]
 
 No new ontology shift—this chapter **names and wires** what Parts II–VI already built. The unit of cognition is the **task**, not the token.
 

@@ -7,7 +7,7 @@ description: "Common failures across the stack — symptom, diagnosis, fix."
 
 Distilled from chapter troubleshooting tables and [`infrastructure/hermes/runbooks/`](https://github.com/crudnicky/agent-to-aws-guide/tree/main/infrastructure/hermes/runbooks). When an alert fires, start with **symptom** → **diagnostic command** → **fix** → **chapter** for depth.
 
-:::tip First checks (any layer)
+:::tip[First checks (any layer)]
 
 ```bash
 echo $AWS_PROFILE $KUBECONFIG

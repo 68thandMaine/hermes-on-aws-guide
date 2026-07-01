@@ -69,7 +69,7 @@ Bibliography and documentation links for *Building a Personal AI Cloud*. Organiz
 | llama.cpp server docs | https://github.com/ggerganov/llama.cpp/tree/master/examples/server | 36 |
 | Hugging Face Model Hub (GGUF) | https://huggingface.co/models?library=gguf | 36 |
 
-:::note Not Ollama
+:::note[Not Ollama]
 
 This book deploys **llama.cpp** as a cluster service (`llama-server`), not Ollama. You get explicit GGUF paths, Helm values, and production-style HTTP inference—aligned with [Chapter 36](../part-vi-ai/36-model-serving.md).
 

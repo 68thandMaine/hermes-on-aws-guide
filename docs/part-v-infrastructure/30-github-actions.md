@@ -22,7 +22,7 @@ After:   Git event → GitHub Actions → terraform apply → AWS
 
 This is the first **non-human execution actor** in the Hermes platform: CI becomes part of the control plane.
 
-:::note Why this matters for Hermes
+:::note[Why this matters for Hermes]
 
 Hermes evolves through model updates, scaling changes, and new integrations. The platform beneath it must evolve through **Git events**, not ad-hoc terminal sessions. GitHub Actions is the delivery layer that connects repository changes to AWS reality.
 
@@ -239,7 +239,7 @@ Repository → **Settings** → **Secrets and variables** → **Actions** → **
 
 Region is set in the workflow (`us-east-1`)—same as [Chapter 8](../part-ii-aws/08-creating-network-for-hermes.md).
 
-:::warning Never commit credentials
+:::warning[Never commit credentials]
 
 Keys in Git history are permanent exposure. Use Secrets only. [Chapter 31](31-secrets-management.md) covers external vaults and rotation.
 

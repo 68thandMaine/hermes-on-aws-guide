@@ -23,7 +23,7 @@ Chapter 27   Security    →  who may change what
 
 No new mental model—configuration enters at **Human Intent** and mounts into **Containers** via the API and kubelet.
 
-:::note Why this matters for Hermes
+:::note[Why this matters for Hermes]
 
 Hermes needs model selection, inference parameters, tool URLs, and API keys. ConfigMaps hold tunable non-secret settings; Secrets hold credentials. Without them, every tweak requires a new image—unacceptable for an agent platform.
 

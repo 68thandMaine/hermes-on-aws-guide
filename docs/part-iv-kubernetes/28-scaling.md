@@ -17,7 +17,7 @@ Scaling is not “more Pods.” It is **feedback control over time**:
 observe load → compare target → change replica count → repeat
 ```
 
-:::note Why this matters for Hermes
+:::note[Why this matters for Hermes]
 
 Hermes API and workers scale horizontally; inference may scale differently; PostgreSQL scales vertically. Without scaling, Hermes has fixed capacity. With HPA—and honest limits—you design for bursts, not just idle state.
 

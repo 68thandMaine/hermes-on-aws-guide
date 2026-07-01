@@ -24,7 +24,7 @@ After:   heterogeneous stack — CPU baseline + GPU accelerated path
 
 No new mental model—GPUs are another **execution substrate** in State Layers, like choosing a node pool for memory-heavy vs compute-heavy work.
 
-:::note Optional but architecturally important
+:::note[Optional but architecturally important]
 
 You can complete the book on CPU-only. This chapter documents the **production path** when agent latency and concurrency matter—and when cost becomes a first-class design constraint.
 

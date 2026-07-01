@@ -20,7 +20,7 @@ Chapter 26   Config/Secret  →  what the system knows
 Chapter 27   RBAC + NetworkPolicy →  who may act and who may connect
 ```
 
-:::note Why this matters for Hermes
+:::note[Why this matters for Hermes]
 
 Hermes is multi-component: API, workers, llama.cpp, PostgreSQL, tools. Not every Pod should list Secrets, reach the database, or call inference directly. RBAC limits API actions; NetworkPolicy limits east-west traffic.
 

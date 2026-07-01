@@ -26,7 +26,7 @@ After:   Hermes contains intelligence (local llama-server)
 
 Aligned with [Chapter 6](../part-i-foundations/06-designing-the-hermes-platform.md): **Hermes and llama.cpp are separate services**—orchestration vs inference runtime.
 
-:::note Phase shift
+:::note[Phase shift]
 
 | Chapter | Capability |
 |---------|------------|

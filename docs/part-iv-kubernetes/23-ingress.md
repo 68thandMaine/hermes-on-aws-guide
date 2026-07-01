@@ -30,7 +30,7 @@ Chapter 23   Ingress   →  external HTTP entry
 
 On your k3s cluster, **Traefik** is already the Ingress controller—it installed with [Chapter 13](../part-ii-aws/13-the-first-control-plane.md). You declare rules; Traefik enforces them.
 
-:::note Why this matters for Hermes
+:::note[Why this matters for Hermes]
 
 Ingress becomes the front door to the AI stack: `https://hermes.example.com` → Hermes Service → workers → llama.cpp. This chapter uses `nginx.local` on HTTP; [Chapter 14](../part-ii-aws/14-routing-traffic-to-hermes.md) adds Route 53 and TLS.
 

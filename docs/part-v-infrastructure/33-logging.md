@@ -26,7 +26,7 @@ After:   LogQL filter → trace_id → span tree → root cause
 
 No new mental model—logs and traces are **State Layers** outputs: discrete events and request paths materialized from running Pods, federated into queryable stores.
 
-:::note Why this matters for Hermes
+:::note[Why this matters for Hermes]
 
 Hermes executes tool chains, model calls, and memory lookups across multiple steps. Metrics show latency rising; logs show *which tool timed out*; traces show *the full execution graph*. Without all three, Hermes is a black box.
 

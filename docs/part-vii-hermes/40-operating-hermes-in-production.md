@@ -24,7 +24,7 @@ By now: users request, workers reason, models serve, memory grows. The new probl
 
 This chapter ties together [Terraform](../part-v-infrastructure/29-terraform.md), [GitHub Actions](../part-v-infrastructure/30-github-actions.md), [Secrets](../part-v-infrastructure/31-secrets-management.md), [Monitoring & Logging](../part-v-infrastructure/32-monitoring.md), [Kubernetes](../part-iv-kubernetes/21-deployments.md), and [Hermes runtime](39-distributed-cognitive-execution.md) into **production engineering**—preserving correctness while change is continuous.
 
-:::note Operator shift
+:::note[Operator shift]
 
 No new infrastructure primitives. You apply patterns you already built—rolling updates, backups, alerts, runbooks—against a **system that thinks**.
 

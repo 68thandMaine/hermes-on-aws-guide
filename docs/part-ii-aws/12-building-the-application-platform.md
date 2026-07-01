@@ -24,7 +24,7 @@ You are no longer provisioning infrastructure. You are **building the applicatio
 
 This chapter is not "install Docker." It explains **why containers exist**, what a runtime does, and how to verify the platform before Kubernetes arrives.
 
-:::note Why this matters for Hermes
+:::note[Why this matters for Hermes]
 
 Hermes, llama.cpp, PostgreSQL, and Redis will eventually run as orchestrated workloads—not as packages you `apt install` on Ubuntu. Containers package each service with its dependencies so the same image runs after a rebuild, a k3s upgrade, or a move to a second node. Docker is the on-ramp; Kubernetes is the conductor. **Hermes comes after the platform is ready**—not before.
 

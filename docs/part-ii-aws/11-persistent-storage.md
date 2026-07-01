@@ -27,7 +27,7 @@ Persistence is a **design decision**, not an afterthought.
 
 A mature platform assumes servers fail, disks fill, instances terminate, and operators make mistakes. The goal is not preventing every failure—it is ensuring failures do not cause **permanent data loss**.
 
-:::note Why this matters for Hermes
+:::note[Why this matters for Hermes]
 
 llama.cpp reads multi-gigabyte model files from disk on every cold start. PostgreSQL holds agent state Hermes cannot infer from thin air. Losing `/models` means re-downloading; losing `/data` means losing conversations and tool history. Separating storage tiers and proving restore **before** you deploy Hermes is what separates a demo from a platform.
 

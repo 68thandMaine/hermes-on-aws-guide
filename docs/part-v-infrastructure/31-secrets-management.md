@@ -29,7 +29,7 @@ After:   AWS Secrets Manager → sync → Kubernetes → Pods (materialized at r
 
 No new mental model—this is **State Layers** applied to credentials: external source of truth, cluster materializes temporarily, workloads consume via refs.
 
-:::note Why this matters for Hermes
+:::note[Why this matters for Hermes]
 
 Hermes needs model provider keys, tool API credentials, and database passwords. Those cannot live in Git, Helm values, or base64 YAML forever. Automated CI ([Chapter 30](30-github-actions.md)) makes credential leakage more dangerous—not less. External secret management is how the platform stays secure while evolving through merges.
 

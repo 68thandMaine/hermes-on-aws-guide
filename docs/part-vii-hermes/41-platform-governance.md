@@ -18,7 +18,7 @@ Chapter 41:  "Who is allowed to make it do that?"
 
 Hermes can execute code, call APIs, retrieve memories, coordinate agents, and run continuously. Those capabilities create risks a generic ethics lecture cannot fix. This chapter stays **implementation-grounded**: every control maps to a Kubernetes object, AWS service, Hermes component, or operational procedure you already built.
 
-:::note Core principle
+:::note[Core principle]
 
 **The language model is never the security boundary. The platform is.**
 

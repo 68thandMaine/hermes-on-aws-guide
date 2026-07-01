@@ -22,7 +22,7 @@ Chapter 24+      →  persisting state (not disposable)
 
 This is required before PostgreSQL, Redis persistence, or Hermes conversation history mean anything in production.
 
-:::note Why this matters for Hermes
+:::note[Why this matters for Hermes]
 
 Hermes depends on durable state—PostgreSQL, optional Redis AOF, model metadata on disk. Without PVCs (or equivalent), every Pod restart wipes memory. [Chapter 11](../part-ii-aws/11-persistent-storage.md) protected **node disks**; this chapter protects **workload data inside Kubernetes**.
 

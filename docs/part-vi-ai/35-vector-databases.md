@@ -28,7 +28,7 @@ After:   Hermes remembers meaning (Qdrant) — semantic continuity
 
 No new mental model—retrieval is another **State Layer**: write embeddings on process, read neighbors on query, inject into prompt context.
 
-:::note Why this is a system-type upgrade
+:::note[Why this is a system-type upgrade]
 
 You are not adding "a database." You are introducing **semantic state** into an already running distributed system. Hermes transitions from execution system → **memory-aware execution system**.
 

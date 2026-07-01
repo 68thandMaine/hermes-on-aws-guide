@@ -7,7 +7,7 @@ description: "Every CLI command used in the book, organized by chapter."
 
 Keep this appendix open while building Hermes. Commands are extracted from chapter labs and walkthroughs—grouped by chapter, with environment conventions first.
 
-:::tip Environment variables (use in Part II+)
+:::tip[Environment variables (use in Part II+)]
 
 ```bash
 export AWS_PROFILE=hermes

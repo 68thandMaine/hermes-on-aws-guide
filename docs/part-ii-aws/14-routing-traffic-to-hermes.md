@@ -11,7 +11,7 @@ description: "Route 53, TLS, and DNS so clients reach the platform over HTTPS."
 
 > 📋 **Outline** — RFC not started. Optional AWS polish—**execution only** (no new ontology). Complete after Kubernetes core objects (Part IV) or when exposing HTTPS.
 
-:::note Why this matters for Hermes
+:::note[Why this matters for Hermes]
 
 Your laptop sends requests to a hostname—not a raw IP you memorize. Route 53 maps that name to your Elastic IP; TLS protects tokens in transit. Deploy Hermes first on Kubernetes; add public DNS when you are ready for HTTPS access.
 

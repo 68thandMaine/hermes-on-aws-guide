@@ -24,7 +24,7 @@ Chapter 21   Deployment →  “always keep N of these running”
 
 You are not learning a new paradigm. You are **using the reconciliation loop** you already saw in system pods—now for your own workload.
 
-:::note Why this matters for Hermes
+:::note[Why this matters for Hermes]
 
 Hermes will run as a Deployment (or similar controller)—not as a Pod you create by hand. Self-healing, scaling, and rollouts depend on desired state. This chapter is the control-layer knob you will turn again when deploying the agent stack.
 

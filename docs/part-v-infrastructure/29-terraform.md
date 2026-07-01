@@ -20,7 +20,7 @@ Chapter 29 (Terraform) →  same specification, reproducible
 
 You are not learning a new mental model. Terraform is **declarative desired state**—the same pattern as Kubernetes Deployments, applied to VPCs and EC2 instead of Pods.
 
-:::note Why this matters for Hermes
+:::note[Why this matters for Hermes]
 
 Hermes runs on a **machine that produces a cluster**. If that machine is hand-built, every environment drifts. Terraform makes `hermes-vpc`, `hermes-controlplane-01`, and security boundaries **repeatable**—dev, staging, disaster rebuild.
 

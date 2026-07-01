@@ -73,7 +73,7 @@ AWS does not sell you a specific physical machine. It sells **capacity units** b
 
 The contract is **behavioral**: your instance behaves like a dedicated machine. The implementation is **shared**: thousands of customers' VMs may run on the same physical racks.
 
-:::note Why this matters for Hermes
+:::note[Why this matters for Hermes]
 
 Hermes, PostgreSQL, Redis, and llama.cpp will all run on **one EC2 instance** in your initial design—a single VM with multiple services inside it. Later chapters add Docker and k3s, which add another isolation layer *inside* that VM. Knowing where the VM boundary sits helps you reason about failure domains: reboot the instance and everything inside it stops; restart a container and only that workload restarts.
 

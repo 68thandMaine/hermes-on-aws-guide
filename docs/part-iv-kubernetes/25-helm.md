@@ -22,7 +22,7 @@ Chapter 25       →  packaged system (helm install)
 
 You are not learning a new mental model. You are **stacking packaging on top of the State Layers you already use**.
 
-:::note Why this matters for Hermes
+:::note[Why this matters for Hermes]
 
 Hermes is not one Deployment—it is API, workers, inference, storage, and Ingress wired together. Helm is how that becomes:
 

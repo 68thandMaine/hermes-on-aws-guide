@@ -17,7 +17,7 @@ A **Pod** is the smallest executable unit the scheduler places on a node. Everyt
 
 For most workloads: **Pod = one container**. Start there.
 
-:::note Why this matters for Hermes
+:::note[Why this matters for Hermes]
 
 Later chapters deploy Hermes, inference, and databases as scheduled workloads. This chapter is the first time you manipulate the **execution substrate** for `laptop → ingress → Hermes → model → response`. No Hermes image yet—just nginx, to learn placement and lifecycle.
 

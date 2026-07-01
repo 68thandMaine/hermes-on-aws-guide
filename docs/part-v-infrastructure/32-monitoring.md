@@ -22,7 +22,7 @@ After:   metrics → dashboards → alerts → informed scaling and debugging
 
 No new mental model—monitoring maps to **State Layers**: scrape signals from Nodes and Pods, store time series, compare against thresholds, feed HPA and humans.
 
-:::note Why this matters for Hermes
+:::note[Why this matters for Hermes]
 
 Hermes is API + workers + inference + tools + memory. "All Pods Running" does not mean healthy latency, empty queues, or successful tool calls. Monitoring is how you distinguish **running** from **healthy** before users notice.
 

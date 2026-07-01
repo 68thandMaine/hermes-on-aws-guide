@@ -22,7 +22,7 @@ Hermes can execute, reason, remember, coordinate, observe, secure, and recover. 
 
 > **Can Hermes learn a new capability without redesigning itself?**
 
-:::note Extension philosophy
+:::note[Extension philosophy]
 
 A **capability** is something Hermes can do that it could not do yesterday. The platform stays stable. Only capabilities grow.
 

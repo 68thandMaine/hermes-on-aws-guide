@@ -77,7 +77,7 @@ RFC 1918 defines three private ranges:
 
 Your home Wi-Fi probably assigns `192.168.1.x` addresses. Your Hermes EC2 instance will get a `10.0.x.x` address inside your VPC. Neither is directly reachable from the public internet—which is intentional.
 
-:::note Why this matters for Hermes
+:::note[Why this matters for Hermes]
 
 Hermes runs PostgreSQL, Redis, and llama.cpp on the same server, but the **principle** still applies: internal services should not be exposed to the internet unless you deliberately open them. Private IP ranges and firewalls exist so you can run many services on one machine and expose only HTTPS (443) and SSH (22). When you build the VPC in Chapter 8, you are choosing which addresses live inside your isolated network—and which paths lead to the outside world.
 

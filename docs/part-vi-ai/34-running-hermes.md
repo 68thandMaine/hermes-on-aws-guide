@@ -22,7 +22,7 @@ After:   Hermes namespace — API + workers + model + memory + queue — alive a
 
 This chapter is **not** architecture design—that was [Chapter 6](../part-i-foundations/06-designing-the-hermes-platform.md). This is the first **end-to-end deployment** on everything you built.
 
-:::note Lab honesty
+:::note[Lab honesty]
 
 The repo ships `hermes-lab` with **stub images** that wire the same topology as production Hermes. Real Hermes API and llama.cpp replace stubs in later chapters ([Chapter 36](36-model-serving.md), Part VII). The lesson is **system assembly and verification**, not a specific container tag.
 

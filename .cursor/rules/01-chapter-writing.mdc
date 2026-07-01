@@ -36,7 +36,7 @@ description: "One-line summary for search/SEO."
 
 **Every implementation chapter (Part II+)** must include:
 
-1. At least one `:::note Why this matters for Hermes` admonition in Background or Theory
+1. At least one `:::note[Why this matters for Hermes]` admonition in Background or Theory
 2. A **Hermes Platform Status** section before What's Next — update checkmarks and progress % (see `STYLE_GUIDE.md` template)
 3. An **Engineering Decision Record** section linking to `infrastructure/edr/EDR-NNNN-*.md`
 
