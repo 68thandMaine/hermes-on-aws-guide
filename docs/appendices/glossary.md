@@ -35,6 +35,23 @@ Terms used throughout *Building a Personal AI Cloud*. Terms are added as chapter
 | **systemd** | Init system and service manager; PID 1 on modern Ubuntu. | Ch 3 |
 | **system call** | Request from a program to the kernel (read, write, allocate memory). | Ch 3 |
 | **Cloud computing** | Delivery of compute, storage, and networking over the internet on a pay-as-you-go basis, without owning physical hardware. | Ch 1 |
+| **CloudWatch** | AWS service for metrics, logs, dashboards, and alarms. | Ch 15 |
+| **CloudWatch Agent** | Daemon on EC2 that publishes custom host metrics and log files to CloudWatch. | Ch 15 |
+| **A record** | DNS record mapping a hostname to an IPv4 address. | Ch 14 |
+| **ACM** | AWS Certificate Manager—managed TLS certificates for AWS terminators (ALB, CloudFront). | Ch 14 |
+| **cert-manager** | Kubernetes controller that requests and renews TLS certificates (e.g. from Let's Encrypt). | Ch 14 |
+| **ClusterIssuer** | Cluster-scoped cert-manager resource defining how to obtain certificates. | Ch 14 |
+| **Hosted zone** | DNS container for a domain’s records in Route 53. | Ch 14 |
+| **HTTP-01 challenge** | ACME proof of domain control via an HTTP resource on port 80. | Ch 14 |
+| **Let's Encrypt** | Free public Certificate Authority with automated short-lived certificates. | Ch 14 |
+| **Route 53** | AWS DNS service—hosted zones and records that map names to addresses. | Ch 14 |
+| **TLS** | Transport Layer Security—encrypts HTTP as HTTPS. | Ch 14 |
+| **AWS Budget** | Billing tool that tracks spend against a monthly limit with configurable alerts. | Ch 16 |
+| **Cost Explorer** | AWS console for analyzing historical spend by service, tag, or time range. | Ch 16 |
+| **Cost allocation tag** | User-defined tag activated in Billing to appear in cost reports. | Ch 16 |
+| **Instance profile** | IAM role attached to an EC2 instance for API access without static access keys. | Ch 15 |
+| **Log group** | Container for log streams in CloudWatch Logs (e.g., `/hermes/controlplane`). | Ch 15 |
+| **Status check** | EC2 health signal—instance-level or system-level failure detection. | Ch 15 |
 | **Control plane** | The tools and environment you use to manage infrastructure (laptop, terminal, Git, Terraform)—distinct from the data plane. | Ch 1 |
 | **Data plane** | Where application workloads actually execute—in this book, EC2 instances, containers, and pods in AWS. | Ch 1 |
 | **Dev environment** | A configured space for writing and testing code; may be local, remote, or cloud-hosted. | Ch 1 |

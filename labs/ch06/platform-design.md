@@ -4,26 +4,19 @@ Complete after reading [Chapter 6](../../docs/part-i-foundations/06-designing-th
 
 ## Platform components
 
-| Component | Purpose (one sentence) | Separate service? | AWS / on-node | Chapter |
-|-----------|------------------------|-------------------|---------------|---------|
-| Hermes API | | Yes | | |
-| llama.cpp | | Yes | | |
-| PostgreSQL | | Yes | | |
-| Redis | | Yes | | |
-| Traefik | | Yes | | |
-| MCP Server A | | Yes | | |
-| k3s | | — | on-node | |
-| Docker | | — | on-node | |
+| Component    | Purpose (one sentence) | Separate service? | AWS / on-node | Chapter |
+| ------------ | ---------------------- | ----------------- | ------------- | ------- |
+| Hermes API   |                        | Yes               | AWS           |         |
+| llama.cpp    |                        | Yes               | on-node       |         |
+| PostgreSQL   |                        | Yes               | on-node       |         |
+| Redis        |                        | Yes               | AWS           |         |
+| Traefik      |                        | Yes               | on-node       |         |
+| MCP Server A |                        | Yes               | AWS           |         |
+| k3s          |                        | —                 | on-node       |         |
+| Docker       |                        | —                 | on-node       |         |
 
 ## Request lifecycle (8 steps)
 
-1.
-2.
-3.
-4.
-5.
-6.
-7.
 8.
 
 ## Compute choice
@@ -35,10 +28,10 @@ Complete after reading [Chapter 6](../../docs/part-i-foundations/06-designing-th
 ## Security Group rules (day one)
 
 | Port | Source | Purpose |
-|------|--------|---------|
-| | | |
-| | | |
-| | | |
+| ---- | ------ | ------- |
+|      |        |         |
+|      |        |         |
+|      |        |         |
 
 ## Scaling trigger (future)
 

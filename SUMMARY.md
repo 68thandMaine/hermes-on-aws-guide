@@ -69,9 +69,9 @@ See [Book Completion](STYLE_GUIDE.md#book-completion-design-done-execution-remai
 | 11 | [Persistent Storage for Models and Data](docs/part-ii-aws/11-persistent-storage.md) | `11-persistent-storage.md` | ✏️ Draft |
 | 12 | [Building the Application Platform](docs/part-ii-aws/12-building-the-application-platform.md) | `12-building-the-application-platform.md` | ✏️ Draft |
 | 13 | [The First Control Plane](docs/part-ii-aws/13-the-first-control-plane.md) | `13-the-first-control-plane.md` | ✏️ Draft |
-| 14 | [Routing Traffic to Hermes](docs/part-ii-aws/14-routing-traffic-to-hermes.md) | `14-routing-traffic-to-hermes.md` | ⬜ Planned |
-| 15 | [Observing the Hermes Platform](docs/part-ii-aws/15-observing-hermes-platform.md) | `15-observing-hermes-platform.md` | ⬜ Planned |
-| 16 | [Managing Platform Costs](docs/part-ii-aws/16-managing-platform-costs.md) | `16-managing-platform-costs.md` | ⬜ Planned |
+| 14 | [Routing Traffic to Hermes](docs/part-ii-aws/14-routing-traffic-to-hermes.md) | `14-routing-traffic-to-hermes.md` | ✏️ Draft |
+| 15 | [Observing the Hermes Platform](docs/part-ii-aws/15-observing-hermes-platform.md) | `15-observing-hermes-platform.md` | ✏️ Draft |
+| 16 | [Managing Platform Costs](docs/part-ii-aws/16-managing-platform-costs.md) | `16-managing-platform-costs.md` | ✏️ Draft |
 
 ---
 

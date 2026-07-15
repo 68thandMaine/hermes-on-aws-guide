@@ -36,6 +36,9 @@ infrastructure/
 | 11 | `cli/ch11-storage-backup-baseline.sh`, `edr/EDR-0004-separate-storage-tiers.md` |
 | 12 | `cli/ch12-install-docker.sh`, `edr/EDR-0005-containers-as-deployment-unit.md` |
 | 13 | `cli/ch13-install-k3s.sh`, `edr/EDR-0006-single-node-k3s-control-plane.md` |
+| 14 | `cli/ch14-routing-baseline.sh`, `edr/EDR-0009-public-https-entrypoint.md` |
+| 15 | `cli/ch15-cloudwatch-baseline.sh`, `edr/EDR-0007-aws-cloudwatch-baseline.md` |
+| 16 | `cli/ch16-cost-baseline.sh`, `edr/EDR-0008-cost-governance-baseline.md` |
 | 21 | `kubernetes/ch21-nginx-deployment.yaml` |
 | 22 | `kubernetes/ch22-nginx-service.yaml` |
 | 23 | `kubernetes/ch23-nginx-ingress.yaml` |

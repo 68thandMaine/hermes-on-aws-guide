@@ -10,6 +10,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
+- Chapter 14: Routing Traffic to Hermes — full draft (Route 53, cert-manager, Let's Encrypt TLS on Traefik); was outline-only stub; EDR-0009; `ch14-routing-baseline.sh`
 - Chapter 4: Networking Fundamentals — full draft (TCP/IP, CIDR, DNS, NAT, routing, local diagnostics lab); was outline-only stub
 - Editorial: local inference standardized on **llama.cpp** (`llama-server`)—removed Ollama as primary path; Ch 36 "Why not Ollama"; glossary, diagrams, references, labs index updated
 - Appendices: Command Reference, Repository Walkthrough, Cost Estimates, Troubleshooting Guide — reference manual; glossary expanded
@@ -41,7 +42,8 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Part VII Ch 43 reframed as capstone closure (*The Platform You Built*); SUMMARY project status (design vs execution)
 - STYLE_GUIDE — narrative governance: one ontology shift per layer; post-Ch-13 hard boundary; exercise-don't-philosophize rule
 - Chapter 13 — state-change awareness, Chapter 6 callback, Declarative Reality, State Layers, "The Boundary" closing
-- Chapter 15 stub — observability framed as *How do I see what the platform is doing?*
+- Chapter 15: Observing the Hermes Platform — CloudWatch Agent, host metrics/logs, alarms, dashboard; EDR-0007; platform status 67%
+- Chapter 16: Managing Platform Costs — budgets, cost tags, Cost Explorer review, billing guardrails; EDR-0008; platform status 68%
 
 ### Added
 

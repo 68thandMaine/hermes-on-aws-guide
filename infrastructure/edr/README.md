@@ -21,6 +21,9 @@ Each EDR includes:
 | EDR-0004 | [Separate OS, models, and application data](EDR-0004-separate-storage-tiers.md) | 11 — Persistent Storage |
 | EDR-0005 | [Adopt containers as deployment unit](EDR-0005-containers-as-deployment-unit.md) | 12 — Building the Application Platform |
 | EDR-0006 | [Single-node k3s as the Hermes control plane](EDR-0006-single-node-k3s-control-plane.md) | 13 — The First Control Plane |
+| EDR-0007 | [AWS CloudWatch baseline for the control plane host](EDR-0007-aws-cloudwatch-baseline.md) | 15 — Observing the Hermes Platform |
+| EDR-0008 | [Tag-based cost governance baseline for the Hermes lab](EDR-0008-cost-governance-baseline.md) | 16 — Managing Platform Costs |
+| EDR-0009 | [Public HTTPS entry via Route 53 and Let's Encrypt](EDR-0009-public-https-entrypoint.md) | 14 — Routing Traffic to Hermes |
 
 Earlier chapters (7–9) predate formal EDR numbering; retroactive EDRs may be added for account isolation, single public subnet, and dual-volume layout.
 

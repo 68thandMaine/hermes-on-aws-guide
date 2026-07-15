@@ -58,10 +58,14 @@ This file orients AI coding agents working in **Building a Personal AI Cloud**.
 | 10 | `docs/part-ii-aws/10-establishing-trust.md` | Full draft — trust boundaries, EDR-0003, SG + UFW + sshd |
 | 11 | `docs/part-ii-aws/11-persistent-storage.md` | Full draft — three EBS tiers, snapshots, S3, restore test, EDR-0004 |
 | 12 | `docs/part-ii-aws/12-building-the-application-platform.md` | Full draft — Docker platform, data-root on /data/docker, EDR-0005 |
+| 13 | `docs/part-ii-aws/13-the-first-control-plane.md` | Full draft — k3s, EDR-0006 |
+| 14 | `docs/part-ii-aws/14-routing-traffic-to-hermes.md` | Full draft — Route 53, cert-manager, Let's Encrypt, EDR-0009 |
+| 15 | `docs/part-ii-aws/15-observing-hermes-platform.md` | Full draft — CloudWatch baseline, EDR-0007 |
+| 16 | `docs/part-ii-aws/16-managing-platform-costs.md` | Full draft — budgets/tags, EDR-0008 |
 
 ### Content ⬜ (stubs only)
 
-Most chapters in Parts II–VII are planned stubs. Do not assume they have content.
+Most chapters in Parts III–VII (beyond drafted Part IV–VII chapters listed in SUMMARY) remain planned stubs. Do not assume undeclared chapters have content.
 
 ## Repository Map
 

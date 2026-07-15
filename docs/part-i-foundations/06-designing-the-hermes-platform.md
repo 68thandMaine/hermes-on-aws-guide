@@ -214,12 +214,12 @@ Every row connects this design to Part II provisioning:
 | Compute for k3s + workloads | EC2 (`m7i.2xlarge` or similar) | 9 |
 | Network isolation | VPC, subnets, IGW, route tables | 8 |
 | Static inbound IP | Elastic IP | 9, 8 |
-| HTTPS DNS | Route 53 + ACM or Let's Encrypt | 13 |
+| HTTPS DNS | Route 53 + Let's Encrypt (Traefik) | 14 |
 | Block storage | EBS gp3 — `hermes-root` 100 GB, `hermes-models` 300 GB → `/models`, `hermes-data` 100 GB → `/data` | 9, 11 |
 | Object storage (backups, artifacts) | S3 `hermes-platform-backups-ACCOUNT_ID` | 11 |
 | Identity for operators | IAM users, roles, MFA | 7 |
 | SSH access | Security Group (22 from your IP) | 9, 10 |
-| HTTPS access | Security Group (443 from intended clients) | 10, 13 |
+| HTTPS access | Security Group (443; opened in Ch 14) | 10, 14 |
 | Billing guardrails | CloudWatch billing alarm | 7 |
 
 You are not creating these yet—you are **naming why they will exist**.
