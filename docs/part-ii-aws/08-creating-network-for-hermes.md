@@ -46,7 +46,7 @@ After completing this chapter, you will be able to:
 
 ## Prerequisites
 
-- [Chapter 7: Provisioning Your AWS Account](07-provisioning-aws-account.md) — `hermes-admin`, MFA, CLI profile `hermes`, home region chosen (this chapter uses **`us-west-2`**)
+- [Chapter 7: Provisioning Your AWS Account](07-provisioning-aws-account.md) — `hermes-admin`, MFA, CLI profile `hermes`, home region `us-west-2`
 - Lab 6 platform design worksheet completed
 - AWS CLI profile working: `aws sts get-caller-identity --profile hermes`
 
@@ -243,8 +243,6 @@ flowchart TB
 | Public subnet | `hermes-public-usw2a` | `10.0.1.0/24` in `us-west-2a` |
 | Route table | `hermes-public-rt` | `0.0.0.0/0` → `hermes-igw` |
 
-If your home region is not `us-west-2`, substitute your region and AZ suffix (e.g., `hermes-public-use1a` in `us-east-1a`).
-
 ### What This Design Deliberately Omits (For Now)
 
 - Private subnets and NAT Gateway
@@ -268,8 +266,6 @@ Set your region and profile for every command:
 export AWS_PROFILE=hermes
 export AWS_REGION=us-west-2
 ```
-
-Adjust `AWS_REGION` if your home region differs.
 
 ### AWS Console (Optional Reference)
 
@@ -387,7 +383,7 @@ Source this file in later chapters: `source ~/hermes-platform/notes/network-reso
 
 **Steps:**
 
-1. Export `AWS_PROFILE=hermes` and `AWS_REGION=us-west-2` (or your home region)
+1. Export `AWS_PROFILE=hermes` and `AWS_REGION=us-west-2`
 2. Run Walkthrough Steps 1–5 (CLI)
 3. Run every command in [Verification](#verification) below
 4. Compare CLI output to the [Architecture](#architecture) diagram—confirm CIDR, IGW attachment, and `0.0.0.0/0` route

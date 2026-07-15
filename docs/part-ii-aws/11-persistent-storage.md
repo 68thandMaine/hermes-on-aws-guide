@@ -302,12 +302,8 @@ Adjust device queries if your mapping differs—use `lsblk` on the instance to c
 ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 BUCKET="hermes-platform-backups-${ACCOUNT_ID}"
 
-if [ "$AWS_REGION" = "us-east-1" ]; then
-  aws s3api create-bucket --bucket "$BUCKET" --region us-east-1
-else
-  aws s3api create-bucket --bucket "$BUCKET" --region "$AWS_REGION" \
-    --create-bucket-configuration LocationConstraint="$AWS_REGION"
-fi
+aws s3api create-bucket --bucket "$BUCKET" --region us-west-2 \
+  --create-bucket-configuration LocationConstraint=us-west-2
 
 aws s3api put-public-access-block --bucket "$BUCKET" \
   --public-access-block-configuration \

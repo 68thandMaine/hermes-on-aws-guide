@@ -119,7 +119,7 @@ Internet → AWS (VPC, EC2 Ubuntu) → Docker → k3s
 
 ## Defaults
 
-- AWS home region: **`us-west-2`** (billing EstimatedCharges alarms: `us-east-1`)
+- AWS home region: **`us-west-2`**
 - EC2 OS: **Ubuntu Server LTS** (`ubuntu` user)
 - Kubernetes: **k3s**
 - IaC: **Terraform** (Part V)

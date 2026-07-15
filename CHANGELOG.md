@@ -10,7 +10,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
-- Default AWS region standardized on **`us-west-2`** (subnet `hermes-public-usw2a`); billing EstimatedCharges alarms remain in `us-east-1` (AWS constraint)
+- Default AWS region standardized on **`us-west-2`** (subnet `hermes-public-usw2a`)
 - Renumber: Part III–VII shifted +1 so Managing Platform Costs keeps Ch 16; Docker is Ch 17 … capstone is Ch 45 (fixes duplicate Ch 16)
 - Chapter 6: restore Chapter 15 (CloudWatch) and Chapter 16 (cost) in the design map; Observable/Cost rows used stale numbers after Routing became Ch 14
 - Lab 15 worksheet: `labs/ch15/observability-notes.md`

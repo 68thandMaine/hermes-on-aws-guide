@@ -156,7 +156,7 @@ Name every resource as if you will have many someday—even when you only create
 | Security group | `hermes-controlplane-sg` | `hermes-{role}-sg` |
 | EC2 instance | `hermes-controlplane-01` | `hermes-{role}-{nn}` |
 
-Use your home region's AZ suffix (`usw2a` for `us-west-2a`, `use1a` for `us-east-1a`, etc.). This book defaults to **`us-west-2`**. Consistent names make later scaling, Terraform, and debugging far easier.
+Use the `usw2a` AZ suffix for `us-west-2a`. This book uses **`us-west-2`** throughout. Consistent names make later scaling, Terraform, and debugging far easier.
 
 ### Infrastructure Artifacts (Early IaC)
 

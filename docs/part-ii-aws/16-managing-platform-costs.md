@@ -193,13 +193,13 @@ Adjust for your budget. A $50 alarm after provisioning generates false positives
 
 ### Step 1 — Raise the Billing Alarm
 
-Switch the console to **`us-east-1`** (EstimatedCharges lives only there), then open **CloudWatch** → **Alarms** → edit `hermes-estimated-charges-50usd` (or create `hermes-estimated-charges-350usd`):
+In **CloudWatch** → **Alarms** → edit `hermes-estimated-charges-50usd` (or create `hermes-estimated-charges-350usd`):
 
 - Metric: `AWS/Billing` → `EstimatedCharges` → currency `USD`
 - Threshold: **Greater than $350** (or your monthly target + 15%)
-- Action: SNS topic `hermes-billing-alerts` or `hermes-platform-alerts` (create/subscribe in `us-east-1` if needed)
+- Action: SNS topic `hermes-billing-alerts` or `hermes-platform-alerts` in `us-west-2`
 
-Keep the old alarm disabled or delete it—two alarms on the same metric with different thresholds is fine if you want early + late warnings. Return the console to **`us-west-2`** when finished.
+Keep the old alarm disabled or delete it—two alarms on the same metric with different thresholds is fine if you want early + late warnings.
 
 ### Step 2 — Activate Cost Allocation Tags
 

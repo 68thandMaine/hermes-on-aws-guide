@@ -124,7 +124,7 @@ If credentials leak, MFA often prevents account takeover.
 
 AWS partitions infrastructure into **regions** (e.g., `us-west-2` in Oregon). Each region contains multiple **Availability Zones** (isolated data centers).
 
-Pick one **home region** for the Hermes platform and stay consistent unless you have a reason to change. This book uses **`us-west-2`** (Oregon) as the default—strong service coverage for EC2, EBS, and the stack you will build. Your Lab 6 worksheet may specify a different region; if so, substitute your region in every command.
+Pick **`us-west-2`** (Oregon) as the Hermes home region and stay consistent in every command, console session, and resource name.
 
 ### Billing and Cost Guardrails
 
@@ -260,18 +260,16 @@ Sign out of root. **From this point forward, use `hermes-admin` for all work** (
 
 Sign in as **`hermes-admin`**.
 
-Billing estimated-charges metrics are available **only** in **US East (N. Virginia) `us-east-1`**, even when your Hermes home region is `us-west-2`. Switch the console region for this step only; return to `us-west-2` afterward.
-
-1. Confirm region selector shows **US East (N. Virginia) `us-east-1`**
+1. Confirm region selector shows **US West (Oregon) `us-west-2`**
 2. Open **CloudWatch** → **Alarms** → **Create alarm**
 3. Choose **Select metric** → **Billing** → **Total Estimated Charge**
 4. If no billing metrics appear, wait up to 24 hours after account creation, or enable billing alerts in **Billing** → **Billing preferences** → **Receive Billing Alerts**
 5. Set threshold: **Static** → **Greater than** → `50` (USD)—adjust if your budget differs
-6. Configure notification: create an **SNS topic** in `us-east-1` (e.g., `hermes-billing-alerts`) and subscribe your email; confirm the subscription from your inbox
+6. Configure notification: create an **SNS topic** in `us-west-2` (e.g., `hermes-billing-alerts`) and subscribe your email; confirm the subscription from your inbox
 7. Alarm name: `hermes-estimated-charges-50usd`
 8. Create alarm
 
-When estimated monthly charges exceed $50, you receive email. Raise the threshold after you intentionally launch the full Hermes server. Switch the console back to **`us-west-2`** for all later chapters.
+When estimated monthly charges exceed $50, you receive email. Raise the threshold after you intentionally launch the full Hermes server.
 
 ### Step 7 — Install and Configure the AWS CLI
 
@@ -305,7 +303,7 @@ Enter:
 
 - **AWS Access Key ID:** from Step 5
 - **AWS Secret Access Key:** from Step 5
-- **Default region name:** `us-west-2` (or your chosen home region)
+- **Default region name:** `us-west-2`
 - **Default output format:** `json`
 
 Test authentication:
@@ -374,12 +372,12 @@ Fill in your account ID from the `get-caller-identity` output.
 aws sts get-caller-identity --profile hermes
 ```
 
-Output shows `hermes-admin`. In the console, **EC2 → Instances** lists zero instances in your home region.
+Output shows `hermes-admin`. In the console, **EC2 → Instances** lists zero instances in `us-west-2`.
 
 **Expected output:**
 
 - Root and `hermes-admin` both show MFA enabled in IAM
-- CloudWatch billing alarm exists in `us-east-1` (required for EstimatedCharges)
+- CloudWatch billing alarm exists in `us-west-2`
 - CLI returns valid account ID and user ARN
 
 **Troubleshooting:**
@@ -404,7 +402,7 @@ Confirm before moving to Chapter 8:
 - [ ] Billing alarm configured with confirmed SNS subscription
 - [ ] `aws sts get-caller-identity --profile hermes` succeeds
 - [ ] Account ID recorded in local notes
-- [ ] Zero EC2 instances in home region
+- [ ] Zero EC2 instances in `us-west-2`
 
 ---
 

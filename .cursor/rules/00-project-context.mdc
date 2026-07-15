@@ -59,7 +59,6 @@ diagrams/                ← Reusable diagram sources
 ## Technical Defaults
 
 - **AWS home region:** `us-west-2` (Oregon); AZ example `us-west-2a`; subnet name `hermes-public-usw2a`
-- **Billing alarms:** CloudWatch EstimatedCharges still requires `us-east-1` (AWS constraint)
 - **OS on EC2:** Ubuntu Server LTS (user `ubuntu`)
 - **Orchestration target:** k3s on EC2
 - **IaC:** Terraform (Part V)
