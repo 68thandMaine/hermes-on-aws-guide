@@ -38,7 +38,7 @@ This file orients AI coding agents working in **Building a Personal AI Cloud**.
 ### Infrastructure ✅
 
 - Docusaurus 3 site with Mermaid, local search, GitHub Pages deploy
-- 43-chapter scaffold across 7 parts + appendices
+- 45-chapter scaffold across 7 parts + appendices
 - CI: markdownlint, link validation, `npm run build`
 - Phase 0 docs: README, STYLE_GUIDE, SUMMARY, CHANGELOG
 
@@ -119,6 +119,7 @@ Internet → AWS (VPC, EC2 Ubuntu) → Docker → k3s
 
 ## Defaults
 
+- AWS home region: **`us-west-2`** (billing EstimatedCharges alarms: `us-east-1`)
 - EC2 OS: **Ubuntu Server LTS** (`ubuntu` user)
 - Kubernetes: **k3s**
 - IaC: **Terraform** (Part V)

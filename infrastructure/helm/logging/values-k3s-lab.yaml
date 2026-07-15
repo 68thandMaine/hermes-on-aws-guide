@@ -1,5 +1,5 @@
-# Chapter 33 — Loki stack for single-node k3s (lab)
-# Reuses Grafana from Chapter 32 (grafana.enabled: false here).
+# Chapter 34 — Loki stack for single-node k3s (lab)
+# Reuses Grafana from Chapter 33 (grafana.enabled: false here).
 # Install:
 #   helm repo add grafana https://grafana.github.io/helm-charts
 #   helm upgrade --install logging grafana/loki-stack \
@@ -38,7 +38,7 @@ promtail:
       cpu: 200m
       memory: 128Mi
 
-# Use monitoring Grafana from Ch 32 — add Loki datasource manually or via ConfigMap
+# Use monitoring Grafana from Ch 33 — add Loki datasource manually or via ConfigMap
 grafana:
   enabled: false
 

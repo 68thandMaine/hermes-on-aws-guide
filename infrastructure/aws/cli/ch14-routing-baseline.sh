@@ -4,7 +4,7 @@
 set -euo pipefail
 
 export AWS_PROFILE="${AWS_PROFILE:-hermes}"
-export AWS_REGION="${AWS_REGION:-us-east-1}"
+export AWS_REGION="${AWS_REGION:-us-west-2}"
 source "${HOME}/hermes-platform/notes/controlplane.env"
 
 : "${HERMES_DOMAIN:?Set HERMES_DOMAIN=example.com}"

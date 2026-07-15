@@ -122,10 +122,10 @@ The platform must support:
 
 | Quality | How we satisfy it | When introduced |
 |---------|-------------------|-----------------|
-| Recoverable | EBS snapshots, DB backups, documented restore | Ch 42 |
-| Reproducible | Terraform + Git | Ch 28 |
-| Observable | Prometheus, Grafana, CloudWatch, logs | Ch 14, 31–32 |
-| Cost-effective | Single node, right-sized instance, alerts | Ch 6, 15 |
+| Recoverable | EBS snapshots, DB backups, documented restore | Ch 43 |
+| Reproducible | Terraform + Git | Ch 29 |
+| Observable | Prometheus, Grafana, CloudWatch, logs | Ch 15, 33–34 |
+| Cost-effective | Single node, right-sized instance, alerts | Ch 6, 16 |
 | Upgradeable | Rolling k3s/Hermes deploys, separate llama.cpp | Part IV–VI |
 
 These qualities determine whether the platform is practical to run continuously—not just for a weekend demo.
@@ -215,12 +215,13 @@ Every row connects this design to Part II provisioning:
 | Network isolation | VPC, subnets, IGW, route tables | 8 |
 | Static inbound IP | Elastic IP | 9, 8 |
 | HTTPS DNS | Route 53 + Let's Encrypt (Traefik) | 14 |
+| Host metrics and logs | CloudWatch Agent, dashboards, alarms | 15 |
 | Block storage | EBS gp3 — `hermes-root` 100 GB, `hermes-models` 300 GB → `/models`, `hermes-data` 100 GB → `/data` | 9, 11 |
 | Object storage (backups, artifacts) | S3 `hermes-platform-backups-ACCOUNT_ID` | 11 |
 | Identity for operators | IAM users, roles, MFA | 7 |
 | SSH access | Security Group (22 from your IP) | 9, 10 |
 | HTTPS access | Security Group (443; opened in Ch 14) | 10, 14 |
-| Billing guardrails | CloudWatch billing alarm | 7 |
+| Billing guardrails | CloudWatch billing alarm, budgets, tags | 7, 16 |
 
 You are not creating these yet—you are **naming why they will exist**.
 
@@ -282,7 +283,7 @@ Security is part of design—not a late hardening chapter.
 
 ### Cost Expectations (order of magnitude)
 
-Single-node `m7i.2xlarge` in `us-east-1` (approximate, verify current pricing):
+Single-node `m7i.2xlarge` in `us-west-2` (approximate, verify current pricing):
 
 | Item | Rough monthly |
 |------|----------------|

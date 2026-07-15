@@ -1,0 +1,10 @@
+# Chapter 27 — non-sensitive app configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  labels:
+    app: config-demo
+data:
+  LOG_LEVEL: "debug"
+  API_URL: "http://nginx-demo-service.default.svc.cluster.local"

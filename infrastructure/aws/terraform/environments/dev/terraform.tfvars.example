@@ -1,5 +1,6 @@
 # Copy to terraform.tfvars and adjust. Do not commit secrets.
-aws_region   = "us-east-1"
-aws_profile  = "hermes"
-environment  = "dev"
-name_prefix  = "hermes"
+aws_region         = "us-west-2"
+availability_zone  = "us-west-2a"
+aws_profile        = "hermes"
+environment        = "dev"
+name_prefix        = "hermes"

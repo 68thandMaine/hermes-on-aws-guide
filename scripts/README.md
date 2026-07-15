@@ -11,7 +11,7 @@ scripts/
 │   └── check-prerequisites.sh
 ├── ci/                    # CI scripts run in GitHub Actions
 │   └── validate-links.sh
-└── terraform/             # Starter Terraform configs (Ch 28)
+└── terraform/             # Starter Terraform configs (Ch 29)
     └── README.md
 ```
 

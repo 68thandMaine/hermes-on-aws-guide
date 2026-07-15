@@ -290,7 +290,7 @@ Virtualization was invented to:
 2. **Isolate failures** — one VM crashing does not take down neighbors
 3. **Provision faster** — launch a new VM in minutes, not hardware lead times
 
-AWS EC2 instances are virtual machines. Docker containers are a lighter-weight isolation layer on top (same kernel, separate process trees—[Part III: Containers](../part-iii-containers/16-docker.md)). Kubernetes schedules containers across virtual machines across data centers.
+AWS EC2 instances are virtual machines. Docker containers are a lighter-weight isolation layer on top (same kernel, separate process trees—[Part III: Containers](../part-iii-containers/17-docker.md)). Kubernetes schedules containers across virtual machines across data centers.
 
 The stack builds upward. The four resources stay the same.
 

@@ -1,8 +1,8 @@
-# Chapter 41 — Cognitive and platform resource boundaries
+# Chapter 42 — Cognitive and platform resource boundaries
 # Kubernetes enforces container limits (Helm resources:); Hermes enforces these at runtime.
 
 perRequest:
-  maxSubtaskDepth: 4          # coordinator recursion guard (Ch 39)
+  maxSubtaskDepth: 4          # coordinator recursion guard (Ch 40)
   maxConcurrentSubtasks: 8
   maxReasoningSteps: 25       # loop iterations before forced fail
   inferTimeoutSeconds: 120
@@ -27,9 +27,9 @@ rateLimits:
 costGuards:
   retryBackoffSeconds: [1, 2, 4, 8]
   maxRetriesPerTask: 3
-  alertOnRepeatedFailures: 5  # same tool failing N times → alert Ch 32
+  alertOnRepeatedFailures: 5  # same tool failing N times → alert Ch 33
 
 # Map to Kubernetes objects:
 # - per-container: Deployment spec.resources.limits (hermes-lab Helm)
 # - namespace: ResourceQuota on hermes namespace
-# - cluster: HPA maxReplicas (Ch 28/42)
+# - cluster: HPA maxReplicas (Ch 29/42)

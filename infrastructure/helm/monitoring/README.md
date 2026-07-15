@@ -1,4 +1,4 @@
-# Monitoring stack (Chapter 32)
+# Monitoring stack (Chapter 33)
 
 Helm values for [kube-prometheus-stack](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack) on single-node k3s.
 
@@ -23,9 +23,9 @@ kubectl get secret -n monitoring monitoring-grafana \
 
 ## Related manifests
 
-- [`../../kubernetes/ch32-prometheusrule-hermes-lab.yaml`](../../kubernetes/ch32-prometheusrule-hermes-lab.yaml) — lab alerts tied to Ch 28 HPA
-- [`../../kubernetes/ch32-servicemonitor-hermes-bridge.example.yaml`](../../kubernetes/ch32-servicemonitor-hermes-bridge.example.yaml) — Hermes `/metrics` pattern
+- [`../../kubernetes/ch33-prometheusrule-hermes-lab.yaml`](../../kubernetes/ch33-prometheusrule-hermes-lab.yaml) — lab alerts tied to Ch 29 HPA
+- [`../../kubernetes/ch33-servicemonitor-hermes-bridge.example.yaml`](../../kubernetes/ch33-servicemonitor-hermes-bridge.example.yaml) — Hermes `/metrics` pattern
 
 ## k3s note
 
-**metrics-server** (Ch 28 `kubectl top`, HPA) and **Prometheus** (this chapter) serve different roles — both stay installed.
+**metrics-server** (Ch 29 `kubectl top`, HPA) and **Prometheus** (this chapter) serve different roles — both stay installed.

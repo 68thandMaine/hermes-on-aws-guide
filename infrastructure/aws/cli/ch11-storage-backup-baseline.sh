@@ -3,16 +3,19 @@
 set -euo pipefail
 
 export AWS_PROFILE="${AWS_PROFILE:-hermes}"
-export AWS_REGION="${AWS_REGION:-us-east-1}"
+export AWS_REGION="${AWS_REGION:-us-west-2}"
 source "${HOME}/hermes-platform/notes/controlplane.env"
 
 ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 BUCKET="hermes-platform-backups-${ACCOUNT_ID}"
 
 if ! aws s3api head-bucket --bucket "$BUCKET" 2>/dev/null; then
-  aws s3api create-bucket --bucket "$BUCKET" --region "$AWS_REGION" \
-    ${AWS_REGION:+--create-bucket-configuration LocationConstraint=$AWS_REGION} 2>/dev/null || \
-  aws s3api create-bucket --bucket "$BUCKET" --region us-east-1
+  if [ "$AWS_REGION" = "us-east-1" ]; then
+    aws s3api create-bucket --bucket "$BUCKET" --region us-east-1
+  else
+    aws s3api create-bucket --bucket "$BUCKET" --region "$AWS_REGION" \
+      --create-bucket-configuration LocationConstraint="$AWS_REGION"
+  fi
   aws s3api put-public-access-block --bucket "$BUCKET" --public-access-block-configuration \
     BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true
 fi

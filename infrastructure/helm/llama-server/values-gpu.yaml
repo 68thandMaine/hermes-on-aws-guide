@@ -1,5 +1,5 @@
-# Chapter 37 — llama.cpp with CUDA on GPU-labeled k3s node
-# Prerequisite: NVIDIA driver + nvidia-container-toolkit + device plugin (see ch37-gpu-node-prep.sh)
+# Chapter 38 — llama.cpp with CUDA on GPU-labeled k3s node
+# Prerequisite: NVIDIA driver + nvidia-container-toolkit + device plugin (see ch38-gpu-node-prep.sh)
 # Install as second release alongside CPU llama-server:
 #   helm upgrade --install llama-server-gpu infrastructure/helm/llama-server \
 #     -n hermes -f infrastructure/helm/llama-server/values-gpu.yaml

@@ -1,6 +1,6 @@
 variable "aws_region" {
   type    = string
-  default = "us-east-1"
+  default = "us-west-2"
 }
 
 variable "aws_profile" {
@@ -31,5 +31,5 @@ variable "public_subnet_cidr" {
 
 variable "availability_zone" {
   type    = string
-  default = "us-east-1a"
+  default = "us-west-2a"
 }

@@ -41,7 +41,7 @@ _Content coming soon._
 
 ## Architecture
 
-This book builds a single, coherent platform. By Chapter 18, your environment looks like this:
+This book builds a single, coherent platform. By Chapter 19, your environment looks like this:
 
 ```
            Internet

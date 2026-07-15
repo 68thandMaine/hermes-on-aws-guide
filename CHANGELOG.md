@@ -10,36 +10,40 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
+- Default AWS region standardized on **`us-west-2`** (subnet `hermes-public-usw2a`); billing EstimatedCharges alarms remain in `us-east-1` (AWS constraint)
+- Renumber: Part III–VII shifted +1 so Managing Platform Costs keeps Ch 16; Docker is Ch 17 … capstone is Ch 45 (fixes duplicate Ch 16)
+- Chapter 6: restore Chapter 15 (CloudWatch) and Chapter 16 (cost) in the design map; Observable/Cost rows used stale numbers after Routing became Ch 14
+- Lab 15 worksheet: `labs/ch15/observability-notes.md`
 - Chapter 14: Routing Traffic to Hermes — full draft (Route 53, cert-manager, Let's Encrypt TLS on Traefik); was outline-only stub; EDR-0009; `ch14-routing-baseline.sh`
 - Chapter 4: Networking Fundamentals — full draft (TCP/IP, CIDR, DNS, NAT, routing, local diagnostics lab); was outline-only stub
-- Editorial: local inference standardized on **llama.cpp** (`llama-server`)—removed Ollama as primary path; Ch 36 "Why not Ollama"; glossary, diagrams, references, labs index updated
+- Editorial: local inference standardized on **llama.cpp** (`llama-server`)—removed Ollama as primary path; Ch 37 "Why not Ollama"; glossary, diagrams, references, labs index updated
 - Appendices: Command Reference, Repository Walkthrough, Cost Estimates, Troubleshooting Guide — reference manual; glossary expanded
-- Chapter 44: The Platform You Built — retrospective capstone
-- Chapter 43: From Development to Production — production payoff; readiness assessment; environment promotion; synthesis (last technical chapter)
-- Chapter 42: Extending Hermes — capability layer; tool contracts, registry, implementation, policy; extension checklist; platform-stable growth philosophy
-- Chapter 41: Security, Governance, and Trust — tool gateway, agent_role policy, approval queue, audit trail; RBAC/NetworkPolicy manifests; platform security boundary principle
-- Chapter 40: Operating Hermes in Production — operator shift; rolling deploy/rollback; backups/DR/SLOs/runbooks
-- Chapter 39: Distributed Cognitive Execution — Hermes as OS for agents; coordinator pattern; state-based agent coordination
-- Chapter 38: The Hermes Reasoning Loop — task-driven runtime; worker-owned loop; memory/inference/tools; durable state schema
-- Chapter 37: GPU Instances — g5 + device plugin; llama-server-gpu; dual-path inference; heterogeneous compute
-- Chapter 36: Model Serving — llama.cpp on k3s; hostPath /models; llama-server chart; worker wiring; bounded CPU cognition
-- Chapter 35: Vector Databases — Qdrant semantic memory; three memory layers; RAG write/read paths; lab retrieval demo
-- Chapter 34: Running Hermes — hermes-lab Helm stack; API/workers/model/Redis/Postgres; first system instantiation
-- Chapter 33: Logging & Tracing — Loki + Promtail; LogQL; structured logs; OTel/Tempo concepts; observability triad complete
-- Chapter 32: Monitoring — kube-prometheus-stack on k3s; Grafana; PrometheusRules; metrics-server vs Prometheus; HPA correlation
-- Chapter 31: Secrets Management — AWS SM + ESO sync; IAM scoping; infra vs runtime credential domains; k3s lab auth
-- Chapter 30: GitHub Actions — validate/plan/apply pipeline; `terraform.yml`; CI as control-plane actor; Ch 31 preview
-- Chapter 29: Terraform — IaC narrative; network module codifies Ch 8; `environments/dev` lab; Part V begins; platform status network-as-code
-- Chapter 28: Scaling — HPA, metrics-server, load lab; k3s single-node limits; platform status 94%
-- Chapter 27: Security — RBAC read-only SA, NetworkPolicy deny/allow; k3s enforcement notes; platform status 91%
-- Chapter 26: Configuration — ConfigMaps/Secrets injection lab; pre-Hermes config→security ordering; Ch 27–44 renumbered (+1)
-- Chapter 24: Storage — PVC, local-path on k3s, persistence lab; platform status 82%
-- Chapter 23: Ingress — Traefik on k3s, host routing, external curl; `ch23-nginx-ingress.yaml`; platform status 78%
-- Chapter 22: Services — ClusterIP, DNS, Endpoints; `ch22-nginx-service.yaml`; platform status 75%
-- Chapter 21: Deployments — desired state, self-healing, rollout intro; manifest in `infrastructure/kubernetes/`; platform status 72%
-- Chapter 20: Pods — execution-only first workload; State Layer mapping; platform status 68%
+- Chapter 45: The Platform You Built — retrospective capstone
+- Chapter 44: From Development to Production — production payoff; readiness assessment; environment promotion; synthesis (last technical chapter)
+- Chapter 43: Extending Hermes — capability layer; tool contracts, registry, implementation, policy; extension checklist; platform-stable growth philosophy
+- Chapter 42: Security, Governance, and Trust — tool gateway, agent_role policy, approval queue, audit trail; RBAC/NetworkPolicy manifests; platform security boundary principle
+- Chapter 41: Operating Hermes in Production — operator shift; rolling deploy/rollback; backups/DR/SLOs/runbooks
+- Chapter 40: Distributed Cognitive Execution — Hermes as OS for agents; coordinator pattern; state-based agent coordination
+- Chapter 39: The Hermes Reasoning Loop — task-driven runtime; worker-owned loop; memory/inference/tools; durable state schema
+- Chapter 38: GPU Instances — g5 + device plugin; llama-server-gpu; dual-path inference; heterogeneous compute
+- Chapter 37: Model Serving — llama.cpp on k3s; hostPath /models; llama-server chart; worker wiring; bounded CPU cognition
+- Chapter 36: Vector Databases — Qdrant semantic memory; three memory layers; RAG write/read paths; lab retrieval demo
+- Chapter 35: Running Hermes — hermes-lab Helm stack; API/workers/model/Redis/Postgres; first system instantiation
+- Chapter 34: Logging & Tracing — Loki + Promtail; LogQL; structured logs; OTel/Tempo concepts; observability triad complete
+- Chapter 33: Monitoring — kube-prometheus-stack on k3s; Grafana; PrometheusRules; metrics-server vs Prometheus; HPA correlation
+- Chapter 32: Secrets Management — AWS SM + ESO sync; IAM scoping; infra vs runtime credential domains; k3s lab auth
+- Chapter 31: GitHub Actions — validate/plan/apply pipeline; `terraform.yml`; CI as control-plane actor; Ch 32 preview
+- Chapter 30: Terraform — IaC narrative; network module codifies Ch 8; `environments/dev` lab; Part V begins; platform status network-as-code
+- Chapter 29: Scaling — HPA, metrics-server, load lab; k3s single-node limits; platform status 94%
+- Chapter 28: Security — RBAC read-only SA, NetworkPolicy deny/allow; k3s enforcement notes; platform status 91%
+- Chapter 27: Configuration — ConfigMaps/Secrets injection lab; pre-Hermes config→security ordering; Ch 28–44 renumbered (+1)
+- Chapter 25: Storage — PVC, local-path on k3s, persistence lab; platform status 82%
+- Chapter 24: Ingress — Traefik on k3s, host routing, external curl; `ch24-nginx-ingress.yaml`; platform status 78%
+- Chapter 23: Services — ClusterIP, DNS, Endpoints; `ch23-nginx-service.yaml`; platform status 75%
+- Chapter 22: Deployments — desired state, self-healing, rollout intro; manifest in `infrastructure/kubernetes/`; platform status 72%
+- Chapter 21: Pods — execution-only first workload; State Layer mapping; platform status 68%
 - STYLE_GUIDE — cognitive governance: no new mental models after Ch 13; State Layer litmus test; execution-only chapter template
-- Part VII Ch 43 reframed as capstone closure (*The Platform You Built*); SUMMARY project status (design vs execution)
+- Part VII Ch 44 reframed as capstone closure (*The Platform You Built*); SUMMARY project status (design vs execution)
 - STYLE_GUIDE — narrative governance: one ontology shift per layer; post-Ch-13 hard boundary; exercise-don't-philosophize rule
 - Chapter 13 — state-change awareness, Chapter 6 callback, Declarative Reality, State Layers, "The Boundary" closing
 - Chapter 15: Observing the Hermes Platform — CloudWatch Agent, host metrics/logs, alarms, dashboard; EDR-0007; platform status 67%
@@ -89,7 +93,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Removed
 
-- `docs/part-i-foundations/06-containers.md` — container fundamentals covered in Part III (Ch 16–18)
+- `docs/part-i-foundations/06-containers.md` — container fundamentals covered in Part III (Ch 17–18)
 - Legacy `chapters/` directory (content now in `docs/`)
 
 ---

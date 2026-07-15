@@ -198,7 +198,7 @@ For Hermes, almost everything you operate daily is **TCP on a known port**:
 
 ### DNS — Names to Numbers
 
-Humans remember `ec2.us-east-1.amazonaws.com`. Routers need `54.x.x.x`. **DNS (Domain Name System)** translates names to IP addresses.
+Humans remember `ec2.us-west-2.amazonaws.com`. Routers need `54.x.x.x`. **DNS (Domain Name System)** translates names to IP addresses.
 
 Resolution steps (simplified):
 
@@ -357,7 +357,7 @@ Look for a `default` or `0.0.0.0/0` entry—that is your default gateway (usuall
 ### DNS Resolution
 
 ```bash
-dig ec2.us-east-1.amazonaws.com +short
+dig ec2.us-west-2.amazonaws.com +short
 ```
 
 The `+short` flag prints only IP addresses. If this fails, the problem is DNS or upstream connectivity—not AWS.
@@ -372,10 +372,10 @@ dig @8.8.8.8 github.com +short
 
 ```bash
 # macOS / most Linux
-traceroute ec2.us-east-1.amazonaws.com
+traceroute ec2.us-west-2.amazonaws.com
 
 # Linux alternative if traceroute missing
-tracepath ec2.us-east-1.amazonaws.com
+tracepath ec2.us-west-2.amazonaws.com
 ```
 
 Each line is a **hop**—a router along the path. Timeouts (`* * *`) often mean ICMP is blocked; that is common and not always a problem.
@@ -418,8 +418,8 @@ Shows which processes are waiting for inbound TCP connections—equivalent to ch
 2. Inspect your local routing table:
    - macOS: `netstat -rn`
    - Linux: `ip route`
-3. Trace the route to AWS: `traceroute ec2.us-east-1.amazonaws.com`
-4. Resolve DNS: `dig ec2.us-east-1.amazonaws.com +short`
+3. Trace the route to AWS: `traceroute ec2.us-west-2.amazonaws.com`
+4. Resolve DNS: `dig ec2.us-west-2.amazonaws.com +short`
 5. Test TCP connectivity: `curl -v https://aws.amazon.com 2>&1 | head -30`
 6. Check open ports locally: `ss -tlnp` (Linux) or `netstat -an | grep LISTEN` (macOS)
 7. Calculate a subnet: how many hosts in a `/24`? A `/28`?
@@ -429,7 +429,7 @@ Shows which processes are waiting for inbound TCP connections—equivalent to ch
 
 ```bash
 curl -s https://checkip.amazonaws.com
-dig ec2.us-east-1.amazonaws.com +short
+dig ec2.us-west-2.amazonaws.com +short
 ```
 
 **Expected output:** Your public IP address and one or more AWS IP addresses.

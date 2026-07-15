@@ -59,7 +59,7 @@ Creating an S3 bucket is a step—not the objective. Understanding **why** stora
 
 ```bash
 export AWS_PROFILE=hermes
-export AWS_REGION=us-east-1
+export AWS_REGION=us-west-2
 source ~/hermes-platform/notes/controlplane.env
 KEY=~/.ssh/${HERMES_KEY_NAME}.pem
 ```
@@ -180,7 +180,7 @@ A backup strategy defines:
 
 - Nightly PostgreSQL dumps (future)
 - Snapshot manifests and backup logs
-- Terraform state ([Chapter 29](../part-v-infrastructure/29-terraform.md))
+- Terraform state ([Chapter 30](../part-v-infrastructure/30-terraform.md))
 - Exported Hermes configuration
 - Log archives and AI artifacts
 

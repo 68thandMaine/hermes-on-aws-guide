@@ -59,7 +59,7 @@ Most objectives are **understanding**, not commands. The implementation section 
 
 ```bash
 export AWS_PROFILE=hermes
-export AWS_REGION=us-east-1
+export AWS_REGION=us-west-2
 source ~/hermes-platform/notes/controlplane.env
 ```
 

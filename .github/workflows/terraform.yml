@@ -1,5 +1,5 @@
-# Chapter 30 — Terraform pipeline for Hermes AWS infrastructure
-# See docs/part-v-infrastructure/30-github-actions.md
+# Chapter 31 — Terraform pipeline for Hermes AWS infrastructure
+# See docs/part-v-infrastructure/31-github-actions.md
 
 name: Terraform Infrastructure Pipeline
 
@@ -22,7 +22,7 @@ concurrency:
 env:
   TF_IN_AUTOMATION: true
   TF_WORKING_DIR: infrastructure/aws/terraform/environments/dev
-  AWS_REGION: us-east-1
+  AWS_REGION: us-west-2
 
 jobs:
   validate:

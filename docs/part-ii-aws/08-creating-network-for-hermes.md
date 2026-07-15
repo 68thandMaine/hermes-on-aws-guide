@@ -46,7 +46,7 @@ After completing this chapter, you will be able to:
 
 ## Prerequisites
 
-- [Chapter 7: Provisioning Your AWS Account](07-provisioning-aws-account.md) — `hermes-admin`, MFA, CLI profile `hermes`, home region chosen (this chapter uses **`us-east-1`**)
+- [Chapter 7: Provisioning Your AWS Account](07-provisioning-aws-account.md) — `hermes-admin`, MFA, CLI profile `hermes`, home region chosen (this chapter uses **`us-west-2`**)
 - Lab 6 platform design worksheet completed
 - AWS CLI profile working: `aws sts get-caller-identity --profile hermes`
 
@@ -217,7 +217,7 @@ Internet Gateway (hermes-igw)
     │
 VPC 10.0.0.0/16 (hermes-vpc)
     │
-Public Subnet 10.0.1.0/24 (hermes-public-use1a)  ← us-east-1a
+Public Subnet 10.0.1.0/24 (hermes-public-usw2a)  ← us-west-2a
     │
     └── EC2 (Chapter 9) — hermes-controlplane-01
             │
@@ -229,7 +229,7 @@ flowchart TB
     Laptop[Your laptop] -->|HTTPS| Internet[Internet]
     Internet --> IGW[hermes-igw]
     IGW --> VPC[hermes-vpc 10.0.0.0/16]
-    VPC --> Subnet[hermes-public-use1a 10.0.1.0/24]
+    VPC --> Subnet[hermes-public-usw2a 10.0.1.0/24]
     Subnet --> EC2[hermes-controlplane-01 — Ch 9]
     EC2 --> K3s[k3s → Hermes stack]
 ```
@@ -240,10 +240,10 @@ flowchart TB
 |----------|------|-------|
 | VPC | `hermes-vpc` | CIDR `10.0.0.0/16` |
 | Internet Gateway | `hermes-igw` | Attached to `hermes-vpc` |
-| Public subnet | `hermes-public-use1a` | `10.0.1.0/24` in `us-east-1a` |
+| Public subnet | `hermes-public-usw2a` | `10.0.1.0/24` in `us-west-2a` |
 | Route table | `hermes-public-rt` | `0.0.0.0/0` → `hermes-igw` |
 
-If your home region is not `us-east-1`, substitute your region and AZ suffix (e.g., `hermes-public-usw2a` in `us-west-2a`).
+If your home region is not `us-west-2`, substitute your region and AZ suffix (e.g., `hermes-public-use1a` in `us-east-1a`).
 
 ### What This Design Deliberately Omits (For Now)
 
@@ -266,7 +266,7 @@ Set your region and profile for every command:
 
 ```bash
 export AWS_PROFILE=hermes
-export AWS_REGION=us-east-1
+export AWS_REGION=us-west-2
 ```
 
 Adjust `AWS_REGION` if your home region differs.
@@ -277,8 +277,8 @@ If you prefer the console for visualization, the order is:
 
 1. **VPC** → Create VPC → name `hermes-vpc`, IPv4 CIDR `10.0.0.0/16`, enable DNS hostnames and DNS resolution
 2. **Internet Gateway** → Create → name `hermes-igw` → Attach to `hermes-vpc`
-3. **Subnet** → Create → name `hermes-public-use1a`, VPC `hermes-vpc`, AZ `us-east-1a`, CIDR `10.0.1.0/24`, enable auto-assign public IPv4
-4. **Route table** → Create → name `hermes-public-rt`, VPC `hermes-vpc` → Add route `0.0.0.0/0` → target `hermes-igw` → Associate with `hermes-public-use1a`
+3. **Subnet** → Create → name `hermes-public-usw2a`, VPC `hermes-vpc`, AZ `us-west-2a`, CIDR `10.0.1.0/24`, enable auto-assign public IPv4
+4. **Route table** → Create → name `hermes-public-rt`, VPC `hermes-vpc` → Add route `0.0.0.0/0` → target `hermes-igw` → Associate with `hermes-public-usw2a`
 
 The CLI walkthrough below is the **canonical** path—copy-paste reproducible and identical to what Terraform will express in Part V.
 
@@ -322,8 +322,8 @@ echo "IGW_ID=$IGW_ID"
 SUBNET_ID=$(aws ec2 create-subnet \
   --vpc-id "$VPC_ID" \
   --cidr-block 10.0.1.0/24 \
-  --availability-zone us-east-1a \
-  --tag-specifications 'ResourceType=subnet,Tags=[{Key=Name,Value=hermes-public-use1a}]' \
+  --availability-zone us-west-2a \
+  --tag-specifications 'ResourceType=subnet,Tags=[{Key=Name,Value=hermes-public-usw2a}]' \
   --query 'Subnet.SubnetId' \
   --output text)
 
@@ -361,7 +361,7 @@ echo "RT_ID=$RT_ID"
 mkdir -p ~/hermes-platform/notes
 cat > ~/hermes-platform/notes/network-resources.env <<EOF
 # Hermes network — created $(date +%Y-%m-%d)
-export AWS_REGION=us-east-1
+export AWS_REGION=us-west-2
 export HERMES_VPC_ID=$VPC_ID
 export HERMES_IGW_ID=$IGW_ID
 export HERMES_PUBLIC_SUBNET_ID=$SUBNET_ID
@@ -381,13 +381,13 @@ Source this file in later chapters: `source ~/hermes-platform/notes/network-reso
 
 **Estimated Time:** 40 minutes
 
-**Goal:** Build `hermes-vpc`, `hermes-igw`, `hermes-public-use1a`, and `hermes-public-rt`—then verify with the CLI that the design matches reality.
+**Goal:** Build `hermes-vpc`, `hermes-igw`, `hermes-public-usw2a`, and `hermes-public-rt`—then verify with the CLI that the design matches reality.
 
 **Prerequisites:** Chapter 7 complete; `AWS_PROFILE=hermes`
 
 **Steps:**
 
-1. Export `AWS_PROFILE=hermes` and `AWS_REGION=us-east-1` (or your home region)
+1. Export `AWS_PROFILE=hermes` and `AWS_REGION=us-west-2` (or your home region)
 2. Run Walkthrough Steps 1–5 (CLI)
 3. Run every command in [Verification](#verification) below
 4. Compare CLI output to the [Architecture](#architecture) diagram—confirm CIDR, IGW attachment, and `0.0.0.0/0` route
@@ -428,7 +428,7 @@ aws ec2 describe-subnets \
   --output table
 ```
 
-Expected: `Name=hermes-public-use1a`, `Cidr=10.0.1.0/24`, `PublicIP=True`.
+Expected: `Name=hermes-public-usw2a`, `Cidr=10.0.1.0/24`, `PublicIP=True`.
 
 ### Describe the Internet Gateway
 
@@ -460,7 +460,7 @@ Confirm in the JSON:
 
 - [ ] `hermes-vpc` exists with CIDR `10.0.0.0/16`
 - [ ] `hermes-igw` attached to `hermes-vpc`
-- [ ] `hermes-public-use1a` in your chosen AZ with public IP on launch enabled
+- [ ] `hermes-public-usw2a` in your chosen AZ with public IP on launch enabled
 - [ ] `hermes-public-rt` routes `0.0.0.0/0` to the IGW and is associated with the subnet
 - [ ] Resource IDs saved to `~/hermes-platform/notes/network-resources.env`
 - [ ] Zero EC2 instances yet (network only)
@@ -500,7 +500,7 @@ Confirm in the JSON:
 - **Implementation:** VPC → IGW → subnet → route table—in that dependency order
 - **CIDR intuition:** `10.0.0.0/16` is a roomy private address space; subnets take smaller slices
 - **Route tables:** "Where does this packet go next?"—the `0.0.0.0/0 → IGW` route makes a subnet public
-- **Naming:** `hermes-vpc`, `hermes-public-use1a`, etc.—name for the platform you are building, not a disposable lab
+- **Naming:** `hermes-vpc`, `hermes-public-usw2a`, etc.—name for the platform you are building, not a disposable lab
 - **Verify with CLI:** `describe-vpcs`, `describe-subnets`, `describe-route-tables`—compare output to your design
 
 ---
@@ -512,7 +512,7 @@ Confirm in the JSON:
 | **VPC** | Virtual Private Cloud—isolated network in your AWS account. |
 | **CIDR** | Notation for an IP address range (e.g., `10.0.0.0/16`). |
 | **Subnet** | A segment of a VPC in one Availability Zone. |
-| **Availability Zone (AZ)** | Isolated data center within a region (e.g., `us-east-1a`). |
+| **Availability Zone (AZ)** | Isolated data center within a region (e.g., `us-west-2a`). |
 | **Internet Gateway (IGW)** | VPC attachment enabling bidirectional internet routing. |
 | **Route table** | Rules that determine where network traffic is directed next. |
 | **Security Group** | Stateful virtual firewall attached to an instance's network interface. |
@@ -563,7 +563,7 @@ The network exists. Nothing is inside it yet.
 
 Our network now exists, but there is nothing inside it.
 
-[Chapter 9: Provisioning the Hermes Server](09-provisioning-hermes-server.md) launches the Ubuntu EC2 instance—`hermes-controlplane-01`—into `hermes-public-use1a`, the home of k3s, Hermes, and llama.cpp.
+[Chapter 9: Provisioning the Hermes Server](09-provisioning-hermes-server.md) launches the Ubuntu EC2 instance—`hermes-controlplane-01`—into `hermes-public-usw2a`, the home of k3s, Hermes, and llama.cpp.
 
 ---
 

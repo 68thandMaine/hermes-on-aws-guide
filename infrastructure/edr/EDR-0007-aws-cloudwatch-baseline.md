@@ -24,7 +24,7 @@ Adopt a **CloudWatch baseline** on `hermes-controlplane-01`:
 4. **Alarms** on CPU, `/data` disk usage, and EC2 status check failure, notifying via SNS (`hermes-platform-alerts`).
 5. **Dashboard** `hermes-controlplane` for at-a-glance host health.
 
-In-cluster workload monitoring remains deferred to [Chapter 32](../../docs/part-v-infrastructure/32-monitoring.md).
+In-cluster workload monitoring remains deferred to [Chapter 33](../../docs/part-v-infrastructure/33-monitoring.md).
 
 ## Consequences
 
@@ -48,7 +48,7 @@ In-cluster workload monitoring remains deferred to [Chapter 32](../../docs/part-
 |-------------|--------------|
 | SSH-only monitoring | No paging; logs lost if instance is replaced |
 | Third-party agent (Datadog, etc.) | Extra cost and account coupling for a learning platform |
-| Skip host monitoring until Ch 32 | Prometheus on k3s does not report EBS free space per mount by default |
+| Skip host monitoring until Ch 33 | Prometheus on k3s does not report EBS free space per mount by default |
 | Embed AWS access keys in agent config | Security anti-pattern; instance profile is standard |
 
 ## References

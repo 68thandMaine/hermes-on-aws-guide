@@ -8,7 +8,7 @@
 
 ## Context
 
-[Chapter 10](../../docs/part-ii-aws/10-establishing-trust.md) left TCP **443** closed until Traefik served a real workload. [Chapter 23](../../docs/part-iv-kubernetes/23-ingress.md) proves HTTP Ingress with `/etc/hosts`. Hermes will eventually exchange API tokens and conversation payloads with clients; that traffic should not remain on raw Elastic IPs over cleartext HTTP.
+[Chapter 10](../../docs/part-ii-aws/10-establishing-trust.md) left TCP **443** closed until Traefik served a real workload. [Chapter 24](../../docs/part-iv-kubernetes/24-ingress.md) proves HTTP Ingress with `/etc/hosts`. Hermes will eventually exchange API tokens and conversation payloads with clients; that traffic should not remain on raw Elastic IPs over cleartext HTTP.
 
 [Chapter 6](../../docs/part-i-foundations/06-designing-the-hermes-platform.md) already chose: Internet → Route 53 → Elastic IP → Traefik (TLS) → Hermes. ACM on an Application Load Balancer would introduce a new AWS front door and ongoing ALB cost that the single-node lab does not need.
 
@@ -31,7 +31,7 @@ Application-level authentication for Hermes remains a later concern; TLS protect
 - Stable public hostname matching the Chapter 6 diagram
 - Trusted certificates without paying for ALB
 - Certificate renewal automated inside the cluster
-- Same Traefik Ingress path Chapter 23 already taught
+- Same Traefik Ingress path Chapter 24 already taught
 
 **Negative:**
 

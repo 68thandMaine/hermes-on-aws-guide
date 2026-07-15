@@ -73,7 +73,7 @@ Terms used throughout *Building a Personal AI Cloud*. Terms are added as chapter
 | **ConfigMap** | Kubernetes resource for storing non-sensitive configuration data. | Ch 11 |
 | **Container** | A lightweight, isolated process running on a shared kernel, packaged with its dependencies. | Ch 10 |
 | **Control Plane** | The Kubernetes components that manage the cluster (API server, etcd, scheduler, controller manager). | Ch 11 |
-| **CronJob** | Kubernetes resource that runs Jobs on a schedule. | Ch 18 |
+| **CronJob** | Kubernetes resource that runs Jobs on a schedule. | Ch 19 |
 | **Deployment** | Kubernetes resource that manages stateless application replicas with rolling updates. | Ch 11 |
 | **EBS** | Elastic Block Store — persistent block storage volumes for EC2 instances. | Ch 5, 9 |
 | **EC2** | Elastic Compute Cloud — AWS virtual machine service. | Ch 5, 7 |
@@ -91,15 +91,15 @@ Terms used throughout *Building a Personal AI Cloud*. Terms are added as chapter
 | **Nitro** | AWS hypervisor system offloading network, storage, and security to dedicated hardware. | Ch 5, 7 |
 | **Node** | A worker machine in Kubernetes (virtual or physical) that runs pods. | Ch 11 |
 | **OIDC** | OpenID Connect — authentication protocol used for GitHub Actions → AWS federation. | Ch 14 |
-| **Ollama** | *(Not used in this book.)* Desktop-friendly model runner; we use **llama.cpp** directly for explicit GGUF control and Kubernetes-native serving ([Chapter 36](../part-vi-ai/36-model-serving.md)). | — |
+| **Ollama** | *(Not used in this book.)* Desktop-friendly model runner; we use **llama.cpp** directly for explicit GGUF control and Kubernetes-native serving ([Chapter 37](../part-vi-ai/37-model-serving.md)). | — |
 | **Oversubscription** | Allocating more virtual resources than physical capacity, relying on average usage patterns. | Ch 5 |
-| **PersistentVolumeClaim (PVC)** | Kubernetes request for persistent storage, bound to a PersistentVolume. | Ch 16 |
+| **PersistentVolumeClaim (PVC)** | Kubernetes request for persistent storage, bound to a PersistentVolume. | Ch 25 |
 | **Pod** | The smallest deployable unit in Kubernetes — one or more containers sharing network and storage. | Ch 11 |
-| **Quantization** | Reducing model precision (e.g., FP16 → Q4) to decrease size and memory requirements. | Ch 17 |
+| **Quantization** | Reducing model precision (e.g., FP16 → Q4) to decrease size and memory requirements. | Ch 18 |
 | **Route Table** | Set of rules determining where network traffic is directed within a VPC. | Ch 8 |
 | **S3** | Simple Storage Service — AWS object storage for files, backups, and static assets. | Ch 9 |
 | **Security Group** | Stateful virtual firewall controlling inbound and outbound traffic for AWS resources. | Ch 7 |
-| **StatefulSet** | Kubernetes resource for stateful applications requiring stable network identity and persistent storage. | Ch 16 |
+| **StatefulSet** | Kubernetes resource for stateful applications requiring stable network identity and persistent storage. | Ch 25 |
 | **STS** | Security Token Service — AWS service issuing temporary credentials. | Ch 6 |
 | **Subnet** | A range of IP addresses within a VPC, tied to a single availability zone. | Ch 8 |
 | **Terraform** | Infrastructure as Code tool by HashiCorp using HCL configuration language. | Ch 13 |
@@ -110,59 +110,59 @@ Terms used throughout *Building a Personal AI Cloud*. Terms are added as chapter
 
 | Term | Definition | First Appears |
 |------|------------|---------------|
-| **ClusterRole** | Cluster-scoped RBAC permissions binding. | Ch 27 |
-| **ClusterRoleBinding** | Links ClusterRole to users or ServiceAccounts cluster-wide. | Ch 27 |
-| **HPA** | Horizontal Pod Autoscaler — scales replicas based on metrics. | Ch 28 |
-| **LimitRange** | Namespace default/min/max for Pod resource requests and limits. | Ch 28 |
-| **NetworkPolicy** | Kubernetes resource controlling Pod ingress/egress traffic. | Ch 27 |
-| **ReplicaSet** | Controller maintaining a set of Pod replicas for a Deployment. | Ch 21 |
-| **ResourceQuota** | Namespace cap on aggregate resource consumption. | Ch 28 |
-| **Role** | Namespace-scoped RBAC permission set. | Ch 27 |
-| **RoleBinding** | Links Role to subjects within a namespace. | Ch 27 |
-| **Rolling update** | Incremental Pod replacement to maintain availability during deploys. | Ch 21 |
-| **ServiceAccount** | Kubernetes identity assigned to Pods for API and RBAC. | Ch 27 |
-| **ServiceMonitor** | Prometheus Operator CRD defining scrape targets. | Ch 32 |
-| **StorageClass** | Defines how PVCs are dynamically provisioned. | Ch 24 |
+| **ClusterRole** | Cluster-scoped RBAC permissions binding. | Ch 28 |
+| **ClusterRoleBinding** | Links ClusterRole to users or ServiceAccounts cluster-wide. | Ch 28 |
+| **HPA** | Horizontal Pod Autoscaler — scales replicas based on metrics. | Ch 29 |
+| **LimitRange** | Namespace default/min/max for Pod resource requests and limits. | Ch 29 |
+| **NetworkPolicy** | Kubernetes resource controlling Pod ingress/egress traffic. | Ch 28 |
+| **ReplicaSet** | Controller maintaining a set of Pod replicas for a Deployment. | Ch 22 |
+| **ResourceQuota** | Namespace cap on aggregate resource consumption. | Ch 29 |
+| **Role** | Namespace-scoped RBAC permission set. | Ch 28 |
+| **RoleBinding** | Links Role to subjects within a namespace. | Ch 28 |
+| **Rolling update** | Incremental Pod replacement to maintain availability during deploys. | Ch 22 |
+| **ServiceAccount** | Kubernetes identity assigned to Pods for API and RBAC. | Ch 28 |
+| **ServiceMonitor** | Prometheus Operator CRD defining scrape targets. | Ch 33 |
+| **StorageClass** | Defines how PVCs are dynamically provisioned. | Ch 25 |
 
 ## Platform engineering (Part V)
 
 | Term | Definition | First Appears |
 |------|------------|---------------|
-| **Alertmanager** | Routes Prometheus alerts to channels and on-call. | Ch 32 |
-| **External Secrets Operator (ESO)** | Syncs secrets from cloud stores into Kubernetes. | Ch 31 |
-| **ExternalSecret** | ESO CRD mapping remote secret to Kubernetes Secret. | Ch 31 |
-| **Grafana** | Dashboards and visualization for metrics and logs. | Ch 32 |
-| **LogQL** | Loki query language for log search. | Ch 33 |
-| **Loki** | Log aggregation system optimized for Kubernetes. | Ch 33 |
-| **PromQL** | Prometheus query language for metrics. | Ch 32 |
-| **Prometheus** | Time-series metrics database and alerting engine. | Ch 32 |
-| **PrometheusRule** | CRD defining alert and recording rules. | Ch 32 |
-| **Secrets Manager** | AWS service for storing and rotating secrets with IAM audit. | Ch 31 |
-| **SLO** | Service level objective — measurable reliability target. | Ch 40 |
-| **Tempo** | Distributed tracing backend (Grafana stack). | Ch 33 |
-| **trace_id** | Correlation ID linking logs, spans, and audit rows. | Ch 33 |
+| **Alertmanager** | Routes Prometheus alerts to channels and on-call. | Ch 33 |
+| **External Secrets Operator (ESO)** | Syncs secrets from cloud stores into Kubernetes. | Ch 32 |
+| **ExternalSecret** | ESO CRD mapping remote secret to Kubernetes Secret. | Ch 32 |
+| **Grafana** | Dashboards and visualization for metrics and logs. | Ch 33 |
+| **LogQL** | Loki query language for log search. | Ch 34 |
+| **Loki** | Log aggregation system optimized for Kubernetes. | Ch 34 |
+| **PromQL** | Prometheus query language for metrics. | Ch 33 |
+| **Prometheus** | Time-series metrics database and alerting engine. | Ch 33 |
+| **PrometheusRule** | CRD defining alert and recording rules. | Ch 33 |
+| **Secrets Manager** | AWS service for storing and rotating secrets with IAM audit. | Ch 32 |
+| **SLO** | Service level objective — measurable reliability target. | Ch 41 |
+| **Tempo** | Distributed tracing backend (Grafana stack). | Ch 34 |
+| **trace_id** | Correlation ID linking logs, spans, and audit rows. | Ch 34 |
 
 ## AI and Hermes (Parts VI–VII)
 
 | Term | Definition | First Appears |
 |------|------------|---------------|
-| **agent_role** | Task label selecting prompt template and tool allowlist. | Ch 39 |
-| **Capability** | Something Hermes can do via a registered tool—not a platform change. | Ch 42 |
-| **Coordinator** | Task/worker that decomposes objectives into subtasks. | Ch 39 |
-| **Default deny** | Tool policy: reject unless explicitly allowed for the role. | Ch 41 |
-| **Distributed cognitive execution** | Multiple reasoning loops coordinated via shared durable state. | Ch 39 |
-| **GGUF** | File format for quantized local LLM weights (llama.cpp). | Ch 36 |
-| **llama.cpp** | C++ inference engine; runs GGUF models with an HTTP server (`llama-server`). | Ch 36 |
-| **llama-server** | Kubernetes Deployment running the llama.cpp HTTP inference server. | Ch 36 |
-| **Prompt injection** | Attempt to override instructions via text—defeated by authorization architecture. | Ch 41 |
-| **Qdrant** | Vector database for semantic memory and RAG. | Ch 35 |
-| **RAG** | Retrieval-augmented generation — context from vector search before inference. | Ch 35 |
-| **Reasoning loop** | Hermes task cycle: claim → context → infer → tool → persist. | Ch 38 |
-| **root_request_id** | Correlation ID for all tasks in one user objective. | Ch 39 |
+| **agent_role** | Task label selecting prompt template and tool allowlist. | Ch 40 |
+| **Capability** | Something Hermes can do via a registered tool—not a platform change. | Ch 43 |
+| **Coordinator** | Task/worker that decomposes objectives into subtasks. | Ch 40 |
+| **Default deny** | Tool policy: reject unless explicitly allowed for the role. | Ch 42 |
+| **Distributed cognitive execution** | Multiple reasoning loops coordinated via shared durable state. | Ch 40 |
+| **GGUF** | File format for quantized local LLM weights (llama.cpp). | Ch 37 |
+| **llama.cpp** | C++ inference engine; runs GGUF models with an HTTP server (`llama-server`). | Ch 37 |
+| **llama-server** | Kubernetes Deployment running the llama.cpp HTTP inference server. | Ch 37 |
+| **Prompt injection** | Attempt to override instructions via text—defeated by authorization architecture. | Ch 42 |
+| **Qdrant** | Vector database for semantic memory and RAG. | Ch 36 |
+| **RAG** | Retrieval-augmented generation — context from vector search before inference. | Ch 36 |
+| **Reasoning loop** | Hermes task cycle: claim → context → infer → tool → persist. | Ch 39 |
+| **root_request_id** | Correlation ID for all tasks in one user objective. | Ch 40 |
 | **State Layers** | Intent → API → Scheduler → Containers → Kernel mental model. | Ch 13 |
-| **Tool contract** | JSON Schema defining valid tool parameters. | Ch 42 |
-| **Tool gateway** | Worker-mediated validate → authorize → execute → audit path. | Ch 41 |
-| **Tool registry** | ConfigMap catalog of available tools and metadata. | Ch 42 |
+| **Tool contract** | JSON Schema defining valid tool parameters. | Ch 43 |
+| **Tool gateway** | Worker-mediated validate → authorize → execute → audit path. | Ch 42 |
+| **Tool registry** | ConfigMap catalog of available tools and metadata. | Ch 43 |
 
 ## Adding Terms
 

@@ -7,7 +7,7 @@ Architecture and flow diagrams used throughout the book. Source files live here;
 | Diagram | File | Used In |
 |---------|------|---------|
 | Full platform stack | `platform-overview.txt` | Preface, Ch 1 |
-| End-state architecture | `end-state-architecture.mmd` | Ch 1, Ch 18 |
+| End-state architecture | `end-state-architecture.mmd` | Ch 1, Ch 19 |
 
 ## AWS Infrastructure
 
@@ -32,9 +32,9 @@ Architecture and flow diagrams used throughout the book. Source files live here;
 
 | Diagram | File | Used In |
 |---------|------|---------|
-| Hermes request flow | `hermes-request-flow.mmd` | Ch 16 |
-| llama.cpp inference stack | `llama-server-stack.txt` | Ch 36 |
-| Hermes agent data flow | `hermes-data-pipeline.mmd` | Ch 39 |
+| Hermes request flow | `hermes-request-flow.mmd` | Ch 17 |
+| llama.cpp inference stack | `llama-server-stack.txt` | Ch 37 |
+| Hermes agent data flow | `hermes-data-pipeline.mmd` | Ch 40 |
 | CI/CD pipeline | `cicd-pipeline.mmd` | Ch 14 |
 | Monitoring stack | `monitoring-stack.txt` | Ch 15 |
 

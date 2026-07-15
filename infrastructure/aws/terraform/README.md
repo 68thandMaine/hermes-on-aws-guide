@@ -10,10 +10,10 @@ terraform/
 │   ├── network/       ← Chapter 8 (hermes-vpc, IGW, public subnet, route table)
 │   └── controlplane/  ← Chapter 9 (planned — EC2, EBS, SG, EIP)
 └── environments/
-    └── dev/           ← Chapter 29 lab entry point
+    └── dev/           ← Chapter 30 lab entry point
 ```
 
-## Quick start (Chapter 29)
+## Quick start (Chapter 30)
 
 ```bash
 cd infrastructure/aws/terraform/environments/dev
@@ -39,7 +39,7 @@ terraform apply
 
 ## Relationship to CI
 
-Chapter 30 adds [`.github/workflows/terraform.yml`](../../.github/workflows/terraform.yml) — runs on changes under `infrastructure/aws/terraform/`.
+Chapter 31 adds [`.github/workflows/terraform.yml`](../../.github/workflows/terraform.yml) — runs on changes under `infrastructure/aws/terraform/`.
 
 Configure repository secrets `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` (see chapter). Optional GitHub **environment** `terraform-dev` gates apply on `main`.
 

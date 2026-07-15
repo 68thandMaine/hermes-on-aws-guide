@@ -1,6 +1,6 @@
-# llama.cpp inference server (Chapter 36)
+# llama.cpp inference server (Chapter 37)
 
-Local **reasoning layer** for Hermes — replaces `hermes-model` stub from [Chapter 34](../hermes-lab/README.md).
+Local **reasoning layer** for Hermes — replaces `hermes-model` stub from [Chapter 35](../hermes-lab/README.md).
 
 ## Prerequisites
 
@@ -15,7 +15,7 @@ sudo ln -sf /models/qwen/your-model.Q4_K_M.gguf /models/model.gguf
 ls -lh /models/model.gguf
 ```
 
-Or run [`../../aws/cli/ch36-prepare-model-lab.sh`](../../aws/cli/ch36-prepare-model-lab.sh) for guided setup notes.
+Or run [`../../aws/cli/ch37-prepare-model-lab.sh`](../../aws/cli/ch37-prepare-model-lab.sh) for guided setup notes.
 
 ## Install
 
@@ -36,20 +36,20 @@ helm upgrade hermes-lab infrastructure/helm/hermes-lab -n hermes \
 ## Verify
 
 ```bash
-./infrastructure/aws/cli/ch36-verify-llama-inference.sh
+./infrastructure/aws/cli/ch37-verify-llama-inference.sh
 ```
 
 ## API
 
 Internal only: `http://llama-server:8080/completion` (POST JSON). Workers and Hermes API call this — not exposed via Ingress.
 
-## GPU path (Chapter 37)
+## GPU path (Chapter 38)
 
 Second release on GPU-labeled nodes:
 
 ```bash
-./infrastructure/aws/cli/ch37-gpu-node-prep.sh
-kubectl apply -f infrastructure/kubernetes/ch37-nvidia-device-plugin.yaml
+./infrastructure/aws/cli/ch38-gpu-node-prep.sh
+kubectl apply -f infrastructure/kubernetes/ch38-nvidia-device-plugin.yaml
 
 helm upgrade --install llama-server-gpu infrastructure/helm/llama-server \
   -n hermes -f infrastructure/helm/llama-server/values-gpu.yaml

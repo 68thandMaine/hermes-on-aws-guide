@@ -4,14 +4,16 @@
 set -euo pipefail
 
 export AWS_PROFILE="${AWS_PROFILE:-hermes}"
-export AWS_REGION="${AWS_REGION:-us-east-1}"
+export AWS_REGION="${AWS_REGION:-us-west-2}"
+# Billing EstimatedCharges metrics exist only in us-east-1
+BILLING_REGION="${BILLING_REGION:-us-east-1}"
 source "${HOME}/hermes-platform/notes/controlplane.env"
 
 ACCOUNT=$(aws sts get-caller-identity --query Account --output text)
 BUDGET_USD="${HERMES_MONTHLY_BUDGET_USD:-400}"
 ALARM_USD="${HERMES_BILLING_ALARM_USD:-350}"
 TOPIC_NAME="${HERMES_ALERTS_TOPIC:-hermes-platform-alerts}"
-SNS_ARN="arn:aws:sns:${AWS_REGION}:${ACCOUNT}:${TOPIC_NAME}"
+SNS_ARN="arn:aws:sns:${BILLING_REGION}:${ACCOUNT}:${TOPIC_NAME}"
 
 echo "=== Tag Hermes resources (idempotent) ==="
 for rid in "$HERMES_INSTANCE_ID" "${HERMES_VPC_ID:-}"; do
@@ -26,8 +28,8 @@ for vol in $(aws ec2 describe-instances --instance-ids "$HERMES_INSTANCE_ID" \
     --tags Key=Project,Value=hermes Key=Environment,Value=lab
 done
 
-echo "=== Billing alarm (estimated charges > ${ALARM_USD} USD) ==="
-aws sns create-topic --name "$TOPIC_NAME" >/dev/null 2>&1 || true
+echo "=== Billing alarm in ${BILLING_REGION} (estimated charges > ${ALARM_USD} USD) ==="
+aws sns create-topic --name "$TOPIC_NAME" --region "$BILLING_REGION" >/dev/null 2>&1 || true
 
 aws cloudwatch put-metric-alarm \
   --alarm-name "hermes-estimated-charges-${ALARM_USD}usd" \
@@ -38,7 +40,7 @@ aws cloudwatch put-metric-alarm \
   --statistic Maximum --period 21600 --evaluation-periods 1 \
   --threshold "$ALARM_USD" --comparison-operator GreaterThanThreshold \
   --alarm-actions "$SNS_ARN" \
-  --region us-east-1
+  --region "$BILLING_REGION"
 
 echo "=== Monthly budget (create in console if API fails — IAM budget permissions vary) ==="
 if aws budgets describe-budget --account-id "$ACCOUNT" --budget-name hermes-monthly-lab >/dev/null 2>&1; then

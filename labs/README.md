@@ -14,7 +14,7 @@ labs/
 ├── ch12/          # k3s kubeconfig notes
 ├── ch13/          # Terraform configuration
 │   └── terraform/
-├── ch15/          # Monitoring notes
+├── ch15/          # CloudWatch / host observability notes
 ├── ch16/          # Hermes Kubernetes manifests
 ├── ch17/          # Docker Compose lab assets
 └── ch38/          # Hermes agent manifests and platform summary
@@ -38,7 +38,7 @@ labs/
 | 12 | 12 | Deploy k3s on EC2 | 60 min | 📝 Scaffold |
 | 13 | 13 | Rebuild Infrastructure with Terraform | 90 min | 📝 Scaffold |
 | 14 | 14 | CI/CD Pipeline for Terraform | 75 min | 📝 Scaffold |
-| 15 | 15 | Deploy Prometheus and Grafana | 75 min | 📝 Scaffold |
+| 15 | 15 | Host Observability Baseline (CloudWatch) | 50 min | ✏️ Draft |
 | 16 | 16 | Deploy Hermes on k3s | 90 min | 📝 Scaffold |
 
 Model serving labs: Chapters 36–37 (`llama-server` Helm chart, not Ollama).

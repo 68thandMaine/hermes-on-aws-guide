@@ -1,10 +1,10 @@
-# Centralized logging (Chapter 33)
+# Centralized logging (Chapter 34)
 
 [Loki stack](https://github.com/grafana/helm-charts/tree/main/charts/loki-stack) — Promtail ships Pod logs to Loki.
 
 ## Install
 
-Requires [Chapter 32](../monitoring/README.md) Grafana for query UI (this chart disables bundled Grafana).
+Requires [Chapter 33](../monitoring/README.md) Grafana for query UI (this chart disables bundled Grafana).
 
 ```bash
 helm repo add grafana https://grafana.github.io/helm-charts
@@ -14,7 +14,7 @@ helm upgrade --install logging grafana/loki-stack \
   -f infrastructure/helm/logging/values-k3s-lab.yaml
 ```
 
-## Add Loki to Grafana (Ch 32)
+## Add Loki to Grafana (Ch 33)
 
 In Grafana → Connections → Data sources → Add **Loki**:
 
@@ -31,5 +31,5 @@ Explore → pick Loki → run LogQL, e.g. `{namespace="default"}`.
 
 ## Demo manifests
 
-- [`../../kubernetes/ch33-structured-log-demo-pod.yaml`](../../kubernetes/ch33-structured-log-demo-pod.yaml)
-- [`../../kubernetes/ch33-otel-collector-lab.example.yaml`](../../kubernetes/ch33-otel-collector-lab.example.yaml)
+- [`../../kubernetes/ch34-structured-log-demo-pod.yaml`](../../kubernetes/ch34-structured-log-demo-pod.yaml)
+- [`../../kubernetes/ch34-otel-collector-lab.example.yaml`](../../kubernetes/ch34-otel-collector-lab.example.yaml)

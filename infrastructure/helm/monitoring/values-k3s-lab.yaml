@@ -1,4 +1,4 @@
-# Chapter 32 — kube-prometheus-stack values for single-node k3s on EC2
+# Chapter 33 — kube-prometheus-stack values for single-node k3s on EC2
 # Install:
 #   helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 #   helm upgrade --install monitoring prometheus-community/kube-prometheus-stack \

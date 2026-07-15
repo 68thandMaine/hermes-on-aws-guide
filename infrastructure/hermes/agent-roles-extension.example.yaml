@@ -1,4 +1,4 @@
-# Chapter 42 — New agent_role: project management (extends Ch 41 tool-policy)
+# Chapter 43 — New agent_role: project management (extends Ch 42 tool-policy)
 # Merge into tool-policy ConfigMap or maintain as overlay.
 
 agentRoles:

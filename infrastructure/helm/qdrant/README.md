@@ -1,4 +1,4 @@
-# Qdrant — Hermes semantic memory (Chapter 35)
+# Qdrant — Hermes semantic memory (Chapter 36)
 
 Vector database for **meaning-aware retrieval** in the Hermes namespace.
 
@@ -19,15 +19,15 @@ Service: `hermes-qdrant:6333` (HTTP API).
 ## Initialize collection
 
 ```bash
-chmod +x infrastructure/aws/cli/ch35-init-hermes-memory-collection.sh
+chmod +x infrastructure/aws/cli/ch36-init-hermes-memory-collection.sh
 kubectl port-forward -n hermes svc/hermes-qdrant 6333:6333 &
-./infrastructure/aws/cli/ch35-init-hermes-memory-collection.sh
+./infrastructure/aws/cli/ch36-init-hermes-memory-collection.sh
 ```
 
 ## Retrieval demo
 
 ```bash
-./infrastructure/aws/cli/ch35-vector-retrieval-demo.sh
+./infrastructure/aws/cli/ch36-vector-retrieval-demo.sh
 ```
 
 ## Three memory layers

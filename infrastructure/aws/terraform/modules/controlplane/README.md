@@ -1,4 +1,4 @@
-# Control plane module (Chapter 29+)
+# Control plane module (Chapter 30+)
 
 Codifies Chapter 9 (provisioning the Hermes server):
 

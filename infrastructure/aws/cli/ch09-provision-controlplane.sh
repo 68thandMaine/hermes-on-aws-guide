@@ -2,7 +2,7 @@
 # Provision hermes-controlplane-01 — see docs/part-ii-aws/09-provisioning-hermes-server.md
 #
 # Usage:
-#   export AWS_PROFILE=hermes AWS_REGION=us-east-1
+#   export AWS_PROFILE=hermes AWS_REGION=us-west-2
 #   source ~/hermes-platform/notes/network-resources.env
 #   bash infrastructure/aws/cli/ch09-provision-controlplane.sh
 #
@@ -11,7 +11,7 @@ set -euo pipefail
 : "${HERMES_VPC_ID:?Set HERMES_VPC_ID — source network-resources.env}"
 : "${HERMES_PUBLIC_SUBNET_ID:?Set HERMES_PUBLIC_SUBNET_ID}"
 
-AWS_REGION="${AWS_REGION:-us-east-1}"
+AWS_REGION="${AWS_REGION:-us-west-2}"
 INSTANCE_TYPE="${INSTANCE_TYPE:-m7i.2xlarge}"
 KEY_NAME="${KEY_NAME:-hermes-controlplane-key}"
 ROOT_GB="${ROOT_GB:-100}"

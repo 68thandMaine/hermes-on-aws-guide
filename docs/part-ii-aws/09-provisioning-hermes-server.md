@@ -58,7 +58,7 @@ After completing this chapter, you will be able to:
 
 ## Prerequisites
 
-- [Chapter 8: Creating the Network for Hermes](08-creating-network-for-hermes.md) — `hermes-vpc`, `hermes-public-use1a`, resource IDs in `~/hermes-platform/notes/network-resources.env`
+- [Chapter 8: Creating the Network for Hermes](08-creating-network-for-hermes.md) — `hermes-vpc`, `hermes-public-usw2a`, resource IDs in `~/hermes-platform/notes/network-resources.env`
 - AWS CLI profile `hermes` working
 - SSH client on your laptop
 
@@ -66,7 +66,7 @@ Source network IDs before starting:
 
 ```bash
 export AWS_PROFILE=hermes
-export AWS_REGION=us-east-1
+export AWS_REGION=us-west-2
 source ~/hermes-platform/notes/network-resources.env
 ```
 
@@ -112,7 +112,7 @@ That is exactly what this chapter accomplishes. Software stacks come in Chapters
 | **ECS/Fargate** | Hides the node; you learn less about the machine Hermes runs on |
 | **EKS** | Managed control plane before you understand k3s on one node ([Chapter 6 design](../part-i-foundations/06-designing-the-hermes-platform.md)) |
 
-**EC2** gives you a virtual computer in `hermes-public-use1a`. You own the full stack from kernel upward—matching the book's learning path and the single-node Hermes design.
+**EC2** gives you a virtual computer in `hermes-public-usw2a`. You own the full stack from kernel upward—matching the book's learning path and the single-node Hermes design.
 
 ---
 
@@ -253,7 +253,7 @@ Security Group (hermes-controlplane-sg)
     │  inbound: TCP 22 from YOUR_IP/32
     │
 hermes-controlplane-01  (m7i.2xlarge)
-    ├── hermes-vpc / hermes-public-use1a
+    ├── hermes-vpc / hermes-public-usw2a
     ├── Volume 1: 100 GB gp3 root (`hermes-root`)
     ├── Volume 2: 300 GB gp3 → `/models` (`hermes-models`)
     ├── Volume 3: 100 GB gp3 → `/data` (`hermes-data`)
@@ -290,7 +290,7 @@ After this chapter you have:
 
 - A reusable **cloud-init** bootstrap
 - **CLI** commands (and script) you executed
-- A **terraform/** directory reserved for codification in [Chapter 29](../part-v-infrastructure/29-terraform.md)
+- A **terraform/** directory reserved for codification in [Chapter 30](../part-v-infrastructure/30-terraform.md)
 
 Nothing stays hand-built forever.
 
@@ -308,7 +308,7 @@ Set environment:
 
 ```bash
 export AWS_PROFILE=hermes
-export AWS_REGION=us-east-1
+export AWS_REGION=us-west-2
 source ~/hermes-platform/notes/network-resources.env
 ```
 

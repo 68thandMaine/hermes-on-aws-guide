@@ -1,4 +1,4 @@
-# Default values for nginx-demo (Chapter 25)
+# Default values for nginx-demo (Chapter 26)
 replicaCount: 3
 
 image:

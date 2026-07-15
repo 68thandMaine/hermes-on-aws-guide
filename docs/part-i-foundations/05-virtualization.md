@@ -212,7 +212,7 @@ Physical server (AWS data center)
                     └── Hermes Pod, PostgreSQL, Redis, llama.cpp
 ```
 
-Containers are not a replacement for VMs—they usually **run inside** VMs. Kubernetes (k3s) schedules containers across nodes; each node is an EC2 instance. Chapter 5 explains the VM layer; [Part III](../part-iii-containers/16-docker.md) explains containers.
+Containers are not a replacement for VMs—they usually **run inside** VMs. Kubernetes (k3s) schedules containers across nodes; each node is an EC2 instance. Chapter 5 explains the VM layer; [Part III](../part-iii-containers/17-docker.md) explains containers.
 
 ---
 

@@ -1,4 +1,4 @@
-# Chapter 34 — Hermes lab stack defaults (single-node k3s)
+# Chapter 35 — Hermes lab stack defaults (single-node k3s)
 # Replace stub images with real Hermes / llama.cpp in later chapters.
 
 namespace: hermes

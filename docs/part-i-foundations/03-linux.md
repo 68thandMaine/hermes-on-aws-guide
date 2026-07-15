@@ -40,9 +40,9 @@ You are not learning Linux in the abstract. Every mechanism below maps to operat
 | Networking tools | Debug Traefik → Hermes → llama.cpp paths |
 | SSH and hardening | Remote admin to your EC2 instance |
 
-Labs use a local Ubuntu environment (VM, Multipass, WSL2) **as practice for the same Ubuntu Server 24.04 LTS** you will provision in [Chapter 9](../part-ii-aws/09-provisioning-hermes-server.md). Container fundamentals move to [Part III](../part-iii-containers/16-docker.md)—after you know why the server exists.
+Labs use a local Ubuntu environment (VM, Multipass, WSL2) **as practice for the same Ubuntu Server 24.04 LTS** you will provision in [Chapter 9](../part-ii-aws/09-provisioning-hermes-server.md). Container fundamentals move to [Part III](../part-iii-containers/17-docker.md)—after you know why the server exists.
 
-Every command below is tied to a mechanism: the kernel, the filesystem, a process, a permission check, a network socket, a log entry. When you SSH into your Hermes EC2 instance, deploy a container in [Chapter 16](../part-iii-containers/16-docker.md), or debug a crashing pod in [Chapter 20](../part-iv-kubernetes/20-pods.md), you are using the skills from this chapter.
+Every command below is tied to a mechanism: the kernel, the filesystem, a process, a permission check, a network socket, a log entry. When you SSH into your Hermes EC2 instance, deploy a container in [Chapter 17](../part-iii-containers/17-docker.md), or debug a crashing pod in [Chapter 21](../part-iv-kubernetes/21-pods.md), you are using the skills from this chapter.
 
 ### Chapter 3 Roadmap
 

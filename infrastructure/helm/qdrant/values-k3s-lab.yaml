@@ -1,4 +1,4 @@
-# Chapter 35 — Qdrant on single-node k3s (Hermes semantic memory lab)
+# Chapter 36 — Qdrant on single-node k3s (Hermes semantic memory lab)
 # Install:
 #   helm repo add qdrant https://qdrant.github.io/qdrant-helm
 #   helm upgrade --install hermes-qdrant qdrant/qdrant \

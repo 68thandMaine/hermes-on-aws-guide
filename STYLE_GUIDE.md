@@ -30,7 +30,7 @@ This book builds infrastructure to run **Hermes**—an AI agent platform—not a
 | **ULLR is integration context** | ULLR may appear as a data backend Hermes calls; document *integration points*, not ULLR as the primary product |
 | **Every capstone serves the agent** | Weather pipelines, CI/CD, scaling, and DR chapters answer: *how does this help Hermes operate in production?* |
 | **Avoid ULLR-first framing** | Do not title chapters, labs, or Part VII sections around ULLR; use "Hermes agent," "agent tools," "agent data sources" |
-| **Local inference = llama.cpp** | Deploy **llama-server** (llama.cpp HTTP API)—not Ollama. GGUF on `/models`, Helm chart in `infrastructure/helm/llama-server/`. See [Chapter 36](docs/part-vi-ai/36-model-serving.md). |
+| **Local inference = llama.cpp** | Deploy **llama-server** (llama.cpp HTTP API)—not Ollama. GGUF on `/models`, Helm chart in `infrastructure/helm/llama-server/`. See [Chapter 37](docs/part-vi-ai/37-model-serving.md). |
 
 When engineering content that touches ULLR, ask:
 
@@ -150,13 +150,13 @@ Name every resource as if you will have many someday—even when you only create
 | Resource | Example name | Pattern |
 |----------|--------------|---------|
 | VPC | `hermes-vpc` | `hermes-{purpose}` |
-| Subnet | `hermes-public-use1a` | `hermes-{visibility}-{region-az}` |
+| Subnet | `hermes-public-usw2a` | `hermes-{visibility}-{region-az}` |
 | Internet Gateway | `hermes-igw` | `hermes-{type}` |
 | Route table | `hermes-public-rt` | `hermes-{visibility}-rt` |
 | Security group | `hermes-controlplane-sg` | `hermes-{role}-sg` |
 | EC2 instance | `hermes-controlplane-01` | `hermes-{role}-{nn}` |
 
-Use your home region's AZ suffix (`use1a` for `us-east-1a`, `usw2a` for `us-west-2a`, etc.). Consistent names make later scaling, Terraform, and debugging far easier.
+Use your home region's AZ suffix (`usw2a` for `us-west-2a`, `use1a` for `us-east-1a`, etc.). This book defaults to **`us-west-2`**. Consistent names make later scaling, Terraform, and debugging far easier.
 
 ### Infrastructure Artifacts (Early IaC)
 
@@ -210,7 +210,7 @@ The book encodes a layered mental model. **Do not inflate the narrative**—only
 | **Infrastructure** | Ch 7–11 | Stability—a trustworthy foundation on AWS | Refinement: network, trust, storage |
 | **Runtime (prep)** | Ch 12 | Portability—containers as deployment unit | Preparation only; not the platform threshold |
 | **Platform** | **Ch 13 only** | **Control plane emergence**—machine → scheduler with state | Part IV: exercise the API; optional Ch 14–16: AWS visibility/manipulation |
-| **Kubernetes objects** | Part IV (≈ Ch 20+) | Declarative programming model (already introduced in Ch 13)—**apply it** | Pods, Deployments, Services: manipulation, not new philosophy |
+| **Kubernetes objects** | Part IV (≈ Ch 21+) | Declarative programming model (already introduced in Ch 13)—**apply it** | Pods, Deployments, Services: manipulation, not new philosophy |
 | **Applications** | Part VI–VII | Hermes on the model—**deploy**, do not re-justify Kubernetes | Operations, tools, scaling |
 
 **Hard rules for authors:**
@@ -244,7 +244,7 @@ After Chapter 13, the book separates:
 | Type | When | Example |
 |------|------|---------|
 | **Conceptual events** | Ch 13 only (and earlier layer ignitions) | Machine → scheduler with state |
-| **Operational learning** | Ch 20+ | Schedule a Pod; read logs; watch restart |
+| **Operational learning** | Ch 21+ | Schedule a Pod; read logs; watch restart |
 
 The reader already paid the cognitive cost of a new mental model at Chapter 13. **Do not spend that currency again.**
 
@@ -279,7 +279,7 @@ The book is now a **controlled expansion of a single mental model** across incre
 
 #### Execution-Only Chapters (Part IV+ template)
 
-Use this template for Part IV object chapters (starting with [Chapter 20: Pods](docs/part-iv-kubernetes/20-pods.md)):
+Use this template for Part IV object chapters (starting with [Chapter 21: Pods](docs/part-iv-kubernetes/21-pods.md)):
 
 | Allowed content | Disallowed content |
 |-----------------|-------------------|
@@ -288,10 +288,10 @@ Use this template for Part IV object chapters (starting with [Chapter 20: Pods](
 | `kubectl` exercises on the live cluster from Ch 13 | Re-explaining why Kubernetes exists |
 | State Layer mapping for every new object | New ontology arcs or State 1→2→3 patterns |
 
-**Chapter 20 framing:**
+**Chapter 21 framing:**
 
 - Chapter 13: *“We now have a scheduler.”*
-- Chapter 20: *“We now use the scheduler.”*
+- Chapter 21: *“We now use the scheduler.”*
 
 ### Book Completion: Design Done, Execution Remains
 
@@ -306,7 +306,7 @@ The hard problems—structure, pedagogy, sequencing, abstraction layers—are **
 
 **Remaining chapters are not new ideas.** They progressively turn knobs on a machine whose design already exists. Map every chapter to State Layers; do not reopen architecture.
 
-**Capstone chapter** (Part VII finale, e.g. Ch 43): show the full platform running; walk the State Layer stack against real components; confirm *this is what we built*—without introducing future work as the emotional ending.
+**Capstone chapter** (Part VII finale, e.g. Ch 45): show the full platform running; walk the State Layer stack against real components; confirm *this is what we built*—without introducing future work as the emotional ending.
 
 > You’ve already built the *thinking model of Hermes*. The rest is just making it run.
 
@@ -614,7 +614,7 @@ What to tear down, what to keep for later chapters.
 ## Cross-References
 
 - Link to previous chapters when assuming knowledge — e.g. "See [Chapter 8: Creating the Network for Hermes](docs/part-ii-aws/08-creating-network-for-hermes.md)"
-- Link forward sparingly: " covered in Chapter 28"
+- Link forward sparingly: " covered in Chapter 29"
 - Navigation footer at end of every chapter:
 
 ```markdown

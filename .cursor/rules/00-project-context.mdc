@@ -31,12 +31,12 @@ A hands-on book that teaches cloud engineering by building infrastructure to run
 ```
 docs/                    ← ALL chapter content lives here (Docusaurus)
   part-i-foundations/    ← Ch 1–6 (Ch 6 = Hermes platform design before AWS)
-  part-ii-aws/           ← Ch 7–15
-  part-iii-containers/   ← Ch 16–18
-  part-iv-kubernetes/    ← Ch 19–27
-  part-v-infrastructure/ ← Ch 28–32
-  part-vi-ai/            ← Ch 33–37 (Hermes, models, agents)
-  part-vii-hermes/       ← Ch 38–43 (Hermes agent platform)
+  part-ii-aws/           ← Ch 7–16 (14–16 optional polish)
+  part-iii-containers/   ← Ch 17–19
+  part-iv-kubernetes/    ← Ch 20–29
+  part-v-infrastructure/ ← Ch 30–34
+  part-vi-ai/            ← Ch 35–39 (Hermes, models, agents)
+  part-vii-hermes/       ← Ch 40–45 (Hermes agent platform)
   appendices/
 sidebars.ts              ← Sidebar navigation (keep in sync with SUMMARY)
 docusaurus.config.ts     ← Site config
@@ -58,6 +58,8 @@ diagrams/                ← Reusable diagram sources
 
 ## Technical Defaults
 
+- **AWS home region:** `us-west-2` (Oregon); AZ example `us-west-2a`; subnet name `hermes-public-usw2a`
+- **Billing alarms:** CloudWatch EstimatedCharges still requires `us-east-1` (AWS constraint)
 - **OS on EC2:** Ubuntu Server LTS (user `ubuntu`)
 - **Orchestration target:** k3s on EC2
 - **IaC:** Terraform (Part V)

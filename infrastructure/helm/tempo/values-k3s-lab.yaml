@@ -1,9 +1,9 @@
-# Chapter 33 — optional Grafana Tempo (tracing backend, lab)
+# Chapter 34 — optional Grafana Tempo (tracing backend, lab)
 # Install after logging stack:
 #   helm upgrade --install tempo grafana/tempo \
 #     -n logging --create-namespace \
 #     -f infrastructure/helm/tempo/values-k3s-lab.yaml
-# Add Tempo datasource in Grafana (Ch 32) — URL http://tempo.logging.svc:3100
+# Add Tempo datasource in Grafana (Ch 33) — URL http://tempo.logging.svc:3100
 
 tempo:
   retention: 24h

@@ -1,5 +1,5 @@
-# Chapter 37 — dual CPU + GPU inference paths for hermes-lab workers
-# Requires: llama-server (CPU, Ch 36) + llama-server-gpu (values-gpu.yaml)
+# Chapter 38 — dual CPU + GPU inference paths for hermes-lab workers
+# Requires: llama-server (CPU, Ch 37) + llama-server-gpu (values-gpu.yaml)
 
 model:
   enabled: false

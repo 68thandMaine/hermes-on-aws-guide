@@ -22,7 +22,7 @@ Interface:
 ## 3. Traceroute to AWS
 
 ```bash
-traceroute ec2.us-east-1.amazonaws.com
+traceroute ec2.us-west-2.amazonaws.com
 ```
 
 Number of hops to first AWS address:
@@ -32,7 +32,7 @@ Any timeouts (`* * *`)? Note which hop:
 ## 4. DNS resolution
 
 ```bash
-dig ec2.us-east-1.amazonaws.com +short
+dig ec2.us-west-2.amazonaws.com +short
 ```
 
 IP address(es) returned:

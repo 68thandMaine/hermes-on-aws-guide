@@ -36,7 +36,7 @@ k3s is the first chapter of the platform layer that **produces behavior**.
 
 After this chapter, `kubectl get nodes` returns Ready. System pods run. The machine is **alive**.
 
-**Hermes does not deploy yet.** Learn Pods, Deployments, Services, and Ingress with simple examples in [Part IV — Kubernetes](../part-iv-kubernetes/20-pods.md) first. Applications come after the platform works.
+**Hermes does not deploy yet.** Learn Pods, Deployments, Services, and Ingress with simple examples in [Part IV — Kubernetes](../part-iv-kubernetes/21-pods.md) first. Applications come after the platform works.
 
 ### Why This Chapter Sits Here (Pedagogically)
 
@@ -520,7 +520,7 @@ Node should return **Ready** without manual intervention.
 
 - [k3s quick start](https://docs.k3s.io/quick-start)
 - [Kubernetes components](https://kubernetes.io/docs/concepts/overview/components/)
-- [Part IV — Kubernetes](../part-iv-kubernetes/19-why-kubernetes-exists.md) — deepens theory while you work with objects
+- [Part IV — Kubernetes](../part-iv-kubernetes/20-why-kubernetes-exists.md) — deepens theory while you work with objects
 
 ---
 
@@ -572,10 +572,10 @@ Chapter 13 is the only ontology shift at the platform layer. What follows **exer
 
 ## What's Next
 
-[Chapter 20: Pods](../part-iv-kubernetes/20-pods.md) — exercise the scheduler. Deploy a simple container **not** Hermes; map the Pod to a **State Layer**. No second ignition moment—just hands-on control plane use.
+[Chapter 21: Pods](../part-iv-kubernetes/21-pods.md) — exercise the scheduler. Deploy a simple container **not** Hermes; map the Pod to a **State Layer**. No second ignition moment—just hands-on control plane use.
 
 Optional anytime (execution and refinement only): [Chapter 14 — Routing Traffic to Hermes](14-routing-traffic-to-hermes.md) (DNS/TLS), [15 — Observing the Platform](15-observing-hermes-platform.md) (*how do I see what it is doing?*), [16 — Managing Platform Costs](16-managing-platform-costs.md).
 
 ---
 
-[← Chapter 12: Building the Application Platform](12-building-the-application-platform.md) | [Next: Chapter 20 — Pods →](../part-iv-kubernetes/20-pods.md)
+[← Chapter 12: Building the Application Platform](12-building-the-application-platform.md) | [Next: Chapter 21 — Pods →](../part-iv-kubernetes/21-pods.md)

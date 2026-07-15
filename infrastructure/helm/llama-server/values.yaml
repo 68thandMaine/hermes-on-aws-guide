@@ -1,4 +1,4 @@
-# Chapter 36 — llama.cpp server on k3s (CPU lab)
+# Chapter 37 — llama.cpp server on k3s (CPU lab)
 # Requires GGUF at hostPath (default /models/model.gguf — see Ch 11 hermes-models volume)
 
 namespace: hermes

@@ -404,7 +404,7 @@ Only then is the platform ready for Kubernetes.
 - [Docker Engine install — Ubuntu](https://docs.docker.com/engine/install/ubuntu/)
 - [OCI project](https://opencontainers.org/)
 - [containerd vs Docker](https://kubernetes.io/docs/setup/production-environment/container-runtimes/)
-- Part III — deeper Docker, Compose, and OCI ([Chapter 16](../part-iii-containers/16-docker.md))
+- Part III — deeper Docker, Compose, and OCI ([Chapter 17](../part-iii-containers/17-docker.md))
 
 ---
 
@@ -448,7 +448,7 @@ The application platform runtime is ready. Kubernetes is next—not Hermes yet.
 
 ## What's Next
 
-**Platform layer continues:** [Chapter 13 — The First Control Plane](13-the-first-control-plane.md) installs k3s—the scheduler that makes the platform **alive**. Then learn Pods, Deployments, Services, Ingress, and storage in [Part IV — Kubernetes](../part-iv-kubernetes/20-pods.md) with simple examples before any Hermes deploy.
+**Platform layer continues:** [Chapter 13 — The First Control Plane](13-the-first-control-plane.md) installs k3s—the scheduler that makes the platform **alive**. Then learn Pods, Deployments, Services, Ingress, and storage in [Part IV — Kubernetes](../part-iv-kubernetes/21-pods.md) with simple examples before any Hermes deploy.
 
 Optional AWS polish ([Chapter 14](14-routing-traffic-to-hermes.md), [15](15-observing-hermes-platform.md), [16](16-managing-platform-costs.md)) can wait until you expose HTTPS or tune observability.
 

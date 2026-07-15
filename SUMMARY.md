@@ -3,7 +3,7 @@
 > **Building a Personal AI Cloud**
 > *From Laptop to Production Kubernetes*
 
-44 chapters across 7 parts. Status reflects the RFC workflow defined in [STYLE_GUIDE.md](STYLE_GUIDE.md).
+45 chapters across 7 parts. Status reflects the RFC workflow defined in [STYLE_GUIDE.md](STYLE_GUIDE.md).
 
 ---
 
@@ -23,9 +23,9 @@
 
 | Phase | Chapters | Delivers | Mode |
 |-------|----------|----------|------|
-| **1. Platform completeness** | Part IV 20–27 (+ secrets, basic observability in Part V) | Operate the control plane: Pods, Deployments, Services, Ingress, storage | Execution only |
-| **2. Hermes payoff** | Part VI–VII 33–42 | Hermes, llama.cpp, PostgreSQL, Redis in-cluster; end-to-end request flow | Application layer on existing model |
-| **3. Closure capstone** | Part VII 43 (or dedicated finale) | Full system running; re-derive State Layers from reality; Ch 6 → Ch 13 → now | Reflection, not new ideas |
+| **1. Platform completeness** | Part IV 20–29 (+ secrets, basic observability in Part V) | Operate the control plane: Pods, Deployments, Services, Ingress, storage | Execution only |
+| **2. Hermes payoff** | Part VI–VII 35–44 | Hermes, llama.cpp, PostgreSQL, Redis in-cluster; end-to-end request flow | Application layer on existing model |
+| **3. Closure capstone** | Part VII 45 (or dedicated finale) | Full system running; re-derive State Layers from reality; Ch 6 → Ch 13 → now | Reflection, not new ideas |
 
 **Finish line:** `laptop → ingress → Hermes → model → response`
 
@@ -81,9 +81,9 @@ See [Book Completion](STYLE_GUIDE.md#book-completion-design-done-execution-remai
 
 | # | Chapter | File | Status |
 |---|---------|------|--------|
-| 16 | [Docker](docs/part-iii-containers/16-docker.md) | `16-docker.md` | 📋 Outline |
-| 17 | [Docker Compose](docs/part-iii-containers/17-docker-compose.md) | `17-docker-compose.md` | ⬜ Planned |
-| 18 | [OCI](docs/part-iii-containers/18-oci.md) | `18-oci.md` | ⬜ Planned |
+| 17 | [Docker](docs/part-iii-containers/17-docker.md) | `17-docker.md` | 📋 Outline |
+| 18 | [Docker Compose](docs/part-iii-containers/18-docker-compose.md) | `18-docker-compose.md` | ⬜ Planned |
+| 19 | [OCI](docs/part-iii-containers/19-oci.md) | `19-oci.md` | ⬜ Planned |
 
 ---
 
@@ -93,16 +93,16 @@ See [Book Completion](STYLE_GUIDE.md#book-completion-design-done-execution-remai
 
 | # | Chapter | File | Status |
 |---|---------|------|--------|
-| 19 | [Why Kubernetes Exists](docs/part-iv-kubernetes/19-why-kubernetes-exists.md) | `19-why-kubernetes-exists.md` | 📋 Outline |
-| 20 | [Pods](docs/part-iv-kubernetes/20-pods.md) | `20-pods.md` | ✏️ Draft |
-| 21 | [Deployments](docs/part-iv-kubernetes/21-deployments.md) | `21-deployments.md` | ✏️ Draft |
-| 22 | [Services](docs/part-iv-kubernetes/22-services.md) | `22-services.md` | ✏️ Draft |
-| 23 | [Ingress](docs/part-iv-kubernetes/23-ingress.md) | `23-ingress.md` | ✏️ Draft |
-| 24 | [Storage](docs/part-iv-kubernetes/24-kubernetes-storage.md) | `24-kubernetes-storage.md` | ✏️ Draft |
-| 25 | [Helm](docs/part-iv-kubernetes/25-helm.md) | `25-helm.md` | ✏️ Draft |
-| 26 | [Configuration (ConfigMaps & Secrets)](docs/part-iv-kubernetes/26-configuration-configmaps-secrets.md) | `26-configuration-configmaps-secrets.md` | ✏️ Draft |
-| 27 | [Security](docs/part-iv-kubernetes/27-kubernetes-security.md) | `27-kubernetes-security.md` | ✏️ Draft |
-| 28 | [Scaling](docs/part-iv-kubernetes/28-scaling.md) | `28-scaling.md` | ✏️ Draft |
+| 20 | [Why Kubernetes Exists](docs/part-iv-kubernetes/20-why-kubernetes-exists.md) | `20-why-kubernetes-exists.md` | 📋 Outline |
+| 21 | [Pods](docs/part-iv-kubernetes/21-pods.md) | `21-pods.md` | ✏️ Draft |
+| 22 | [Deployments](docs/part-iv-kubernetes/22-deployments.md) | `22-deployments.md` | ✏️ Draft |
+| 23 | [Services](docs/part-iv-kubernetes/23-services.md) | `23-services.md` | ✏️ Draft |
+| 24 | [Ingress](docs/part-iv-kubernetes/24-ingress.md) | `24-ingress.md` | ✏️ Draft |
+| 25 | [Storage](docs/part-iv-kubernetes/25-kubernetes-storage.md) | `25-kubernetes-storage.md` | ✏️ Draft |
+| 26 | [Helm](docs/part-iv-kubernetes/26-helm.md) | `26-helm.md` | ✏️ Draft |
+| 27 | [Configuration (ConfigMaps & Secrets)](docs/part-iv-kubernetes/27-configuration-configmaps-secrets.md) | `27-configuration-configmaps-secrets.md` | ✏️ Draft |
+| 28 | [Security](docs/part-iv-kubernetes/28-kubernetes-security.md) | `28-kubernetes-security.md` | ✏️ Draft |
+| 29 | [Scaling](docs/part-iv-kubernetes/29-scaling.md) | `29-scaling.md` | ✏️ Draft |
 
 ---
 
@@ -112,11 +112,11 @@ See [Book Completion](STYLE_GUIDE.md#book-completion-design-done-execution-remai
 
 | # | Chapter | File | Status |
 |---|---------|------|--------|
-| 29 | [Terraform](docs/part-v-infrastructure/29-terraform.md) | `29-terraform.md` | ✏️ Draft |
-| 30 | [GitHub Actions](docs/part-v-infrastructure/30-github-actions.md) | `30-github-actions.md` | ✏️ Draft |
-| 31 | [Secrets Management](docs/part-v-infrastructure/31-secrets-management.md) | `31-secrets-management.md` | ✏️ Draft |
-| 32 | [Monitoring](docs/part-v-infrastructure/32-monitoring.md) | `32-monitoring.md` | ✏️ Draft |
-| 33 | [Logging & Tracing](docs/part-v-infrastructure/33-logging.md) | `33-logging.md` | ✏️ Draft |
+| 30 | [Terraform](docs/part-v-infrastructure/30-terraform.md) | `30-terraform.md` | ✏️ Draft |
+| 31 | [GitHub Actions](docs/part-v-infrastructure/31-github-actions.md) | `31-github-actions.md` | ✏️ Draft |
+| 32 | [Secrets Management](docs/part-v-infrastructure/32-secrets-management.md) | `32-secrets-management.md` | ✏️ Draft |
+| 33 | [Monitoring](docs/part-v-infrastructure/33-monitoring.md) | `33-monitoring.md` | ✏️ Draft |
+| 34 | [Logging & Tracing](docs/part-v-infrastructure/34-logging.md) | `34-logging.md` | ✏️ Draft |
 
 ---
 
@@ -126,11 +126,11 @@ See [Book Completion](STYLE_GUIDE.md#book-completion-design-done-execution-remai
 
 | # | Chapter | File | Status |
 |---|---------|------|--------|
-| 34 | [Running Hermes](docs/part-vi-ai/34-running-hermes.md) | `34-running-hermes.md` | ✏️ Draft |
-| 35 | [Vector Databases](docs/part-vi-ai/35-vector-databases.md) | `35-vector-databases.md` | ✏️ Draft |
-| 36 | [Model Serving](docs/part-vi-ai/36-model-serving.md) | `36-model-serving.md` | ✏️ Draft |
-| 37 | [GPU Instances](docs/part-vi-ai/37-gpu-instances.md) | `37-gpu-instances.md` | ✏️ Draft |
-| 38 | [The Hermes Reasoning Loop](docs/part-vi-ai/38-ai-agent-architecture.md) | `38-ai-agent-architecture.md` | ✏️ Draft |
+| 35 | [Running Hermes](docs/part-vi-ai/35-running-hermes.md) | `35-running-hermes.md` | ✏️ Draft |
+| 36 | [Vector Databases](docs/part-vi-ai/36-vector-databases.md) | `36-vector-databases.md` | ✏️ Draft |
+| 37 | [Model Serving](docs/part-vi-ai/37-model-serving.md) | `37-model-serving.md` | ✏️ Draft |
+| 38 | [GPU Instances](docs/part-vi-ai/38-gpu-instances.md) | `38-gpu-instances.md` | ✏️ Draft |
+| 39 | [The Hermes Reasoning Loop](docs/part-vi-ai/39-ai-agent-architecture.md) | `39-ai-agent-architecture.md` | ✏️ Draft |
 
 ---
 
@@ -140,12 +140,12 @@ See [Book Completion](STYLE_GUIDE.md#book-completion-design-done-execution-remai
 
 | # | Chapter | File | Status |
 |---|---------|------|--------|
-| 39 | [Distributed Cognitive Execution](docs/part-vii-hermes/39-distributed-cognitive-execution.md) | `39-distributed-cognitive-execution.md` | ✏️ Draft |
-| 40 | [Operating Hermes in Production](docs/part-vii-hermes/40-operating-hermes-in-production.md) | `40-operating-hermes-in-production.md` | ✏️ Draft |
-| 41 | [Security, Governance, and Trust](docs/part-vii-hermes/41-platform-governance.md) | `41-platform-governance.md` | ✏️ Draft |
-| 42 | [Extending Hermes](docs/part-vii-hermes/42-extending-hermes.md) | `42-extending-hermes.md` | ✏️ Draft |
-| 43 | [From Development to Production](docs/part-vii-hermes/43-from-development-to-production.md) | `43-from-development-to-production.md` | ✏️ Draft |
-| 44 | [The Platform You Built](docs/part-vii-hermes/44-the-platform-you-built.md) | `44-the-platform-you-built.md` | ✏️ Draft |
+| 40 | [Distributed Cognitive Execution](docs/part-vii-hermes/40-distributed-cognitive-execution.md) | `40-distributed-cognitive-execution.md` | ✏️ Draft |
+| 41 | [Operating Hermes in Production](docs/part-vii-hermes/41-operating-hermes-in-production.md) | `41-operating-hermes-in-production.md` | ✏️ Draft |
+| 42 | [Security, Governance, and Trust](docs/part-vii-hermes/42-platform-governance.md) | `42-platform-governance.md` | ✏️ Draft |
+| 43 | [Extending Hermes](docs/part-vii-hermes/43-extending-hermes.md) | `43-extending-hermes.md` | ✏️ Draft |
+| 44 | [From Development to Production](docs/part-vii-hermes/44-from-development-to-production.md) | `44-from-development-to-production.md` | ✏️ Draft |
+| 45 | [The Platform You Built](docs/part-vii-hermes/45-the-platform-you-built.md) | `45-the-platform-you-built.md` | ✏️ Draft |
 
 ---
 
@@ -170,10 +170,10 @@ See [Book Completion](STYLE_GUIDE.md#book-completion-design-done-execution-remai
 Part I    Foundations          Ch 1–6
 Part II   AWS & Platform         Ch 7–16 (Ch 14–16 optional polish)
 Part III  Containers             Ch 17–19 (depth; Ch 12 covers essentials)
-Part IV   Kubernetes             Ch 19–28 (after Ch 13 k3s)
-Part V    Infrastructure       Ch 29–33
-Part VI   AI Infrastructure    Ch 34–38
-Part VII  Hermes Agent         Ch 39–44
+Part IV   Kubernetes             Ch 20–29 (after Ch 13 k3s)
+Part V    Infrastructure       Ch 30–34
+Part VI   AI Infrastructure    Ch 35–39
+Part VII  Hermes Agent         Ch 40–45
 ```
 
 Chapters are sequential. Do not skip ahead unless you have equivalent experience with the prerequisite material.
@@ -202,4 +202,4 @@ Legacy scaffold files from the initial repository setup were removed during the 
 
 **Part VII and reference appendices drafted.** Next: lab-test chapters; expand command reference with full Ch 8–11 AWS sequences; flesh out Lab Index.
 
-Suggested order: Config → Security → Scaling → Hermes stack → capstone (Ch 44).
+Suggested order: Config → Security → Scaling → Hermes stack → capstone (Ch 45).

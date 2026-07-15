@@ -1,10 +1,10 @@
-# Chapter 43 — Environment promotion (same artifacts, different configuration)
+# Chapter 44 — Environment promotion (same artifacts, different configuration)
 # Application images and Helm charts do not fork per environment.
 # Terraform variables and Helm values layers capture differences.
 
 environments:
   development:
-    description: Laptop or single-node k3s lab (Ch 13, Ch 34)
+    description: Laptop or single-node k3s lab (Ch 13, Ch 35)
     terraform: infrastructure/aws/terraform/environments/dev
     kubeconfig: ~/.kube/hermes-k3s.yaml
     helm_values:
@@ -44,7 +44,7 @@ environments:
       readiness: production-readiness.example.yaml signed
 
 promotion_flow:
-  - merge to main triggers GitHub Actions (Ch 30)
+  - merge to main triggers GitHub Actions (Ch 31)
   - terraform plan/apply per environment workspace
   - helm upgrade with environment-specific -f chain
   - smoke test + rollout status

@@ -53,10 +53,10 @@ See also [`infrastructure/README.md`](https://github.com/crudnicky/agent-to-aws-
 | `cli/ch11-storage-backup-baseline.sh` | S3 backup baseline | 11 |
 | `cli/ch12-install-docker.sh` | Docker CE on Ubuntu | 12 |
 | `cli/ch13-install-k3s.sh` | k3s control plane install | 13 |
-| `cli/ch31-create-hermes-api-secret.sh` | AWS Secrets Manager seed | 31 |
+| `cli/ch32-create-hermes-api-secret.sh` | AWS Secrets Manager seed | 31 |
 | `cli/ch35-*.sh` | Qdrant collection init + retrieval demo | 35 |
 | `cli/ch36-*.sh` | Model path prep + inference verify | 36 |
-| `cli/ch37-gpu-node-prep.sh` | NVIDIA driver on GPU node | 37 |
+| `cli/ch38-gpu-node-prep.sh` | NVIDIA driver on GPU node | 37 |
 | `terraform/modules/network/` | VPC, subnet, IGW module | 29 |
 | `terraform/modules/secrets/` | Secrets Manager resources | 31 |
 | `terraform/environments/dev/` | Dev Terraform workspace | 29 |
@@ -67,13 +67,13 @@ Flat YAML manifests applied with `kubectl apply -f`:
 
 | File pattern | Chapter |
 |--------------|---------|
-| `ch21-nginx-deployment.yaml` | 21 |
-| `ch22-nginx-service.yaml` | 22 |
-| `ch23-nginx-ingress.yaml` | 23 |
-| `ch24-*-pvc.yaml`, `ch24-storage-demo-pod.yaml` | 24 |
+| `ch22-nginx-deployment.yaml` | 21 |
+| `ch23-nginx-service.yaml` | 22 |
+| `ch24-nginx-ingress.yaml` | 23 |
+| `ch24-*-pvc.yaml`, `ch25-storage-demo-pod.yaml` | 24 |
 | `ch26-*` ConfigMap/Secret demo | 26 |
 | `ch27-rbac-*`, `ch27-networkpolicy-*` | 27 |
-| `ch28-nginx-hpa.yaml` | 28 |
+| `ch29-nginx-hpa.yaml` | 28 |
 | `ch31-*` External Secrets Operator | 31 |
 | `ch32-*` PrometheusRule, ServiceMonitor | 32 |
 | `ch33-*` Structured log demo, OTel example | 33 |
@@ -141,7 +141,7 @@ Operator notes also live in `~/hermes-platform/notes/` (created in Ch 7–9).
 |------|---------|
 | `scripts/setup/check-prerequisites.sh` | Ch 1 toolchain verification |
 | `scripts/ci/validate-links.sh` | Link checking |
-| `.github/workflows/terraform.yml` | Ch 30 — Terraform CI |
+| `.github/workflows/terraform.yml` | Ch 31 — Terraform CI |
 | `.github/workflows/book-ci.yml` | Docusaurus build on PR |
 
 ---

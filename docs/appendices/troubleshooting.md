@@ -148,7 +148,7 @@ kubectl get pods -A | grep -v Running
 | Postgres CrashLoop | PVC permissions | Postgres logs | Check `subPath`; recreate PVC | 34 |
 | Qdrant collection fails | Pod not ready | Port-forward 6333; curl `/` | Wait for Qdrant | 35 |
 | Empty vector search | No points indexed | Collection info API | Run upsert demo script | 35 |
-| llama-server CrashLoop | Missing GGUF | `ls /models` on node | Run `ch36-prepare-model-lab.sh` | 36 |
+| llama-server CrashLoop | Missing GGUF | `ls /models` on node | Run `ch37-prepare-model-lab.sh` | 36 |
 | llama OOMKilled | Model too large | `kubectl describe pod` | Smaller quant; more RAM | 36, 40 |
 | Workers can't reach llama | Wrong service DNS | `kubectl get svc -n hermes` | Use `llama-server:8080` in namespace | 36 |
 | GPU Pod Pending | No GPU allocatable | `kubectl describe node` | Device plugin; driver; label node | 37 |

@@ -21,7 +21,7 @@ variable "vpc_cidr" {
 }
 
 variable "public_subnet_cidr" {
-  description = "Public subnet CIDR in us-east-1a"
+  description = "Public subnet CIDR in us-west-2a"
   type        = string
   default     = "10.0.1.0/24"
 }
@@ -29,7 +29,7 @@ variable "public_subnet_cidr" {
 variable "availability_zone" {
   description = "AZ for the public subnet"
   type        = string
-  default     = "us-east-1a"
+  default     = "us-west-2a"
 }
 
 variable "tags" {
@@ -70,7 +70,7 @@ resource "aws_subnet" "public" {
   map_public_ip_on_launch = true
 
   tags = merge(local.tags, {
-    Name = "${var.name_prefix}-public-use1a"
+    Name = "${var.name_prefix}-public-usw2a"
   })
 }
 

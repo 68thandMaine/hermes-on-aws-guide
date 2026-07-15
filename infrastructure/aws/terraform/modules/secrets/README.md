@@ -1,4 +1,4 @@
-# Secrets module (Chapter 31+)
+# Secrets module (Chapter 32+)
 
 IAM policies and (future) Secrets Manager resources for Hermes.
 
@@ -13,15 +13,15 @@ Attach to a dedicated identity:
 
 ## CLI
 
-[`../../cli/ch31-create-hermes-api-secret.sh`](../../cli/ch31-create-hermes-api-secret.sh) — create `hermes/api-key` in Secrets Manager.
+[`../../../cli/ch32-create-hermes-api-secret.sh`](../../../cli/ch32-create-hermes-api-secret.sh) — create `hermes/api-key` in Secrets Manager.
 
 ## Kubernetes sync
 
-Manifests in [`../../../kubernetes/`](../../../kubernetes/):
+Manifests in [`../../../../kubernetes/`](../../../../kubernetes/ch32-cluster-secret-store.yaml):
 
-- `ch31-eso-aws-credentials-secret.example.yaml` — template only; copy locally
-- `ch31-cluster-secret-store.yaml`
-- `ch31-external-secret-hermes-api.yaml`
-- `ch31-external-secret-demo-pod.yaml`
+- `ch32-eso-aws-credentials-secret.example.yaml` — template only; copy locally
+- `ch32-cluster-secret-store.yaml`
+- `ch32-external-secret-hermes-api.yaml`
+- `ch32-external-secret-demo-pod.yaml`
 
 **Never commit real AWS access keys.**

@@ -71,7 +71,7 @@ Bibliography and documentation links for *Building a Personal AI Cloud*. Organiz
 
 :::note[Not Ollama]
 
-This book deploys **llama.cpp** as a cluster service (`llama-server`), not Ollama. You get explicit GGUF paths, Helm values, and production-style HTTP inference—aligned with [Chapter 36](../part-vi-ai/36-model-serving.md).
+This book deploys **llama.cpp** as a cluster service (`llama-server`), not Ollama. You get explicit GGUF paths, Helm values, and production-style HTTP inference—aligned with [Chapter 37](../part-vi-ai/37-model-serving.md).
 
 :::
 

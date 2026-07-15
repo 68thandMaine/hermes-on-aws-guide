@@ -9,7 +9,7 @@ Order-of-magnitude monthly costs for the Hermes platform. **Verify with [AWS Pri
 
 :::warning[Not a quote]
 
-On-demand US East (N. Virginia) estimates as of book writing. Reserved Instances, Savings Plans, and Spot change these materially. **Stop EC2 when not learning** to avoid continuous compute charges.
+On-demand US West (Oregon) `us-west-2` estimates as of book writing. Reserved Instances, Savings Plans, and Spot change these materially. **Stop EC2 when not learning** to avoid continuous compute charges.
 
 :::
 
@@ -64,7 +64,7 @@ Staging value is **process** (promotion checklist), not extra hardware—on a la
 |------|---------------|-------------------|
 | EC2 control plane | `m7i.2xlarge` × 1 (single-node k3s lab path) | $250–290 |
 | EC2 workers (optional) | Additional node(s) for HA | +$250+ each |
-| GPU inference (optional) | `g5.xlarge` when running ([Ch 37](../part-vi-ai/37-gpu-instances.md)) | ~$1.00–1.50/hr on-demand |
+| GPU inference (optional) | `g5.xlarge` when running ([Ch 38](../part-vi-ai/38-gpu-instances.md)) | ~$1.00–1.50/hr on-demand |
 | EBS | 500 GB gp3 total + snapshots | ~$50–80 |
 | S3 | Backups, artifacts, log archive | $5–20 |
 | Secrets Manager + API calls | Production secret count | $1–5 |
@@ -74,15 +74,15 @@ Staging value is **process** (promotion checklist), not extra hardware—on a la
 | **+ GPU 8h/day** | Inference bursts | **+$240–360** |
 | **Multi-node HA** | 2–3 EC2 + managed RDS (future) | **$800–1,500+** |
 
-### Production cost levers ([Chapter 40](../part-vii-hermes/40-operating-hermes-in-production.md), [43](../part-vii-hermes/43-from-development-to-production.md))
+### Production cost levers ([Chapter 41](../part-vii-hermes/41-operating-hermes-in-production.md), [43](../part-vii-hermes/44-from-development-to-production.md))
 
 | Lever | Mechanism |
 |-------|-----------|
 | Right-size instance | `kubectl top nodes`; scale down if headroom &gt; 60% sustained |
 | HPA on workers | Scale replicas on queue depth, not fixed over-provision |
 | GPU schedule | Start GPU node for inference windows; stop when idle |
-| Log retention | Bound Loki retention ([Ch 33](../part-v-infrastructure/33-logging.md)) |
-| Vector TTL | Expire unused Qdrant collections ([Ch 35](../part-vi-ai/35-vector-databases.md)) |
+| Log retention | Bound Loki retention ([Ch 34](../part-v-infrastructure/34-logging.md)) |
+| Vector TTL | Expire unused Qdrant collections ([Ch 36](../part-vi-ai/36-vector-databases.md)) |
 | Reserved Instances | 1-year commit on steady control plane |
 | Snapshot lifecycle | Delete snapshots older than policy |
 

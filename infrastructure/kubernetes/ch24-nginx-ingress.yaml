@@ -1,0 +1,24 @@
+# Chapter 24 — HTTP Ingress to nginx-service
+# Prerequisites:
+#   kubectl apply -f infrastructure/kubernetes/ch22-nginx-deployment.yaml
+#   kubectl apply -f infrastructure/kubernetes/ch23-nginx-service.yaml
+# Apply: kubectl apply -f infrastructure/kubernetes/ch24-nginx-ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+  labels:
+    app: nginx
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: nginx.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx-service
+                port:
+                  number: 80

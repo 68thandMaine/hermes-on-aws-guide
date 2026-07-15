@@ -18,7 +18,7 @@ terraform/
 
 ## Usage
 
-These files are created during Lab 29. Until then, follow the step-by-step instructions in [Chapter 29](../../docs/part-v-infrastructure/29-terraform.md).
+These files are created during Lab 29. Until then, follow the step-by-step instructions in [Chapter 30](../../docs/part-v-infrastructure/30-terraform.md).
 
 ## Backend Setup
 

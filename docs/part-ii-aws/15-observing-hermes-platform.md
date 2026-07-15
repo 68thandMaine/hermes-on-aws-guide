@@ -17,7 +17,7 @@ This chapter adds **AWS-level visibility** into `hermes-controlplane-01`—the m
 
 :::note[Why this matters for Hermes]
 
-Hermes depends on large model files on `/models` and database state on `/data`. A full disk there does not always crash Pods immediately—it corrupts writes, stalls inference, or prevents PostgreSQL from checkpointing. CloudWatch alarms on **disk free space** and **CPU** give you early warning before agent conversations fail. In-cluster Prometheus and Loki ([Chapters 32](../part-v-infrastructure/32-monitoring.md) and [33](../part-v-infrastructure/33-logging.md)) cover workload behavior; this chapter covers the **host and account layer** they run on.
+Hermes depends on large model files on `/models` and database state on `/data`. A full disk there does not always crash Pods immediately—it corrupts writes, stalls inference, or prevents PostgreSQL from checkpointing. CloudWatch alarms on **disk free space** and **CPU** give you early warning before agent conversations fail. In-cluster Prometheus and Loki ([Chapters 32](../part-v-infrastructure/33-monitoring.md) and [33](../part-v-infrastructure/34-logging.md)) cover workload behavior; this chapter covers the **host and account layer** they run on.
 
 :::
 
@@ -47,7 +47,7 @@ After completing this chapter, you will be able to:
 
 ```bash
 export AWS_PROFILE=hermes
-export AWS_REGION=us-east-1
+export AWS_REGION=us-west-2
 source ~/hermes-platform/notes/controlplane.env
 KEY=~/.ssh/${HERMES_KEY_NAME}.pem
 ```
@@ -92,7 +92,7 @@ CloudWatch is AWS's built-in **metrics, logs, and alarms** service. You already 
 └───────────────────────────┬─────────────────────────────┘
                             │ runs on
 ┌───────────────────────────▼─────────────────────────────┐
-│  Chapters 32–33 — Kubernetes / workload layer             │
+│  Chapters 33–34 — Kubernetes / workload layer             │
 │  Prometheus, Grafana, Loki, Pod logs, HPA metrics         │
 └─────────────────────────────────────────────────────────┘
 ```
@@ -131,7 +131,7 @@ CloudWatch **Logs** stores log streams in **log groups**. You query with **Logs 
 - `journald` (system and k3s service logs)
 - Optional: `/var/log/hermes-bootstrap.log` from cloud-init
 
-Full structured application logging for Hermes Pods belongs in [Chapter 33](../part-v-infrastructure/33-logging.md). This chapter establishes the **host baseline**.
+Full structured application logging for Hermes Pods belongs in [Chapter 34](../part-v-infrastructure/34-logging.md). This chapter establishes the **host baseline**.
 
 ### Alarms — From Graph to Action
 
@@ -203,8 +203,8 @@ flowchart LR
 
 | Topic | Where |
 |-------|-------|
-| Pod CPU/memory dashboards | [Chapter 32](../part-v-infrastructure/32-monitoring.md) |
-| Hermes API latency and traces | [Chapters 32–33](../part-v-infrastructure/33-logging.md) |
+| Pod CPU/memory dashboards | [Chapter 33](../part-v-infrastructure/33-monitoring.md) |
+| Hermes API latency and traces | [Chapters 33–34](../part-v-infrastructure/34-logging.md) |
 | Cost optimization dashboards | [Chapter 16](16-managing-platform-costs.md) |
 | Public HTTPS health checks | [Chapter 14](14-routing-traffic-to-hermes.md) |
 
@@ -212,7 +212,7 @@ flowchart LR
 
 ## Walkthrough
 
-Follow **Concept → Design → Implementation**. Steps assume `us-east-1` and `HERMES_INSTANCE_ID` in `controlplane.env`.
+Follow **Concept → Design → Implementation**. Steps assume `us-west-2` and `HERMES_INSTANCE_ID` in `controlplane.env`.
 
 ### Step 1 — Create IAM Role and Instance Profile
 
@@ -484,7 +484,7 @@ bash infrastructure/aws/cli/ch15-cloudwatch-baseline.sh
 | Alarms stuck `INSUFFICIENT_DATA` | New metric or wrong dimension | Wait 15 min; verify dimension `path` matches agent config |
 | No journald logs | journald collection not enabled | Add `journald.json` in agent `.d` directory; restart agent |
 | SNS never emails | Subscription unconfirmed | Click confirm link in email |
-| High costs from logs | Verbose shipping, long retention | Set `retention_in_days: 14`; filter in Ch 33 for workloads |
+| High costs from logs | Verbose shipping, long retention | Set `retention_in_days: 14`; filter in Ch 34 for workloads |
 
 ---
 
@@ -493,7 +493,7 @@ bash infrastructure/aws/cli/ch15-cloudwatch-baseline.sh
 1. What is the difference between EC2 basic monitoring and CloudWatch Agent metrics?
 2. Why use an instance profile instead of access keys on the server?
 3. Which mount points matter most for Hermes, and why?
-4. How does Chapter 15 observability differ from Chapter 32 monitoring?
+4. How does Chapter 15 observability differ from Chapter 33 monitoring?
 5. What does a `StatusCheckFailed` alarm tell you that CPU alone does not?
 6. When would you page on disk usage vs CPU usage for a model-serving node?
 7. What log group would you search first if k3s failed to start after reboot?
@@ -502,7 +502,7 @@ bash infrastructure/aws/cli/ch15-cloudwatch-baseline.sh
 
 ## Key Takeaways
 
-- **Two layers** — CloudWatch covers the host; Prometheus/Loki cover workloads ([Chapters 32–33](../part-v-infrastructure/32-monitoring.md))
+- **Two layers** — CloudWatch covers the host; Prometheus/Loki cover workloads ([Chapters 33–34](../part-v-infrastructure/33-monitoring.md))
 - **Disk matters** — `/models` and `/data` fullness is a leading cause of silent platform failure
 - **IAM roles, not keys** — instance profiles are the credential pattern for agents on EC2
 - **Alarms turn graphs into action** — reuse SNS from billing alarms or dedicate `hermes-platform-alerts`
@@ -528,7 +528,7 @@ bash infrastructure/aws/cli/ch15-cloudwatch-baseline.sh
 - [CloudWatch Agent configuration](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Install-CloudWatch-Agent.html)
 - [Using instance profiles](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2_instance-profiles.html)
 - [CloudWatch Logs Insights query syntax](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CWL_QuerySyntax.html)
-- [Chapter 32: Monitoring](../part-v-infrastructure/32-monitoring.md) — in-cluster metrics
+- [Chapter 33: Monitoring](../part-v-infrastructure/33-monitoring.md) — in-cluster metrics
 
 ---
 
@@ -565,15 +565,15 @@ Overall Progress
 ───────────────────────────────────────────────
 ```
 
-The host is visible from the AWS console—not only from SSH. Optional polish continues in [Chapter 16](16-managing-platform-costs.md); core platform learning continues in [Part IV](../part-iv-kubernetes/20-pods.md).
+The host is visible from the AWS console—not only from SSH. Optional polish continues in [Chapter 16](16-managing-platform-costs.md); core platform learning continues in [Part IV](../part-iv-kubernetes/21-pods.md).
 
 ---
 
 ## What's Next
 
-- **Core path:** [Chapter 20: Pods](../part-iv-kubernetes/20-pods.md) — exercise the scheduler with a simple workload.
+- **Core path:** [Chapter 21: Pods](../part-iv-kubernetes/21-pods.md) — exercise the scheduler with a simple workload.
 - **Optional:** [Chapter 16 — Managing Platform Costs](16-managing-platform-costs.md) — budgets, Cost Explorer, and tuning spend.
-- **Later:** [Chapter 32 — Monitoring](../part-v-infrastructure/32-monitoring.md) — Prometheus and Grafana for in-cluster health.
+- **Later:** [Chapter 33 — Monitoring](../part-v-infrastructure/33-monitoring.md) — Prometheus and Grafana for in-cluster health.
 
 ---
 

@@ -1,4 +1,4 @@
-# Chapter 40 — production rollout settings for hermes-lab
+# Chapter 41 — production rollout settings for hermes-lab
 # helm upgrade hermes-lab ... -f values.yaml -f values-production-rollout.yaml
 
 api:

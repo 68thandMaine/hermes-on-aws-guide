@@ -9,7 +9,7 @@ description: "Route 53, TLS, and DNS so clients reach the platform over HTTPS."
 
 ---
 
-In [Chapter 13](13-the-first-control-plane.md) you lit the control plane. Clients still reach the node by **Elastic IP** and, in [Chapter 23](../part-iv-kubernetes/23-ingress.md), by a fake hostname in `/etc/hosts` over **HTTP**. That is fine for learning Ingress. It is not how you want Hermes authentication tokens or conversation payloads to travel in the open.
+In [Chapter 13](13-the-first-control-plane.md) you lit the control plane. Clients still reach the node by **Elastic IP** and, in [Chapter 24](../part-iv-kubernetes/24-ingress.md), by a fake hostname in `/etc/hosts` over **HTTP**. That is fine for learning Ingress. It is not how you want Hermes authentication tokens or conversation payloads to travel in the open.
 
 This chapter adds the **public name and the padlock**: Route 53 maps a hostname to your Elastic IP; Traefik terminates **TLS** with a Let's Encrypt certificate. You are not inventing a new mental model—only completing the front door [Chapter 6](../part-i-foundations/06-designing-the-hermes-platform.md) drew on paper:
 
@@ -23,7 +23,7 @@ Hermes will exchange API tokens and conversation content with clients. Serving t
 
 :::
 
-**Execution only** — optional AWS polish after [Chapter 13](13-the-first-control-plane.md). Complete after [Chapter 23](../part-iv-kubernetes/23-ingress.md) (Ingress concepts) or whenever you are ready to expose HTTPS. No ontology shift.
+**Execution only** — optional AWS polish after [Chapter 13](13-the-first-control-plane.md). Complete after [Chapter 24](../part-iv-kubernetes/24-ingress.md) (Ingress concepts) or whenever you are ready to expose HTTPS. No ontology shift.
 
 ---
 
@@ -45,13 +45,13 @@ After completing this chapter, you will be able to:
 
 - [Chapter 13: The First Control Plane](13-the-first-control-plane.md) — k3s running; Traefik present
 - [Chapter 10: Establishing Trust](10-establishing-trust.md) — Security Group and UFW model; 443 deferred until now
-- [Chapter 23: Ingress](../part-iv-kubernetes/23-ingress.md) — strongly recommended so host-based routing is familiar
+- [Chapter 24: Ingress](../part-iv-kubernetes/24-ingress.md) — strongly recommended so host-based routing is familiar
 - A **domain you control** (registrar NS can point at Route 53), or willingness to buy one (~$12/year for many TLDs)
 - `~/hermes-platform/notes/controlplane.env` sourced; `kubectl` working against the cluster
 
 ```bash
 export AWS_PROFILE=hermes
-export AWS_REGION=us-east-1
+export AWS_REGION=us-west-2
 export KUBECONFIG=~/.kube/hermes-k3s.yaml
 source ~/hermes-platform/notes/controlplane.env
 
@@ -61,7 +61,7 @@ kubectl get pods -n kube-system -l app.kubernetes.io/name=traefik
 
 :::tip[No domain yet?]
 
-You can read Concept and Design now, then return for Implementation when you own a domain. Do **not** invent a public DNS record you cannot prove control of—Let's Encrypt validation will fail. `/etc/hosts` + HTTP (Chapter 23) remains valid until then.
+You can read Concept and Design now, then return for Implementation when you own a domain. Do **not** invent a public DNS record you cannot prove control of—Let's Encrypt validation will fail. `/etc/hosts` + HTTP (Chapter 24) remains valid until then.
 
 :::
 
@@ -86,7 +86,7 @@ Two different failures look alike to a user:
 | `certificate verify failed` | TLS | cert-manager / Ingress TLS |
 | `404` from Traefik | HTTP routing | Ingress host/path rules |
 
-Chapter 4 taught DNS and TLS as vocabulary. Chapter 23 taught Ingress as routing. This chapter **wires them to AWS and to a real certificate** on the path Chapter 6 already chose: Elastic IP on a public subnet, Traefik on the node—not a managed load balancer.
+Chapter 4 taught DNS and TLS as vocabulary. Chapter 24 taught Ingress as routing. This chapter **wires them to AWS and to a real certificate** on the path Chapter 6 already chose: Elastic IP on a public subnet, Traefik on the node—not a managed load balancer.
 
 ### Design — Stay on the Chapter 6 Path
 
@@ -130,7 +130,7 @@ Hosted zone costs are small (~$0.50/month per zone) plus query charges that are 
 
 **TLS** encrypts the HTTP conversation. The **certificate** proves the server is allowed to use that hostname.
 
-**Let's Encrypt** issues free, short-lived certificates if you prove you control the name. **HTTP-01** proof: Let's Encrypt fetches `http://hermes.example.com/.well-known/acme-challenge/…` — so port **80** must remain reachable from the public internet during issuance and renewal (or from Let's Encrypt's validators). That is why Chapter 23 left 80 open from your IP for labs; for automated renewal from Let's Encrypt, the challenge path must be reachable from **their** validators, not only from your laptop.
+**Let's Encrypt** issues free, short-lived certificates if you prove you control the name. **HTTP-01** proof: Let's Encrypt fetches `http://hermes.example.com/.well-known/acme-challenge/…` — so port **80** must remain reachable from the public internet during issuance and renewal (or from Let's Encrypt's validators). That is why Chapter 24 left 80 open from your IP for labs; for automated renewal from Let's Encrypt, the challenge path must be reachable from **their** validators, not only from your laptop.
 
 :::warning[Security Group for ACME]
 
@@ -140,7 +140,7 @@ If 80/443 are locked to `${MY_IP}/32` only, Let's Encrypt validation **fails**. 
 
 ### Why Not ACM Here?
 
-**AWS Certificate Manager (ACM)** shines when a managed AWS front door (ALB, CloudFront, API Gateway) terminates TLS. Your design terminates on **Traefik on the EC2 node**. Exporting ACM certificates to that path is not the lab default. Revisit ACM if Part VII / production hardening introduces an ALB ([Chapter 43](../part-vii-hermes/43-from-development-to-production.md)).
+**AWS Certificate Manager (ACM)** shines when a managed AWS front door (ALB, CloudFront, API Gateway) terminates TLS. Your design terminates on **Traefik on the EC2 node**. Exporting ACM certificates to that path is not the lab default. Revisit ACM if Part VII / production hardening introduces an ALB ([Chapter 44](../part-vii-hermes/44-from-development-to-production.md)).
 
 ### Trust Boundaries (Updates Chapter 10)
 
@@ -329,7 +329,7 @@ Use the staging server (`acme-staging-v02…`) if you are debugging rate limits;
 
 ### Step 6 — TLS Ingress for the Demo Workload
 
-If you still have `nginx-service` from Chapter 23, expose it on your real hostname. Otherwise create a minimal echo Service first, then apply:
+If you still have `nginx-service` from Chapter 24, expose it on your real hostname. Otherwise create a minimal echo Service first, then apply:
 
 ```bash
 kubectl apply -f - <<EOF
@@ -500,7 +500,7 @@ bash infrastructure/aws/cli/ch14-routing-baseline.sh
 - [cert-manager documentation](https://cert-manager.io/docs/)
 - [Let's Encrypt — How It Works](https://letsencrypt.org/how-it-works/)
 - [Chapter 4: Networking Fundamentals](../part-i-foundations/04-networking.md) — DNS and TLS vocabulary
-- [Chapter 23: Ingress](../part-iv-kubernetes/23-ingress.md) — Traefik routing before TLS
+- [Chapter 24: Ingress](../part-iv-kubernetes/24-ingress.md) — Traefik routing before TLS
 
 ---
 
@@ -536,7 +536,7 @@ Overall Progress
 ───────────────────────────────────────────────
 ```
 
-Clients can find the platform by name over HTTPS. Optional polish continues in [Chapter 15](15-observing-hermes-platform.md) and [Chapter 16](16-managing-platform-costs.md); core learning continues in [Part IV](../part-iv-kubernetes/20-pods.md) if you have not finished Ingress yet.
+Clients can find the platform by name over HTTPS. Optional polish continues in [Chapter 15](15-observing-hermes-platform.md) and [Chapter 16](16-managing-platform-costs.md); core learning continues in [Part IV](../part-iv-kubernetes/21-pods.md) if you have not finished Ingress yet.
 
 ---
 
@@ -544,7 +544,7 @@ Clients can find the platform by name over HTTPS. Optional polish continues in [
 
 - **Optional:** [Chapter 15 — Observing the Hermes Platform](15-observing-hermes-platform.md) — CloudWatch host metrics before you trust 24/7 uptime.
 - **Optional:** [Chapter 16 — Managing Platform Costs](16-managing-platform-costs.md) — budgets once DNS and logs add a few dollars.
-- **Core path:** [Chapter 20: Pods](../part-iv-kubernetes/20-pods.md) or [Chapter 23: Ingress](../part-iv-kubernetes/23-ingress.md) if you jumped here early—finish cluster HTTP before depending on public HTTPS.
+- **Core path:** [Chapter 21: Pods](../part-iv-kubernetes/21-pods.md) or [Chapter 24: Ingress](../part-iv-kubernetes/24-ingress.md) if you jumped here early—finish cluster HTTP before depending on public HTTPS.
 - **Later:** Point the same hostname (or `api.` / `hermes.` variants) at the Hermes Service when Part VI/VII deploy the agent.
 
 ---

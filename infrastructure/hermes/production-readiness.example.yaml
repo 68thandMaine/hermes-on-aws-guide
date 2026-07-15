@@ -1,4 +1,4 @@
-# Chapter 43 — Production readiness assessment (illustrative)
+# Chapter 44 — Production readiness assessment (illustrative)
 # Complete with evidence before exposing Hermes to real users.
 # Maps each item to book chapters and artifacts.
 
@@ -81,7 +81,7 @@ readiness:
 
     - id: network_segmented
       question: Is model inference internal-only?
-      evidence: ch41-networkpolicy-hermes.yaml applied
+      evidence: ch42-networkpolicy-hermes.yaml applied
       chapter: 41
       required: true
 

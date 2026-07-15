@@ -22,7 +22,7 @@ Adopt a **cost governance baseline** for the Hermes lab account:
 4. Establish a **monthly cost review checklist** (Cost Explorer by service, running instances, snapshot hygiene).
 5. Document targets in `~/hermes-platform/notes/cost.env`.
 
-Reserved Instances and Savings Plans remain **out of scope** until usage is stable (revisited in Chapter 43).
+Reserved Instances and Savings Plans remain **out of scope** until usage is stable (revisited in Chapter 44).
 
 ## Consequences
 

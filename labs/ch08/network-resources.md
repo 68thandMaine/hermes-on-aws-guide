@@ -12,7 +12,7 @@ source ~/hermes-platform/notes/network-resources.env
 |----------|----------|
 | `HERMES_VPC_ID` | `hermes-vpc` |
 | `HERMES_IGW_ID` | `hermes-igw` |
-| `HERMES_PUBLIC_SUBNET_ID` | `hermes-public-use1a` |
+| `HERMES_PUBLIC_SUBNET_ID` | `hermes-public-usw2a` |
 | `HERMES_PUBLIC_RT_ID` | `hermes-public-rt` |
 
 ## Verification checklist

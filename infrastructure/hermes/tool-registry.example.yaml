@@ -1,5 +1,5 @@
-# Chapter 42 — Hermes tool registry (illustrative)
-# Mounted as ConfigMap alongside tool-policy.example.yaml (Ch 41).
+# Chapter 43 — Hermes tool registry (illustrative)
+# Mounted as ConfigMap alongside tool-policy.example.yaml (Ch 42).
 # Registration makes a tool *available*; agent_role policy grants *permission*.
 
 tools:
@@ -7,7 +7,7 @@ tools:
     version: "1.0.0"
     description: NOAA forecast for a lat/lon and date range
     schema: tools/noaa.forecast.schema.json
-    secretRef: hermes/noaa-api-key          # AWS SM key via ESO (Ch 31)
+    secretRef: hermes/noaa-api-key          # AWS SM key via ESO (Ch 32)
     timeoutSeconds: 30
     retries: 2
 

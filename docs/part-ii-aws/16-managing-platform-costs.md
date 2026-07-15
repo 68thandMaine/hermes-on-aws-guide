@@ -19,7 +19,7 @@ Hermes is not a weekend script you tear down. It is a continuous platform—comp
 
 :::
 
-**Execution only** — optional polish after [Chapter 13](13-the-first-control-plane.md). Complete when your platform is running continuously or before enabling GPU inference ([Chapter 37](../part-vi-ai/37-gpu-instances.md)).
+**Execution only** — optional polish after [Chapter 13](13-the-first-control-plane.md). Complete when your platform is running continuously or before enabling GPU inference ([Chapter 38](../part-vi-ai/38-gpu-instances.md)).
 
 ---
 
@@ -46,7 +46,7 @@ After completing this chapter, you will be able to:
 
 ```bash
 export AWS_PROFILE=hermes
-export AWS_REGION=us-east-1
+export AWS_REGION=us-west-2
 source ~/hermes-platform/notes/controlplane.env
 ```
 
@@ -74,7 +74,7 @@ Costs accrue whether or not you SSH in today:
 | S3 objects | Yes — per GB-month | Small unless large dumps |
 | Elastic IP (unattached) | Yes — hourly penalty | Avoid |
 | CloudWatch Logs | Yes — ingestion + storage | Grows with verbosity |
-| GPU instance ([Ch 37](../part-vi-ai/37-gpu-instances.md)) | Yes — per second while running | Can dominate a day |
+| GPU instance ([Ch 38](../part-vi-ai/38-gpu-instances.md)) | Yes — per second while running | Can dominate a day |
 
 **Stopping** the EC2 instance stops compute charges but **not** EBS, snapshots, or S3. That is the main lever for a learning schedule: stop when you are not labbing; accept ~$40/month storage while paused.
 
@@ -128,7 +128,7 @@ Chapter 9 tagged the instance with `Project=hermes`. Network resources from Chap
 | **Reserved Instances / Savings Plans** | 24/7 production for 1–3 years after instance type is stable |
 | **Spot** | Fault-tolerant batch jobs—not the control plane node |
 
-Do not buy a Savings Plan on day one. Run the platform for months, confirm instance family and region, then commit ([Chapter 43](../part-vii-hermes/43-from-development-to-production.md) revisits this).
+Do not buy a Savings Plan on day one. Run the platform for months, confirm instance family and region, then commit ([Chapter 44](../part-vii-hermes/44-from-development-to-production.md) revisits this).
 
 ### Stop vs Terminate
 
@@ -137,7 +137,7 @@ Do not buy a Savings Plan on day one. Run the platform for months, confirm insta
 | **Stop** instance | Stops billing | Retained, still billed | EIP stays (free while attached) | Survives on disk |
 | **Terminate** instance | Gone | Root volume deleted unless configured otherwise | Released | Gone unless rebuilt |
 
-For cost savings during a break: **stop**, do not terminate—unless you have snapshots and IaC to reprovision ([Chapter 29](../part-v-infrastructure/29-terraform.md)).
+For cost savings during a break: **stop**, do not terminate—unless you have snapshots and IaC to reprovision ([Chapter 30](../part-v-infrastructure/30-terraform.md)).
 
 ---
 
@@ -193,13 +193,13 @@ Adjust for your budget. A $50 alarm after provisioning generates false positives
 
 ### Step 1 — Raise the Billing Alarm
 
-In **CloudWatch** → **Alarms** → edit `hermes-estimated-charges-50usd` (or create `hermes-estimated-charges-350usd`):
+Switch the console to **`us-east-1`** (EstimatedCharges lives only there), then open **CloudWatch** → **Alarms** → edit `hermes-estimated-charges-50usd` (or create `hermes-estimated-charges-350usd`):
 
 - Metric: `AWS/Billing` → `EstimatedCharges` → currency `USD`
 - Threshold: **Greater than $350** (or your monthly target + 15%)
-- Action: SNS topic `hermes-billing-alerts` or `hermes-platform-alerts` from Chapter 15
+- Action: SNS topic `hermes-billing-alerts` or `hermes-platform-alerts` (create/subscribe in `us-east-1` if needed)
 
-Keep the old alarm disabled or delete it—two alarms on the same metric with different thresholds is fine if you want early + late warnings.
+Keep the old alarm disabled or delete it—two alarms on the same metric with different thresholds is fine if you want early + late warnings. Return the console to **`us-west-2`** when finished.
 
 ### Step 2 — Activate Cost Allocation Tags
 
@@ -300,7 +300,7 @@ aws ec2 describe-snapshots --owner-ids self \
 
 **GPU labs** — terminate or stop GPU instances same day; set a calendar reminder.
 
-**CloudWatch Logs** — keep 14-day retention on `/hermes/controlplane` ([Chapter 15](15-observing-hermes-platform.md)); workload logs get tighter filters in [Chapter 33](../part-v-infrastructure/33-logging.md).
+**CloudWatch Logs** — keep 14-day retention on `/hermes/controlplane` ([Chapter 15](15-observing-hermes-platform.md)); workload logs get tighter filters in [Chapter 34](../part-v-infrastructure/34-logging.md).
 
 ### Step 6 — Monthly Review Checklist
 
@@ -410,8 +410,8 @@ On the first of each month (15 minutes):
 - [AWS Cost Explorer](https://docs.aws.amazon.com/cost-management/latest/userguide/ce-what-is.html)
 - [AWS Budgets](https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html)
 - [Appendix: Cost Estimates](../appendices/cost-estimates.md)
-- [Chapter 40: Operating Hermes in Production](../part-vii-hermes/40-operating-hermes-in-production.md) — production cost levers
-- [Chapter 43: From Development to Production](../part-vii-hermes/43-from-development-to-production.md) — optimize from measurements
+- [Chapter 41: Operating Hermes in Production](../part-vii-hermes/41-operating-hermes-in-production.md) — production cost levers
+- [Chapter 44: From Development to Production](../part-vii-hermes/44-from-development-to-production.md) — optimize from measurements
 
 ---
 
@@ -454,10 +454,10 @@ Part II optional AWS polish is complete. The core learning path continues in **P
 
 ## What's Next
 
-- **Core path:** [Chapter 20: Pods](../part-iv-kubernetes/20-pods.md) — schedule your first workload on the live k3s cluster.
-- **Depth path:** [Part III — Docker](../part-iii-containers/16-docker.md) — container internals (complements Part IV; does not block it).
+- **Core path:** [Chapter 21: Pods](../part-iv-kubernetes/21-pods.md) — schedule your first workload on the live k3s cluster.
+- **Depth path:** [Part III — Docker](../part-iii-containers/17-docker.md) — container internals (complements Part IV; does not block it).
 - **Reference:** [Appendix: Cost Estimates](../appendices/cost-estimates.md) — development, staging, and production scenarios.
 
 ---
 
-[← Chapter 15: Observing the Hermes Platform](15-observing-hermes-platform.md) | [Next: Part III — Docker →](../part-iii-containers/16-docker.md)
+[← Chapter 15: Observing the Hermes Platform](15-observing-hermes-platform.md) | [Next: Part III — Docker →](../part-iii-containers/17-docker.md)

@@ -8,7 +8,7 @@ Reproducible AWS CLI commands for provisioning `hermes-controlplane-01`.
 
 ```bash
 export AWS_PROFILE=hermes
-export AWS_REGION=us-east-1
+export AWS_REGION=us-west-2
 source ~/hermes-platform/notes/network-resources.env
 ```
 

@@ -54,7 +54,7 @@ Never open the AWS console in Walkthrough until the reader understands why each 
 
 ## AWS Resource Naming
 
-Use `hermes-` prefixed names: `hermes-vpc`, `hermes-public-use1a`, `hermes-igw`, `hermes-public-rt`, `hermes-controlplane-sg`, `hermes-controlplane-01`. See `STYLE_GUIDE.md`.
+Use `hermes-` prefixed names: `hermes-vpc`, `hermes-public-usw2a`, `hermes-igw`, `hermes-public-rt`, `hermes-controlplane-sg`, `hermes-controlplane-01`. See `STYLE_GUIDE.md`.
 
 ## Infrastructure Artifacts
 

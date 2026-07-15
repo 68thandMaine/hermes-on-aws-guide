@@ -84,7 +84,7 @@ Read these before contributing or writing.
 
 ```
 ├── README.md              # Project purpose and audience
-├── SUMMARY.md             # Table of contents (43 chapters)
+├── SUMMARY.md             # Table of contents (45 chapters)
 ├── STYLE_GUIDE.md         # Writing rules and quality bar
 ├── CHANGELOG.md           # Meaningful revisions
 ├── LICENSE                # MIT License

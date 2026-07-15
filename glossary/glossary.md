@@ -40,7 +40,7 @@ Terms used throughout *Building a Personal AI Cloud*. Terms are added as chapter
 | **ConfigMap** | Kubernetes resource for storing non-sensitive configuration data. | Ch 11 |
 | **Container** | A lightweight, isolated process running on a shared kernel, packaged with its dependencies. | Ch 10 |
 | **Control Plane** | The Kubernetes components that manage the cluster (API server, etcd, scheduler, controller manager). | Ch 11 |
-| **CronJob** | Kubernetes resource that runs Jobs on a schedule. | Ch 18 |
+| **CronJob** | Kubernetes resource that runs Jobs on a schedule. | Ch 19 |
 | **Deployment** | Kubernetes resource that manages stateless application replicas with rolling updates. | Ch 11 |
 | **EBS** | Elastic Block Store — persistent block storage volumes for EC2 instances. | Ch 9 |
 | **EC2** | Elastic Compute Cloud — AWS virtual machine service. | Ch 7 |
@@ -56,14 +56,14 @@ Terms used throughout *Building a Personal AI Cloud*. Terms are added as chapter
 | **Nitro** | AWS hypervisor system offloading network, storage, and security to dedicated hardware. | Ch 7 |
 | **Node** | A worker machine in Kubernetes (virtual or physical) that runs pods. | Ch 11 |
 | **OIDC** | OpenID Connect — authentication protocol used for GitHub Actions → AWS federation. | Ch 14 |
-| **Ollama** | *(Not used in this book.)* Desktop model runner; we deploy **llama.cpp** directly ([Chapter 36](docs/part-vi-ai/36-model-serving.md)). | — |
-| **PersistentVolumeClaim (PVC)** | Kubernetes request for persistent storage, bound to a PersistentVolume. | Ch 16 |
+| **Ollama** | *(Not used in this book.)* Desktop model runner; we deploy **llama.cpp** directly ([Chapter 37](docs/part-vi-ai/37-model-serving.md)). | — |
+| **PersistentVolumeClaim (PVC)** | Kubernetes request for persistent storage, bound to a PersistentVolume. | Ch 25 |
 | **Pod** | The smallest deployable unit in Kubernetes — one or more containers sharing network and storage. | Ch 11 |
-| **Quantization** | Reducing model precision (e.g., FP16 → Q4) to decrease size and memory requirements. | Ch 17 |
+| **Quantization** | Reducing model precision (e.g., FP16 → Q4) to decrease size and memory requirements. | Ch 18 |
 | **Route Table** | Set of rules determining where network traffic is directed within a VPC. | Ch 8 |
 | **S3** | Simple Storage Service — AWS object storage for files, backups, and static assets. | Ch 9 |
 | **Security Group** | Stateful virtual firewall controlling inbound and outbound traffic for AWS resources. | Ch 7 |
-| **StatefulSet** | Kubernetes resource for stateful applications requiring stable network identity and persistent storage. | Ch 16 |
+| **StatefulSet** | Kubernetes resource for stateful applications requiring stable network identity and persistent storage. | Ch 25 |
 | **STS** | Security Token Service — AWS service issuing temporary credentials. | Ch 6 |
 | **Subnet** | A range of IP addresses within a VPC, tied to a single availability zone. | Ch 8 |
 | **Terraform** | Infrastructure as Code tool by HashiCorp using HCL configuration language. | Ch 13 |

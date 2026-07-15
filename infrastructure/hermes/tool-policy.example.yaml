@@ -1,4 +1,4 @@
-# Chapter 41 — Hermes tool authorization policy (illustrative)
+# Chapter 42 — Hermes tool authorization policy (illustrative)
 # Workers load this at startup (ConfigMap mount). The model never reads this file.
 # Hermes enforces: model proposes tool calls; platform authorizes against agent_role.
 
