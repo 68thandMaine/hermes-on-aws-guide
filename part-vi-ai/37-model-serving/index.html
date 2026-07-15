@@ -1,0 +1,401 @@
+<!doctype html><html lang=en dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-part-vi-ai/37-model-serving" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>Chapter 37: Model Serving | Building a Personal AI Cloud</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://68thandMaine.github.io/hermes-on-aws-guide/img/social-card.svg /><meta data-rh=true name=twitter:image content=https://68thandMaine.github.io/hermes-on-aws-guide/img/social-card.svg /><meta data-rh=true property=og:url content=https://68thandMaine.github.io/hermes-on-aws-guide/part-vi-ai/37-model-serving /><meta data-rh=true property=og:locale content=en /><meta data-rh=true name=docusaurus_locale content=en /><meta data-rh=true name=docsearch:language content=en /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="Chapter 37: Model Serving | Building a Personal AI Cloud"/><meta data-rh=true name=description content="Local inference — llama.cpp as a cluster-native reasoning layer for Hermes."/><meta data-rh=true property=og:description content="Local inference — llama.cpp as a cluster-native reasoning layer for Hermes."/><link data-rh=true rel=icon href=/hermes-on-aws-guide/img/favicon.ico /><link data-rh=true rel=canonical href=https://68thandMaine.github.io/hermes-on-aws-guide/part-vi-ai/37-model-serving /><link data-rh=true rel=alternate href=https://68thandMaine.github.io/hermes-on-aws-guide/part-vi-ai/37-model-serving hreflang=en /><link data-rh=true rel=alternate href=https://68thandMaine.github.io/hermes-on-aws-guide/part-vi-ai/37-model-serving hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://68thandMaine.github.io/hermes-on-aws-guide/part-vi-ai/37-model-serving","name":"Chapter 37: Model Serving","position":1}]}</script><link rel=stylesheet href=/hermes-on-aws-guide/assets/css/styles.56f47aec.css /><script src=/hermes-on-aws-guide/assets/js/runtime~main.99235806.js defer></script><script src=/hermes-on-aws-guide/assets/js/main.3557c68e.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-ce0")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id=__docusaurus><link rel=preload as=image href=/hermes-on-aws-guide/img/logo.svg /><div role=region aria-label="Skip to main content"><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>Skip to main content</a></div><nav aria-label=Main class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/hermes-on-aws-guide/><div class=navbar__logo><img src=/hermes-on-aws-guide/img/logo.svg alt="Personal AI Cloud" class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/hermes-on-aws-guide/img/logo.svg alt="Personal AI Cloud" class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">Personal AI Cloud</b></a><a aria-current=page class="navbar__item navbar__link guides-top-header navbar__link--active" href=/hermes-on-aws-guide/>Guides</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/68thandMaine/hermes-on-aws-guide target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=Search aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/hermes-on-aws-guide/preface/00-preface><span title=Preface class=linkLabel_WmDU>Preface</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=true href=/hermes-on-aws-guide/part-i-foundations/01-introduction><span title="Part I — Foundations" class=categoryLinkLabel_W154>Part I — Foundations</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/01-introduction><span title="Chapter 1: Introduction" class=linkLabel_WmDU>Chapter 1: Introduction</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/02-how-computers-work><span title="Chapter 2: How Computers Actually Work" class=linkLabel_WmDU>Chapter 2: How Computers Actually Work</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/03-linux><span title="Chapter 3: Linux — The Operating System of the Cloud" class=linkLabel_WmDU>Chapter 3: Linux — The Operating System of the Cloud</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/04-networking><span title="Chapter 4: Networking Fundamentals" class=linkLabel_WmDU>Chapter 4: Networking Fundamentals</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/05-virtualization><span title="Chapter 5: Virtualization" class=linkLabel_WmDU>Chapter 5: Virtualization</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/06-designing-the-hermes-platform><span title="Chapter 6: Designing the Hermes Platform" class=linkLabel_WmDU>Chapter 6: Designing the Hermes Platform</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-ii-aws/07-provisioning-aws-account><span title="Part II — AWS & Platform" class=categoryLinkLabel_W154>Part II — AWS & Platform</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-iii-containers/17-docker><span title="Part III — Containers" class=categoryLinkLabel_W154>Part III — Containers</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-iv-kubernetes/20-why-kubernetes-exists><span title="Part IV — Kubernetes" class=categoryLinkLabel_W154>Part IV — Kubernetes</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-v-infrastructure/30-terraform><span title="Part V — Infrastructure" class=categoryLinkLabel_W154>Part V — Infrastructure</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role=button aria-expanded=true href=/hermes-on-aws-guide/part-vi-ai/35-running-hermes><span title="Part VI — AI Infrastructure" class=categoryLinkLabel_W154>Part VI — AI Infrastructure</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-vi-ai/35-running-hermes><span title="Chapter 35: Running Hermes" class=linkLabel_WmDU>Chapter 35: Running Hermes</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-vi-ai/36-vector-databases><span title="Chapter 36: Vector Databases" class=linkLabel_WmDU>Chapter 36: Vector Databases</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/hermes-on-aws-guide/part-vi-ai/37-model-serving><span title="Chapter 37: Model Serving" class=linkLabel_WmDU>Chapter 37: Model Serving</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-vi-ai/38-gpu-instances><span title="Chapter 38: GPU Instances" class=linkLabel_WmDU>Chapter 38: GPU Instances</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-vi-ai/39-ai-agent-architecture><span title="Chapter 39: The Hermes Reasoning Loop" class=linkLabel_WmDU>Chapter 39: The Hermes Reasoning Loop</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-vii-hermes/40-distributed-cognitive-execution><span title="Part VII — Hermes Agent Platform" class=categoryLinkLabel_W154>Part VII — Hermes Agent Platform</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/appendices/glossary><span title=Appendices class=categoryLinkLabel_W154>Appendices</span></a></div></ul></nav><button type=button title="Collapse sidebar" aria-label="Collapse sidebar" class="button button--secondary button--outline collapseSidebarButton_PEFL"><svg width=20 height=20 aria-hidden=true class=collapseSidebarButtonIcon_kv0_><g fill=#7a7a7a><path d="M9.992 10.023c0 .2-.062.399-.172.547l-4.996 7.492a.982.982 0 01-.828.454H1c-.55 0-1-.453-1-1 0-.2.059-.403.168-.551l4.629-6.942L.168 3.078A.939.939 0 010 2.528c0-.548.45-.997 1-.997h2.996c.352 0 .649.18.828.45L9.82 9.472c.11.148.172.347.172.55zm0 0"/><path d="M19.98 10.023c0 .2-.058.399-.168.547l-4.996 7.492a.987.987 0 01-.828.454h-3c-.547 0-.996-.453-.996-1 0-.2.059-.403.168-.551l4.625-6.942-4.625-6.945a.939.939 0 01-.168-.55 1 1 0 01.996-.997h3c.348 0 .649.18.828.45l4.996 7.492c.11.148.168.347.168.55zm0 0"/></g></svg></button></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=Breadcrumbs><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label="Home page" class=breadcrumbs__link href=/hermes-on-aws-guide/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><span class=breadcrumbs__link>Part VI — AI Infrastructure</span><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>Chapter 37: Model Serving</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Chapter 37: Model Serving</h1></header>
+<blockquote>
+<p>A system without a model executes logic.</p>
+<p>A system with a model executes cognition.</p>
+</blockquote>
+<hr/>
+<p><a class="" href=/hermes-on-aws-guide/part-vi-ai/36-vector-databases>Chapter 36</a> added <strong>semantic memory</strong> (Qdrant). <a class="" href=/hermes-on-aws-guide/part-vi-ai/35-running-hermes>Chapter 35</a> deployed execution layers—but the model stub was not real inference.</p>
+<p>Gap:</p>
+<blockquote>
+<p><strong>No native reasoning engine inside the system</strong></p>
+</blockquote>
+<p>This chapter replaces the stub with <strong>llama.cpp</strong> as infrastructure: inference as a cluster-internal service Hermes workers call—not an external API assumption.</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Before:  Hermes orchestrates intelligence (external or implied)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">After:   Hermes contains intelligence (local llama-server)</span><br/></div></code></pre></div></div>
+<p>Aligned with <a class="" href=/hermes-on-aws-guide/part-i-foundations/06-designing-the-hermes-platform>Chapter 6</a>: <strong>Hermes and llama.cpp are separate services</strong>—orchestration vs inference runtime.</p>
+<div class="theme-admonition theme-admonition-note admonition_xJq3 alert alert--secondary"><div class=admonitionHeading_Gvgb><span class=admonitionIcon_Rf37><svg viewBox="0 0 14 16"><path fill-rule=evenodd d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"/></svg></span>Phase shift</div><div class=admonitionContent_BuS1>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Chapter<th>Capability<tbody><tr><td>Ch 35<td>System <strong>executes</strong><tr><td>Ch 36<td>System <strong>remembers</strong> (meaning)<tr><td>Ch 37<td>System <strong>reasons</strong> (local inference)</table></div></div>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=learning-objectives>Learning Objectives<a href=#learning-objectives class=hash-link aria-label="Direct link to Learning Objectives" title="Direct link to Learning Objectives" translate=no>​</a></h2>
+<p>After completing this chapter, you will be able to:</p>
+<ul class="contains-task-list containsTaskList_mC6p">
+<li class=task-list-item><input type=checkbox disabled/> Deploy llama.cpp server as a Kubernetes workload in <code>hermes</code></li>
+<li class=task-list-item><input type=checkbox disabled/> Mount GGUF models from the node <code>/models</code> path (<a class="" href=/hermes-on-aws-guide/part-ii-aws/11-persistent-storage>Chapter 11</a>)</li>
+<li class=task-list-item><input type=checkbox disabled/> Expose inference via internal Service only (no Ingress)</li>
+<li class=task-list-item><input type=checkbox disabled/> Wire workers to <code>http://llama-server:8080/completion</code></li>
+<li class=task-list-item><input type=checkbox disabled/> Explain CPU-only latency, memory, and concurrency constraints on k3s</li>
+<li class=task-list-item><input type=checkbox disabled/> Distinguish model <strong>serving</strong> (infra) from model <strong>usage</strong> (application prompts)</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=prerequisites>Prerequisites<a href=#prerequisites class=hash-link aria-label="Direct link to Prerequisites" title="Direct link to Prerequisites" translate=no>​</a></h2>
+<ul>
+<li class=""><a class="" href=/hermes-on-aws-guide/part-vi-ai/35-running-hermes>Chapter 35</a> — <code>hermes-lab</code> running</li>
+<li class=""><a class="" href=/hermes-on-aws-guide/part-ii-aws/11-persistent-storage>Chapter 11</a> — <code>/models</code> on <code>hermes-models</code> EBS</li>
+<li class="">GGUF file available on the k3s node (small Q4 model recommended for CPU lab)</li>
+<li class="">Helm (<a class="" href=/hermes-on-aws-guide/part-iv-kubernetes/26-helm>Chapter 26</a>)</li>
+</ul>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token builtin class-name">export</span><span class="token plain"> </span><span class="token assign-left variable" style=color:#36acaa>KUBECONFIG</span><span class="token operator" style=color:#393A34>=~</span><span class="token plain">/.kube/hermes-k3s.yaml</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">kubectl get pods </span><span class="token parameter variable" style=color:#36acaa>-n</span><span class="token plain"> hermes</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic># On EC2 node via SSH:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token function" style=color:#d73a49>ls</span><span class="token plain"> </span><span class="token parameter variable" style=color:#36acaa>-lh</span><span class="token plain"> /models/model.gguf </span><span class="token operator" style=color:#393A34>||</span><span class="token plain"> ./infrastructure/aws/cli/ch37-prepare-model-lab.sh</span><br/></div></code></pre></div></div>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=estimated-time>Estimated Time<a href=#estimated-time class=hash-link aria-label="Direct link to Estimated Time" title="Direct link to Estimated Time" translate=no>​</a></h2>
+<p><strong>120 minutes</strong> — 30 minutes reading, 90 minutes model prep + deploy + first completion (model load is slow on CPU).</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=background>Background<a href=#background class=hash-link aria-label="Direct link to Background" title="Direct link to Background" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=the-problem>The Problem<a href=#the-problem class=hash-link aria-label="Direct link to The Problem" title="Direct link to The Problem" translate=no>​</a></h3>
+<p>Hermes today has:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Layer<th>Status<tbody><tr><td>Structured state (Postgres)<td>✓<tr><td>Coordination (Redis)<td>✓<tr><td>Semantic memory (Qdrant)<td>✓<tr><td>Workers<td>✓<tr><td><strong>Local inference</strong><td>✗</table>
+<p>Workers orchestrate but do not <strong>generate cognition</strong> until a model server exists inside the cluster.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=model-serving-vs-model-usage>Model Serving vs Model Usage<a href=#model-serving-vs-model-usage class=hash-link aria-label="Direct link to Model Serving vs Model Usage" title="Direct link to Model Serving vs Model Usage" translate=no>​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Concept<th>Meaning<tbody><tr><td><strong>Model usage</strong><td>Calling OpenAI/Anthropic APIs from app code<tr><td><strong>Model serving</strong><td>Running inference as <strong>infrastructure</strong> in your cluster</table>
+<p>We implement:</p>
+<blockquote>
+<p><strong>Inference as a first-class infrastructure component</strong></p>
+</blockquote>
+<p>Hermes API and workers <strong>use</strong> the model Service; they do not embed the GGUF file.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=why-llamacpp-not-ollama>Why llama.cpp, Not Ollama?<a href=#why-llamacpp-not-ollama class=hash-link aria-label="Direct link to Why llama.cpp, Not Ollama?" title="Direct link to Why llama.cpp, Not Ollama?" translate=no>​</a></h3>
+<p><strong>Ollama</strong> is excellent for local experimentation—it downloads models, runs a daemon, and exposes a simple API. This book does <strong>not</strong> use it.</p>
+<p>We deploy <strong>llama.cpp</strong> directly as <code>llama-server</code> because the learning goal is <strong>production-shaped inference on Kubernetes</strong>:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Requirement<th>llama.cpp path<th>Why not Ollama alone<tbody><tr><td>Explicit GGUF on <code>/models</code><td>You place files on EBS (<a class="" href=/hermes-on-aws-guide/part-ii-aws/11-persistent-storage>Ch 11</a>)<td>Ollama manages its own model store<tr><td>Helm + Deployment + Service<td><code>infrastructure/helm/llama-server/</code><td>Extra abstraction layer around the runtime<tr><td>Cluster-internal HTTP only<td><code>ClusterIP</code>, no Ingress to model<td>Same possible, but less transparent in labs<tr><td>CPU/GPU resource limits<td><code>resources</code> + device plugin (<a class="" href=/hermes-on-aws-guide/part-vi-ai/38-gpu-instances>Ch 38</a>)<td>Harder to reason about in ops chapters<tr><td>Swap models like infra<td>Symlink <code>model.gguf</code>, rolling restart<td><code>ollama pull</code> hides file layout</table>
+<p>Hermes workers call a stable HTTP contract—<code>POST /completion</code>—whether the backend is llama.cpp today or another engine tomorrow. <strong>The book teaches you to operate that contract on your platform</strong>, not a desktop tool.</p>
+<div class="theme-admonition theme-admonition-note admonition_xJq3 alert alert--secondary"><div class=admonitionHeading_Gvgb><span class=admonitionIcon_Rf37><svg viewBox="0 0 14 16"><path fill-rule=evenodd d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"/></svg></span>note</div><div class=admonitionContent_BuS1><p>You may use Ollama on your laptop for casual testing. Everything in Parts VI–VII assumes <strong>llama-server</strong> inside the <code>hermes</code> namespace.</div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=architecture-update>Architecture Update<a href=#architecture-update class=hash-link aria-label="Direct link to Architecture Update" title="Direct link to Architecture Update" translate=no>​</a></h3>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">                ┌──────────────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                │  Hermes API  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                └──────┬───────┘</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                       ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        ┌──────────────┼──────────────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        ↓              ↓              ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   PostgreSQL      Redis         Qdrant</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        └──────────────┼──────────────┘</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                       ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                ┌──────────────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                │ llama-server │  ClusterIP only</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                └──────┬───────┘</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                       ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">              /models/model.gguf (hostPath)</span><br/></div></code></pre></div></div>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=walkthrough>Walkthrough<a href=#walkthrough class=hash-link aria-label="Direct link to Walkthrough" title="Direct link to Walkthrough" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-1--prepare-model-on-node>Step 1 — Prepare Model on Node<a href=#step-1--prepare-model-on-node class=hash-link aria-label="Direct link to Step 1 — Prepare Model on Node" title="Direct link to Step 1 — Prepare Model on Node" translate=no>​</a></h3>
+<p>llama.cpp reads GGUF from disk at pod start—<strong>cold load is real latency</strong>.</p>
+<p>On the control plane EC2 (SSH):</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token function" style=color:#d73a49>chmod</span><span class="token plain"> +x infrastructure/aws/cli/ch37-prepare-model-lab.sh</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">./infrastructure/aws/cli/ch37-prepare-model-lab.sh</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic># Example: point at an existing GGUF under /models/</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token function" style=color:#d73a49>sudo</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>ln</span><span class="token plain"> </span><span class="token parameter variable" style=color:#36acaa>-sf</span><span class="token plain"> /models/qwen/your-lab-model.Q4_K_M.gguf /models/model.gguf</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">./infrastructure/aws/cli/ch37-prepare-model-lab.sh </span><span class="token parameter variable" style=color:#36acaa>--check</span><br/></div></code></pre></div></div>
+<p>This path maps to <strong>hermes-models</strong> EBS— the physical substrate of reasoning.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-2--deploy-llama-server>Step 2 — Deploy llama-server<a href=#step-2--deploy-llama-server class=hash-link aria-label="Direct link to Step 2 — Deploy llama-server" title="Direct link to Step 2 — Deploy llama-server" translate=no>​</a></h3>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">helm upgrade </span><span class="token parameter variable" style=color:#36acaa>--install</span><span class="token plain"> llama-server infrastructure/helm/llama-server </span><span class="token punctuation" style=color:#393A34>\</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token parameter variable" style=color:#36acaa>-n</span><span class="token plain"> hermes </span><span class="token punctuation" style=color:#393A34>\</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token parameter variable" style=color:#36acaa>-f</span><span class="token plain"> infrastructure/helm/llama-server/values.yaml</span><br/></div></code></pre></div></div>
+<p>Chart highlights (<code>infrastructure/helm/llama-server/</code>):</p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token key atrule" style=color:#00a4db>args</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token punctuation" style=color:#393A34>-</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"-m"</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token punctuation" style=color:#393A34>-</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"/models/model.gguf"</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token punctuation" style=color:#393A34>-</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"--host"</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token punctuation" style=color:#393A34>-</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"0.0.0.0"</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token punctuation" style=color:#393A34>-</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"--port"</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token punctuation" style=color:#393A34>-</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"8080"</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token key atrule" style=color:#00a4db>volumeMounts</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token punctuation" style=color:#393A34>-</span><span class="token plain"> </span><span class="token key atrule" style=color:#00a4db>mountPath</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> /models</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token key atrule" style=color:#00a4db>hostPath</span><span class="token punctuation" style=color:#393A34>:</span><span class="token plain"> /models   </span><span class="token comment" style=color:#999988;font-style:italic># node path from Ch 11</span><br/></div></code></pre></div></div>
+<p>Wait for readiness (model load may take 1–3 minutes on CPU):</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">kubectl get pods </span><span class="token parameter variable" style=color:#36acaa>-n</span><span class="token plain"> hermes </span><span class="token parameter variable" style=color:#36acaa>-l</span><span class="token plain"> </span><span class="token assign-left variable" style=color:#36acaa>app</span><span class="token operator" style=color:#393A34>=</span><span class="token plain">llama-server </span><span class="token parameter variable" style=color:#36acaa>-w</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-3--internal-service>Step 3 — Internal Service<a href=#step-3--internal-service class=hash-link aria-label="Direct link to Step 3 — Internal Service" title="Direct link to Step 3 — Internal Service" translate=no>​</a></h3>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">kubectl get svc llama-server </span><span class="token parameter variable" style=color:#36acaa>-n</span><span class="token plain"> hermes</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Property<th>Value<tbody><tr><td>DNS<td><code>llama-server.hermes.svc</code><tr><td>Port<td>8080<tr><td>Exposure<td><strong>ClusterIP</strong> — not on Ingress</table>
+<p>Inference stays <strong>inside the trust boundary</strong>—only Hermes components call it.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-4--disable-model-stub-rewire-hermes-lab>Step 4 — Disable Model Stub; Rewire hermes-lab<a href=#step-4--disable-model-stub-rewire-hermes-lab class=hash-link aria-label="Direct link to Step 4 — Disable Model Stub; Rewire hermes-lab" title="Direct link to Step 4 — Disable Model Stub; Rewire hermes-lab" translate=no>​</a></h3>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">helm upgrade hermes-lab infrastructure/helm/hermes-lab </span><span class="token parameter variable" style=color:#36acaa>-n</span><span class="token plain"> hermes </span><span class="token punctuation" style=color:#393A34>\</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token parameter variable" style=color:#36acaa>-f</span><span class="token plain"> infrastructure/helm/hermes-lab/values.yaml </span><span class="token punctuation" style=color:#393A34>\</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token parameter variable" style=color:#36acaa>-f</span><span class="token plain"> infrastructure/helm/hermes-lab/values-with-llama.yaml</span><br/></div></code></pre></div></div>
+<p>This sets <code>model.enabled: false</code>, <code>model.host: llama-server</code>, and worker env <code>LLAMA_SERVER_URL</code>.</p>
+<p>Verify API Pod env:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">kubectl </span><span class="token builtin class-name">exec</span><span class="token plain"> </span><span class="token parameter variable" style=color:#36acaa>-n</span><span class="token plain"> hermes deploy/hermes-api -- </span><span class="token function" style=color:#d73a49>env</span><span class="token plain"> </span><span class="token operator" style=color:#393A34>|</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>grep</span><span class="token plain"> </span><span class="token parameter variable" style=color:#36acaa>-E</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>'MODEL_|LLAMA'</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-5--first-completion-inference-proof>Step 5 — First Completion (Inference Proof)<a href=#step-5--first-completion-inference-proof class=hash-link aria-label="Direct link to Step 5 — First Completion (Inference Proof)" title="Direct link to Step 5 — First Completion (Inference Proof)" translate=no>​</a></h3>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token function" style=color:#d73a49>chmod</span><span class="token plain"> +x infrastructure/aws/cli/ch37-verify-llama-inference.sh</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">./infrastructure/aws/cli/ch37-verify-llama-inference.sh</span><br/></div></code></pre></div></div>
+<p>Or from a worker Pod:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">kubectl </span><span class="token builtin class-name">exec</span><span class="token plain"> </span><span class="token parameter variable" style=color:#36acaa>-n</span><span class="token plain"> hermes deploy/hermes-workers -- </span><span class="token punctuation" style=color:#393A34>\</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token function" style=color:#d73a49>wget</span><span class="token plain"> -qO- --post-data</span><span class="token operator" style=color:#393A34>=</span><span class="token string" style=color:#e3116c>'{"prompt":"Hello","n_predict":32,"stream":false}'</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>\</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token parameter variable" style=color:#36acaa>--header</span><span class="token operator" style=color:#393A34>=</span><span class="token string" style=color:#e3116c>'Content-Type: application/json'</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>\</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  http://llama-server:8080/completion </span><span class="token operator" style=color:#393A34>|</span><span class="token plain"> </span><span class="token function" style=color:#d73a49>head</span><span class="token plain"> </span><span class="token parameter variable" style=color:#36acaa>-c</span><span class="token plain"> </span><span class="token number" style=color:#36acaa>500</span><br/></div></code></pre></div></div>
+<p>Flow:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Worker → POST /completion → llama-server → token generation → JSON response</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-6--streaming-concept>Step 6 — Streaming (Concept)<a href=#step-6--streaming-concept class=hash-link aria-label="Direct link to Step 6 — Streaming (Concept)" title="Direct link to Step 6 — Streaming (Concept)" translate=no>​</a></h3>
+<p>Enable streaming for responsive UX:</p>
+<div class="language-json codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-json codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token punctuation" style=color:#393A34>{</span><span class="token property" style=color:#36acaa>"prompt"</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"..."</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"> </span><span class="token property" style=color:#36acaa>"stream"</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token boolean" style=color:#36acaa>true</span><span class="token punctuation" style=color:#393A34>}</span><br/></div></code></pre></div></div>
+<p>Server emits partial tokens; clients must handle <strong>backpressure</strong>—slow consumers stall generation. Hermes API will stream to users in Part VII; here you verify the endpoint supports it.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-7--connect-to-rag-ch-36-bridge>Step 7 — Connect to RAG (Ch 36 Bridge)<a href=#step-7--connect-to-rag-ch-36-bridge class=hash-link aria-label="Direct link to Step 7 — Connect to RAG (Ch 36 Bridge)" title="Direct link to Step 7 — Connect to RAG (Ch 36 Bridge)" translate=no>​</a></h3>
+<p>Full agent loop (later):</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Query → Qdrant retrieval → prompt assembly → llama-server → response → embed → Qdrant upsert</span><br/></div></code></pre></div></div>
+<p>Model serving provides the <strong>generation</strong> step; Qdrant provides <strong>context</strong>.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-8--observability>Step 8 — Observability<a href=#step-8--observability class=hash-link aria-label="Direct link to Step 8 — Observability" title="Direct link to Step 8 — Observability" translate=no>​</a></h3>
+<p><strong>Metrics</strong> — watch Pod memory during inference (<a class="" href=/hermes-on-aws-guide/part-v-infrastructure/33-monitoring>Chapter 33</a>):</p>
+<ul>
+<li class=""><code>container_memory_working_set_bytes{namespace="hermes",pod=~"llama-server.*"}</code></li>
+</ul>
+<p><strong>Logs</strong> — llama.cpp server logs load time and requests (<a class="" href=/hermes-on-aws-guide/part-v-infrastructure/34-logging>Chapter 34</a>):</p>
+<div class="language-logql codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-logql codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">{namespace="hermes", app="llama-server"}</span><br/></div></code></pre></div></div>
+<p>Latency becomes a <strong>design constraint</strong> you can measure—not guess.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=hands-on-lab>Hands-on Lab<a href=#hands-on-lab class=hash-link aria-label="Direct link to Hands-on Lab" title="Direct link to Hands-on Lab" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=lab-36-local-inference>Lab 36: Local Inference<a href=#lab-36-local-inference class=hash-link aria-label="Direct link to Lab 36: Local Inference" title="Direct link to Lab 36: Local Inference" translate=no>​</a></h3>
+<p><strong>Estimated Time:</strong> 90 minutes</p>
+<p><strong>Goal:</strong> llama-server Running; <code>/completion</code> returns generated text; workers reference <code>LLAMA_SERVER_URL</code>.</p>
+<p><strong>Steps:</strong></p>
+<ol>
+<li class="">Place or symlink GGUF at <code>/models/model.gguf</code> on node</li>
+<li class=""><code>helm install llama-server ...</code></li>
+<li class="">Wait for readiness probe <code>/health</code></li>
+<li class="">Run <code>ch37-verify-llama-inference.sh</code></li>
+<li class="">Upgrade hermes-lab with <code>values-with-llama.yaml</code></li>
+<li class="">Confirm worker logs include <code>llama</code> URL field</li>
+<li class="">Record cold-start time and first-token latency in notes</li>
+</ol>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=verification>Verification<a href=#verification class=hash-link aria-label="Direct link to Verification" title="Direct link to Verification" translate=no>​</a></h2>
+<ul class="contains-task-list containsTaskList_mC6p">
+<li class=task-list-item><input type=checkbox disabled/> <code>/models/model.gguf</code> exists on EC2 node</li>
+<li class=task-list-item><input type=checkbox disabled/> <code>llama-server</code> Pod Running and ready</li>
+<li class=task-list-item><input type=checkbox disabled/> <code>/completion</code> returns content JSON</li>
+<li class=task-list-item><input type=checkbox disabled/> <code>hermes-model</code> stub scaled away (<code>model.enabled: false</code>)</li>
+<li class=task-list-item><input type=checkbox disabled/> Workers have <code>LLAMA_SERVER_URL=http://llama-server:8080</code></li>
+<li class=task-list-item><input type=checkbox disabled/> Inference not exposed via Ingress</li>
+<li class=task-list-item><input type=checkbox disabled/> You can explain serving vs usage</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=troubleshooting>Troubleshooting<a href=#troubleshooting class=hash-link aria-label="Direct link to Troubleshooting" title="Direct link to Troubleshooting" translate=no>​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Problem<th>Cause<th>Fix<tbody><tr><td>CrashLoop on start<td>Missing GGUF<td><code>--check</code> script on node; verify hostPath<tr><td>OOMKilled<td>Model too large for RAM<td>Smaller quant (Q4); raise limits; smaller model<tr><td>Readiness never passes<td>Slow CPU load<td>Increase <code>initialDelaySeconds</code>; wait longer<tr><td>Empty completion<td>Wrong API path<td>Use POST <code>/completion</code> with JSON body<tr><td>Permission denied on /models<td>Mount read-only / ownership<td><code>sudo chmod o+r</code> or fix ownership on GGUF<tr><td>Workers cannot reach server<td>DNS / namespace<td>Same namespace <code>hermes</code>; use <code>llama-server:8080</code></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=failure-modes>Failure Modes<a href=#failure-modes class=hash-link aria-label="Direct link to Failure Modes" title="Direct link to Failure Modes" translate=no>​</a></h3>
+<p><strong>Cold start latency</strong> — First request after Pod restart pays full GGUF load. Fix: keep Pod warm; use <code>minReplicas: 1</code>; preload on node.</p>
+<p><strong>Memory exhaustion</strong> — Concurrent requests exceed RAM. Fix: <code>-np 1</code> parallel slots; queue at worker layer; GPU path (<a class="" href=/hermes-on-aws-guide/part-vi-ai/38-gpu-instances>Chapter 38</a>).</p>
+<p><strong>Queue saturation</strong> — Workers outpace inference. Fix: backpressure in Redis queue; scale model tier (GPU) not infinite workers.</p>
+<p><strong>Streaming backpressure</strong> — Slow HTTP client blocks generation. Fix: timeouts; buffered streams; separate worker consumer.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=k3s-reality-constraints>k3s Reality Constraints<a href=#k3s-reality-constraints class=hash-link aria-label="Direct link to k3s Reality Constraints" title="Direct link to k3s Reality Constraints" translate=no>​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Constraint<th>Impact<tbody><tr><td>CPU-only<td>Low tokens/sec; long responses<tr><td>Single node<td>Model + Hermes + observability share RAM<tr><td>No GPU (until Ch 38)<td>Small models only<tr><td>Disk IO<td>Large GGUF slow to mmap on first load</table>
+<p>This is a <strong>bounded cognition environment</strong>—honest for learning, not datacenter LLM serving.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=review-questions>Review Questions<a href=#review-questions class=hash-link aria-label="Direct link to Review Questions" title="Direct link to Review Questions" translate=no>​</a></h2>
+<ol>
+<li class="">Why is llama.cpp a separate Deployment from Hermes API?</li>
+<li class="">Why hostPath <code>/models</code> instead of baking GGUF into the image?</li>
+<li class="">Why ClusterIP only for llama-server?</li>
+<li class="">What happens to workers if inference is slower than task arrival rate?</li>
+<li class="">How does Ch 37 change the Hermes system type?</li>
+</ol>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=key-takeaways>Key Takeaways<a href=#key-takeaways class=hash-link aria-label="Direct link to Key Takeaways" title="Direct link to Key Takeaways" translate=no>​</a></h2>
+<ul>
+<li class=""><strong>Model serving is infrastructure</strong>, not application logic</li>
+<li class=""><strong>llama.cpp</strong> runs inference inside k3s; Hermes <strong>uses</strong> it via HTTP</li>
+<li class=""><strong>GGUF on <code>/models</code></strong> ties inference to <a class="" href=/hermes-on-aws-guide/part-ii-aws/11-persistent-storage>Chapter 11</a> storage design</li>
+<li class=""><strong>Workers depend on internal reasoning runtime</strong> — cognition is in-cluster</li>
+<li class=""><strong>Latency and memory</strong> are system design constraints on single-node CPU</li>
+<li class="">System evolution: <strong>Execution → Memory → Reasoning</strong></li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=glossary-additions>Glossary Additions<a href=#glossary-additions class=hash-link aria-label="Direct link to Glossary Additions" title="Direct link to Glossary Additions" translate=no>​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Term<th>Definition<tbody><tr><td><strong>GGUF</strong><td>File format for quantized LLM weights used by llama.cpp.<tr><td><strong>Model serving</strong><td>Hosting inference as a network service in infrastructure.<tr><td><strong>Completion</strong><td>llama.cpp HTTP API for text generation from a prompt.<tr><td><strong>Cold start</strong><td>Latency to load model weights on first Pod start or request.<tr><td><strong>hostPath</strong><td>Kubernetes volume mapping a path on the node into a Pod.</table>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=further-reading>Further Reading<a href=#further-reading class=hash-link aria-label="Direct link to Further Reading" title="Direct link to Further Reading" translate=no>​</a></h2>
+<ul>
+<li class=""><a href=https://github.com/ggerganov/llama.cpp/blob/master/examples/server/README.md target=_blank rel="noopener noreferrer" class="">llama.cpp server documentation</a></li>
+<li class=""><a class="" href=/hermes-on-aws-guide/part-i-foundations/06-designing-the-hermes-platform>Chapter 6: Designing the Hermes Platform</a></li>
+<li class=""><a class="" href=/hermes-on-aws-guide/part-vi-ai/35-running-hermes>Chapter 35: Running Hermes</a></li>
+<li class=""><a class="" href=/hermes-on-aws-guide/part-vi-ai/36-vector-databases>Chapter 36: Vector Databases</a></li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=hermes-platform-status>Hermes Platform Status<a href=#hermes-platform-status class=hash-link aria-label="Direct link to Hermes Platform Status" title="Direct link to Hermes Platform Status" translate=no>​</a></h2>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">───────────────────────────────────────────────</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        HERMES PLATFORM STATUS</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Execution + memory       ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">llama-server (local)     ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">GPU inference            ◐ (Ch 38)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Full agent loop          ◐ (Part VII)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Hermes production image  ◐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">───────────────────────────────────────────────</span><br/></div></code></pre></div></div>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Execution → Memory → Reasoning</span><br/></div></code></pre></div></div>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=whats-next>What's Next<a href=#whats-next class=hash-link aria-label="Direct link to What's Next" title="Direct link to What's Next" translate=no>​</a></h2>
+<p><a class="" href=/hermes-on-aws-guide/part-vi-ai/38-gpu-instances>Chapter 38: GPU Instances</a> — when CPU inference is insufficient; GPU nodes and model serving at scale.</p>
+<p><a class="" href=/hermes-on-aws-guide/part-vi-ai/39-ai-agent-architecture>Chapter 39: The Hermes Reasoning Loop</a> — platform-owned task loop; memory + inference + tools.</p>
+<hr/>
+<p><a class="" href=/hermes-on-aws-guide/part-vi-ai/36-vector-databases>← Chapter 36: Vector Databases</a> | <a class="" href=/hermes-on-aws-guide/part-vi-ai/38-gpu-instances>Next: Chapter 38 — GPU Instances →</a></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/68thandMaine/hermes-on-aws-guide/tree/main/docs/part-vi-ai/37-model-serving.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href=/hermes-on-aws-guide/part-vi-ai/36-vector-databases><div class=pagination-nav__sublabel>Previous</div><div class=pagination-nav__label>Chapter 36: Vector Databases</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/hermes-on-aws-guide/part-vi-ai/38-gpu-instances><div class=pagination-nav__sublabel>Next</div><div class=pagination-nav__label>Chapter 38: GPU Instances</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#learning-objectives class="table-of-contents__link toc-highlight">Learning Objectives</a><li><a href=#prerequisites class="table-of-contents__link toc-highlight">Prerequisites</a><li><a href=#estimated-time class="table-of-contents__link toc-highlight">Estimated Time</a><li><a href=#background class="table-of-contents__link toc-highlight">Background</a><ul><li><a href=#the-problem class="table-of-contents__link toc-highlight">The Problem</a><li><a href=#model-serving-vs-model-usage class="table-of-contents__link toc-highlight">Model Serving vs Model Usage</a><li><a href=#why-llamacpp-not-ollama class="table-of-contents__link toc-highlight">Why llama.cpp, Not Ollama?</a><li><a href=#architecture-update class="table-of-contents__link toc-highlight">Architecture Update</a></ul><li><a href=#walkthrough class="table-of-contents__link toc-highlight">Walkthrough</a><ul><li><a href=#step-1--prepare-model-on-node class="table-of-contents__link toc-highlight">Step 1 — Prepare Model on Node</a><li><a href=#step-2--deploy-llama-server class="table-of-contents__link toc-highlight">Step 2 — Deploy llama-server</a><li><a href=#step-3--internal-service class="table-of-contents__link toc-highlight">Step 3 — Internal Service</a><li><a href=#step-4--disable-model-stub-rewire-hermes-lab class="table-of-contents__link toc-highlight">Step 4 — Disable Model Stub; Rewire hermes-lab</a><li><a href=#step-5--first-completion-inference-proof class="table-of-contents__link toc-highlight">Step 5 — First Completion (Inference Proof)</a><li><a href=#step-6--streaming-concept class="table-of-contents__link toc-highlight">Step 6 — Streaming (Concept)</a><li><a href=#step-7--connect-to-rag-ch-36-bridge class="table-of-contents__link toc-highlight">Step 7 — Connect to RAG (Ch 36 Bridge)</a><li><a href=#step-8--observability class="table-of-contents__link toc-highlight">Step 8 — Observability</a></ul><li><a href=#hands-on-lab class="table-of-contents__link toc-highlight">Hands-on Lab</a><ul><li><a href=#lab-36-local-inference class="table-of-contents__link toc-highlight">Lab 36: Local Inference</a></ul><li><a href=#verification class="table-of-contents__link toc-highlight">Verification</a><li><a href=#troubleshooting class="table-of-contents__link toc-highlight">Troubleshooting</a><ul><li><a href=#failure-modes class="table-of-contents__link toc-highlight">Failure Modes</a></ul><li><a href=#k3s-reality-constraints class="table-of-contents__link toc-highlight">k3s Reality Constraints</a><li><a href=#review-questions class="table-of-contents__link toc-highlight">Review Questions</a><li><a href=#key-takeaways class="table-of-contents__link toc-highlight">Key Takeaways</a><li><a href=#glossary-additions class="table-of-contents__link toc-highlight">Glossary Additions</a><li><a href=#further-reading class="table-of-contents__link toc-highlight">Further Reading</a><li><a href=#hermes-platform-status class="table-of-contents__link toc-highlight">Hermes Platform Status</a><li><a href=#whats-next class="table-of-contents__link toc-highlight">What's Next</a></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>Book</div><ul class="footer__items clean-list"><li class=footer__item><a class=footer__link-item href=/hermes-on-aws-guide/>Table of Contents</a><li class=footer__item><a href=https://github.com/68thandMaine/hermes-on-aws-guide/blob/main/CONTRIBUTING.md target=_blank rel="noopener noreferrer" class=footer__link-item>Contributing<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>Author</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/crudnicky target=_blank rel="noopener noreferrer" class=footer__link-item>Christopher Rudnicky<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 Christopher Rudnicky. MIT License.</div></div></div></footer></div></body>

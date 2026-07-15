@@ -1,0 +1,384 @@
+<!doctype html><html lang=en dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-part-v-infrastructure/32-secrets-management" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>Chapter 32: Secrets Management | Building a Personal AI Cloud</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://68thandMaine.github.io/hermes-on-aws-guide/img/social-card.svg /><meta data-rh=true name=twitter:image content=https://68thandMaine.github.io/hermes-on-aws-guide/img/social-card.svg /><meta data-rh=true property=og:url content=https://68thandMaine.github.io/hermes-on-aws-guide/part-v-infrastructure/32-secrets-management /><meta data-rh=true property=og:locale content=en /><meta data-rh=true name=docusaurus_locale content=en /><meta data-rh=true name=docsearch:language content=en /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="Chapter 32: Secrets Management | Building a Personal AI Cloud"/><meta data-rh=true name=description content="Production secret stores — AWS Secrets Manager, External Secrets Operator, and credential boundaries."/><meta data-rh=true property=og:description content="Production secret stores — AWS Secrets Manager, External Secrets Operator, and credential boundaries."/><link data-rh=true rel=icon href=/hermes-on-aws-guide/img/favicon.ico /><link data-rh=true rel=canonical href=https://68thandMaine.github.io/hermes-on-aws-guide/part-v-infrastructure/32-secrets-management /><link data-rh=true rel=alternate href=https://68thandMaine.github.io/hermes-on-aws-guide/part-v-infrastructure/32-secrets-management hreflang=en /><link data-rh=true rel=alternate href=https://68thandMaine.github.io/hermes-on-aws-guide/part-v-infrastructure/32-secrets-management hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://68thandMaine.github.io/hermes-on-aws-guide/part-v-infrastructure/32-secrets-management","name":"Chapter 32: Secrets Management","position":1}]}</script><link rel=stylesheet href=/hermes-on-aws-guide/assets/css/styles.56f47aec.css /><script src=/hermes-on-aws-guide/assets/js/runtime~main.99235806.js defer></script><script src=/hermes-on-aws-guide/assets/js/main.3557c68e.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-ce0")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id=__docusaurus><link rel=preload as=image href=/hermes-on-aws-guide/img/logo.svg /><div role=region aria-label="Skip to main content"><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>Skip to main content</a></div><nav aria-label=Main class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/hermes-on-aws-guide/><div class=navbar__logo><img src=/hermes-on-aws-guide/img/logo.svg alt="Personal AI Cloud" class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/hermes-on-aws-guide/img/logo.svg alt="Personal AI Cloud" class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">Personal AI Cloud</b></a><a aria-current=page class="navbar__item navbar__link guides-top-header navbar__link--active" href=/hermes-on-aws-guide/>Guides</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/68thandMaine/hermes-on-aws-guide target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=Search aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/hermes-on-aws-guide/preface/00-preface><span title=Preface class=linkLabel_WmDU>Preface</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=true href=/hermes-on-aws-guide/part-i-foundations/01-introduction><span title="Part I — Foundations" class=categoryLinkLabel_W154>Part I — Foundations</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/01-introduction><span title="Chapter 1: Introduction" class=linkLabel_WmDU>Chapter 1: Introduction</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/02-how-computers-work><span title="Chapter 2: How Computers Actually Work" class=linkLabel_WmDU>Chapter 2: How Computers Actually Work</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/03-linux><span title="Chapter 3: Linux — The Operating System of the Cloud" class=linkLabel_WmDU>Chapter 3: Linux — The Operating System of the Cloud</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/04-networking><span title="Chapter 4: Networking Fundamentals" class=linkLabel_WmDU>Chapter 4: Networking Fundamentals</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/05-virtualization><span title="Chapter 5: Virtualization" class=linkLabel_WmDU>Chapter 5: Virtualization</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/06-designing-the-hermes-platform><span title="Chapter 6: Designing the Hermes Platform" class=linkLabel_WmDU>Chapter 6: Designing the Hermes Platform</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-ii-aws/07-provisioning-aws-account><span title="Part II — AWS & Platform" class=categoryLinkLabel_W154>Part II — AWS & Platform</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-iii-containers/17-docker><span title="Part III — Containers" class=categoryLinkLabel_W154>Part III — Containers</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-iv-kubernetes/20-why-kubernetes-exists><span title="Part IV — Kubernetes" class=categoryLinkLabel_W154>Part IV — Kubernetes</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role=button aria-expanded=true href=/hermes-on-aws-guide/part-v-infrastructure/30-terraform><span title="Part V — Infrastructure" class=categoryLinkLabel_W154>Part V — Infrastructure</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-v-infrastructure/30-terraform><span title="Chapter 30: Terraform" class=linkLabel_WmDU>Chapter 30: Terraform</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-v-infrastructure/31-github-actions><span title="Chapter 31: GitHub Actions" class=linkLabel_WmDU>Chapter 31: GitHub Actions</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/hermes-on-aws-guide/part-v-infrastructure/32-secrets-management><span title="Chapter 32: Secrets Management" class=linkLabel_WmDU>Chapter 32: Secrets Management</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-v-infrastructure/33-monitoring><span title="Chapter 33: Monitoring" class=linkLabel_WmDU>Chapter 33: Monitoring</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-v-infrastructure/34-logging><span title="Chapter 34: Logging & Tracing" class=linkLabel_WmDU>Chapter 34: Logging & Tracing</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-vi-ai/35-running-hermes><span title="Part VI — AI Infrastructure" class=categoryLinkLabel_W154>Part VI — AI Infrastructure</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-vii-hermes/40-distributed-cognitive-execution><span title="Part VII — Hermes Agent Platform" class=categoryLinkLabel_W154>Part VII — Hermes Agent Platform</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/appendices/glossary><span title=Appendices class=categoryLinkLabel_W154>Appendices</span></a></div></ul></nav><button type=button title="Collapse sidebar" aria-label="Collapse sidebar" class="button button--secondary button--outline collapseSidebarButton_PEFL"><svg width=20 height=20 aria-hidden=true class=collapseSidebarButtonIcon_kv0_><g fill=#7a7a7a><path d="M9.992 10.023c0 .2-.062.399-.172.547l-4.996 7.492a.982.982 0 01-.828.454H1c-.55 0-1-.453-1-1 0-.2.059-.403.168-.551l4.629-6.942L.168 3.078A.939.939 0 010 2.528c0-.548.45-.997 1-.997h2.996c.352 0 .649.18.828.45L9.82 9.472c.11.148.172.347.172.55zm0 0"/><path d="M19.98 10.023c0 .2-.058.399-.168.547l-4.996 7.492a.987.987 0 01-.828.454h-3c-.547 0-.996-.453-.996-1 0-.2.059-.403.168-.551l4.625-6.942-4.625-6.945a.939.939 0 01-.168-.55 1 1 0 01.996-.997h3c.348 0 .649.18.828.45l4.996 7.492c.11.148.168.347.168.55zm0 0"/></g></svg></button></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=Breadcrumbs><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label="Home page" class=breadcrumbs__link href=/hermes-on-aws-guide/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><span class=breadcrumbs__link>Part V — Infrastructure</span><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>Chapter 32: Secrets Management</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Chapter 32: Secrets Management</h1></header>
+<blockquote>
+<p>Secrets are not data.</p>
+<p>Secrets are a control boundary.</p>
+</blockquote>
+<hr/>
+<p><a class="" href=/hermes-on-aws-guide/part-iv-kubernetes/27-configuration-configmaps-secrets>Chapter 27</a> introduced Kubernetes Secrets. <a class="" href=/hermes-on-aws-guide/part-v-infrastructure/31-github-actions>Chapter 31</a> introduced a <strong>privileged automated actor</strong> that mutates infrastructure with AWS credentials in GitHub Secrets.</p>
+<p>You now have:</p>
+<ul>
+<li class="">GitHub Secrets (CI layer)</li>
+<li class="">Terraform variables (infrastructure layer)</li>
+<li class="">Kubernetes Secrets (runtime layer)</li>
+<li class="">Environment variables (application layer)</li>
+</ul>
+<p>That is <strong>four trust boundaries with no central authority</strong>. This chapter fixes that for production Hermes.</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Before:  secrets scattered → manual rotation → unknown blast radius</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">After:   AWS Secrets Manager → sync → Kubernetes → Pods (materialized at runtime)</span><br/></div></code></pre></div></div>
+<p>No new mental model—this is <strong>State Layers</strong> applied to credentials: external source of truth, cluster materializes temporarily, workloads consume via refs.</p>
+<div class="theme-admonition theme-admonition-note admonition_xJq3 alert alert--secondary"><div class=admonitionHeading_Gvgb><span class=admonitionIcon_Rf37><svg viewBox="0 0 14 16"><path fill-rule=evenodd d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"/></svg></span>Why this matters for Hermes</div><div class=admonitionContent_BuS1><p>Hermes needs model provider keys, tool API credentials, and database passwords. Those cannot live in Git, Helm values, or base64 YAML forever. Automated CI (<a class="" href=/hermes-on-aws-guide/part-v-infrastructure/31-github-actions>Chapter 31</a>) makes credential leakage more dangerous—not less. External secret management is how the platform stays secure while evolving through merges.</div></div>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=learning-objectives>Learning Objectives<a href=#learning-objectives class=hash-link aria-label="Direct link to Learning Objectives" title="Direct link to Learning Objectives" translate=no>​</a></h2>
+<p>After completing this chapter, you will be able to:</p>
+<ul class="contains-task-list containsTaskList_mC6p">
+<li class=task-list-item><input type=checkbox disabled/> Explain why Kubernetes Secrets alone are insufficient for production</li>
+<li class=task-list-item><input type=checkbox disabled/> Distinguish infrastructure secrets (CI/Terraform) from runtime secrets (Hermes workloads)</li>
+<li class=task-list-item><input type=checkbox disabled/> Store secrets in AWS Secrets Manager and scope IAM read access</li>
+<li class=task-list-item><input type=checkbox disabled/> Install External Secrets Operator (ESO) and sync into the cluster</li>
+<li class=task-list-item><input type=checkbox disabled/> Inject synced secrets into Pods without committing values to Git</li>
+<li class=task-list-item><input type=checkbox disabled/> Describe rotation, revocation, and leakage failure modes</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=prerequisites>Prerequisites<a href=#prerequisites class=hash-link aria-label="Direct link to Prerequisites" title="Direct link to Prerequisites" translate=no>​</a></h2>
+<ul>
+<li class=""><a class="" href=/hermes-on-aws-guide/part-iv-kubernetes/27-configuration-configmaps-secrets>Chapter 27</a> — ConfigMaps and in-cluster Secrets</li>
+<li class=""><a class="" href=/hermes-on-aws-guide/part-iv-kubernetes/28-kubernetes-security>Chapter 28</a> — RBAC (who can read Secrets)</li>
+<li class=""><a class="" href=/hermes-on-aws-guide/part-v-infrastructure/31-github-actions>Chapter 31</a> — CI credentials in GitHub Secrets</li>
+<li class="">k3s cluster with <code>kubectl</code> access</li>
+<li class="">AWS CLI profile <code>hermes</code> (<a class="" href=/hermes-on-aws-guide/part-ii-aws/07-provisioning-aws-account>Chapter 7</a>)</li>
+<li class="">Helm (<a class="" href=/hermes-on-aws-guide/part-iv-kubernetes/26-helm>Chapter 26</a>)</li>
+</ul>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token builtin class-name">export</span><span class="token plain"> </span><span class="token assign-left variable" style=color:#36acaa>KUBECONFIG</span><span class="token operator" style=color:#393A34>=~</span><span class="token plain">/.kube/hermes-k3s.yaml</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token builtin class-name">export</span><span class="token plain"> </span><span class="token assign-left variable" style=color:#36acaa>AWS_PROFILE</span><span class="token operator" style=color:#393A34>=</span><span class="token plain">hermes</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">kubectl get nodes</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">helm version</span><br/></div></code></pre></div></div>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=estimated-time>Estimated Time<a href=#estimated-time class=hash-link aria-label="Direct link to Estimated Time" title="Direct link to Estimated Time" translate=no>​</a></h2>
+<p><strong>90 minutes</strong> — 30 minutes reading, 60 minutes AWS + ESO lab.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=background>Background<a href=#background class=hash-link aria-label="Direct link to Background" title="Direct link to Background" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=the-problem>The Problem<a href=#the-problem class=hash-link aria-label="Direct link to The Problem" title="Direct link to The Problem" translate=no>​</a></h3>
+<p>At this point:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Layer<th>Credential example<th>Risk<tbody><tr><td>GitHub Actions<td><code>AWS_ACCESS_KEY_ID</code> for Terraform<td>Long-lived CI keys; fork PR exposure<tr><td>Terraform<td>Variables for DB passwords (future)<td>State file may capture values<tr><td>Kubernetes<td><code>app-secret</code> from Ch 27<td>Base64 ≠ encryption; etcd exposure<tr><td>Application<td><code>env: API_KEY</code><td>Visible to anyone with Pod exec</table>
+<p><strong>Automated infrastructure without centralized secret authority does not scale.</strong></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=why-kubernetes-secrets-are-not-enough>Why Kubernetes Secrets Are Not Enough<a href=#why-kubernetes-secrets-are-not-enough class=hash-link aria-label="Direct link to Why Kubernetes Secrets Are Not Enough" title="Direct link to Why Kubernetes Secrets Are Not Enough" translate=no>​</a></h3>
+<p>Kubernetes Secrets (<a class="" href=/hermes-on-aws-guide/part-iv-kubernetes/27-configuration-configmaps-secrets>Chapter 27</a>):</p>
+<ul>
+<li class="">Are <strong>base64-encoded</strong>, not encrypted by default in etcd</li>
+<li class="">Are readable by any identity with RBAC <code>get/list secrets</code></li>
+<li class="">Are <strong>static</strong> unless you manually update and restart Pods</li>
+<li class="">Have <strong>limited audit trail</strong> compared to cloud secret stores</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Requirement<th>In-cluster Secret only<th>External store<tbody><tr><td>Rotation<td>Manual edit + restart<td>Automated / scheduled<tr><td>Revocation<td>Delete object; stale Pods may retain<td>Central disable + sync<tr><td>Auditability<td>API audit logs<td>CloudTrail + SM access logs<tr><td>CI vs runtime separation<td>Weak<td>Strong domain split</table>
+<p>They remain valid for <strong>lab demos</strong> and <strong>sync targets</strong>—not as the system of record.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=credential-domains>Credential Domains<a href=#credential-domains class=hash-link aria-label="Direct link to Credential Domains" title="Direct link to Credential Domains" translate=no>​</a></h3>
+<p>Separate secrets by <strong>who consumes them</strong>:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Infrastructure secrets          Runtime secrets</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">─────────────────────          ───────────────</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">GitHub Secrets (Terraform CI)  AWS Secrets Manager → Hermes Pods</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Terraform Cloud / SSM (future)  Per-service scoped IAM</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Operator laptop (hermes-admin)  ExternalSecret sync layer</span><br/></div></code></pre></div></div>
+<p>Rule:</p>
+<blockquote>
+<p><strong>Infrastructure secrets mutate AWS. Runtime secrets mutate application behavior. Never use the same key for both.</strong></p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=production-pattern-external-secret-authority>Production Pattern: External Secret Authority<a href=#production-pattern-external-secret-authority class=hash-link aria-label="Direct link to Production Pattern: External Secret Authority" title="Direct link to Production Pattern: External Secret Authority" translate=no>​</a></h3>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">AWS Secrets Manager (source of truth)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">External Secrets Operator (sync controller)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Kubernetes Secret (materialized cache)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Pod / Deployment (env or volume mount)</span><br/></div></code></pre></div></div>
+<p>Secrets are <strong>federated, pulled, and materialized at runtime</strong>—not copied into Git.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=store-options>Store Options<a href=#store-options class=hash-link aria-label="Direct link to Store Options" title="Direct link to Store Options" translate=no>​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>System<th>Hermes use case<tbody><tr><td><strong>AWS Secrets Manager</strong><td>Baseline for this book — rotation, IAM, CloudTrail<tr><td>SSM Parameter Store<td>Simple key/value; cheaper; less rotation tooling<tr><td>HashiCorp Vault<td>Full control, dynamic secrets — ops overhead</table>
+<p>This chapter uses <strong>AWS Secrets Manager</strong> on <code>us-west-2</code>.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=architecture>Architecture<a href=#architecture class=hash-link aria-label="Direct link to Architecture" title="Direct link to Architecture" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=extended-stack>Extended Stack<a href=#extended-stack class=hash-link aria-label="Direct link to Extended Stack" title="Direct link to Extended Stack" translate=no>​</a></h3>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">GitHub Actions</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Terraform</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">AWS (compute + Secrets Manager + IAM)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">External Secrets Operator (on k3s)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Kubernetes Secret (synced)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Hermes workloads</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=k3s-on-ec2-auth-reality>k3s-on-EC2 Auth Reality<a href=#k3s-on-ec2-auth-reality class=hash-link aria-label="Direct link to k3s-on-EC2 Auth Reality" title="Direct link to k3s-on-EC2 Auth Reality" translate=no>​</a></h3>
+<p>On EKS, <strong>IRSA</strong> (IAM Roles for Service Accounts) lets Pods assume IAM roles. On <strong>single-node k3s on EC2</strong>, Pods do <strong>not</strong> automatically inherit the EC2 instance profile.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Environment<th>ESO auth pattern<tbody><tr><td><strong>This book (k3s lab)</strong><td>Dedicated <code>hermes-eso</code> IAM user → credentials in K8s Secret → ESO <code>secretRef</code><tr><td><strong>EKS production</strong><td>IRSA via <code>serviceAccountRef</code> — no long-lived keys in cluster<tr><td><strong>Future controlplane module</strong><td>Instance profile for node-level agents; ESO still prefers IRSA or scoped user</table>
+<p>The lab path is intentional: you learn <strong>least privilege</strong> and <strong>scope</strong> before magic identity wiring hides the boundary.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=security-model-shift>Security Model Shift<a href=#security-model-shift class=hash-link aria-label="Direct link to Security Model Shift" title="Direct link to Security Model Shift" translate=no>​</a></h3>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Before:  Secrets live inside Kubernetes (and GitHub, and Terraform state)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">After:   Secrets live in AWS; cluster materializes them temporarily</span><br/></div></code></pre></div></div>
+<p>CI credentials (<a class="" href=/hermes-on-aws-guide/part-v-infrastructure/31-github-actions>Chapter 31</a>) remain in GitHub Secrets for now—<a href=#step-8--harden-ci-credentials-preview class="">Chapter 32 hardening note</a>: prefer <strong>OIDC federation</strong> over long-lived access keys when Terraform apply runs in production.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=walkthrough>Walkthrough<a href=#walkthrough class=hash-link aria-label="Direct link to Walkthrough" title="Direct link to Walkthrough" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-1--create-secret-in-aws-secrets-manager>Step 1 — Create Secret in AWS Secrets Manager<a href=#step-1--create-secret-in-aws-secrets-manager class=hash-link aria-label="Direct link to Step 1 — Create Secret in AWS Secrets Manager" title="Direct link to Step 1 — Create Secret in AWS Secrets Manager" translate=no>​</a></h3>
+<p>Use the repo script or CLI directly:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token function" style=color:#d73a49>chmod</span><span class="token plain"> +x infrastructure/aws/cli/ch32-create-hermes-api-secret.sh</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token assign-left variable" style=color:#36acaa>SECRET_VALUE</span><span class="token operator" style=color:#393A34>=</span><span class="token string" style=color:#e3116c>"your-lab-key-here"</span><span class="token plain"> </span><span class="token assign-left variable" style=color:#36acaa>AWS_PROFILE</span><span class="token operator" style=color:#393A34>=</span><span class="token plain">hermes </span><span class="token punctuation" style=color:#393A34>\</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  ./infrastructure/aws/cli/ch32-create-hermes-api-secret.sh</span><br/></div></code></pre></div></div>
+<p>Or manually:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">aws secretsmanager create-secret </span><span class="token punctuation" style=color:#393A34>\</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token parameter variable" style=color:#36acaa>--name</span><span class="token plain"> hermes/api-key </span><span class="token punctuation" style=color:#393A34>\</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  --secret-string </span><span class="token string" style=color:#e3116c>"your-lab-key-here"</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>\</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token parameter variable" style=color:#36acaa>--region</span><span class="token plain"> us-west-2</span><br/></div></code></pre></div></div>
+<p>Verify:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">aws secretsmanager describe-secret --secret-id hermes/api-key </span><span class="token parameter variable" style=color:#36acaa>--region</span><span class="token plain"> us-west-2</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-2--create-scoped-iam-identity-for-eso>Step 2 — Create Scoped IAM Identity for ESO<a href=#step-2--create-scoped-iam-identity-for-eso class=hash-link aria-label="Direct link to Step 2 — Create Scoped IAM Identity for ESO" title="Direct link to Step 2 — Create Scoped IAM Identity for ESO" translate=no>​</a></h3>
+<ol>
+<li class="">IAM → Users → <strong>Create user</strong> → <code>hermes-eso</code></li>
+<li class="">Attach inline policy from <a href=https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/aws/terraform/modules/secrets/iam-eso-read-policy.json target=_blank rel="noopener noreferrer" class=""><code>infrastructure/aws/terraform/modules/secrets/iam-eso-read-policy.json</code></a>:</li>
+</ol>
+<div class="language-json codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-json codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token property" style=color:#36acaa>"Version"</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"2012-10-17"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token property" style=color:#36acaa>"Statement"</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>[</span><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token property" style=color:#36acaa>"Effect"</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"Allow"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token property" style=color:#36acaa>"Action"</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>[</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      </span><span class="token string" style=color:#e3116c>"secretsmanager:GetSecretValue"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      </span><span class="token string" style=color:#e3116c>"secretsmanager:DescribeSecret"</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token punctuation" style=color:#393A34>]</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    </span><span class="token property" style=color:#36acaa>"Resource"</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"arn:aws:secretsmanager:*:*:secret:hermes/*"</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token punctuation" style=color:#393A34>}</span><span class="token punctuation" style=color:#393A34>]</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><br/></div></code></pre></div></div>
+<ol start=3>
+<li class="">Create access keys for <strong>programmatic use only</strong></li>
+<li class="">Store keys in your password manager—<strong>not</strong> in Git</li>
+</ol>
+<p>Do <strong>not</strong> reuse <code>hermes-admin</code> or <code>hermes-terraform-ci</code> keys.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-3--install-external-secrets-operator>Step 3 — Install External Secrets Operator<a href=#step-3--install-external-secrets-operator class=hash-link aria-label="Direct link to Step 3 — Install External Secrets Operator" title="Direct link to Step 3 — Install External Secrets Operator" translate=no>​</a></h3>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">helm repo </span><span class="token function" style=color:#d73a49>add</span><span class="token plain"> external-secrets https://charts.external-secrets.io</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">helm repo update</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">helm upgrade </span><span class="token parameter variable" style=color:#36acaa>--install</span><span class="token plain"> external-secrets external-secrets/external-secrets </span><span class="token punctuation" style=color:#393A34>\</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token parameter variable" style=color:#36acaa>-n</span><span class="token plain"> external-secrets </span><span class="token punctuation" style=color:#393A34>\</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  --create-namespace </span><span class="token punctuation" style=color:#393A34>\</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token parameter variable" style=color:#36acaa>--set</span><span class="token plain"> </span><span class="token assign-left variable" style=color:#36acaa>installCRDs</span><span class="token operator" style=color:#393A34>=</span><span class="token plain">true</span><br/></div></code></pre></div></div>
+<p>Verify:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">kubectl get pods </span><span class="token parameter variable" style=color:#36acaa>-n</span><span class="token plain"> external-secrets</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">kubectl get crd externalsecrets.external-secrets.io</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-4--provide-eso-aws-credentials-lab>Step 4 — Provide ESO AWS Credentials (Lab)<a href=#step-4--provide-eso-aws-credentials-lab class=hash-link aria-label="Direct link to Step 4 — Provide ESO AWS Credentials (Lab)" title="Direct link to Step 4 — Provide ESO AWS Credentials (Lab)" translate=no>​</a></h3>
+<p>Copy the example and fill locally:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token function" style=color:#d73a49>cp</span><span class="token plain"> infrastructure/kubernetes/ch32-eso-aws-credentials-secret.example.yaml </span><span class="token punctuation" style=color:#393A34>\</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">   ~/hermes-platform/local/ch31-eso-aws-credentials-secret.yaml</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic># Edit placeholders — file stays outside repo</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">kubectl apply </span><span class="token parameter variable" style=color:#36acaa>-f</span><span class="token plain"> ~/hermes-platform/local/ch31-eso-aws-credentials-secret.yaml</span><br/></div></code></pre></div></div>
+<p>The example template lives at <code>infrastructure/kubernetes/ch32-eso-aws-credentials-secret.example.yaml</code>.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-5--clustersecretstore>Step 5 — ClusterSecretStore<a href=#step-5--clustersecretstore class=hash-link aria-label="Direct link to Step 5 — ClusterSecretStore" title="Direct link to Step 5 — ClusterSecretStore" translate=no>​</a></h3>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">kubectl apply </span><span class="token parameter variable" style=color:#36acaa>-f</span><span class="token plain"> infrastructure/kubernetes/ch32-cluster-secret-store.yaml</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">kubectl get clustersecretstore aws-secrets-manager</span><br/></div></code></pre></div></div>
+<p>Status should become <strong>Valid</strong> once credentials and IAM policy are correct.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-6--externalsecret-sync>Step 6 — ExternalSecret Sync<a href=#step-6--externalsecret-sync class=hash-link aria-label="Direct link to Step 6 — ExternalSecret Sync" title="Direct link to Step 6 — ExternalSecret Sync" translate=no>​</a></h3>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">kubectl apply </span><span class="token parameter variable" style=color:#36acaa>-f</span><span class="token plain"> infrastructure/kubernetes/ch32-external-secret-hermes-api.yaml</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">kubectl get externalsecret hermes-api-secret</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">kubectl get secret hermes-api-secret</span><br/></div></code></pre></div></div>
+<p>ESO creates/updates the Kubernetes Secret <code>hermes-api-secret</code> from <code>hermes/api-key</code> in AWS.</p>
+<p>Inspect sync status:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">kubectl describe externalsecret hermes-api-secret</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-7--consume-in-a-pod>Step 7 — Consume in a Pod<a href=#step-7--consume-in-a-pod class=hash-link aria-label="Direct link to Step 7 — Consume in a Pod" title="Direct link to Step 7 — Consume in a Pod" translate=no>​</a></h3>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">kubectl apply </span><span class="token parameter variable" style=color:#36acaa>-f</span><span class="token plain"> infrastructure/kubernetes/ch32-external-secret-demo-pod.yaml</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">kubectl logs external-secret-demo</span><br/></div></code></pre></div></div>
+<p>Expected: non-zero API_KEY length; <strong>value not printed</strong> in logs.</p>
+<p>Compare to <a class="" href=/hermes-on-aws-guide/part-iv-kubernetes/27-configuration-configmaps-secrets>Chapter 27</a> <code>app-secret</code>—same injection pattern, different <strong>source of truth</strong>.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-8--harden-ci-credentials-preview>Step 8 — Harden CI Credentials (Preview)<a href=#step-8--harden-ci-credentials-preview class=hash-link aria-label="Direct link to Step 8 — Harden CI Credentials (Preview)" title="Direct link to Step 8 — Harden CI Credentials (Preview)" translate=no>​</a></h3>
+<p><a class="" href=/hermes-on-aws-guide/part-v-infrastructure/31-github-actions>Chapter 31</a> stores <code>AWS_ACCESS_KEY_ID</code> in GitHub Secrets. Production hardening:</p>
+<ul>
+<li class="">Replace long-lived keys with <strong>GitHub OIDC → AWS IAM role</strong> (no static secret in GitHub)</li>
+<li class="">Scope Terraform role to infrastructure APIs only—not <code>secretsmanager:*</code></li>
+<li class="">Keep <strong>runtime</strong> secret reads on <code>hermes-eso</code>, not the CI role</li>
+</ul>
+<p>Full OIDC wiring lands with the controlplane Terraform module; the <strong>domain separation</strong> is the lesson here.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-9--rotation-workflow-conceptual>Step 9 — Rotation Workflow (Conceptual)<a href=#step-9--rotation-workflow-conceptual class=hash-link aria-label="Direct link to Step 9 — Rotation Workflow (Conceptual)" title="Direct link to Step 9 — Rotation Workflow (Conceptual)" translate=no>​</a></h3>
+<ol>
+<li class="">Update value in Secrets Manager (<code>put-secret-value</code>)</li>
+<li class="">ESO refreshes on <code>refreshInterval</code> (default 1h in manifest—or trigger reconcile)</li>
+<li class="">Restart Pods that do not reload secrets on change (most Deployments need rollout)</li>
+</ol>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">kubectl rollout restart deployment/hermes-api   </span><span class="token comment" style=color:#999988;font-style:italic># future Hermes deployment</span><br/></div></code></pre></div></div>
+<p>Revocation: disable secret in AWS or delete IAM policy attachment—sync fails closed; Pods retain last materialized value until restarted and secret removed.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=hands-on-lab>Hands-on Lab<a href=#hands-on-lab class=hash-link aria-label="Direct link to Hands-on Lab" title="Direct link to Hands-on Lab" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=lab-31-external-secret-sync>Lab 31: External Secret Sync<a href=#lab-31-external-secret-sync class=hash-link aria-label="Direct link to Lab 31: External Secret Sync" title="Direct link to Lab 31: External Secret Sync" translate=no>​</a></h3>
+<p><strong>Estimated Time:</strong> 60 minutes</p>
+<p><strong>Goal:</strong> <code>hermes/api-key</code> in AWS → ESO → Kubernetes Secret → Pod env.</p>
+<p><strong>Steps:</strong></p>
+<ol>
+<li class="">Create <code>hermes/api-key</code> in Secrets Manager</li>
+<li class="">Create <code>hermes-eso</code> IAM user with read-only policy on <code>hermes/*</code></li>
+<li class="">Install External Secrets Operator via Helm</li>
+<li class="">Apply local credentials Secret (from example template)</li>
+<li class="">Apply ClusterSecretStore + ExternalSecret</li>
+<li class="">Verify <code>kubectl get secret hermes-api-secret</code></li>
+<li class="">Run <code>external-secret-demo</code> Pod and confirm injection</li>
+<li class="">Rotate secret in AWS; wait for refresh; confirm Pod still works after rollout</li>
+</ol>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=verification>Verification<a href=#verification class=hash-link aria-label="Direct link to Verification" title="Direct link to Verification" translate=no>​</a></h2>
+<ul class="contains-task-list containsTaskList_mC6p">
+<li class=task-list-item><input type=checkbox disabled/> Secret exists in AWS Secrets Manager (<code>hermes/api-key</code>)</li>
+<li class=task-list-item><input type=checkbox disabled/> <code>hermes-eso</code> IAM policy scoped to <code>hermes/*</code> only</li>
+<li class=task-list-item><input type=checkbox disabled/> ESO pods running in <code>external-secrets</code> namespace</li>
+<li class=task-list-item><input type=checkbox disabled/> <code>ClusterSecretStore</code> status Valid</li>
+<li class=task-list-item><input type=checkbox disabled/> <code>ExternalSecret</code> synced; K8s Secret created</li>
+<li class=task-list-item><input type=checkbox disabled/> Demo Pod receives <code>API_KEY</code> without value in Git</li>
+<li class=task-list-item><input type=checkbox disabled/> You can explain infrastructure vs runtime credential domains</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=troubleshooting>Troubleshooting<a href=#troubleshooting class=hash-link aria-label="Direct link to Troubleshooting" title="Direct link to Troubleshooting" translate=no>​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Problem<th>Cause<th>Fix<tbody><tr><td>ClusterSecretStore Invalid<td>Wrong AWS creds or region<td>Check <code>eso-aws-credentials</code>; region <code>us-west-2</code><tr><td>ExternalSecret SecretSyncedError<td>IAM deny or missing SM secret<td>Verify policy; <code>aws secretsmanager get-secret-value</code><tr><td>Empty K8s Secret<td>Wrong <code>remoteRef.key</code><td>Must match SM name <code>hermes/api-key</code><tr><td>Pod still has old value<td>ESO refreshed; Pod not restarted<td><code>kubectl rollout restart</code> or delete Pod<tr><td>ESO cannot reach AWS<td>Network egress blocked<td>SG must allow HTTPS outbound (default on Ch 8 VPC)</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=failure-modes>Failure Modes<a href=#failure-modes class=hash-link aria-label="Direct link to Failure Modes" title="Direct link to Failure Modes" translate=no>​</a></h3>
+<p><strong>Secret drift</strong> — Manual <code>kubectl edit secret</code> while ESO owns it. ESO reconciles back; avoid editing synced Secrets by hand.</p>
+<p><strong>IAM misconfiguration</strong> — <code>hermes-eso</code> with <code>Resource: "*"</code> or admin policy. Scope to <code>hermes/*</code>.</p>
+<p><strong>Cache staleness</strong> — <code>refreshInterval: 1h</code> means up to one hour before rotation visible. Lower for labs; use operator-triggered reconcile for emergencies.</p>
+<p><strong>Overexposure</strong> — One <code>hermes/api-key</code> shared by every service. Split secrets per integration (<code>hermes/openweather</code>, <code>hermes/postgres</code>).</p>
+<p><strong>CI leakage</strong> — Terraform logs or fork PRs exposing GitHub Secrets. OIDC + environment protection (<a class="" href=/hermes-on-aws-guide/part-v-infrastructure/31-github-actions>Chapter 31</a>).</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=review-questions>Review Questions<a href=#review-questions class=hash-link aria-label="Direct link to Review Questions" title="Direct link to Review Questions" translate=no>​</a></h2>
+<ol>
+<li class="">Why are Kubernetes Secrets insufficient as the system of record?</li>
+<li class="">What is the difference between infrastructure secrets and runtime secrets?</li>
+<li class="">Why does k3s-on-EC2 use <code>secretRef</code> auth for ESO in this lab?</li>
+<li class="">What happens if you rotate a secret in AWS but never restart Pods?</li>
+<li class="">Why should CI credentials differ from ESO credentials?</li>
+</ol>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=key-takeaways>Key Takeaways<a href=#key-takeaways class=hash-link aria-label="Direct link to Key Takeaways" title="Direct link to Key Takeaways" translate=no>​</a></h2>
+<ul>
+<li class=""><strong>Secrets are a control boundary</strong>, not configuration data</li>
+<li class=""><strong>Kubernetes Secrets</strong> are sync targets in production—not the vault</li>
+<li class=""><strong>AWS Secrets Manager</strong> is the baseline external authority for Hermes</li>
+<li class=""><strong>External Secrets Operator</strong> federates cloud secrets into the cluster</li>
+<li class=""><strong>IAM scoping</strong> (<code>hermes/*</code>) is part of application design</li>
+<li class=""><strong>Automated CI</strong> raises the cost of credential mistakes—centralize and separate domains</li>
+<li class="">Hermes tool keys and provider credentials belong in this layer before Part VI deploy</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=glossary-additions>Glossary Additions<a href=#glossary-additions class=hash-link aria-label="Direct link to Glossary Additions" title="Direct link to Glossary Additions" translate=no>​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Term<th>Definition<tbody><tr><td><strong>Secrets Manager</strong><td>AWS service for storing and rotating secrets with IAM and audit.<tr><td><strong>External Secrets Operator</strong><td>Kubernetes controller syncing external stores into cluster Secrets.<tr><td><strong>ExternalSecret</strong><td>CRD declaring which remote secret maps to which K8s Secret.<tr><td><strong>ClusterSecretStore</strong><td>Cluster-scoped config for ESO provider auth (AWS SM).<tr><td><strong>Materialization</strong><td>Creating/updating in-cluster Secret from external source at runtime.</table>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=further-reading>Further Reading<a href=#further-reading class=hash-link aria-label="Direct link to Further Reading" title="Direct link to Further Reading" translate=no>​</a></h2>
+<ul>
+<li class=""><a href=https://docs.aws.amazon.com/secretsmanager/ target=_blank rel="noopener noreferrer" class="">AWS Secrets Manager</a></li>
+<li class=""><a href=https://external-secrets.io/latest/provider/aws-secrets-manager/ target=_blank rel="noopener noreferrer" class="">External Secrets Operator — AWS</a></li>
+<li class=""><a class="" href=/hermes-on-aws-guide/part-iv-kubernetes/27-configuration-configmaps-secrets>Chapter 27: Configuration</a></li>
+<li class=""><a class="" href=/hermes-on-aws-guide/part-v-infrastructure/31-github-actions>Chapter 31: GitHub Actions</a></li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=hermes-platform-status>Hermes Platform Status<a href=#hermes-platform-status class=hash-link aria-label="Direct link to Hermes Platform Status" title="Direct link to Hermes Platform Status" translate=no>​</a></h2>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">───────────────────────────────────────────────</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        HERMES PLATFORM STATUS</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">AWS Account              ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Terraform + CI           ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Kubernetes platform      ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">AWS Secrets Manager      ✓ (lab)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">External Secrets sync    ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">CI OIDC / remote state   ◐ (hardening)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Hermes application       ✗</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">───────────────────────────────────────────────</span><br/></div></code></pre></div></div>
+<p>Part V: codify → automate → <strong>secure</strong>.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=whats-next>What's Next<a href=#whats-next class=hash-link aria-label="Direct link to What's Next" title="Direct link to What's Next" translate=no>​</a></h2>
+<p><a class="" href=/hermes-on-aws-guide/part-v-infrastructure/33-monitoring>Chapter 33: Monitoring</a> — Prometheus, Grafana, and metrics so the platform can explain itself under load and failure.</p>
+<hr/>
+<p><a class="" href=/hermes-on-aws-guide/part-v-infrastructure/31-github-actions>← Chapter 31: GitHub Actions</a> | <a class="" href=/hermes-on-aws-guide/part-v-infrastructure/33-monitoring>Next: Chapter 33 — Monitoring →</a></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/68thandMaine/hermes-on-aws-guide/tree/main/docs/part-v-infrastructure/32-secrets-management.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href=/hermes-on-aws-guide/part-v-infrastructure/31-github-actions><div class=pagination-nav__sublabel>Previous</div><div class=pagination-nav__label>Chapter 31: GitHub Actions</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/hermes-on-aws-guide/part-v-infrastructure/33-monitoring><div class=pagination-nav__sublabel>Next</div><div class=pagination-nav__label>Chapter 33: Monitoring</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#learning-objectives class="table-of-contents__link toc-highlight">Learning Objectives</a><li><a href=#prerequisites class="table-of-contents__link toc-highlight">Prerequisites</a><li><a href=#estimated-time class="table-of-contents__link toc-highlight">Estimated Time</a><li><a href=#background class="table-of-contents__link toc-highlight">Background</a><ul><li><a href=#the-problem class="table-of-contents__link toc-highlight">The Problem</a><li><a href=#why-kubernetes-secrets-are-not-enough class="table-of-contents__link toc-highlight">Why Kubernetes Secrets Are Not Enough</a><li><a href=#credential-domains class="table-of-contents__link toc-highlight">Credential Domains</a><li><a href=#production-pattern-external-secret-authority class="table-of-contents__link toc-highlight">Production Pattern: External Secret Authority</a><li><a href=#store-options class="table-of-contents__link toc-highlight">Store Options</a></ul><li><a href=#architecture class="table-of-contents__link toc-highlight">Architecture</a><ul><li><a href=#extended-stack class="table-of-contents__link toc-highlight">Extended Stack</a><li><a href=#k3s-on-ec2-auth-reality class="table-of-contents__link toc-highlight">k3s-on-EC2 Auth Reality</a><li><a href=#security-model-shift class="table-of-contents__link toc-highlight">Security Model Shift</a></ul><li><a href=#walkthrough class="table-of-contents__link toc-highlight">Walkthrough</a><ul><li><a href=#step-1--create-secret-in-aws-secrets-manager class="table-of-contents__link toc-highlight">Step 1 — Create Secret in AWS Secrets Manager</a><li><a href=#step-2--create-scoped-iam-identity-for-eso class="table-of-contents__link toc-highlight">Step 2 — Create Scoped IAM Identity for ESO</a><li><a href=#step-3--install-external-secrets-operator class="table-of-contents__link toc-highlight">Step 3 — Install External Secrets Operator</a><li><a href=#step-4--provide-eso-aws-credentials-lab class="table-of-contents__link toc-highlight">Step 4 — Provide ESO AWS Credentials (Lab)</a><li><a href=#step-5--clustersecretstore class="table-of-contents__link toc-highlight">Step 5 — ClusterSecretStore</a><li><a href=#step-6--externalsecret-sync class="table-of-contents__link toc-highlight">Step 6 — ExternalSecret Sync</a><li><a href=#step-7--consume-in-a-pod class="table-of-contents__link toc-highlight">Step 7 — Consume in a Pod</a><li><a href=#step-8--harden-ci-credentials-preview class="table-of-contents__link toc-highlight">Step 8 — Harden CI Credentials (Preview)</a><li><a href=#step-9--rotation-workflow-conceptual class="table-of-contents__link toc-highlight">Step 9 — Rotation Workflow (Conceptual)</a></ul><li><a href=#hands-on-lab class="table-of-contents__link toc-highlight">Hands-on Lab</a><ul><li><a href=#lab-31-external-secret-sync class="table-of-contents__link toc-highlight">Lab 31: External Secret Sync</a></ul><li><a href=#verification class="table-of-contents__link toc-highlight">Verification</a><li><a href=#troubleshooting class="table-of-contents__link toc-highlight">Troubleshooting</a><ul><li><a href=#failure-modes class="table-of-contents__link toc-highlight">Failure Modes</a></ul><li><a href=#review-questions class="table-of-contents__link toc-highlight">Review Questions</a><li><a href=#key-takeaways class="table-of-contents__link toc-highlight">Key Takeaways</a><li><a href=#glossary-additions class="table-of-contents__link toc-highlight">Glossary Additions</a><li><a href=#further-reading class="table-of-contents__link toc-highlight">Further Reading</a><li><a href=#hermes-platform-status class="table-of-contents__link toc-highlight">Hermes Platform Status</a><li><a href=#whats-next class="table-of-contents__link toc-highlight">What's Next</a></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>Book</div><ul class="footer__items clean-list"><li class=footer__item><a class=footer__link-item href=/hermes-on-aws-guide/>Table of Contents</a><li class=footer__item><a href=https://github.com/68thandMaine/hermes-on-aws-guide/blob/main/CONTRIBUTING.md target=_blank rel="noopener noreferrer" class=footer__link-item>Contributing<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>Author</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/crudnicky target=_blank rel="noopener noreferrer" class=footer__link-item>Christopher Rudnicky<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 Christopher Rudnicky. MIT License.</div></div></div></footer></div></body>

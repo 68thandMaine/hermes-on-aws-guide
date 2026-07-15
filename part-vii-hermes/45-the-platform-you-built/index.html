@@ -1,0 +1,287 @@
+<!doctype html><html lang=en dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-part-vii-hermes/45-the-platform-you-built" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>Chapter 45: The Platform You Built | Building a Personal AI Cloud</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://68thandMaine.github.io/hermes-on-aws-guide/img/social-card.svg /><meta data-rh=true name=twitter:image content=https://68thandMaine.github.io/hermes-on-aws-guide/img/social-card.svg /><meta data-rh=true property=og:url content=https://68thandMaine.github.io/hermes-on-aws-guide/part-vii-hermes/45-the-platform-you-built /><meta data-rh=true property=og:locale content=en /><meta data-rh=true name=docusaurus_locale content=en /><meta data-rh=true name=docsearch:language content=en /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="Chapter 45: The Platform You Built | Building a Personal AI Cloud"/><meta data-rh=true name=description content="The retrospective capstone — one coherent idea expressed at every scale."/><meta data-rh=true property=og:description content="The retrospective capstone — one coherent idea expressed at every scale."/><link data-rh=true rel=icon href=/hermes-on-aws-guide/img/favicon.ico /><link data-rh=true rel=canonical href=https://68thandMaine.github.io/hermes-on-aws-guide/part-vii-hermes/45-the-platform-you-built /><link data-rh=true rel=alternate href=https://68thandMaine.github.io/hermes-on-aws-guide/part-vii-hermes/45-the-platform-you-built hreflang=en /><link data-rh=true rel=alternate href=https://68thandMaine.github.io/hermes-on-aws-guide/part-vii-hermes/45-the-platform-you-built hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://68thandMaine.github.io/hermes-on-aws-guide/part-vii-hermes/45-the-platform-you-built","name":"Chapter 45: The Platform You Built","position":1}]}</script><link rel=stylesheet href=/hermes-on-aws-guide/assets/css/styles.56f47aec.css /><script src=/hermes-on-aws-guide/assets/js/runtime~main.99235806.js defer></script><script src=/hermes-on-aws-guide/assets/js/main.3557c68e.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-ce0")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id=__docusaurus><link rel=preload as=image href=/hermes-on-aws-guide/img/logo.svg /><div role=region aria-label="Skip to main content"><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>Skip to main content</a></div><nav aria-label=Main class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/hermes-on-aws-guide/><div class=navbar__logo><img src=/hermes-on-aws-guide/img/logo.svg alt="Personal AI Cloud" class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/hermes-on-aws-guide/img/logo.svg alt="Personal AI Cloud" class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">Personal AI Cloud</b></a><a aria-current=page class="navbar__item navbar__link guides-top-header navbar__link--active" href=/hermes-on-aws-guide/>Guides</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/68thandMaine/hermes-on-aws-guide target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=Search aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/hermes-on-aws-guide/preface/00-preface><span title=Preface class=linkLabel_WmDU>Preface</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=true href=/hermes-on-aws-guide/part-i-foundations/01-introduction><span title="Part I — Foundations" class=categoryLinkLabel_W154>Part I — Foundations</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/01-introduction><span title="Chapter 1: Introduction" class=linkLabel_WmDU>Chapter 1: Introduction</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/02-how-computers-work><span title="Chapter 2: How Computers Actually Work" class=linkLabel_WmDU>Chapter 2: How Computers Actually Work</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/03-linux><span title="Chapter 3: Linux — The Operating System of the Cloud" class=linkLabel_WmDU>Chapter 3: Linux — The Operating System of the Cloud</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/04-networking><span title="Chapter 4: Networking Fundamentals" class=linkLabel_WmDU>Chapter 4: Networking Fundamentals</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/05-virtualization><span title="Chapter 5: Virtualization" class=linkLabel_WmDU>Chapter 5: Virtualization</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/06-designing-the-hermes-platform><span title="Chapter 6: Designing the Hermes Platform" class=linkLabel_WmDU>Chapter 6: Designing the Hermes Platform</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-ii-aws/07-provisioning-aws-account><span title="Part II — AWS & Platform" class=categoryLinkLabel_W154>Part II — AWS & Platform</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-iii-containers/17-docker><span title="Part III — Containers" class=categoryLinkLabel_W154>Part III — Containers</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-iv-kubernetes/20-why-kubernetes-exists><span title="Part IV — Kubernetes" class=categoryLinkLabel_W154>Part IV — Kubernetes</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-v-infrastructure/30-terraform><span title="Part V — Infrastructure" class=categoryLinkLabel_W154>Part V — Infrastructure</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-vi-ai/35-running-hermes><span title="Part VI — AI Infrastructure" class=categoryLinkLabel_W154>Part VI — AI Infrastructure</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role=button aria-expanded=true href=/hermes-on-aws-guide/part-vii-hermes/40-distributed-cognitive-execution><span title="Part VII — Hermes Agent Platform" class=categoryLinkLabel_W154>Part VII — Hermes Agent Platform</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-vii-hermes/40-distributed-cognitive-execution><span title="Chapter 40: Distributed Cognitive Execution" class=linkLabel_WmDU>Chapter 40: Distributed Cognitive Execution</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-vii-hermes/41-operating-hermes-in-production><span title="Chapter 41: Operating Hermes in Production" class=linkLabel_WmDU>Chapter 41: Operating Hermes in Production</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-vii-hermes/42-platform-governance><span title="Chapter 42: Security, Governance, and Trust" class=linkLabel_WmDU>Chapter 42: Security, Governance, and Trust</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-vii-hermes/43-extending-hermes><span title="Chapter 43: Extending Hermes" class=linkLabel_WmDU>Chapter 43: Extending Hermes</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-vii-hermes/44-from-development-to-production><span title="Chapter 44: From Development to Production" class=linkLabel_WmDU>Chapter 44: From Development to Production</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/hermes-on-aws-guide/part-vii-hermes/45-the-platform-you-built><span title="Chapter 45: The Platform You Built" class=linkLabel_WmDU>Chapter 45: The Platform You Built</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/appendices/glossary><span title=Appendices class=categoryLinkLabel_W154>Appendices</span></a></div></ul></nav><button type=button title="Collapse sidebar" aria-label="Collapse sidebar" class="button button--secondary button--outline collapseSidebarButton_PEFL"><svg width=20 height=20 aria-hidden=true class=collapseSidebarButtonIcon_kv0_><g fill=#7a7a7a><path d="M9.992 10.023c0 .2-.062.399-.172.547l-4.996 7.492a.982.982 0 01-.828.454H1c-.55 0-1-.453-1-1 0-.2.059-.403.168-.551l4.629-6.942L.168 3.078A.939.939 0 010 2.528c0-.548.45-.997 1-.997h2.996c.352 0 .649.18.828.45L9.82 9.472c.11.148.172.347.172.55zm0 0"/><path d="M19.98 10.023c0 .2-.058.399-.168.547l-4.996 7.492a.987.987 0 01-.828.454h-3c-.547 0-.996-.453-.996-1 0-.2.059-.403.168-.551l4.625-6.942-4.625-6.945a.939.939 0 01-.168-.55 1 1 0 01.996-.997h3c.348 0 .649.18.828.45l4.996 7.492c.11.148.168.347.168.55zm0 0"/></g></svg></button></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=Breadcrumbs><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label="Home page" class=breadcrumbs__link href=/hermes-on-aws-guide/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><span class=breadcrumbs__link>Part VII — Hermes Agent Platform</span><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>Chapter 45: The Platform You Built</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Chapter 45: The Platform You Built</h1></header>
+<blockquote>
+<p>Every abstraction in this book existed to solve the same problem:</p>
+<p><strong>How do we reliably execute increasingly complex work?</strong></p>
+</blockquote>
+<hr/>
+<div class="theme-admonition theme-admonition-note admonition_xJq3 alert alert--secondary"><div class=admonitionHeading_Gvgb><span class=admonitionIcon_Rf37><svg viewBox="0 0 14 16"><path fill-rule=evenodd d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"/></svg></span>Unlike every other chapter</div><div class=admonitionContent_BuS1><p>No labs. No YAML. No new commands. <a class="" href=/hermes-on-aws-guide/part-vii-hermes/44-from-development-to-production>Chapters 1–43</a> built the machine. <strong>Chapter 45 explains why it works.</strong></div></div>
+<p>When you opened this book, you did not know Kubernetes. You did not know AWS. You did not know distributed systems. You certainly did not know how to run a multi-agent AI platform.</p>
+<p>Now look at what exists.</p>
+<p>Not because it was downloaded. Not because a cloud provider made it easy. <strong>Because you understand why every piece belongs.</strong></p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=looking-back>Looking Back<a href=#looking-back class=hash-link aria-label="Direct link to Looking Back" title="Direct link to Looking Back" translate=no>​</a></h2>
+<p>Forty-four chapters. Linux, containers, Docker, AWS, Terraform, Kubernetes, Helm, observability, AI, agents, memory, models, production.</p>
+<p>The journey looked enormous while you were taking it.</p>
+<p>Underneath every topic was the same question:</p>
+<blockquote>
+<p><strong>How do we manage complexity without losing control?</strong></p>
+</blockquote>
+<p>Every chapter answered that question at a <strong>different scale</strong>. The technologies were the vocabulary. The pattern was the grammar.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=the-pattern-never-changed>The Pattern Never Changed<a href=#the-pattern-never-changed class=hash-link aria-label="Direct link to The Pattern Never Changed" title="Direct link to The Pattern Never Changed" translate=no>​</a></h2>
+<p>You may have noticed something. Every technology introduced the same four ideas:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">State</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Execution</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Coordination</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Observation</span><br/></div></code></pre></div></div>
+<p>Those four concepts appeared everywhere. Once you see them, you cannot unsee them.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=linux>Linux<a href=#linux class=hash-link aria-label="Direct link to Linux" title="Direct link to Linux" translate=no>​</a></h3>
+<p>A <strong>process</strong> executes. <strong>Memory</strong> stores state. The <strong>kernel</strong> coordinates execution. <strong>Logs</strong> reveal what happened.</p>
+<p>You met this in <a class="" href=/hermes-on-aws-guide/part-i-foundations/03-linux>Chapter 3</a> and <a class="" href=/hermes-on-aws-guide/part-i-foundations/02-how-computers-work>Chapter 2</a>—before cloud, before containers, before AI.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=containers>Containers<a href=#containers class=hash-link aria-label="Direct link to Containers" title="Direct link to Containers" translate=no>​</a></h3>
+<p><strong>Images</strong> define state. <strong>Containers</strong> execute. The <strong>runtime</strong> coordinates. <strong>Container logs</strong> expose behavior.</p>
+<p><a class="" href=/hermes-on-aws-guide/part-iii-containers/17-docker>Chapter 17</a> did not replace Linux. It <strong>hid</strong> operating-system detail so you could ship reproducible units of work.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=kubernetes>Kubernetes<a href=#kubernetes class=hash-link aria-label="Direct link to Kubernetes" title="Direct link to Kubernetes" translate=no>​</a></h3>
+<p><strong>Desired state</strong> becomes manifests. <strong>Pods</strong> execute. The <strong>control plane</strong> coordinates. <strong>Metrics and events</strong> describe reality.</p>
+<p><a class="" href=/hermes-on-aws-guide/part-ii-aws/13-the-first-control-plane>Chapter 13</a> gave you k3s. <a class="" href=/hermes-on-aws-guide/part-iv-kubernetes/22-deployments>Part IV</a> gave you the objects. The pattern was unchanged—only the scale.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=aws>AWS<a href=#aws class=hash-link aria-label="Direct link to AWS" title="Direct link to AWS" translate=no>​</a></h3>
+<p><strong>Infrastructure</strong> becomes state (VPCs, instances, volumes). <strong>Instances</strong> execute. <strong>Cloud services</strong> coordinate. <strong>CloudWatch</strong> observes.</p>
+<p><a class="" href=/hermes-on-aws-guide/part-ii-aws/07-provisioning-aws-account>Part II</a> was never "learn AWS." It was learn <strong>where execution lives</strong> when your laptop is not enough.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=terraform>Terraform<a href=#terraform class=hash-link aria-label="Direct link to Terraform" title="Direct link to Terraform" translate=no>​</a></h3>
+<p><strong>Configuration</strong> defines desired state. <strong>Terraform</strong> executes changes. <strong>State files</strong> coordinate infrastructure. <strong>Plans</strong> reveal intent.</p>
+<p><a class="" href=/hermes-on-aws-guide/part-v-infrastructure/30-terraform>Chapter 30</a> made the pattern explicit: declare what should exist; reconcile reality toward it.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=hermes>Hermes<a href=#hermes class=hash-link aria-label="Direct link to Hermes" title="Direct link to Hermes" translate=no>​</a></h3>
+<p><strong>PostgreSQL</strong> stores structured state. <strong>Redis</strong> coordinates work. <strong>Qdrant</strong> stores meaning. The <strong>model</strong> reasons. <strong>Workers</strong> execute. <strong>Observability</strong> records everything.</p>
+<p><a class="" href=/hermes-on-aws-guide/part-vi-ai/39-ai-agent-architecture>Chapter 39</a> was not magic—it was the same four ideas applied to <strong>cognitive work</strong>: durable tasks, mediated execution, platform-owned coordination, full audit trail.</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">         State          Execution       Coordination      Observation</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Linux    memory          process         kernel            logs</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Docker   image           container       runtime           docker logs</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">K8s      manifests       Pods            control plane     metrics/events</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">AWS      VPC/EBS         EC2             managed services  CloudWatch</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Terraform .tf files      apply           state file        plan output</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Hermes   Postgres/Qdrant workers/model   Redis/scheduler   Prometheus/Loki</span><br/></div></code></pre></div></div>
+<p><strong>If Chapters 1–43 built the machine, this table is why it works.</strong></p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=the-state-layers>The State Layers<a href=#the-state-layers class=hash-link aria-label="Direct link to The State Layers" title="Direct link to The State Layers" translate=no>​</a></h2>
+<p>Early in the book we introduced <strong>State Layers</strong> (<a class="" href=/hermes-on-aws-guide/part-ii-aws/13-the-first-control-plane>Chapter 13</a>). At the time it may have seemed like another diagram. Now you can see it was the <strong>organizing principle</strong> behind everything.</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Human Intent</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Kubernetes API (desired state)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Scheduler</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Containers</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    ↓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Linux Kernel</span><br/></div></code></pre></div></div>
+<p>By the end of the journey, that stack grew:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Meaning          ← Qdrant, retrieved context, semantic memory</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">──────────────</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Reasoning        ← llama-server, inference, model proposals</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">──────────────</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Application      ← Hermes API, workers, agents, tools</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">──────────────</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Platform         ← Kubernetes, Helm, Ingress, Services</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">──────────────</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Infrastructure   ← AWS, Terraform, VPC, EC2, EBS</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">──────────────</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Hardware         ← CPU, memory, disk, network, GPU</span><br/></div></code></pre></div></div>
+<p>Each layer exists because the one beneath it provides <strong>stability</strong>. Each layer hides unnecessary complexity. Each layer enables the next.</p>
+<p><strong>No layer replaces another.</strong> Hermes does not make Kubernetes obsolete. Kubernetes does not make Linux obsolete. Abstraction stacks; it does not erase.</p>
+<p>When experienced engineers design systems, they ask:</p>
+<blockquote>
+<p>Which layer should own this responsibility?</p>
+</blockquote>
+<p>Not: which command creates a Deployment?</p>
+<p>That shift—in <a class="" href=/hermes-on-aws-guide/part-i-foundations/06-designing-the-hermes-platform>Chapter 6</a> you designed before you provisioned—is the invisible progress that matters most.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=why-hermes-exists>Why Hermes Exists<a href=#why-hermes-exists class=hash-link aria-label="Direct link to Why Hermes Exists" title="Direct link to Why Hermes Exists" translate=no>​</a></h2>
+<p>Hermes was never meant to be "an AI assistant" you download and forget.</p>
+<p>It was a <strong>vehicle for learning</strong>. Building Hermes forced you to confront every major discipline of modern software engineering:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Discipline<th>Where you met it<tbody><tr><td>Operating systems<td>Part I<tr><td>Networking<td>Chapters 4, 8, 22–23<tr><td>Cloud infrastructure<td>Part II<tr><td>Distributed systems<td>Parts IV–VII<tr><td>Automation<td>Chapters 29–30<tr><td>Security<td>Chapters 27, 31, 41<tr><td>Observability<td>Chapters 33–34<tr><td>Data engineering<td>Chapters 11, 24, 35<tr><td>ML infrastructure<td>Chapters 36–37<tr><td>Production operations<td>Chapters 40, 43</table>
+<p>AI happened to <strong>connect</strong> them. None of those disciplines disappeared. The model is one component in a system you now understand end to end.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=what-you-actually-built>What You Actually Built<a href=#what-you-actually-built class=hash-link aria-label="Direct link to What You Actually Built" title="Direct link to What You Actually Built" translate=no>​</a></h2>
+<p>It is tempting to say you built an AI platform. That is true. It is <strong>incomplete</strong>.</p>
+<p>You also built:</p>
+<ul>
+<li class="">a <strong>reproducible</strong> cloud environment (Terraform, Git)</li>
+<li class="">an <strong>automated</strong> deployment pipeline (GitHub Actions, Helm)</li>
+<li class="">a <strong>secure</strong> execution platform (RBAC, NetworkPolicy, tool gateway, ESO)</li>
+<li class="">a <strong>distributed</strong> runtime (tasks, workers, Redis locks)</li>
+<li class="">a <strong>semantic memory</strong> system (Qdrant, RAG paths)</li>
+<li class="">an <strong>observable</strong> production environment (metrics, logs, traces, SLOs)</li>
+<li class="">an <strong>extensible</strong> capability framework (tools, contracts, registry)</li>
+</ul>
+<p><strong>Hermes is the workload that proves the platform works.</strong> Remove Hermes tomorrow and you would still own a production-grade cloud and Kubernetes foundation. Add a different workload and the same patterns hold.</p>
+<p>That is the difference between building an application and building a <strong>platform</strong>—the subject of <a class="" href=/hermes-on-aws-guide/part-vii-hermes/43-extending-hermes>Chapter 43</a> and <a class="" href=/hermes-on-aws-guide/part-vii-hermes/44-from-development-to-production>Chapter 44</a>.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=the-architecture>The Architecture<a href=#the-architecture class=hash-link aria-label="Direct link to The Architecture" title="Direct link to The Architecture" translate=no>​</a></h2>
+<p>From the outside, the platform now looks surprisingly simple:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">                Users</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">             HTTPS / Ingress</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">             Hermes API</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      ┌───────────┼───────────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      │           │           │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  Workers      Memory      Model</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      │           │           │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      │      PostgreSQL       │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      │        Redis          │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      │       Qdrant          │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      └───────────┼───────────┘</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">             Kubernetes</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                 k3s</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">             Ubuntu EC2</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                  │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">                  AWS</span><br/></div></code></pre></div></div>
+<p>Every box exists because you now know <strong>why it belongs there</strong>—not because a tutorial told you to add it.</p>
+<p>Ingress terminates HTTP (<a class="" href=/hermes-on-aws-guide/part-iv-kubernetes/24-ingress>Chapter 24</a>). Workers mediate tools (<a class="" href=/hermes-on-aws-guide/part-vi-ai/39-ai-agent-architecture>Chapters 38, 41</a>). Postgres survives Pod restarts (<a class="" href=/hermes-on-aws-guide/part-vi-ai/35-running-hermes>Chapters 11, 34</a>). Qdrant holds meaning (<a class="" href=/hermes-on-aws-guide/part-vi-ai/36-vector-databases>Chapter 36</a>). The model proposes; the platform authorizes (<a class="" href=/hermes-on-aws-guide/part-vii-hermes/42-platform-governance>Chapter 42</a>). Git declares; Actions and Terraform reconcile (<a class="" href=/hermes-on-aws-guide/part-v-infrastructure/30-terraform>Chapters 29–30</a>).</p>
+<p>You did not memorize a diagram. You <strong>derived</strong> one from forty-three chapters of cause and effect.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=the-most-important-lesson>The Most Important Lesson<a href=#the-most-important-lesson class=hash-link aria-label="Direct link to The Most Important Lesson" title="Direct link to The Most Important Lesson" translate=no>​</a></h2>
+<p>Technology changes. Docker changed software delivery. Kubernetes changed orchestration. Large language models changed what software can <strong>propose</strong>. Something else will replace parts of this stack. That is inevitable.</p>
+<p>What remains valuable is your ability to <strong>reason about systems</strong>.</p>
+<p>If Kubernetes disappeared tomorrow, you would still understand:</p>
+<ul>
+<li class=""><strong>desired state</strong> and reconciliation</li>
+<li class=""><strong>scheduling</strong> and resource boundaries</li>
+<li class=""><strong>networking</strong> and segmentation</li>
+<li class=""><strong>persistence</strong> and recovery</li>
+<li class=""><strong>observability</strong> and feedback loops</li>
+<li class=""><strong>distributed execution</strong> and failure isolation</li>
+</ul>
+<p>Those ideas survive individual products. <a class="" href=/hermes-on-aws-guide/part-vii-hermes/42-platform-governance>Chapter 42</a> stated it plainly: <strong>the language model is never the security boundary. The platform is.</strong> That principle outlives any model vendor.</p>
+<p>The book taught tools. The capstone teaches <strong>transferable structure</strong>.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=where-to-go-next>Where to Go Next<a href=#where-to-go-next class=hash-link aria-label="Direct link to Where to Go Next" title="Direct link to Where to Go Next" translate=no>​</a></h2>
+<p>This platform is intentionally unfinished—not because it is incomplete, but because <strong>platforms are never finished</strong>.</p>
+<p>You might continue by adding:</p>
+<ul>
+<li class="">GPU node pools (<a class="" href=/hermes-on-aws-guide/part-vi-ai/38-gpu-instances>Chapter 38</a> previewed this)</li>
+<li class="">multiple Kubernetes nodes and true HA</li>
+<li class="">service meshes and mTLS east-west</li>
+<li class="">event streaming (Kafka, NATS) beside Redis</li>
+<li class="">workflow orchestration for long-running sagas</li>
+<li class="">federated agents across clusters</li>
+<li class="">multi-region deployments</li>
+<li class="">autonomous planning with human approval gates</li>
+<li class="">robotics or edge inference</li>
+</ul>
+<p>Notice: <strong>none of those require abandoning the architecture you built.</strong> They extend it—new capabilities (<a class="" href=/hermes-on-aws-guide/part-vii-hermes/43-extending-hermes>Chapter 43</a>), same platform kernel.</p>
+<p>The appendices (<a class="" href=/hermes-on-aws-guide/appendices/glossary>Glossary</a>, <a class="" href=/hermes-on-aws-guide/appendices/labs>Lab Index</a>, and the reference material planned below) exist so you can keep building long after this chapter ends.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=a-final-reflection>A Final Reflection<a href=#a-final-reflection class=hash-link aria-label="Direct link to A Final Reflection" title="Direct link to A Final Reflection" translate=no>​</a></h2>
+<p>Earlier in the book we described software as layers of increasing abstraction.</p>
+<p>By the end, another pattern should be visible:</p>
+<p><strong>Every abstraction serves one purpose—to let humans solve larger problems without being overwhelmed by smaller ones.</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Abstraction<th>What it hid<tbody><tr><td>Operating systems<td>Hardware details<tr><td>Containers<td>OS differences<tr><td>Kubernetes<td>Individual servers<tr><td>Cloud platforms<td>Data centers<tr><td>Terraform<td>ClickOps and drift<tr><td>Hermes<td>Distributed AI coordination</table>
+<p>Abstraction is not about making systems mysterious. It is about making <strong>complexity manageable</strong>—so you can operate change safely (<a class="" href=/hermes-on-aws-guide/part-vii-hermes/41-operating-hermes-in-production>Chapter 41</a>), govern action responsibly (<a class="" href=/hermes-on-aws-guide/part-vii-hermes/42-platform-governance>Chapter 42</a>), and grow capabilities without redesign (<a class="" href=/hermes-on-aws-guide/part-vii-hermes/43-extending-hermes>Chapter 43</a>).</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=congratulations>Congratulations<a href=#congratulations class=hash-link aria-label="Direct link to Congratulations" title="Direct link to Congratulations" translate=no>​</a></h2>
+<p>You can now:</p>
+<ul>
+<li class="">provision cloud infrastructure</li>
+<li class="">automate deployments</li>
+<li class="">operate Kubernetes</li>
+<li class="">manage production workloads</li>
+<li class="">observe distributed systems</li>
+<li class="">secure AI applications</li>
+<li class="">deploy local language models</li>
+<li class="">build semantic memory</li>
+<li class="">coordinate autonomous agents</li>
+<li class="">evolve a production platform</li>
+</ul>
+<p>Those are not isolated skills. They are <strong>different expressions of the same engineering mindset</strong>—state, execution, coordination, observation, at every scale you touched.</p>
+<p>You began with a terminal. You end with a platform.</p>
+<p>Not because you learned forty-four unrelated technologies. Because you learned to see the <strong>system beneath them</strong>.</p>
+<p>The technologies in this book will evolve. The way you think about systems does not have to.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=appendix-the-complete-stack>Appendix: The Complete Stack<a href=#appendix-the-complete-stack class=hash-link aria-label="Direct link to Appendix: The Complete Stack" title="Direct link to Appendix: The Complete Stack" translate=no>​</a></h2>
+<p>One more view—from user request to continuous improvement:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Users</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Internet</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">AWS</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Terraform</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">GitHub Actions</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Ubuntu</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">k3s</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Kubernetes</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Ingress</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Services</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Deployments</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Pods</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Hermes</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Workers</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">PostgreSQL</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Redis</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Qdrant</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">llama.cpp</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">External APIs</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Observability</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Continuous Improvement</span><br/></div></code></pre></div></div>
+<p>Every layer has a purpose. Every purpose supports the layer above it.</p>
+<p>Together they form a platform that can continue to grow long after this book ends.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=hermes-platform-status>Hermes Platform Status<a href=#hermes-platform-status class=hash-link aria-label="Direct link to Hermes Platform Status" title="Direct link to Hermes Platform Status" translate=no>​</a></h2>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">───────────────────────────────────────────────</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        HERMES PLATFORM STATUS</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Foundations (Part I)              ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Cloud substrate (Part II)         ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Containers (Part III)             ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Kubernetes (Part IV)              ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Platform engineering (Part V)     ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">AI infrastructure (Part VI)       ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Operate · Govern · Extend (VII)   ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Understanding (Ch 45)             ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">The journey is complete.</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">The platform is yours.</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">───────────────────────────────────────────────</span><br/></div></code></pre></div></div>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=what-remains>What Remains<a href=#what-remains class=hash-link aria-label="Direct link to What Remains" title="Direct link to What Remains" translate=no>​</a></h2>
+<p>The numbered chapters are finished. The platform is not.</p>
+<p>Planned reference appendices—open while you build:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Appendix<th>Purpose<tbody><tr><td><a class="" href=/hermes-on-aws-guide/appendices/glossary>Glossary</a><td>Terminology across AWS, Linux, K8s, and AI<tr><td><a class="" href=/hermes-on-aws-guide/appendices/command-reference>Command Reference</a><td>CLI commands by chapter<tr><td><a class="" href=/hermes-on-aws-guide/appendices/repository-walkthrough>Repository Walkthrough</a><td>Every directory explained<tr><td><a class="" href=/hermes-on-aws-guide/appendices/cost-estimates>Cost Estimates</a><td>Development vs production AWS spend<tr><td><a class="" href=/hermes-on-aws-guide/appendices/troubleshooting>Troubleshooting Guide</a><td>Common failures and diagnosis<tr><td><a class="" href=/hermes-on-aws-guide/appendices/labs>Lab Index</a><td>Hands-on labs by chapter<tr><td><a class="" href=/hermes-on-aws-guide/appendices/diagrams>Diagram Index</a><td>Architecture figures<tr><td><a class="" href=/hermes-on-aws-guide/appendices/references>References</a><td>External docs</table>
+<p>You have the map. The territory is yours to extend.</p>
+<hr/>
+<p><a class="" href=/hermes-on-aws-guide/part-vii-hermes/44-from-development-to-production>← Chapter 44: From Development to Production</a></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/68thandMaine/hermes-on-aws-guide/tree/main/docs/part-vii-hermes/45-the-platform-you-built.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href=/hermes-on-aws-guide/part-vii-hermes/44-from-development-to-production><div class=pagination-nav__sublabel>Previous</div><div class=pagination-nav__label>Chapter 44: From Development to Production</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/hermes-on-aws-guide/appendices/glossary><div class=pagination-nav__sublabel>Next</div><div class=pagination-nav__label>Glossary</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#looking-back class="table-of-contents__link toc-highlight">Looking Back</a><li><a href=#the-pattern-never-changed class="table-of-contents__link toc-highlight">The Pattern Never Changed</a><ul><li><a href=#linux class="table-of-contents__link toc-highlight">Linux</a><li><a href=#containers class="table-of-contents__link toc-highlight">Containers</a><li><a href=#kubernetes class="table-of-contents__link toc-highlight">Kubernetes</a><li><a href=#aws class="table-of-contents__link toc-highlight">AWS</a><li><a href=#terraform class="table-of-contents__link toc-highlight">Terraform</a><li><a href=#hermes class="table-of-contents__link toc-highlight">Hermes</a></ul><li><a href=#the-state-layers class="table-of-contents__link toc-highlight">The State Layers</a><li><a href=#why-hermes-exists class="table-of-contents__link toc-highlight">Why Hermes Exists</a><li><a href=#what-you-actually-built class="table-of-contents__link toc-highlight">What You Actually Built</a><li><a href=#the-architecture class="table-of-contents__link toc-highlight">The Architecture</a><li><a href=#the-most-important-lesson class="table-of-contents__link toc-highlight">The Most Important Lesson</a><li><a href=#where-to-go-next class="table-of-contents__link toc-highlight">Where to Go Next</a><li><a href=#a-final-reflection class="table-of-contents__link toc-highlight">A Final Reflection</a><li><a href=#congratulations class="table-of-contents__link toc-highlight">Congratulations</a><li><a href=#appendix-the-complete-stack class="table-of-contents__link toc-highlight">Appendix: The Complete Stack</a><li><a href=#hermes-platform-status class="table-of-contents__link toc-highlight">Hermes Platform Status</a><li><a href=#what-remains class="table-of-contents__link toc-highlight">What Remains</a></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>Book</div><ul class="footer__items clean-list"><li class=footer__item><a class=footer__link-item href=/hermes-on-aws-guide/>Table of Contents</a><li class=footer__item><a href=https://github.com/68thandMaine/hermes-on-aws-guide/blob/main/CONTRIBUTING.md target=_blank rel="noopener noreferrer" class=footer__link-item>Contributing<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>Author</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/crudnicky target=_blank rel="noopener noreferrer" class=footer__link-item>Christopher Rudnicky<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 Christopher Rudnicky. MIT License.</div></div></div></footer></div></body>

@@ -1,0 +1,458 @@
+<!doctype html><html lang=en dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-part-vi-ai/39-ai-agent-architecture" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>Chapter 39: The Hermes Reasoning Loop | Building a Personal AI Cloud</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://68thandMaine.github.io/hermes-on-aws-guide/img/social-card.svg /><meta data-rh=true name=twitter:image content=https://68thandMaine.github.io/hermes-on-aws-guide/img/social-card.svg /><meta data-rh=true property=og:url content=https://68thandMaine.github.io/hermes-on-aws-guide/part-vi-ai/39-ai-agent-architecture /><meta data-rh=true property=og:locale content=en /><meta data-rh=true name=docusaurus_locale content=en /><meta data-rh=true name=docsearch:language content=en /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="Chapter 39: The Hermes Reasoning Loop | Building a Personal AI Cloud"/><meta data-rh=true name=description content="The Hermes reasoning loop — task-driven orchestration of memory, inference, tools, and persistence."/><meta data-rh=true property=og:description content="The Hermes reasoning loop — task-driven orchestration of memory, inference, tools, and persistence."/><link data-rh=true rel=icon href=/hermes-on-aws-guide/img/favicon.ico /><link data-rh=true rel=canonical href=https://68thandMaine.github.io/hermes-on-aws-guide/part-vi-ai/39-ai-agent-architecture /><link data-rh=true rel=alternate href=https://68thandMaine.github.io/hermes-on-aws-guide/part-vi-ai/39-ai-agent-architecture hreflang=en /><link data-rh=true rel=alternate href=https://68thandMaine.github.io/hermes-on-aws-guide/part-vi-ai/39-ai-agent-architecture hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://68thandMaine.github.io/hermes-on-aws-guide/part-vi-ai/39-ai-agent-architecture","name":"Chapter 39: The Hermes Reasoning Loop","position":1}]}</script><link rel=stylesheet href=/hermes-on-aws-guide/assets/css/styles.56f47aec.css /><script src=/hermes-on-aws-guide/assets/js/runtime~main.99235806.js defer></script><script src=/hermes-on-aws-guide/assets/js/main.3557c68e.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-ce0")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id=__docusaurus><link rel=preload as=image href=/hermes-on-aws-guide/img/logo.svg /><div role=region aria-label="Skip to main content"><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>Skip to main content</a></div><nav aria-label=Main class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/hermes-on-aws-guide/><div class=navbar__logo><img src=/hermes-on-aws-guide/img/logo.svg alt="Personal AI Cloud" class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/hermes-on-aws-guide/img/logo.svg alt="Personal AI Cloud" class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">Personal AI Cloud</b></a><a aria-current=page class="navbar__item navbar__link guides-top-header navbar__link--active" href=/hermes-on-aws-guide/>Guides</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/68thandMaine/hermes-on-aws-guide target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=Search aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/hermes-on-aws-guide/preface/00-preface><span title=Preface class=linkLabel_WmDU>Preface</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=true href=/hermes-on-aws-guide/part-i-foundations/01-introduction><span title="Part I — Foundations" class=categoryLinkLabel_W154>Part I — Foundations</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/01-introduction><span title="Chapter 1: Introduction" class=linkLabel_WmDU>Chapter 1: Introduction</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/02-how-computers-work><span title="Chapter 2: How Computers Actually Work" class=linkLabel_WmDU>Chapter 2: How Computers Actually Work</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/03-linux><span title="Chapter 3: Linux — The Operating System of the Cloud" class=linkLabel_WmDU>Chapter 3: Linux — The Operating System of the Cloud</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/04-networking><span title="Chapter 4: Networking Fundamentals" class=linkLabel_WmDU>Chapter 4: Networking Fundamentals</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/05-virtualization><span title="Chapter 5: Virtualization" class=linkLabel_WmDU>Chapter 5: Virtualization</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-i-foundations/06-designing-the-hermes-platform><span title="Chapter 6: Designing the Hermes Platform" class=linkLabel_WmDU>Chapter 6: Designing the Hermes Platform</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-ii-aws/07-provisioning-aws-account><span title="Part II — AWS & Platform" class=categoryLinkLabel_W154>Part II — AWS & Platform</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-iii-containers/17-docker><span title="Part III — Containers" class=categoryLinkLabel_W154>Part III — Containers</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-iv-kubernetes/20-why-kubernetes-exists><span title="Part IV — Kubernetes" class=categoryLinkLabel_W154>Part IV — Kubernetes</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-v-infrastructure/30-terraform><span title="Part V — Infrastructure" class=categoryLinkLabel_W154>Part V — Infrastructure</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role=button aria-expanded=true href=/hermes-on-aws-guide/part-vi-ai/35-running-hermes><span title="Part VI — AI Infrastructure" class=categoryLinkLabel_W154>Part VI — AI Infrastructure</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-vi-ai/35-running-hermes><span title="Chapter 35: Running Hermes" class=linkLabel_WmDU>Chapter 35: Running Hermes</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-vi-ai/36-vector-databases><span title="Chapter 36: Vector Databases" class=linkLabel_WmDU>Chapter 36: Vector Databases</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-vi-ai/37-model-serving><span title="Chapter 37: Model Serving" class=linkLabel_WmDU>Chapter 37: Model Serving</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/hermes-on-aws-guide/part-vi-ai/38-gpu-instances><span title="Chapter 38: GPU Instances" class=linkLabel_WmDU>Chapter 38: GPU Instances</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/hermes-on-aws-guide/part-vi-ai/39-ai-agent-architecture><span title="Chapter 39: The Hermes Reasoning Loop" class=linkLabel_WmDU>Chapter 39: The Hermes Reasoning Loop</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/part-vii-hermes/40-distributed-cognitive-execution><span title="Part VII — Hermes Agent Platform" class=categoryLinkLabel_W154>Part VII — Hermes Agent Platform</span></a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=false href=/hermes-on-aws-guide/appendices/glossary><span title=Appendices class=categoryLinkLabel_W154>Appendices</span></a></div></ul></nav><button type=button title="Collapse sidebar" aria-label="Collapse sidebar" class="button button--secondary button--outline collapseSidebarButton_PEFL"><svg width=20 height=20 aria-hidden=true class=collapseSidebarButtonIcon_kv0_><g fill=#7a7a7a><path d="M9.992 10.023c0 .2-.062.399-.172.547l-4.996 7.492a.982.982 0 01-.828.454H1c-.55 0-1-.453-1-1 0-.2.059-.403.168-.551l4.629-6.942L.168 3.078A.939.939 0 010 2.528c0-.548.45-.997 1-.997h2.996c.352 0 .649.18.828.45L9.82 9.472c.11.148.172.347.172.55zm0 0"/><path d="M19.98 10.023c0 .2-.058.399-.168.547l-4.996 7.492a.987.987 0 01-.828.454h-3c-.547 0-.996-.453-.996-1 0-.2.059-.403.168-.551l4.625-6.942-4.625-6.945a.939.939 0 01-.168-.55 1 1 0 01.996-.997h3c.348 0 .649.18.828.45l4.996 7.492c.11.148.168.347.168.55zm0 0"/></g></svg></button></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=Breadcrumbs><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label="Home page" class=breadcrumbs__link href=/hermes-on-aws-guide/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><span class=breadcrumbs__link>Part VI — AI Infrastructure</span><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>Chapter 39: The Hermes Reasoning Loop</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Chapter 39: The Hermes Reasoning Loop</h1></header>
+<blockquote>
+<p>A model generates tokens.</p>
+<p>A system generates outcomes.</p>
+</blockquote>
+<hr/>
+<p>By <a class="" href=/hermes-on-aws-guide/part-vi-ai/38-gpu-instances>Chapter 38</a> you have every <strong>subsystem</strong> required for intelligence:</p>
+<ul>
+<li class="">Kubernetes executes workloads</li>
+<li class="">PostgreSQL stores durable state</li>
+<li class="">Redis coordinates async execution</li>
+<li class="">Qdrant stores semantic memory</li>
+<li class="">llama.cpp performs local inference (CPU and optional GPU)</li>
+<li class="">Monitoring and logging expose behavior (<a class="" href=/hermes-on-aws-guide/part-v-infrastructure/33-monitoring>Chapters 33–34</a>)</li>
+</ul>
+<p>None of that explains how Hermes <strong>solves a task</strong>.</p>
+<p>This chapter defines the <strong>Hermes runtime</strong>—the execution model you have been building toward since <a class="" href=/hermes-on-aws-guide/part-i-foundations/06-designing-the-hermes-platform>Chapter 6</a>. It is not a survey of ReAct, LangGraph, or AutoGPT. Those frameworks implement <em>similar</em> patterns; Hermes implements <strong>its own loop</strong> on <strong>your platform</strong>.</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Generic agent guide:  "call the LLM in a loop with tools"</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Hermes:               task → worker → state + memory + inference + tools → outcome</span><br/></div></code></pre></div></div>
+<p>The reasoning loop is <strong>not the LLM</strong>. It is orchestration of <strong>state, memory, inference, tools, and persistence</strong>.</p>
+<div class="theme-admonition theme-admonition-note admonition_xJq3 alert alert--secondary"><div class=admonitionHeading_Gvgb><span class=admonitionIcon_Rf37><svg viewBox="0 0 14 16"><path fill-rule=evenodd d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"/></svg></span>Cognitive governance</div><div class=admonitionContent_BuS1><p>No new ontology shift—this chapter <strong>names and wires</strong> what Parts II–VI already built. The unit of cognition is the <strong>task</strong>, not the token.</div></div>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=learning-objectives>Learning Objectives<a href=#learning-objectives class=hash-link aria-label="Direct link to Learning Objectives" title="Direct link to Learning Objectives" translate=no>​</a></h2>
+<p>After completing this chapter, you will be able to:</p>
+<ul class="contains-task-list containsTaskList_mC6p">
+<li class=task-list-item><input type=checkbox disabled/> Explain why a language model is one component—not the intelligent system</li>
+<li class=task-list-item><input type=checkbox disabled/> Trace Hermes execution from request to task completion</li>
+<li class=task-list-item><input type=checkbox disabled/> Describe how PostgreSQL, Redis, Qdrant, and llama-server participate in one cycle</li>
+<li class=task-list-item><input type=checkbox disabled/> Articulate why workers mediate tools (models never touch infrastructure)</li>
+<li class=task-list-item><input type=checkbox disabled/> Map failure recovery to durable task state and Kubernetes restarts</li>
+<li class=task-list-item><input type=checkbox disabled/> Follow a reasoning cycle through metrics, logs, and traces</li>
+<li class=task-list-item><input type=checkbox disabled/> State Hermes design principles that survive model swaps</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=prerequisites>Prerequisites<a href=#prerequisites class=hash-link aria-label="Direct link to Prerequisites" title="Direct link to Prerequisites" translate=no>​</a></h2>
+<ul>
+<li class=""><a class="" href=/hermes-on-aws-guide/part-vi-ai/35-running-hermes>Chapters 34–37</a> — Hermes lab stack, Qdrant, llama-server, optional GPU path</li>
+<li class=""><a class="" href=/hermes-on-aws-guide/part-iv-kubernetes/27-configuration-configmaps-secrets>Chapter 27</a> — ConfigMaps/Secrets in prompts</li>
+<li class=""><a class="" href=/hermes-on-aws-guide/part-v-infrastructure/33-monitoring>Chapters 33–34</a> — observability substrate</li>
+</ul>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token builtin class-name">export</span><span class="token plain"> </span><span class="token assign-left variable" style=color:#36acaa>KUBECONFIG</span><span class="token operator" style=color:#393A34>=~</span><span class="token plain">/.kube/hermes-k3s.yaml</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">kubectl get pods </span><span class="token parameter variable" style=color:#36acaa>-n</span><span class="token plain"> hermes</span><br/></div></code></pre></div></div>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=estimated-time>Estimated Time<a href=#estimated-time class=hash-link aria-label="Direct link to Estimated Time" title="Direct link to Estimated Time" translate=no>​</a></h2>
+<p><strong>75 minutes</strong> — 45 minutes reading, 30 minutes tracing a task through the stack (conceptual + schema lab).</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=background>Background<a href=#background class=hash-link aria-label="Direct link to Background" title="Direct link to Background" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=the-problem>The Problem<a href=#the-problem class=hash-link aria-label="Direct link to The Problem" title="Direct link to The Problem" translate=no>​</a></h3>
+<p>You can deploy, remember, reason, and accelerate—but <strong>no single diagram</strong> tied them into one behavior:</p>
+<blockquote>
+<p>How does a user question become a completed outcome?</p>
+</blockquote>
+<p>Framework tutorials often start with <code>while True: llm.chat()</code>. Hermes starts with a <strong>durable task</strong> and a <strong>worker responsible for the full cycle</strong>.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=the-unit-of-cognition>The Unit of Cognition<a href=#the-unit-of-cognition class=hash-link aria-label="Direct link to The Unit of Cognition" title="Direct link to The Unit of Cognition" translate=no>​</a></h3>
+<p>The smallest execution unit inside Hermes is <strong>not a token</strong>. It is not a single <code>/completion</code> call.</p>
+<p>It is a <strong>task</strong>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Task property<th>Purpose<tbody><tr><td><strong>Objective</strong><td>What "done" means<tr><td><strong>Context</strong><td>Structured + semantic inputs<tr><td><strong>Tools</strong><td>What the worker may invoke<tr><td><strong>State</strong><td>Progress across iterations<tr><td><strong>Completion criteria</strong><td>When to stop the loop</table>
+<p>Everything Hermes does begins with a task.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=models-vs-platform>Models vs Platform<a href=#models-vs-platform class=hash-link aria-label="Direct link to Models vs Platform" title="Direct link to Models vs Platform" translate=no>​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Layer<th>Role<tbody><tr><td><strong>llama-server</strong><td>Proposes text, plans, tool calls (parsed by worker)<tr><td><strong>Worker</strong><td>Owns the loop; validates; executes; persists<tr><td><strong>API</strong><td>Ingests requests; creates tasks; returns status/results<tr><td><strong>Stores</strong><td>Survive process death</table>
+<blockquote>
+<p><strong>Models generate proposals, not authority.</strong></p>
+</blockquote>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=architecture>Architecture<a href=#architecture class=hash-link aria-label="Direct link to Architecture" title="Direct link to Architecture" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=high-level-execution>High-Level Execution<a href=#high-level-execution class=hash-link aria-label="Direct link to High-Level Execution" title="Direct link to High-Level Execution" translate=no>​</a></h3>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">User Request</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"> Ingress (Traefik)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"> Hermes API — task created → PostgreSQL</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"> Redis — pending queue / claim lock</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"> Worker claims task</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"> Context collection</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      ├──────────────┐</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      ▼              ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"> PostgreSQL      Qdrant search</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"> (structured)    (semantic)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      │              │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      └──────┬───────┘</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">             ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      Prompt assembly (deterministic)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">             │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">             ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      Model inference (llama-server / GPU path)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">             │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">             ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      Tool required? ──No──► update state → done?</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">             │</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">            Yes</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">             ▼</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">      Worker executes tool → persist → loop</span><br/></div></code></pre></div></div>
+<p>This loop—not the model—is the heart of Hermes.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=memory-layers-in-the-loop>Memory Layers in the Loop<a href=#memory-layers-in-the-loop class=hash-link aria-label="Direct link to Memory Layers in the Loop" title="Direct link to Memory Layers in the Loop" translate=no>​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Store<th>When used<th>Example<tbody><tr><td><strong>PostgreSQL</strong><td>Task record, steps, tool outputs, session config<td><code>hermes_tasks</code>, <code>hermes_task_steps</code><tr><td><strong>Redis</strong><td>Claim locks, short-lived coordination<td>One worker per task<tr><td><strong>Qdrant</strong><td>Semantic recall for prompt<td>Top-k prior interactions<tr><td><strong>Secrets Manager → K8s Secret</strong><td>Tool API keys<td>Injected at runtime (<a class="" href=/hermes-on-aws-guide/part-v-infrastructure/32-secrets-management>Ch 32</a>)</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=inference-routing-chapter-38>Inference Routing (<a class="" href=/hermes-on-aws-guide/part-vi-ai/38-gpu-instances>Chapter 38</a>)<a href=#inference-routing-chapter-38 class=hash-link aria-label="Direct link to inference-routing-chapter-38" title="Direct link to inference-routing-chapter-38" translate=no>​</a></h3>
+<p>Workers choose path by policy—not magic:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">if task.priority == interactive OR estimated_tokens > threshold:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    POST llama-server-gpu:8080/completion</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">else:</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">    POST llama-server:8080/completion</span><br/></div></code></pre></div></div>
+<p>Same loop; different compute substrate.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=walkthrough>Walkthrough<a href=#walkthrough class=hash-link aria-label="Direct link to Walkthrough" title="Direct link to Walkthrough" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-1--request-ingestion>Step 1 — Request Ingestion<a href=#step-1--request-ingestion class=hash-link aria-label="Direct link to Step 1 — Request Ingestion" title="Direct link to Step 1 — Request Ingestion" translate=no>​</a></h3>
+<p>Request reaches Hermes API (Ingress → <code>hermes-api</code>).</p>
+<p>Example objective:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Summarize yesterday's ski conditions at Mt. Hood Meadows and recommend equipment.</span><br/></div></code></pre></div></div>
+<p>The API <strong>does not</strong> immediately call llama-server.</p>
+<p>It creates a task:</p>
+<div class="language-json codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-json codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token property" style=color:#36acaa>"objective"</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"Summarize ski conditions..."</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token property" style=color:#36acaa>"owner_id"</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"user-42"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token property" style=color:#36acaa>"priority"</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token number" style=color:#36acaa>1</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token property" style=color:#36acaa>"status"</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"pending"</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><br/></div></code></pre></div></div>
+<p>Persisted to PostgreSQL—see <a href=https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/task-schema.example.sql target=_blank rel="noopener noreferrer" class=""><code>infrastructure/hermes/task-schema.example.sql</code></a>.</p>
+<p>Lab: apply schema inside postgres Pod:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">kubectl </span><span class="token function" style=color:#d73a49>cp</span><span class="token plain"> infrastructure/hermes/task-schema.example.sql </span><span class="token punctuation" style=color:#393A34>\</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  hermes/</span><span class="token variable" style=color:#36acaa>$(</span><span class="token variable" style=color:#36acaa>kubectl get pod </span><span class="token variable parameter variable" style=color:#36acaa>-n</span><span class="token variable" style=color:#36acaa> hermes </span><span class="token variable parameter variable" style=color:#36acaa>-l</span><span class="token variable" style=color:#36acaa> </span><span class="token variable assign-left variable" style=color:#36acaa>app</span><span class="token variable operator" style=color:#393A34>=</span><span class="token variable" style=color:#36acaa>hermes-postgres </span><span class="token variable parameter variable" style=color:#36acaa>-o</span><span class="token variable" style=color:#36acaa> </span><span class="token variable assign-left variable" style=color:#36acaa>jsonpath</span><span class="token variable operator" style=color:#393A34>=</span><span class="token variable string" style=color:#e3116c>'{.items[0].metadata.name}'</span><span class="token variable" style=color:#36acaa>)</span><span class="token plain">:/tmp/</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">kubectl </span><span class="token builtin class-name">exec</span><span class="token plain"> </span><span class="token parameter variable" style=color:#36acaa>-n</span><span class="token plain"> hermes deploy/hermes-postgres -- </span><span class="token punctuation" style=color:#393A34>\</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  psql </span><span class="token parameter variable" style=color:#36acaa>-U</span><span class="token plain"> hermes </span><span class="token parameter variable" style=color:#36acaa>-d</span><span class="token plain"> hermes </span><span class="token parameter variable" style=color:#36acaa>-f</span><span class="token plain"> /tmp/task-schema.example.sql</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-2--worker-acquisition>Step 2 — Worker Acquisition<a href=#step-2--worker-acquisition class=hash-link aria-label="Direct link to Step 2 — Worker Acquisition" title="Direct link to Step 2 — Worker Acquisition" translate=no>​</a></h3>
+<p>Workers poll or subscribe to pending work. Redis provides <strong>lightweight exclusivity</strong>:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">SET task:&lt;uuid>:lock &lt;worker-id> NX EX 300</span><br/></div></code></pre></div></div>
+<p>One worker owns the task for the full reasoning cycle. If the Pod dies, lock expires; another worker resumes from <strong>PostgreSQL state</strong>—not from model memory.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-3--context-collection>Step 3 — Context Collection<a href=#step-3--context-collection class=hash-link aria-label="Direct link to Step 3 — Context Collection" title="Direct link to Step 3 — Context Collection" translate=no>​</a></h3>
+<p>No reasoning yet—only assembly:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Source<th>Data<tbody><tr><td>PostgreSQL<td>User preferences, prior task steps, structured facts<tr><td>Qdrant<td>Similar past queries, tool outputs (<a class="" href=/hermes-on-aws-guide/part-vi-ai/36-vector-databases>Ch 36</a>)<tr><td>ConfigMap<td>Model parameters, feature flags (<a class="" href=/hermes-on-aws-guide/part-iv-kubernetes/27-configuration-configmaps-secrets>Ch 27</a>)<tr><td>External APIs<td>Live weather (tool or pre-fetch) — Part VII</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-4--prompt-construction>Step 4 — Prompt Construction<a href=#step-4--prompt-construction class=hash-link aria-label="Direct link to Step 4 — Prompt Construction" title="Direct link to Step 4 — Prompt Construction" translate=no>​</a></h3>
+<p><strong>Deterministic</strong> template merge:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">[System instructions]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">[Tool definitions — JSON schema]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">[Retrieved Qdrant chunks]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">[Task objective]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">[Execution history from hermes_task_steps]</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">[Safety / policy constraints]</span><br/></div></code></pre></div></div>
+<p>The prompt is the worker's snapshot of <strong>world state</strong> for this iteration.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-5--model-inference>Step 5 — Model Inference<a href=#step-5--model-inference class=hash-link aria-label="Direct link to Step 5 — Model Inference" title="Direct link to Step 5 — Model Inference" translate=no>​</a></h3>
+<p>Worker POSTs to internal llama-server:</p>
+<div class="language-json codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-json codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token punctuation" style=color:#393A34>{</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token property" style=color:#36acaa>"prompt"</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token string" style=color:#e3116c>"&lt;assembled>"</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token property" style=color:#36acaa>"n_predict"</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token number" style=color:#36acaa>512</span><span class="token punctuation" style=color:#393A34>,</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">  </span><span class="token property" style=color:#36acaa>"stream"</span><span class="token operator" style=color:#393A34>:</span><span class="token plain"> </span><span class="token boolean" style=color:#36acaa>false</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token punctuation" style=color:#393A34>}</span><br/></div></code></pre></div></div>
+<p>Output is parsed as <strong>proposal</strong>:</p>
+<ul>
+<li class="">final answer text, or</li>
+<li class="">structured tool request (name + arguments)</li>
+</ul>
+<p>Hermes does not treat raw model output as executed fact.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-6--tool-execution>Step 6 — Tool Execution<a href=#step-6--tool-execution class=hash-link aria-label="Direct link to Step 6 — Tool Execution" title="Direct link to Step 6 — Tool Execution" translate=no>​</a></h3>
+<p>If the model requests a tool:</p>
+<ol>
+<li class=""><strong>Validate</strong> — allowed tools, argument schema, rate limits</li>
+<li class=""><strong>Execute</strong> — worker calls HTTP/MCP; model has no cluster credentials</li>
+<li class=""><strong>Capture</strong> — result + latency + errors</li>
+<li class=""><strong>Persist</strong> — <code>hermes_task_steps</code> row (<code>step_type: tool</code>)</li>
+<li class=""><strong>Continue</strong> — append result to context; loop to Step 4</li>
+</ol>
+<p>The model never invokes Kubernetes, AWS, or Secrets directly.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-7--state-update>Step 7 — State Update<a href=#step-7--state-update class=hash-link aria-label="Direct link to Step 7 — State Update" title="Direct link to Step 7 — State Update" translate=no>​</a></h3>
+<p>Every iteration records:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">progress | retrieved_ids | tool_outputs | errors | status</span><br/></div></code></pre></div></div>
+<p>Enables:</p>
+<ul>
+<li class="">UI progress polling</li>
+<li class="">retries without redoing successful tool calls</li>
+<li class="">audit for debugging</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=step-8--loop-continuation>Step 8 — Loop Continuation<a href=#step-8--loop-continuation class=hash-link aria-label="Direct link to Step 8 — Loop Continuation" title="Direct link to Step 8 — Loop Continuation" translate=no>​</a></h3>
+<p>Worker evaluates:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">Is the objective satisfied?</span><br/></div></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Answer<th>Action<tbody><tr><td><strong>No</strong><td>More retrieval, another tool, or another inference<tr><td><strong>Yes</strong><td><code>status: completed</code>, <code>result_json</code>, notify API/client</table>
+<p>Maximum iterations and timeouts are <strong>platform policy</strong>—not model self-regulation alone.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=failure-recovery>Failure Recovery<a href=#failure-recovery class=hash-link aria-label="Direct link to Failure Recovery" title="Direct link to Failure Recovery" translate=no>​</a></h3>
+<p>Because state is durable:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Failure<th>Recovery<tbody><tr><td>Worker Pod crash<td>New Pod claims expired lock; reads <code>hermes_tasks</code><tr><td>Node loss<td>Kubernetes reschedules; task state in Postgres on PVC<tr><td>Model timeout<td>Retry with <code>retry_count</code>; optional CPU fallback<tr><td>Tool failure<td>Record error step; retry or fail task with message</table>
+<blockquote>
+<p><strong>Intelligence survives individual processes.</strong></p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=observability--close-the-loop>Observability — Close the Loop<a href=#observability--close-the-loop class=hash-link aria-label="Direct link to Observability — Close the Loop" title="Direct link to Observability — Close the Loop" translate=no>​</a></h3>
+<p>Each cycle emits (<a class="" href=/hermes-on-aws-guide/part-v-infrastructure/33-monitoring>Ch 33–34</a>):</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Signal<th>Example<tbody><tr><td><strong>Metrics</strong><td>Task duration, inference latency, tool error rate<tr><td><strong>Logs</strong><td><code>{"event":"tool_call","task_id":"...","trace_id":"..."}</code><tr><td><strong>Traces</strong><td>Ingress → API → worker → llama-server → tool span</table>
+<p>Query lab workers today:</p>
+<div class="language-logql codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-logql codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">{namespace="hermes"} | json | event="worker_tick"</span><br/></div></code></pre></div></div>
+<p>Production Hermes uses the same labels with <code>task_id</code> and <code>trace_id</code> on every step.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=design-principles>Design Principles<a href=#design-principles class=hash-link aria-label="Direct link to Design Principles" title="Direct link to Design Principles" translate=no>​</a></h2>
+<p>Hermes architectural rules (platform-owned, model-agnostic):</p>
+<ol>
+<li class=""><strong>Models propose; workers execute.</strong></li>
+<li class=""><strong>Tasks are durable</strong> — Postgres is source of truth for work.</li>
+<li class=""><strong>Memory is layered</strong> — structured vs semantic vs ephemeral.</li>
+<li class=""><strong>Tools are mediated</strong> — no model-to-infrastructure shortcuts.</li>
+<li class=""><strong>Inference is replaceable</strong> — llama.cpp today; another engine tomorrow.</li>
+<li class=""><strong>State outlives processes</strong> — Kubernetes restarts are not amnesia.</li>
+<li class=""><strong>Everything is observable</strong> — no silent reasoning.</li>
+</ol>
+<p>These rules let models evolve without rewriting the platform.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=how-earlier-chapters-pay-off>How Earlier Chapters Pay Off<a href=#how-earlier-chapters-pay-off class=hash-link aria-label="Direct link to How Earlier Chapters Pay Off" title="Direct link to How Earlier Chapters Pay Off" translate=no>​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Chapter<th>Role in the loop<tbody><tr><td>Linux (Ch 3)<td>Workers are processes with signals and logs<tr><td>AWS (Part II)<td>Execution environment, EBS for models/data<tr><td>Kubernetes (Part IV)<td>Schedule, restart, scale workers<tr><td>Terraform + CI (Part V)<td>Reproduce the platform that runs the loop<tr><td>Secrets (Ch 32)<td>Tool credentials without Git exposure<tr><td>Monitoring + Logging (Ch 33–34)<td>See the loop under load<tr><td>Postgres / Redis / Qdrant (Ch 35–36)<td>Active participants in context<tr><td>llama.cpp (Ch 37–38)<td>One service in the graph—not "the AI"</table>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=hands-on-lab>Hands-on Lab<a href=#hands-on-lab class=hash-link aria-label="Direct link to Hands-on Lab" title="Direct link to Hands-on Lab" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=lab-38-trace-the-loop>Lab 38: Trace the Loop<a href=#lab-38-trace-the-loop class=hash-link aria-label="Direct link to Lab 38: Trace the Loop" title="Direct link to Lab 38: Trace the Loop" translate=no>​</a></h3>
+<p><strong>Estimated Time:</strong> 30 minutes</p>
+<p><strong>Goal:</strong> Map one hypothetical task to concrete Hermes components.</p>
+<p><strong>Steps:</strong></p>
+<ol>
+<li class="">Apply <code>task-schema.example.sql</code> to lab Postgres</li>
+<li class="">Insert a manual <code>pending</code> task row with your ski objective</li>
+<li class="">List which Pods/Services each step touches (draw your own diagram)</li>
+<li class="">Write the LogQL query you would use to find that <code>task_id</code></li>
+<li class="">Identify what survives if <code>hermes-workers</code> Deployment is deleted and recreated</li>
+</ol>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=verification>Verification<a href=#verification class=hash-link aria-label="Direct link to Verification" title="Direct link to Verification" translate=no>​</a></h2>
+<ul class="contains-task-list containsTaskList_mC6p">
+<li class=task-list-item><input type=checkbox disabled/> You can explain task vs token vs model call</li>
+<li class=task-list-item><input type=checkbox disabled/> You can draw the loop without looking at the chapter</li>
+<li class=task-list-item><input type=checkbox disabled/> You can name which store holds task state vs semantic recall</li>
+<li class=task-list-item><input type=checkbox disabled/> You can explain why workers own tool execution</li>
+<li class=task-list-item><input type=checkbox disabled/> You can describe recovery after worker crash</li>
+<li class=task-list-item><input type=checkbox disabled/> You understand Hermes vs generic "agent framework" positioning</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=review-questions>Review Questions<a href=#review-questions class=hash-link aria-label="Direct link to Review Questions" title="Direct link to Review Questions" translate=no>​</a></h2>
+<ol>
+<li class="">Why does the API create a task before calling the model?</li>
+<li class="">What happens to in-flight work if a worker Pod is OOMKilled?</li>
+<li class="">Why is prompt assembly deterministic on the worker?</li>
+<li class="">How does Qdrant differ from PostgreSQL in the loop?</li>
+<li class="">Which design principle prevents credential leakage to the model?</li>
+</ol>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=key-takeaways>Key Takeaways<a href=#key-takeaways class=hash-link aria-label="Direct link to Key Takeaways" title="Direct link to Key Takeaways" translate=no>​</a></h2>
+<ul>
+<li class=""><strong>The reasoning loop belongs to the platform, not the model</strong></li>
+<li class=""><strong>Tasks</strong> are the unit of cognition—durable, resumable, observable</li>
+<li class=""><strong>Workers</strong> own the full cycle; models participate</li>
+<li class=""><strong>Three memory layers</strong> each serve a distinct role in context assembly</li>
+<li class=""><strong>Tool mediation</strong> keeps infrastructure boundaries intact</li>
+<li class=""><strong>Observability</strong> makes the loop debuggable end-to-end</li>
+<li class="">Part VI ends here: you have a <strong>complete cognitive architecture</strong>; Part VII <strong>implements</strong> it in production</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=glossary-additions>Glossary Additions<a href=#glossary-additions class=hash-link aria-label="Direct link to Glossary Additions" title="Direct link to Glossary Additions" translate=no>​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Term<th>Definition<tbody><tr><td><strong>Task</strong><td>Durable unit of work with objective, state, and completion criteria.<tr><td><strong>Reasoning loop</strong><td>Worker-driven cycle of context → infer → tool → persist until done.<tr><td><strong>Proposal</strong><td>Model output interpreted by worker—not auto-executed.<tr><td><strong>Tool mediation</strong><td>Worker validates and runs tools; model never holds infra credentials.</table>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=further-reading>Further Reading<a href=#further-reading class=hash-link aria-label="Direct link to Further Reading" title="Direct link to Further Reading" translate=no>​</a></h2>
+<ul>
+<li class=""><a class="" href=/hermes-on-aws-guide/part-i-foundations/06-designing-the-hermes-platform>Chapter 6: Designing the Hermes Platform</a></li>
+<li class=""><a href=https://arxiv.org/abs/2210.03629 target=_blank rel="noopener noreferrer" class="">ReAct (reference only)</a> — pattern Hermes implements with platform-owned persistence</li>
+<li class=""><a href=https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/task-schema.example.sql target=_blank rel="noopener noreferrer" class=""><code>infrastructure/hermes/task-schema.example.sql</code></a></li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=hermes-platform-status>Hermes Platform Status<a href=#hermes-platform-status class=hash-link aria-label="Direct link to Hermes Platform Status" title="Direct link to Hermes Platform Status" translate=no>​</a></h2>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">───────────────────────────────────────────────</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">        HERMES PLATFORM STATUS</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Substrate + inference        ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Reasoning loop (specified)   ✓</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Production Hermes agent      ◐ (Part VII)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Tool pipelines               ◐ (Part VII)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">End-to-end ski query         ◐ (Ch 41+)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">───────────────────────────────────────────────</span><br/></div></code></pre></div></div>
+<p>Part VI complete. Part VII: <strong>run the loop in production</strong>.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=whats-next>What's Next<a href=#whats-next class=hash-link aria-label="Direct link to What's Next" title="Direct link to What's Next" translate=no>​</a></h2>
+<p><a class="" href=/hermes-on-aws-guide/part-vii-hermes/40-distributed-cognitive-execution>Chapter 40: Distributed Cognitive Execution</a> — Hermes as OS for agents; coordinator + shared state.</p>
+<hr/>
+<p><a class="" href=/hermes-on-aws-guide/part-vi-ai/38-gpu-instances>← Chapter 38: GPU Instances</a> | <a class="" href=/hermes-on-aws-guide/part-vii-hermes/40-distributed-cognitive-execution>Next: Chapter 40 — Distributed Cognitive Execution →</a></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/68thandMaine/hermes-on-aws-guide/tree/main/docs/part-vi-ai/39-ai-agent-architecture.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href=/hermes-on-aws-guide/part-vi-ai/38-gpu-instances><div class=pagination-nav__sublabel>Previous</div><div class=pagination-nav__label>Chapter 38: GPU Instances</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/hermes-on-aws-guide/part-vii-hermes/40-distributed-cognitive-execution><div class=pagination-nav__sublabel>Next</div><div class=pagination-nav__label>Chapter 40: Distributed Cognitive Execution</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#learning-objectives class="table-of-contents__link toc-highlight">Learning Objectives</a><li><a href=#prerequisites class="table-of-contents__link toc-highlight">Prerequisites</a><li><a href=#estimated-time class="table-of-contents__link toc-highlight">Estimated Time</a><li><a href=#background class="table-of-contents__link toc-highlight">Background</a><ul><li><a href=#the-problem class="table-of-contents__link toc-highlight">The Problem</a><li><a href=#the-unit-of-cognition class="table-of-contents__link toc-highlight">The Unit of Cognition</a><li><a href=#models-vs-platform class="table-of-contents__link toc-highlight">Models vs Platform</a></ul><li><a href=#architecture class="table-of-contents__link toc-highlight">Architecture</a><ul><li><a href=#high-level-execution class="table-of-contents__link toc-highlight">High-Level Execution</a><li><a href=#memory-layers-in-the-loop class="table-of-contents__link toc-highlight">Memory Layers in the Loop</a><li><a href=#inference-routing-chapter-38 class="table-of-contents__link toc-highlight">Inference Routing (Chapter 38)</a></ul><li><a href=#walkthrough class="table-of-contents__link toc-highlight">Walkthrough</a><ul><li><a href=#step-1--request-ingestion class="table-of-contents__link toc-highlight">Step 1 — Request Ingestion</a><li><a href=#step-2--worker-acquisition class="table-of-contents__link toc-highlight">Step 2 — Worker Acquisition</a><li><a href=#step-3--context-collection class="table-of-contents__link toc-highlight">Step 3 — Context Collection</a><li><a href=#step-4--prompt-construction class="table-of-contents__link toc-highlight">Step 4 — Prompt Construction</a><li><a href=#step-5--model-inference class="table-of-contents__link toc-highlight">Step 5 — Model Inference</a><li><a href=#step-6--tool-execution class="table-of-contents__link toc-highlight">Step 6 — Tool Execution</a><li><a href=#step-7--state-update class="table-of-contents__link toc-highlight">Step 7 — State Update</a><li><a href=#step-8--loop-continuation class="table-of-contents__link toc-highlight">Step 8 — Loop Continuation</a><li><a href=#failure-recovery class="table-of-contents__link toc-highlight">Failure Recovery</a><li><a href=#observability--close-the-loop class="table-of-contents__link toc-highlight">Observability — Close the Loop</a></ul><li><a href=#design-principles class="table-of-contents__link toc-highlight">Design Principles</a><ul><li><a href=#how-earlier-chapters-pay-off class="table-of-contents__link toc-highlight">How Earlier Chapters Pay Off</a></ul><li><a href=#hands-on-lab class="table-of-contents__link toc-highlight">Hands-on Lab</a><ul><li><a href=#lab-38-trace-the-loop class="table-of-contents__link toc-highlight">Lab 38: Trace the Loop</a></ul><li><a href=#verification class="table-of-contents__link toc-highlight">Verification</a><li><a href=#review-questions class="table-of-contents__link toc-highlight">Review Questions</a><li><a href=#key-takeaways class="table-of-contents__link toc-highlight">Key Takeaways</a><li><a href=#glossary-additions class="table-of-contents__link toc-highlight">Glossary Additions</a><li><a href=#further-reading class="table-of-contents__link toc-highlight">Further Reading</a><li><a href=#hermes-platform-status class="table-of-contents__link toc-highlight">Hermes Platform Status</a><li><a href=#whats-next class="table-of-contents__link toc-highlight">What's Next</a></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>Book</div><ul class="footer__items clean-list"><li class=footer__item><a class=footer__link-item href=/hermes-on-aws-guide/>Table of Contents</a><li class=footer__item><a href=https://github.com/68thandMaine/hermes-on-aws-guide/blob/main/CONTRIBUTING.md target=_blank rel="noopener noreferrer" class=footer__link-item>Contributing<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>Author</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/crudnicky target=_blank rel="noopener noreferrer" class=footer__link-item>Christopher Rudnicky<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 Christopher Rudnicky. MIT License.</div></div></div></footer></div></body>
