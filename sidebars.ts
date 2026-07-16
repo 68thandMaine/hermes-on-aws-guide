@@ -107,6 +107,7 @@ const sidebars: SidebarsConfig = {
         'appendices/repository-walkthrough',
         'appendices/cost-estimates',
         'appendices/troubleshooting',
+        'appendices/hermes-cookbook',
         'appendices/references',
         'appendices/diagrams',
         'appendices/labs',

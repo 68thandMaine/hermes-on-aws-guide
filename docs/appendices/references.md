@@ -65,6 +65,10 @@ Bibliography and documentation links for *Building a Personal AI Cloud*. Organiz
 
 | Resource | URL | Chapters |
 |----------|-----|----------|
+| Hermes Agent (GitHub) | https://github.com/NousResearch/hermes-agent | 6, VI–VII |
+| Hermes Agent docs | https://hermes-agent.nousresearch.com/docs | Cookbook |
+| Hermes User Stories | https://hermes-agent.nousresearch.com/docs/user-stories | Cookbook |
+| Hermes Docker guide | https://hermes-agent.nousresearch.com/docs/user-guide/docker | Cookbook |
 | llama.cpp | https://github.com/ggerganov/llama.cpp | 36–37 |
 | llama.cpp server docs | https://github.com/ggerganov/llama.cpp/tree/master/examples/server | 36 |
 | Hugging Face Model Hub (GGUF) | https://huggingface.co/models?library=gguf | 36 |

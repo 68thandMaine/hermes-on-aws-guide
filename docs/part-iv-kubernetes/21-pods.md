@@ -254,7 +254,7 @@ kubectl get pods
 
 ## Hands-on Lab
 
-### Lab 20: First Pod on the Hermes Cluster
+### Lab 21: First Pod on the Hermes Cluster
 
 **Estimated Time:** 45 minutes
 

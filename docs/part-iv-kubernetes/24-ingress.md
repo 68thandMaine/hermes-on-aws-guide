@@ -314,7 +314,7 @@ Hermes and llama.cpp will use host + path rules on one Traefik entry point.
 
 ## Hands-on Lab
 
-### Lab 23: External HTTP Entry
+### Lab 24: External HTTP Entry
 
 **Estimated Time:** 55 minutes
 

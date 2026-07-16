@@ -106,20 +106,46 @@ Terms used throughout *Building a Personal AI Cloud*. Terms are added as chapter
 | **Traefik** | Open-source reverse proxy and ingress controller, bundled with k3s. | Ch 12 |
 | **VPC** | Virtual Private Cloud — isolated network environment within AWS. | Ch 8 |
 
+## Containers (Part III)
+
+| Term | Definition | First Appears |
+|------|------------|---------------|
+| **Bind mount** | Host path mounted into a container filesystem. | Ch 17 |
+| **cgroup** | Kernel control group limiting CPU, memory, and I/O for processes/containers. | Ch 17 |
+| **Compose file** | YAML declaring multi-container applications for Docker Compose. | Ch 18 |
+| **CRI** | Container Runtime Interface — Kubernetes API to container runtimes. | Ch 19 |
+| **depends_on** | Compose start-order dependency; does not wait for application readiness. | Ch 18 |
+| **Digest** | Cryptographic hash identifying exact image/manifest content. | Ch 17 |
+| **Dockerfile** | Recipe of instructions to build an image reproducibly. | Ch 17 |
+| **Image spec** | OCI standard for image manifests, configs, and layers. | Ch 19 |
+| **Layer** | Content-addressed filesystem diff stacked to form an image. | Ch 17 |
+| **Manifest** | Metadata document listing image config and layers (and platform indexes). | Ch 19 |
+| **Named volume** | Docker-managed persistent storage mounted into containers. | Ch 17 |
+| **Namespace (Linux)** | Kernel isolation of process visibility (PID, net, mount, and related). | Ch 17 |
+| **OCI** | Open Container Initiative — standards for container image and runtime specs. | Ch 12, 19 |
+| **Project network** | User-defined bridge network Compose creates for service DNS. | Ch 18 |
+| **Runtime spec** | OCI standard for running a container from a rootfs and config. | Ch 19 |
+| **runc** | Common low-level OCI runtime that spawns containers via Linux kernel features. | Ch 19 |
+| **Service (Compose)** | Named long-running container definition in a Compose project. | Ch 18 |
+
 ## Kubernetes operations (Part IV–V)
 
 | Term | Definition | First Appears |
 |------|------------|---------------|
 | **ClusterRole** | Cluster-scoped RBAC permissions binding. | Ch 28 |
 | **ClusterRoleBinding** | Links ClusterRole to users or ServiceAccounts cluster-wide. | Ch 28 |
+| **Desired state** | Declared configuration (replicas, images, routes) stored in the API that controllers enforce. | Ch 20 |
 | **HPA** | Horizontal Pod Autoscaler — scales replicas based on metrics. | Ch 29 |
 | **LimitRange** | Namespace default/min/max for Pod resource requests and limits. | Ch 29 |
 | **NetworkPolicy** | Kubernetes resource controlling Pod ingress/egress traffic. | Ch 28 |
+| **Orchestration** | Automated placement, restart, discovery, and lifecycle of containers according to desired state. | Ch 20 |
+| **Reconciliation** | Control-loop process: compare desired vs actual cluster state and act until they match. | Ch 20 |
 | **ReplicaSet** | Controller maintaining a set of Pod replicas for a Deployment. | Ch 22 |
 | **ResourceQuota** | Namespace cap on aggregate resource consumption. | Ch 29 |
 | **Role** | Namespace-scoped RBAC permission set. | Ch 28 |
 | **RoleBinding** | Links Role to subjects within a namespace. | Ch 28 |
 | **Rolling update** | Incremental Pod replacement to maintain availability during deploys. | Ch 22 |
+| **Self-healing** | Controllers recreating or restarting failed workloads to restore desired state. | Ch 20 |
 | **ServiceAccount** | Kubernetes identity assigned to Pods for API and RBAC. | Ch 28 |
 | **ServiceMonitor** | Prometheus Operator CRD defining scrape targets. | Ch 33 |
 | **StorageClass** | Defines how PVCs are dynamically provisioned. | Ch 25 |
@@ -152,6 +178,7 @@ Terms used throughout *Building a Personal AI Cloud*. Terms are added as chapter
 | **Default deny** | Tool policy: reject unless explicitly allowed for the role. | Ch 42 |
 | **Distributed cognitive execution** | Multiple reasoning loops coordinated via shared durable state. | Ch 40 |
 | **GGUF** | File format for quantized local LLM weights (llama.cpp). | Ch 37 |
+| **Hermes Agent** | [Nous Research](https://nousresearch.com) open-source agent ([hermes-agent](https://github.com/NousResearch/hermes-agent)) — skills, memory, messaging gateway, pluggable models. This book hosts it on AWS. See [Hermes Cookbook](hermes-cookbook.md). | Ch 6 |
 | **llama.cpp** | C++ inference engine; runs GGUF models with an HTTP server (`llama-server`). | Ch 37 |
 | **llama-server** | Kubernetes Deployment running the llama.cpp HTTP inference server. | Ch 37 |
 | **Prompt injection** | Attempt to override instructions via text—defeated by authorization architecture. | Ch 42 |

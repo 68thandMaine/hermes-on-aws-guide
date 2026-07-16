@@ -289,7 +289,7 @@ Re-apply anytime with the manifest.
 
 ## Hands-on Lab
 
-### Lab 22: Service Discovery
+### Lab 23: Service Discovery
 
 **Estimated Time:** 45 minutes
 

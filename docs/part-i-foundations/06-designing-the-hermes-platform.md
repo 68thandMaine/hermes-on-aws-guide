@@ -401,7 +401,7 @@ You can explain without notes:
 | Term | Definition |
 |------|------------|
 | **GGUF** | File format for quantized LLM weights, commonly served by llama.cpp. |
-| **Hermes API** | Agent orchestration layer—routing, tools, session state—not the inference engine. |
+| **Hermes API** | Agent orchestration surface—routing, tools, session state—not the inference engine. In production this is [Hermes Agent](https://github.com/NousResearch/hermes-agent). |
 | **llama.cpp** | Inference service for running GGUF models; called by Hermes over the network. |
 | **MCP** | Model Context Protocol—standard for exposing tools to AI agents. |
 | **Purpose-driven provisioning** | Creating cloud resources only after naming the platform problem they solve. |
@@ -415,6 +415,8 @@ You can explain without notes:
 - [k3s documentation](https://docs.k3s.io/) — what you will install on EC2
 - [llama.cpp server mode](https://github.com/ggerganov/llama.cpp/blob/master/examples/server/README.md)
 - [Model Context Protocol](https://modelcontextprotocol.io/)
+- [Hermes Agent](https://github.com/NousResearch/hermes-agent) — the agent this platform runs ([docs](https://hermes-agent.nousresearch.com/docs))
+- [Appendix: Hermes Cookbook](../appendices/hermes-cookbook.md) — real-world usage scenarios
 
 ---
 

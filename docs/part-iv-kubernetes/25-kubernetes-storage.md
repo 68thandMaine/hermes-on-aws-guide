@@ -299,7 +299,7 @@ Data in `emptyDir` dies with the Pod—useful for temp files only.
 
 ## Hands-on Lab
 
-### Lab 24: Persistence Survives Pod Death
+### Lab 25: Persistence Survives Pod Death
 
 **Estimated Time:** 50 minutes
 

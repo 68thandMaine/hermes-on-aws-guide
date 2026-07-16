@@ -218,7 +218,7 @@ kubectl delete configmap app-config secret/app-secret
 
 ## Hands-on Lab
 
-### Lab 26: Config and Secret Injection
+### Lab 27: Config and Secret Injection
 
 **Estimated Time:** 40 minutes
 

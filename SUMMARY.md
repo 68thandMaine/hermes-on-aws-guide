@@ -81,9 +81,9 @@ See [Book Completion](STYLE_GUIDE.md#book-completion-design-done-execution-remai
 
 | # | Chapter | File | Status |
 |---|---------|------|--------|
-| 17 | [Docker](docs/part-iii-containers/17-docker.md) | `17-docker.md` | 📋 Outline |
-| 18 | [Docker Compose](docs/part-iii-containers/18-docker-compose.md) | `18-docker-compose.md` | ⬜ Planned |
-| 19 | [OCI](docs/part-iii-containers/19-oci.md) | `19-oci.md` | ⬜ Planned |
+| 17 | [Docker](docs/part-iii-containers/17-docker.md) | `17-docker.md` | ✏️ Draft |
+| 18 | [Docker Compose](docs/part-iii-containers/18-docker-compose.md) | `18-docker-compose.md` | ✏️ Draft |
+| 19 | [OCI](docs/part-iii-containers/19-oci.md) | `19-oci.md` | ✏️ Draft |
 
 ---
 
@@ -93,7 +93,7 @@ See [Book Completion](STYLE_GUIDE.md#book-completion-design-done-execution-remai
 
 | # | Chapter | File | Status |
 |---|---------|------|--------|
-| 20 | [Why Kubernetes Exists](docs/part-iv-kubernetes/20-why-kubernetes-exists.md) | `20-why-kubernetes-exists.md` | 📋 Outline |
+| 20 | [Why Kubernetes Exists](docs/part-iv-kubernetes/20-why-kubernetes-exists.md) | `20-why-kubernetes-exists.md` | ✏️ Draft |
 | 21 | [Pods](docs/part-iv-kubernetes/21-pods.md) | `21-pods.md` | ✏️ Draft |
 | 22 | [Deployments](docs/part-iv-kubernetes/22-deployments.md) | `22-deployments.md` | ✏️ Draft |
 | 23 | [Services](docs/part-iv-kubernetes/23-services.md) | `23-services.md` | ✏️ Draft |
@@ -158,6 +158,7 @@ See [Book Completion](STYLE_GUIDE.md#book-completion-design-done-execution-remai
 | C | [Repository Walkthrough](docs/appendices/repository-walkthrough.md) | `repository-walkthrough.md` | ✏️ Draft |
 | D | [AWS Cost Estimates](docs/appendices/cost-estimates.md) | `cost-estimates.md` | ✏️ Draft |
 | E | [Troubleshooting Guide](docs/appendices/troubleshooting.md) | `troubleshooting.md` | ✏️ Draft |
+| F | [Hermes Cookbook](docs/appendices/hermes-cookbook.md) | `hermes-cookbook.md` | ✏️ Draft |
 | — | [References](docs/appendices/references.md) | `references.md` |
 | — | [Diagram Index](docs/appendices/diagrams.md) | `diagrams.md` |
 | — | [Lab Index](docs/appendices/labs.md) | `labs.md` |

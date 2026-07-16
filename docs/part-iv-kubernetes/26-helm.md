@@ -11,12 +11,12 @@ description: "Package Deployment, Service, and Ingress as an installable Helm ch
 
 ---
 
-Chapters 20–24 taught individual objects. You applied YAML file by file: Deployment, Service, Ingress, PVC.
+Chapters 21–25 taught individual objects. You applied YAML file by file: Deployment, Service, Ingress, PVC.
 
 Real platforms deploy **systems**—versioned, configurable, upgradeable bundles. **Helm** is the packaging layer for Kubernetes: charts define the system; **releases** track what is installed.
 
 ```text
-Chapters 20–24   →  primitives (apply YAML)
+Chapters 21–25   →  primitives (apply YAML)
 Chapter 26       →  packaged system (helm install)
 ```
 
@@ -271,7 +271,7 @@ Helm removes resources it created for that release.
 
 ## Hands-on Lab
 
-### Lab 25: Package and Lifecycle
+### Lab 26: Package and Lifecycle
 
 **Estimated Time:** 65 minutes
 

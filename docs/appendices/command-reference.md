@@ -168,7 +168,7 @@ kubectl get nodes && kubectl get pods -A
 
 ## Part IV — Kubernetes
 
-### Chapters 20–24 — Core objects
+### Chapters 21–25 — Core objects
 
 ```bash
 kubectl run hello-pod --image=nginx --restart=Never

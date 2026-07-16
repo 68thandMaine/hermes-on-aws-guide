@@ -22,9 +22,12 @@ labs/
 ├── ch12/          # k3s kubeconfig notes
 ├── ch13/          # Terraform configuration
 │   └── terraform/
-├── ch15/          # Monitoring notes
-├── ch16/          # Hermes Kubernetes manifests
-├── ch17/          # Docker Compose lab assets
+├── ch15/          # Observability notes
+├── ch16/          # Cost / platform notes
+├── ch17/          # Docker depth notes
+├── ch18/          # Compose stack notes
+├── ch19/          # OCI portability notes
+├── ch20/          # Why Kubernetes Exists worksheet
 └── ch38/          # Hermes agent manifests and platform summary
 ```
 
@@ -43,10 +46,14 @@ labs/
 | 10 | 10 | Establish Trust on hermes-controlplane-01 | 45 min | ✏️ Draft |
 | 11 | 11 | Persistence, snapshots, S3, restore test | 70 min | ✏️ Draft |
 | 12 | 12 | Build application platform (Docker) | 45 min | ✏️ Draft |
-| 13 | 13 | Rebuild Infrastructure with Terraform | 90 min | 📝 Scaffold |
-| 14 | 14 | CI/CD Pipeline for Terraform | 75 min | 📝 Scaffold |
-| 15 | 15 | Deploy Prometheus and Grafana | 75 min | 📝 Scaffold |
-| 16 | 16 | Deploy Hermes on k3s | 90 min | 📝 Scaffold |
+| 13 | 13 | First control plane (k3s) | 60 min | ✏️ Draft |
+| 14 | 14 | Routing traffic to Hermes | 60 min | ✏️ Draft |
+| 15 | 15 | Observing the Hermes Platform | 60 min | ✏️ Draft |
+| 16 | 16 | Managing Platform Costs | 45 min | ✏️ Draft |
+| 17 | 17 | Docker depth (images, digests, Dockerfile) | 50 min | ✏️ Draft |
+| 18 | 18 | Multi-service Compose stack | 45 min | ✏️ Draft |
+| 19 | 19 | Prove OCI portability | 25 min | ✏️ Draft |
+| 20 | 20 | Why Kubernetes Exists (theory worksheet) | 15 min | ✏️ Draft |
 
 *Part VI — llama.cpp (not Ollama):* Labs 36–37 deploy `llama-server` via Helm; scripts in `infrastructure/aws/cli/ch36-*` and `ch37-*`.
 

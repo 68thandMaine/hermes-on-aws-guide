@@ -276,7 +276,7 @@ kubectl delete -f infrastructure/kubernetes/ch28-rbac-hermes-reader.yaml
 
 ## Hands-on Lab
 
-### Lab 27: Capability Reduction
+### Lab 28: Capability Reduction
 
 **Estimated Time:** 50 minutes
 

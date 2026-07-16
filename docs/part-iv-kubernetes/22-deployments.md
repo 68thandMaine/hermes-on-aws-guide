@@ -287,7 +287,7 @@ kubectl get pods -l app=nginx   # should be empty
 
 ## Hands-on Lab
 
-### Lab 21: Deployment Reconciliation
+### Lab 22: Deployment Reconciliation
 
 **Estimated Time:** 55 minutes
 

@@ -22,7 +22,7 @@ If a chapter deviates from this guide, it is not done.
 
 ## Platform Focus — Hermes-Centric
 
-This book builds infrastructure to run **Hermes**—an AI agent platform—not a generic cloud tutorial.
+This book builds infrastructure to run **Hermes**—[Nous Research’s Hermes Agent](https://github.com/NousResearch/hermes-agent) ([docs](https://hermes-agent.nousresearch.com/docs))—not a generic cloud tutorial or a custom agent framework. Real-world usage patterns live in [Appendix: Hermes Cookbook](docs/appendices/hermes-cookbook.md).
 
 | Rule | Detail |
 |------|--------|

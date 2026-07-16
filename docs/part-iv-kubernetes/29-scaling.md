@@ -257,7 +257,7 @@ kubectl delete pod load-gen --ignore-not-found
 
 ## Hands-on Lab
 
-### Lab 28: HPA Under Load
+### Lab 29: HPA Under Load
 
 **Estimated Time:** 70 minutes
 

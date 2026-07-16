@@ -8,13 +8,18 @@ This file orients AI coding agents working in **Building a Personal AI Cloud**.
 |---|---|
 | **What** | Technical book (O'Reilly/Manning style) — hands-on cloud engineering |
 | **Format** | Docusaurus site + Markdown chapters in `docs/` |
-| **Goal** | Reader builds AWS → k3s infrastructure to run the **Hermes AI agent** in production |
+| **Goal** | Reader builds AWS → k3s infrastructure to run Hermes Agent (Nous Research) in production |
 | **Author** | Christopher Rudnicky |
 | **Site** | https://crudnicky.github.io/agent-to-aws-guide/ |
+| **Hermes product** | https://github.com/NousResearch/hermes-agent |
+| **Hermes usage** | `docs/appendices/hermes-cookbook.md` — real-world scenarios |
 
 ## Non-Negotiables
 
-1. **Hermes-centric** — The agent is the product. ULLR is optional integration context only.
+1. **Hermes-centric** — The product is
+   [NousResearch/hermes-agent](https://github.com/NousResearch/hermes-agent).
+   ULLR is optional integration context only.
+   Usage scenarios: `docs/appendices/hermes-cookbook.md`.
 2. **Why before how** — Explain mechanisms; don't dump command lists without context.
 3. **Follow STYLE_GUIDE.md** — 14-section chapter template, RFC workflow, quality bar.
 4. **Content lives in `docs/`** — Not `chapters/` (removed).
@@ -62,10 +67,14 @@ This file orients AI coding agents working in **Building a Personal AI Cloud**.
 | 14 | `docs/part-ii-aws/14-routing-traffic-to-hermes.md` | Full draft — Route 53, cert-manager, Let's Encrypt, EDR-0009 |
 | 15 | `docs/part-ii-aws/15-observing-hermes-platform.md` | Full draft — CloudWatch baseline, EDR-0007 |
 | 16 | `docs/part-ii-aws/16-managing-platform-costs.md` | Full draft — budgets/tags, EDR-0008 |
+| 17 | `docs/part-iii-containers/17-docker.md` | Full draft — image/container depth, layers, digests, Dockerfile lab |
+| 18 | `docs/part-iii-containers/18-docker-compose.md` | Full draft — multi-service Compose lab; map to K8s |
+| 19 | `docs/part-iii-containers/19-oci.md` | Full draft — OCI image/runtime specs, CRI, digests |
+| 20 | `docs/part-iv-kubernetes/20-why-kubernetes-exists.md` | Full draft — orchestration failure modes; State Layers; Lab 20 |
 
 ### Content ⬜ (stubs only)
 
-Most chapters in Parts III–VII (beyond drafted Part IV–VII chapters listed in SUMMARY) remain planned stubs. Do not assume undeclared chapters have content.
+Gaps are called out in SUMMARY. Do not assume undeclared stubs have content.
 
 ## Repository Map
 

@@ -566,16 +566,18 @@ The platform schedules. Next: learn what to schedule—and which **State Layer**
 
 > **From this point forward, we are no longer configuring a machine. We are operating a system.**
 
-Chapter 13 is the only ontology shift at the platform layer. What follows **exercises** the control plane—visibility, manipulation, expansion—not new frameworks. Part IV begins by scheduling a Pod, not by re-explaining why Kubernetes exists.
+Chapter 13 is the only ontology shift at the platform layer. What follows **exercises** the control plane—visibility, manipulation, expansion—not new frameworks. Optional [Chapter 20](../part-iv-kubernetes/20-why-kubernetes-exists.md) names the failures behind orchestration; it must not feel like a second ignition. Part IV operation begins by scheduling a Pod.
 
 ---
 
 ## What's Next
 
-[Chapter 21: Pods](../part-iv-kubernetes/21-pods.md) — exercise the scheduler. Deploy a simple container **not** Hermes; map the Pod to a **State Layer**. No second ignition moment—just hands-on control plane use.
+Optional orientation: [Chapter 20: Why Kubernetes Exists](../part-iv-kubernetes/20-why-kubernetes-exists.md) — name death/placement/discovery/exposure against State Layers (no new ontology).
+
+Then: [Chapter 21: Pods](../part-iv-kubernetes/21-pods.md) — exercise the scheduler. Deploy a simple container **not** Hermes; map the Pod to a **State Layer**. No second ignition moment—just hands-on control plane use.
 
 Optional anytime (execution and refinement only): [Chapter 14 — Routing Traffic to Hermes](14-routing-traffic-to-hermes.md) (DNS/TLS), [15 — Observing the Platform](15-observing-hermes-platform.md) (*how do I see what it is doing?*), [16 — Managing Platform Costs](16-managing-platform-costs.md).
 
 ---
 
-[← Chapter 12: Building the Application Platform](12-building-the-application-platform.md) | [Next: Chapter 21 — Pods →](../part-iv-kubernetes/21-pods.md)
+[← Chapter 12: Building the Application Platform](12-building-the-application-platform.md) | [Next: Chapter 20 — Why Kubernetes Exists →](../part-iv-kubernetes/20-why-kubernetes-exists.md)

@@ -9,10 +9,11 @@ This repository is **Building a Personal AI Cloud** — an O'Reilly-style techni
 
 ## What We Are Building
 
-A hands-on book that teaches cloud engineering by building infrastructure to run the **Hermes AI agent** on AWS → Docker → k3s → production.
+A hands-on book that teaches cloud engineering by building infrastructure to run **[Hermes Agent](https://github.com/NousResearch/hermes-agent)** (Nous Research) on AWS → Docker → k3s → production.
 
 **Platform focus (mandatory):**
-- All narrative, labs, and architecture are **Hermes-centric**
+- All narrative, labs, and architecture are **Hermes-centric** — product = hermes-agent, not a custom agent
+- Real-world usage scenarios: `docs/appendices/hermes-cookbook.md`
 - **ULLR** may appear only as an optional data backend Hermes integrates with — never as the primary product or chapter subject
 - Frame capstones as: *what does the Hermes agent need?*
 
@@ -50,11 +51,11 @@ diagrams/                ← Reusable diagram sources
 
 | Status | Chapters |
 |--------|----------|
-| ✏️ Draft | … 9 Provisioning the Hermes Server, 10 Establishing Trust |
-| 📋 Outline | Preface, Ch 4 Networking, Ch 8–12 Part II scaffolds |
-| ⬜ Planned | Most of Parts III–VII |
+| ✏️ Draft | Parts I–III (incl. Ch 17–19); most of Parts IV–VII per SUMMARY |
+| 📋 Outline | Preface |
+| ⬜ Planned | Gaps called out in SUMMARY only |
 
-**Active work:** Part II implementation chapters (Ch 8+). **Just-in-time Linux**—do not block on Ch 3.4–3.7; teach commands when the platform needs them.
+**Active work:** Depth and polish; Part III complements Part IV (does not block it). **Just-in-time Linux**—do not block on Ch 3.4–3.7; teach commands when the platform needs them.
 
 ## Technical Defaults
 

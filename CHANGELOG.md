@@ -8,8 +8,16 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added
+
+- Appendix F: [Hermes Cookbook](docs/appendices/hermes-cookbook.md) — real-world Hermes
+  Agent scenarios (briefings, team bots, PR review, rental scanner, and more);
+  Hermes identity pinned to NousResearch/hermes-agent
+
 ### Changed
 
+- Chapters 17–19 (Part III — Containers): full drafts — Docker depth, Compose multi-service labs, OCI standards; lab worksheets `labs/ch17`–`ch19`; was stub-only
+- Chapter 20: Why Kubernetes Exists — full draft (failure modes, State Layers, optional theory before Pods); Lab 20 worksheet; was stub-only
 - Default AWS region standardized on **`us-west-2`** (subnet `hermes-public-usw2a`)
 - Renumber: Part III–VII shifted +1 so Managing Platform Costs keeps Ch 16; Docker is Ch 17 … capstone is Ch 45 (fixes duplicate Ch 16)
 - Chapter 6: restore Chapter 15 (CloudWatch) and Chapter 16 (cost) in the design map; Observable/Cost rows used stale numbers after Routing became Ch 14

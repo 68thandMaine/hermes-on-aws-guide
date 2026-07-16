@@ -27,11 +27,11 @@ agent-to-aws-guide/
 | `docs/preface/` | Preface |
 | `docs/part-i-foundations/` | Chapters 1–6 — foundations and Hermes design |
 | `docs/part-ii-aws/` | Chapters 7–16 — AWS and platform substrate |
-| `docs/part-iii-containers/` | Chapters 16–18 — Docker depth (stubs) |
-| `docs/part-iv-kubernetes/` | Chapters 19–28 — Kubernetes objects and ops |
-| `docs/part-v-infrastructure/` | Chapters 29–33 — Terraform, CI, secrets, observability |
-| `docs/part-vi-ai/` | Chapters 34–38 — Hermes runtime and AI infra |
-| `docs/part-vii-hermes/` | Chapters 39–44 — operate, govern, extend, production, capstone |
+| `docs/part-iii-containers/` | Chapters 17–19 — Docker, Compose, OCI depth |
+| `docs/part-iv-kubernetes/` | Chapters 20–29 — Kubernetes objects and ops |
+| `docs/part-v-infrastructure/` | Chapters 30–34 — Terraform, CI, secrets, observability |
+| `docs/part-vi-ai/` | Chapters 35–39 — Hermes runtime and AI infra |
+| `docs/part-vii-hermes/` | Chapters 40–45 — operate, govern, extend, production, capstone |
 | `docs/appendices/` | Reference material (this section) |
 | `docs/index.mdx` | Book home page |
 
