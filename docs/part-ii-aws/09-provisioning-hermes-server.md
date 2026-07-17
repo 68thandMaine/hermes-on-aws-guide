@@ -375,6 +375,14 @@ aws ec2 authorize-security-group-ingress \
 
 #### Step 4 — Launch hermes-controlplane-01
 
+:::warning[Billing starts here]
+
+Running `aws ec2 run-instances` (or `ch09-provision-controlplane.sh`) **creates and starts** the instance. From this point you incur charges for EC2 compute and the three EBS volumes (~500 GB gp3). Steps 1–3 only prepared free metadata (AMI lookup, key pair, security group).
+
+To pause later without tearing down the server: `aws ec2 stop-instances` stops compute billing, but **EBS storage still bills**. Terminating the instance and deleting volumes stops those charges—you will need to reprovision before continuing the book.
+
+:::
+
 From the repository root, user-data references the bootstrap script:
 
 ```bash
