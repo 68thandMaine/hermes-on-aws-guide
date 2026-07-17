@@ -116,7 +116,7 @@ Kubernetes            ← Part IV
 
 ### What This Chapter Codifies
 
-The repo module **`infrastructure/aws/terraform/modules/network/`** matches [Chapter 8](../part-ii-aws/08-creating-network-for-hermes.md):
+The repo module **`code/infrastructure/aws/terraform/modules/network/`** matches [Chapter 8](../part-ii-aws/08-creating-network-for-hermes.md):
 
 | Terraform resource | Chapter 8 name |
 |--------------------|----------------|
@@ -125,7 +125,7 @@ The repo module **`infrastructure/aws/terraform/modules/network/`** matches [Cha
 | `aws_subnet` | `hermes-public-usw2a` `10.0.1.0/24` |
 | `aws_route_table` | `hermes-public-rt` → `0.0.0.0/0` → IGW |
 
-**EC2 + EBS + SG** remain the next module (`controlplane`)—same pattern as [Chapter 9](../part-ii-aws/09-provisioning-hermes-server.md), with `user_data` from [`hermes-controlplane-bootstrap.sh`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/aws/cloud-init/hermes-controlplane-bootstrap.sh).
+**EC2 + EBS + SG** remain the next module (`controlplane`)—same pattern as [Chapter 9](../part-ii-aws/09-provisioning-hermes-server.md), with `user_data` from [`hermes-controlplane-bootstrap.sh`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/aws/cloud-init/hermes-controlplane-bootstrap.sh).
 
 ### Full Stack
 
@@ -148,7 +148,7 @@ Two orchestrators: **Terraform** (infra), **Kubernetes** (runtime).
 ### Step 1 — Review the Module
 
 ```text
-infrastructure/aws/terraform/
+code/infrastructure/aws/terraform/
 ├── modules/
 │   └── network/          ← Chapter 8 as code
 └── environments/
@@ -169,7 +169,7 @@ This lab assumes a **non-conflicting** apply (new prefix or clean dev account).
 ### Step 3 — Init and Plan
 
 ```bash
-cd infrastructure/aws/terraform/environments/dev
+cd code/infrastructure/aws/terraform/environments/dev
 cp terraform.tfvars.example terraform.tfvars
 # Edit name_prefix if hermes-vpc already exists manually
 

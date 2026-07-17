@@ -319,7 +319,7 @@ Use the walkthrough in Lab 6 to produce your own platform worksheet.
 
 **Steps:**
 
-1. Copy the template: `labs/ch06/platform-design.md` (or create it from the tables in this chapter)
+1. Copy the template: `resources/labs/ch06/platform-design.md` (or create it from the tables in this chapter)
 2. For each box in the architecture diagram, write:
    - **Purpose** (one sentence)
    - **AWS resource** (or "on-node only")
@@ -336,7 +336,7 @@ Your worksheet lists Hermes and llama.cpp as **separate services** with separate
 
 **Expected output:**
 
-A completed `labs/ch06/platform-design.md` you can reference when provisioning in Part II.
+A completed `resources/labs/ch06/platform-design.md` you can reference when provisioning in Part II.
 
 **Troubleshooting:**
 

@@ -52,7 +52,7 @@ After completing this chapter, you will be able to:
 
 - [Chapter 39](../part-vi-ai/39-ai-agent-architecture.md) — single-task reasoning loop
 - [Chapters 34–37](../part-vi-ai/35-running-hermes.md) — Hermes lab stack
-- Task schema applied ([`task-schema.example.sql`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/task-schema.example.sql))
+- Task schema applied ([`task-schema.example.sql`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/hermes/task-schema.example.sql))
 
 ---
 
@@ -144,7 +144,7 @@ There are no "special" agent binaries—only **different tasks**.
 Coordinator responsibilities:
 
 1. Create `root_request_id` for correlation
-2. Decompose user objective into subtasks ([`coordinator-decomposition.example.json`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/coordinator-decomposition.example.json))
+2. Decompose user objective into subtasks ([`coordinator-decomposition.example.json`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/hermes/coordinator-decomposition.example.json))
 3. Insert child rows with `parent_task_id`
 4. Poll/wait for children `status: completed`
 5. Spawn summary task when dependencies satisfied
@@ -212,7 +212,7 @@ Re-apply schema if you completed Lab 38 before this chapter.
 Review ski-trip example:
 
 ```bash
-cat infrastructure/hermes/coordinator-decomposition.example.json
+cat code/infrastructure/hermes/coordinator-decomposition.example.json
 ```
 
 Coordinator translates JSON into `INSERT` rows—each with `status: pending`, shared `root_request_id`.
@@ -339,7 +339,7 @@ Hermes creates **more tasks**; Kubernetes scales **more Pods**. Same platform.
 ## Further Reading
 
 - [Chapter 39: The Hermes Reasoning Loop](../part-vi-ai/39-ai-agent-architecture.md)
-- [`coordinator-decomposition.example.json`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/coordinator-decomposition.example.json)
+- [`coordinator-decomposition.example.json`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/hermes/coordinator-decomposition.example.json)
 
 ---
 

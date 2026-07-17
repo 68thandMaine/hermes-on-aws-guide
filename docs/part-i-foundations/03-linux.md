@@ -1193,7 +1193,7 @@ Complete these labs in order on an Ubuntu system. WSL2, Multipass, or a local VM
 
 ```bash
 ls -l ~/labs/ch03/hello.sh
-./~/labs/ch03/hello.sh
+~/labs/ch03/hello.sh
 ```
 
 **Expected:**

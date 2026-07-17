@@ -16,12 +16,12 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
-- Chapters 17–19 (Part III — Containers): full drafts — Docker depth, Compose multi-service labs, OCI standards; lab worksheets `labs/ch17`–`ch19`; was stub-only
+- Chapters 17–19 (Part III — Containers): full drafts — Docker depth, Compose multi-service labs, OCI standards; lab worksheets `resources/labs/ch17`–`ch19`; was stub-only
 - Chapter 20: Why Kubernetes Exists — full draft (failure modes, State Layers, optional theory before Pods); Lab 20 worksheet; was stub-only
 - Default AWS region standardized on **`us-west-2`** (subnet `hermes-public-usw2a`)
 - Renumber: Part III–VII shifted +1 so Managing Platform Costs keeps Ch 16; Docker is Ch 17 … capstone is Ch 45 (fixes duplicate Ch 16)
 - Chapter 6: restore Chapter 15 (CloudWatch) and Chapter 16 (cost) in the design map; Observable/Cost rows used stale numbers after Routing became Ch 14
-- Lab 15 worksheet: `labs/ch15/observability-notes.md`
+- Lab 15 worksheet: `resources/labs/ch15/observability-notes.md`
 - Chapter 14: Routing Traffic to Hermes — full draft (Route 53, cert-manager, Let's Encrypt TLS on Traefik); was outline-only stub; EDR-0009; `ch14-routing-baseline.sh`
 - Chapter 4: Networking Fundamentals — full draft (TCP/IP, CIDR, DNS, NAT, routing, local diagnostics lab); was outline-only stub
 - Editorial: local inference standardized on **llama.cpp** (`llama-server`)—removed Ollama as primary path; Ch 37 "Why not Ollama"; glossary, diagrams, references, labs index updated
@@ -48,7 +48,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Chapter 25: Storage — PVC, local-path on k3s, persistence lab; platform status 82%
 - Chapter 24: Ingress — Traefik on k3s, host routing, external curl; `ch24-nginx-ingress.yaml`; platform status 78%
 - Chapter 23: Services — ClusterIP, DNS, Endpoints; `ch23-nginx-service.yaml`; platform status 75%
-- Chapter 22: Deployments — desired state, self-healing, rollout intro; manifest in `infrastructure/kubernetes/`; platform status 72%
+- Chapter 22: Deployments — desired state, self-healing, rollout intro; manifest in `code/infrastructure/kubernetes/`; platform status 72%
 - Chapter 21: Pods — execution-only first workload; State Layer mapping; platform status 68%
 - STYLE_GUIDE — cognitive governance: no new mental models after Ch 13; State Layer litmus test; execution-only chapter template
 - Part VII Ch 44 reframed as capstone closure (*The Platform You Built*); SUMMARY project status (design vs execution)
@@ -60,18 +60,18 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Added
 
 - Chapter 13: The First Control Plane — k3s install, server→scheduler narrative, EDR-0006, platform status 65%
-- `infrastructure/aws/cli/ch13-install-k3s.sh` — single-node k3s server + laptop kubeconfig
+- `code/infrastructure/aws/cli/ch13-install-k3s.sh` — single-node k3s server + laptop kubeconfig
 - Chapter 12: Building the Application Platform — Docker, server→platform narrative, EDR-0005
 - STYLE_GUIDE — platform layering (Infrastructure → Platform → Applications); k8s before Hermes
 - Chapter 9 updated — three EBS volumes (`hermes-root`, `hermes-models`, `hermes-data`); mounts `/models`, `/data`
-- Engineering Decision Records (`infrastructure/edr/`) — recurring pattern for implementation chapters
-- `infrastructure/` tree — cloud-init, cli, terraform placeholder (early IaC mindset)
+- Engineering Decision Records (`code/infrastructure/edr/`) — recurring pattern for implementation chapters
+- `code/infrastructure/` tree — cloud-init, cli, terraform placeholder (early IaC mindset)
 - STYLE_GUIDE — guided build three layers, AWS `hermes-*` naming convention
 - Part II restructure — Hermes-centric chapter titles; logical order (network before server); renamed files
 - STYLE_GUIDE — "Why this matters for Hermes" admonition, platform status template, just-in-time Linux
 - Chapter 3 — just-in-time Linux note; Sections 3.4–3.7 deferred until platform needs them
-- Lab 6: `labs/ch06/platform-design.md`
-- Diagram: `diagrams/hermes-platform-services.mmd`
+- Lab 6: `resources/labs/ch06/platform-design.md`
+- Diagram: `resources/diagrams/hermes-platform-services.mmd`
 - Chapter 1: Introduction — full draft framing laptop vs Codespaces vs own cloud
 - Chapter 2: How Computers Actually Work — CPU/RAM/storage/network mental model
 - Chapter 3: Linux — Section 3.3 processes, daemons, systemd (Docker/K8s bridge)
@@ -113,7 +113,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Initial repository scaffold
 - 19 chapter placeholder files (legacy structure)
 - `LICENSE` (MIT), `CONTRIBUTING.md`, glossary, references, diagrams, labs index
-- `scripts/setup/check-prerequisites.sh`
+- `code/scripts/setup/check-prerequisites.sh`
 
 [Unreleased]: https://github.com/crudnicky/agent-to-aws-guide/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/crudnicky/agent-to-aws-guide/releases/tag/v0.1.0

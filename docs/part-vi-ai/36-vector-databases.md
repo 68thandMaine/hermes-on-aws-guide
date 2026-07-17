@@ -196,7 +196,7 @@ helm repo update
 
 helm upgrade --install hermes-qdrant qdrant/qdrant \
   -n hermes \
-  -f infrastructure/helm/qdrant/values-k3s-lab.yaml
+  -f code/infrastructure/helm/qdrant/values-k3s-lab.yaml
 ```
 
 Verify:
@@ -220,8 +220,8 @@ curl -s http://127.0.0.1:6333/ | head
 Lab uses **4 dimensions** for readable demo vectors; production uses model-native size (384–1536).
 
 ```bash
-chmod +x infrastructure/aws/cli/ch36-init-hermes-memory-collection.sh
-./infrastructure/aws/cli/ch36-init-hermes-memory-collection.sh
+chmod +x code/infrastructure/aws/cli/ch36-init-hermes-memory-collection.sh
+./code/infrastructure/aws/cli/ch36-init-hermes-memory-collection.sh
 ```
 
 Equivalent API:
@@ -235,8 +235,8 @@ curl -X PUT 'http://127.0.0.1:6333/collections/hermes-memory' \
 ### Step 4 — Write Sample Memories
 
 ```bash
-chmod +x infrastructure/aws/cli/ch36-vector-retrieval-demo.sh
-./infrastructure/aws/cli/ch36-vector-retrieval-demo.sh
+chmod +x code/infrastructure/aws/cli/ch36-vector-retrieval-demo.sh
+./code/infrastructure/aws/cli/ch36-vector-retrieval-demo.sh
 ```
 
 Upserts three payload-tagged points (weather vs finance). Search with a weather-like query vector returns nearest neighbors—**semantic recall without keyword match**.
@@ -246,7 +246,7 @@ Upserts three payload-tagged points (weather vs finance). Search with a weather-
 Re-deploy `hermes-lab` so API Pods receive Qdrant env vars:
 
 ```bash
-helm upgrade hermes-lab infrastructure/helm/hermes-lab -n hermes
+helm upgrade hermes-lab code/infrastructure/helm/hermes-lab -n hermes
 kubectl exec -n hermes deploy/hermes-api -- env | grep QDRANT
 ```
 

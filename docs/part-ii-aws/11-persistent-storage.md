@@ -140,7 +140,7 @@ Memorize this table. It applies after you add Docker, k3s, and Hermes—containe
 ├── opt/
 │   ├── hermes/          # configs, env templates (root volume)
 │   ├── config/
-│   └── scripts/
+│   └── code/scripts/
 ├── models/              # hermes-models volume
 │   ├── qwen/
 │   ├── mistral/
@@ -320,7 +320,7 @@ echo "export HERMES_BACKUP_BUCKET=$BUCKET" >> ~/hermes-platform/notes/storage.en
 echo "S3 bucket: s3://$BUCKET"
 ```
 
-Or run: `bash infrastructure/aws/cli/ch11-storage-backup-baseline.sh` after review.
+Or run: `bash code/infrastructure/aws/cli/ch11-storage-backup-baseline.sh` after review.
 
 #### Step 4 — Create Initial Snapshots
 
@@ -419,7 +419,7 @@ Document changes in `~/hermes-platform/notes/storage-migration.md`.
 5. Snapshot models and data volumes; wait for completion
 6. Complete restore exercise (Step 5 above)
 7. Reboot and verify mounts
-8. Read [EDR-0004](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/edr/EDR-0004-separate-storage-tiers.md)
+8. Read [EDR-0004](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/edr/EDR-0004-separate-storage-tiers.md)
 
 ---
 
@@ -493,7 +493,7 @@ Document changes in `~/hermes-platform/notes/storage-migration.md`.
 
 ## Engineering Decision Record
 
-**[EDR-0004: Separate operating system, models, and application data](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/edr/EDR-0004-separate-storage-tiers.md)**
+**[EDR-0004: Separate operating system, models, and application data](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/edr/EDR-0004-separate-storage-tiers.md)**
 
 ---
 

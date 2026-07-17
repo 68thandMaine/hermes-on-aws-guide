@@ -161,7 +161,7 @@ Authentication proves identity. **Authorization determines capability.**
 
 In [Chapter 40](40-distributed-cognitive-execution.md), each subtask carries `agent_role` (`weather`, `finance`, `summary`, …). The model may *request* any tool. **Hermes decides** whether the role permits it.
 
-Policy file: [`tool-policy.example.yaml`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/tool-policy.example.yaml)
+Policy file: [`tool-policy.example.yaml`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/hermes/tool-policy.example.yaml)
 
 ```yaml
 defaultAction: deny
@@ -184,7 +184,7 @@ Mount as a **ConfigMap** (not a Secret—the policy is not sensitive; the creden
 
 ```bash
 kubectl create configmap hermes-tool-policy \
-  --from-file=policy.yaml=infrastructure/hermes/tool-policy.example.yaml \
+  --from-file=policy.yaml=code/infrastructure/hermes/tool-policy.example.yaml \
   -n hermes --dry-run=client -o yaml | kubectl apply -f -
 ```
 
@@ -257,7 +257,7 @@ Model → proposed tool call
      → audit row with approver_id, decided_at
 ```
 
-Schema: [`governance-schema.example.sql`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/governance-schema.example.sql)
+Schema: [`governance-schema.example.sql`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/hermes/governance-schema.example.sql)
 
 ```sql
 CREATE TABLE hermes_approvals (
@@ -277,7 +277,7 @@ Kubernetes analogue: a human must `kubectl auth can-i` before a privileged `Clus
 
 Every significant action must be reconstructable. You already have the table—extend how you use it.
 
-**Postgres** — [`hermes_task_steps`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/task-schema.example.sql):
+**Postgres** — [`hermes_task_steps`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/hermes/task-schema.example.sql):
 
 | Field | Purpose |
 |-------|---------|
@@ -329,7 +329,7 @@ resources:
 
 Add namespace `ResourceQuota` for aggregate caps. HPA `maxReplicas` bounds scale-out ([Chapter 29](../part-iv-kubernetes/29-scaling.md), [Chapter 44](44-from-development-to-production.md)).
 
-**Cognitive (Hermes)** — [`resource-governance.example.yaml`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/resource-governance.example.yaml):
+**Cognitive (Hermes)** — [`resource-governance.example.yaml`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/hermes/resource-governance.example.yaml):
 
 ```yaml
 perRequest:
@@ -371,13 +371,13 @@ kubectl auth can-i get secrets \
 # Expected: no
 ```
 
-Apply [`ch42-rbac-hermes-worker.yaml`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/kubernetes/ch42-rbac-hermes-worker.yaml).
+Apply [`ch42-rbac-hermes-worker.yaml`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/kubernetes/ch42-rbac-hermes-worker.yaml).
 
 ### Step 8 — Network Isolation
 
 Model servers and databases stay **internal**. Only the API receives Ingress traffic ([Ch 24](../part-iv-kubernetes/24-ingress.md), [Ch 35](../part-vi-ai/35-running-hermes.md)).
 
-Apply [`ch42-networkpolicy-hermes.yaml`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/kubernetes/ch42-networkpolicy-hermes.yaml):
+Apply [`ch42-networkpolicy-hermes.yaml`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/kubernetes/ch42-networkpolicy-hermes.yaml):
 
 ```text
 default-deny ingress (namespace hermes)
@@ -516,8 +516,8 @@ Every stage is observable and enforceable.
 - [Chapter 28: Security (RBAC & Network Policies)](../part-iv-kubernetes/28-kubernetes-security.md)
 - [Chapter 32: Secrets Management](../part-v-infrastructure/32-secrets-management.md)
 - [Chapter 40: Distributed Cognitive Execution](40-distributed-cognitive-execution.md)
-- [`tool-policy.example.yaml`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/tool-policy.example.yaml)
-- [`governance-schema.example.sql`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/governance-schema.example.sql)
+- [`tool-policy.example.yaml`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/hermes/tool-policy.example.yaml)
+- [`governance-schema.example.sql`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/hermes/governance-schema.example.sql)
 
 ---
 

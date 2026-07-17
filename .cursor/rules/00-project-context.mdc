@@ -41,8 +41,13 @@ docs/                    ← ALL chapter content lives here (Docusaurus)
   appendices/
 sidebars.ts              ← Sidebar navigation (keep in sync with SUMMARY)
 docusaurus.config.ts     ← Site config
-labs/                    ← Lab assets and worksheets (not published as chapters)
-diagrams/                ← Reusable diagram sources
+code/infrastructure/     ← Deployable AWS, Terraform, Helm, Kubernetes, Hermes artifacts
+code/scripts/            ← Helper and CI scripts
+code/site/               ← Docusaurus theme CSS and static assets
+resources/labs/          ← Lab assets and worksheets (not published as chapters)
+resources/diagrams/      ← Reusable diagram sources
+resources/glossary/      ← Source glossary material
+resources/references/    ← Source bibliography material
 ```
 
 **Do not** create or edit under a legacy `chapters/` path — it was removed during the Docusaurus migration.
@@ -74,7 +79,7 @@ Every chapter must answer: (1) what problem, (2) why invented, (3) how it works 
 
 ## CI Requirements
 
-PRs must pass: markdownlint, `scripts/ci/validate-links.sh`, `npm run build` (Docusaurus throws on broken links).
+PRs must pass: markdownlint, `code/scripts/ci/validate-links.sh`, `npm run build` (Docusaurus throws on broken links).
 
 Preview locally: `npm start`
 

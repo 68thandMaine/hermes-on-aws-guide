@@ -4,7 +4,8 @@ globs:
   - docusaurus.config.ts
   - sidebars.ts
   - docs/index.mdx
-  - src/**/*
+  - code/site/src/**/*
+  - code/site/static/**/*
   - .github/workflows/**
   - package.json
 alwaysApply: false
@@ -45,7 +46,7 @@ appendices/
 ## CI Pipeline (`.github/workflows/book-ci.yml`)
 
 1. Markdown lint (`.markdownlint.json`)
-2. `scripts/ci/validate-links.sh` (docs/, labs/, root meta files)
+2. `code/scripts/ci/validate-links.sh` (docs/, resources/labs/, root meta files)
 3. `npm run build`
 4. Deploy to GitHub Pages on push to `main`
 

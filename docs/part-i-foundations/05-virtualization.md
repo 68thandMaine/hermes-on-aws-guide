@@ -345,7 +345,7 @@ Inside the VM, `lscpu` reports fewer CPUs and `free -h` shows only the RAM you a
    - macOS: `sysctl -n hw.ncpu hw.memsize` and convert bytes to GiB
 2. Record disk layout: `lsblk` (Linux) or `diskutil list` (macOS)
 3. **Optional:** Launch `hermes-practice` in Multipass (see Walkthrough) and compare `lscpu` / `free -h` inside vs outside the VM
-4. Complete the stack diagram in `labs/ch05/virtualization-notes.md`
+4. Complete the stack diagram in `resources/labs/ch05/virtualization-notes.md`
 5. Answer: if Hermes needs 8 GiB RAM for llama.cpp and 4 GiB for PostgreSQL/Redis/Hermes, what is the **minimum** EC2 memory you should consider? (Hint: leave headroom for the OS and k3s.)
 6. Answer: why is a container **not** a substitute for an EC2 instance in this architecture?
 
@@ -368,7 +368,7 @@ Physical host → EC2 VM → Ubuntu → Docker → k3s → Hermes Pod
 | `lsblk: command not found` | macOS | Use `diskutil list` instead |
 | VM feels slower than host | Normal — nested virtualization overhead | Expected; EC2 Type 1 hypervisors are faster than laptop Type 2 |
 
-**Cleanup:** If you created a Multipass VM, run `multipass delete hermes-practice --purge`. Keep `labs/ch05/virtualization-notes.md` for reference when sizing your EC2 instance in Chapter 9.
+**Cleanup:** If you created a Multipass VM, run `multipass delete hermes-practice --purge`. Keep `resources/labs/ch05/virtualization-notes.md` for reference when sizing your EC2 instance in Chapter 9.
 
 ---
 

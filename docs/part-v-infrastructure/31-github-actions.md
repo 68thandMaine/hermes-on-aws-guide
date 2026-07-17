@@ -128,7 +128,7 @@ On pull requests: **validate + plan only**. On `main`: **apply** after plan succ
   workflows/
     book-ci.yml       ← docs site (existing)
     terraform.yml     ← Chapter 31 — AWS infrastructure
-infrastructure/aws/terraform/
+code/infrastructure/aws/terraform/
   modules/network/
   environments/dev/
 ```
@@ -369,7 +369,7 @@ This book introduces the pattern here; full remote backend setup is a follow-on 
 | Apply on wrong branch | Workflow `if` misconfigured | Apply only when `github.ref == refs/heads/main` |
 | State conflict | Local + CI both applying | Use one state backend; avoid dual apply |
 | Secrets in logs | `echo $AWS_SECRET_ACCESS_KEY` | Never print env vars; GitHub masks secrets |
-| Workflow never runs | Path filter | Change files under `infrastructure/aws/terraform/` |
+| Workflow never runs | Path filter | Change files under `code/infrastructure/aws/terraform/` |
 
 ### Failure Modes
 

@@ -292,7 +292,7 @@ In your notes, write one line each for Intent, API, Scheduler, Container, Kernel
 
 6. Do **not** create application Pods or deploy Hermes in this lab—that is [Chapter 21](21-pods.md)
 
-**Worksheet:** [`labs/ch20/orchestration-failures.md`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/labs/ch20/orchestration-failures.md)
+**Worksheet:** [`resources/labs/ch20/orchestration-failures.md`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/resources/labs/ch20/orchestration-failures.md)
 
 ---
 

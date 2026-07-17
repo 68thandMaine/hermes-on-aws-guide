@@ -1,0 +1,53 @@
+# Chapter 43 — Pre-flight checklist for new Hermes capabilities
+# Complete before merging tool registry + policy changes to production.
+
+capability:
+  name: github.create_issue
+  owner: platform-team
+  agent_roles: [project]
+
+contract:
+  schemaDefined: true
+  schemaPath: code/infrastructure/hermes/tools/github.create-issue.schema.json
+  breakingChangeProcess: document in CHANGELOG; dual-register versions during migration
+
+authentication:
+  secretInAwsSecretsManager: true
+  secretKey: hermes/github-token
+  esoSynced: true
+  secretNeverInPrompt: true
+  secretNeverInContextJson: true
+
+authorization:
+  registeredInToolRegistry: true
+  allowedInToolPolicy: true
+  defaultDenyRespected: true
+  requiresApproval: false
+
+execution:
+  workerMediated: true
+  modelCallsApiDirectly: false
+  timeoutConfigured: true
+  retriesBounded: true
+
+observability:
+  structuredLogs: true
+  prometheusMetric: true
+  traceIdPropagated: true
+  auditStepPersisted: true          # hermes_task_steps step_type=tool
+
+testing:
+  unitTestsPass: false              # set true before prod
+  integrationTestAgainstSandbox: false
+  deniedRoleTested: true            # summary role cannot call github.create_issue
+  endToEndReasoningTest: false
+
+deployment:
+  configMapUpdated: true
+  helmUpgradeRequired: false        # registry is ConfigMap, not image
+  rollbackPlanDocumented: true
+
+governance:
+  resourceGovernanceReviewed: true    # rate limits in tool-policy
+  networkPolicyAllowsEgress: true   # workers → github.com:443 if required
+  runbookLinked: false

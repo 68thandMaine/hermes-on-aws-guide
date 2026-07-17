@@ -394,7 +394,7 @@ Or run the chapter helper (DNS UPSERT + notes; kubectl steps remain manual):
 ```bash
 export HERMES_DOMAIN=example.com
 export HERMES_HOSTNAME=hermes.example.com
-bash infrastructure/aws/cli/ch14-routing-baseline.sh
+bash code/infrastructure/aws/cli/ch14-routing-baseline.sh
 ```
 
 ---
@@ -415,7 +415,7 @@ bash infrastructure/aws/cli/ch14-routing-baseline.sh
 4. Install cert-manager; apply `letsencrypt-prod` ClusterIssuer
 5. Apply TLS Ingress for `nginx-service` (or Hermes later) with cert-manager annotation
 6. Wait until `Certificate` is Ready; `curl -vI https://hermes.<domain>/`
-7. Read [EDR-0009](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/edr/EDR-0009-public-https-entrypoint.md)
+7. Read [EDR-0009](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/edr/EDR-0009-public-https-entrypoint.md)
 
 **Verification:**
 
@@ -506,7 +506,7 @@ bash infrastructure/aws/cli/ch14-routing-baseline.sh
 
 ## Engineering Decision Record
 
-**[EDR-0009: Public HTTPS entry via Route 53 and Let's Encrypt](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/edr/EDR-0009-public-https-entrypoint.md)**
+**[EDR-0009: Public HTTPS entry via Route 53 and Let's Encrypt](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/edr/EDR-0009-public-https-entrypoint.md)**
 
 ---
 

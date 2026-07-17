@@ -7,11 +7,11 @@ on:
   push:
     branches: [main]
     paths:
-      - 'infrastructure/aws/terraform/**'
+      - 'code/infrastructure/aws/terraform/**'
       - '.github/workflows/terraform.yml'
   pull_request:
     paths:
-      - 'infrastructure/aws/terraform/**'
+      - 'code/infrastructure/aws/terraform/**'
       - '.github/workflows/terraform.yml'
   workflow_dispatch:
 
@@ -21,7 +21,7 @@ concurrency:
 
 env:
   TF_IN_AUTOMATION: true
-  TF_WORKING_DIR: infrastructure/aws/terraform/environments/dev
+  TF_WORKING_DIR: code/infrastructure/aws/terraform/environments/dev
   AWS_REGION: us-west-2
 
 jobs:
@@ -40,7 +40,7 @@ jobs:
           terraform_version: 1.5.7
 
       - name: Terraform Format Check
-        run: terraform fmt -check -recursive infrastructure/aws/terraform
+        run: terraform fmt -check -recursive code/infrastructure/aws/terraform
         continue-on-error: true
 
       - name: Terraform Init

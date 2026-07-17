@@ -170,7 +170,7 @@ helm repo update
 helm upgrade --install logging grafana/loki-stack \
   -n logging \
   --create-namespace \
-  -f infrastructure/helm/logging/values-k3s-lab.yaml
+  -f code/infrastructure/helm/logging/values-k3s-lab.yaml
 ```
 
 Verify:
@@ -245,7 +245,7 @@ Compare to Prometheus in the same Explore split view—metric spike + log lines 
 Apply the structured log emitter:
 
 ```bash
-kubectl apply -f infrastructure/kubernetes/ch34-structured-log-demo-pod.yaml
+kubectl apply -f code/infrastructure/kubernetes/ch34-structured-log-demo-pod.yaml
 ```
 
 The Pod prints JSON lines:
@@ -305,12 +305,12 @@ Minimal trace backend:
 ```bash
 helm upgrade --install tempo grafana/tempo \
   -n logging \
-  -f infrastructure/helm/tempo/values-k3s-lab.yaml
+  -f code/infrastructure/helm/tempo/values-k3s-lab.yaml
 ```
 
 Add Grafana datasource **Tempo** → URL `http://tempo.logging.svc:3100`
 
-Full collector manifest pattern: `infrastructure/kubernetes/ch34-otel-collector-lab.example.yaml` (commented—wire when Hermes exports OTLP).
+Full collector manifest pattern: `code/infrastructure/kubernetes/ch34-otel-collector-lab.example.yaml` (commented—wire when Hermes exports OTLP).
 
 For this chapter, understanding the **model** matters more than running production trace volume on single-node k3s.
 

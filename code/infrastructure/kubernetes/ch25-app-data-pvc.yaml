@@ -1,0 +1,15 @@
+# Chapter 25 — PVC for persistent demo data (k3s local-path)
+# Apply: kubectl apply -f code/infrastructure/kubernetes/ch25-app-data-pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: app-data
+  labels:
+    app: storage-demo
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 1Gi

@@ -203,12 +203,12 @@ It creates a task:
 }
 ```
 
-Persisted to PostgreSQL—see [`infrastructure/hermes/task-schema.example.sql`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/task-schema.example.sql).
+Persisted to PostgreSQL—see [`code/infrastructure/hermes/task-schema.example.sql`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/hermes/task-schema.example.sql).
 
 Lab: apply schema inside postgres Pod:
 
 ```bash
-kubectl cp infrastructure/hermes/task-schema.example.sql \
+kubectl cp code/infrastructure/hermes/task-schema.example.sql \
   hermes/$(kubectl get pod -n hermes -l app=hermes-postgres -o jsonpath='{.items[0].metadata.name}'):/tmp/
 kubectl exec -n hermes deploy/hermes-postgres -- \
   psql -U hermes -d hermes -f /tmp/task-schema.example.sql
@@ -438,7 +438,7 @@ These rules let models evolve without rewriting the platform.
 
 - [Chapter 6: Designing the Hermes Platform](../part-i-foundations/06-designing-the-hermes-platform.md)
 - [ReAct (reference only)](https://arxiv.org/abs/2210.03629) — pattern Hermes implements with platform-owned persistence
-- [`infrastructure/hermes/task-schema.example.sql`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/task-schema.example.sql)
+- [`code/infrastructure/hermes/task-schema.example.sql`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/hermes/task-schema.example.sql)
 
 ---
 

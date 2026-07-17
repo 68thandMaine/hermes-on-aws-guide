@@ -219,7 +219,7 @@ Later chapters extend this script or replace it with Ansible/Terraform + cloud-i
 The canonical bootstrap script lives in the repo:
 
 ```text
-infrastructure/aws/cloud-init/hermes-controlplane-bootstrap.sh
+code/infrastructure/aws/cloud-init/hermes-controlplane-bootstrap.sh
 ```
 
 ### Security — Philosophy Before Implementation
@@ -275,7 +275,7 @@ hermes-controlplane-01  (m7i.2xlarge)
 Every implementation chapter adds to the repo tree—even before Terraform:
 
 ```text
-infrastructure/
+code/infrastructure/
 └── aws/
     ├── cloud-init/
     │   └── hermes-controlplane-bootstrap.sh
@@ -378,7 +378,7 @@ aws ec2 authorize-security-group-ingress \
 From the repository root, user-data references the bootstrap script:
 
 ```bash
-USER_DATA_FILE=infrastructure/aws/cloud-init/hermes-controlplane-bootstrap.sh
+USER_DATA_FILE=code/infrastructure/aws/cloud-init/hermes-controlplane-bootstrap.sh
 
 INSTANCE_ID=$(aws ec2 run-instances \
   --image-id "$AMI_ID" \
@@ -401,7 +401,7 @@ echo "INSTANCE_ID=$INSTANCE_ID"
 Or run the consolidated script (review it first):
 
 ```bash
-bash infrastructure/aws/cli/ch09-provision-controlplane.sh
+bash code/infrastructure/aws/cli/ch09-provision-controlplane.sh
 ```
 
 #### Step 5 — Wait for Running + Status Checks
@@ -464,7 +464,7 @@ ssh -i ~/.ssh/${KEY_NAME}.pem -o StrictHostKeyChecking=accept-new ubuntu@${PUBLI
 
 ### AWS Console (Reference Only)
 
-See walkthrough introduction—use CLI or `infrastructure/aws/cli/ch09-provision-controlplane.sh` as source of truth.
+See walkthrough introduction—use CLI or `code/infrastructure/aws/cli/ch09-provision-controlplane.sh` as source of truth.
 
 ---
 
@@ -474,7 +474,7 @@ See walkthrough introduction—use CLI or `infrastructure/aws/cli/ch09-provision
 
 **Estimated Time:** 60 minutes
 
-**Goal:** Launch a verified, bootstrapped control plane server with three EBS volumes and documented artifacts in `infrastructure/aws/`.
+**Goal:** Launch a verified, bootstrapped control plane server with three EBS volumes and documented artifacts in `code/infrastructure/aws/`.
 
 **Prerequisites:** Chapter 8 network resources sourced
 
@@ -482,7 +482,7 @@ See walkthrough introduction—use CLI or `infrastructure/aws/cli/ch09-provision
 
 1. Complete Walkthrough Steps 1–8
 2. Run the full [Verification](#verification) checklist on the instance
-3. Confirm `infrastructure/aws/cloud-init/hermes-controlplane-bootstrap.sh` exists in your clone
+3. Confirm `code/infrastructure/aws/cloud-init/hermes-controlplane-bootstrap.sh` exists in your clone
 4. Record `HERMES_PUBLIC_IP` in `~/hermes-platform/notes/controlplane.env`
 5. Update Chapter 6 worksheet — mark EC2 row complete
 
@@ -576,7 +576,7 @@ Only then proceed to [Chapter 10](10-establishing-trust.md).
 6. What does cloud-init accomplish on first boot?
 7. Why SSH keys instead of passwords?
 8. Why allocate an Elastic IP now?
-9. What three artifacts does this chapter add under `infrastructure/aws/`?
+9. What three artifacts does this chapter add under `code/infrastructure/aws/`?
 
 ---
 
@@ -586,8 +586,8 @@ Only then proceed to [Chapter 10](10-establishing-trust.md).
 - **`hermes-controlplane-01`** is the platform foundation—not a disposable lab VM
 - **Evidence-based sizing:** ~32 GiB RAM for llama.cpp + k3s + Hermes stack → `m7i.2xlarge`
 - **Three gp3 volumes:** OS (`hermes-root`), models (`hermes-models` → `/models`), data (`hermes-data` → `/data`)
-- **cloud-init** from day one—servers configure themselves; script lives in `infrastructure/aws/cloud-init/`
-- **CLI over console** — reproducible, Terraform-ready; script in `infrastructure/aws/cli/`
+- **cloud-init** from day one—servers configure themselves; script lives in `code/infrastructure/aws/cloud-init/`
+- **CLI over console** — reproducible, Terraform-ready; script in `code/infrastructure/aws/cli/`
 - **Security philosophy:** SSH from your IP only; everything else closed until later chapters
 
 ---
@@ -612,7 +612,7 @@ Only then proceed to [Chapter 10](10-establishing-trust.md).
 - [Ubuntu on AWS](https://ubuntu.com/aws)
 - [cloud-init documentation](https://cloudinit.readthedocs.io/)
 - [EBS volume types](https://docs.aws.amazon.com/ebs/latest/userguide/ebs-volume-types.html)
-- Repo: [`infrastructure/README.md`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/README.md)
+- Repo: [`code/infrastructure/README.md`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/README.md)
 
 ---
 

@@ -162,7 +162,7 @@ Plan monitoring footprint when sizing the control plane ([Chapter 9](../part-ii-
 
 ### Step 1 — Install kube-prometheus-stack
 
-The repo ships lab-tuned values at `infrastructure/helm/monitoring/values-k3s-lab.yaml`:
+The repo ships lab-tuned values at `code/infrastructure/helm/monitoring/values-k3s-lab.yaml`:
 
 ```bash
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
@@ -171,7 +171,7 @@ helm repo update
 helm upgrade --install monitoring prometheus-community/kube-prometheus-stack \
   -n monitoring \
   --create-namespace \
-  -f infrastructure/helm/monitoring/values-k3s-lab.yaml
+  -f code/infrastructure/helm/monitoring/values-k3s-lab.yaml
 ```
 
 Wait for pods:
@@ -250,7 +250,7 @@ Pattern (Part VI):
 Hermes API Pod :9090/metrics  →  ServiceMonitor  →  Prometheus scrape
 ```
 
-Example template: `infrastructure/kubernetes/ch33-servicemonitor-hermes-bridge.example.yaml`
+Example template: `code/infrastructure/kubernetes/ch33-servicemonitor-hermes-bridge.example.yaml`
 
 nginx-demo does not export app metrics by default—use cluster dashboards for this lab; wire ServiceMonitors when Hermes lands.
 
@@ -259,7 +259,7 @@ nginx-demo does not export app metrics by default—use cluster dashboards for t
 Apply lab rules linking monitoring to HPA:
 
 ```bash
-kubectl apply -f infrastructure/kubernetes/ch33-prometheusrule-hermes-lab.yaml
+kubectl apply -f code/infrastructure/kubernetes/ch33-prometheusrule-hermes-lab.yaml
 ```
 
 Example rule (from manifest):

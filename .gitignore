@@ -1,5 +1,5 @@
 # Local lab artifacts — never commit secrets
-labs/**/local/
+resources/labs/**/local/
 *.tfvars
 !*.tfvars.example
 

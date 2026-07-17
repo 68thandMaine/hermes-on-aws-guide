@@ -386,7 +386,7 @@ systemctl is-active unattended-upgrades
 On your laptop, the book repo includes a reference script for reproducibility:
 
 ```text
-infrastructure/aws/cli/ch10-establish-trust-remote.sh
+code/infrastructure/aws/cli/ch10-establish-trust-remote.sh
 ```
 
 Run it after review—it SSHes to the host and applies Steps 3–5.
@@ -409,7 +409,7 @@ Run it after review—it SSHes to the host and applies Steps 3–5.
 4. Enable UFW (Step 4)
 5. Enable unattended-upgrades (Step 5)
 6. Complete [Verification](#verification) checklist
-7. Read [EDR-0003](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/edr/EDR-0003-key-based-ssh.md)
+7. Read [EDR-0003](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/edr/EDR-0003-key-based-ssh.md)
 
 **Cleanup:** Keep settings in place—this is production baseline for the book.
 
@@ -532,7 +532,7 @@ Only then proceed to [Chapter 11](11-persistent-storage.md).
 
 Implementation chapters end with an **Engineering Decision Record (EDR)**—a short document capturing *why* a decision was made. This mirrors Architecture Decision Records (ADRs) used in production teams.
 
-**[EDR-0003: Key-based SSH authentication; password and root login disabled](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/edr/EDR-0003-key-based-ssh.md)**
+**[EDR-0003: Key-based SSH authentication; password and root login disabled](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/edr/EDR-0003-key-based-ssh.md)**
 
 By the end of the book, you will have a documented history of platform decisions—not just resources you clicked into existence.
 

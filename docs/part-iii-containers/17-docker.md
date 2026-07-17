@@ -265,7 +265,7 @@ docker volume rm ch17-demo 2>/dev/null || true
    - `docker info` Root Dir
    - `RepoDigests` for `nginx:1.27-alpine`
    - Build command and successful run of `hermes-ch17:local`
-3. Worksheet: [labs/ch17/docker-notes.md](https://github.com/crudnicky/agent-to-aws-guide/blob/main/labs/ch17/docker-notes.md)
+3. Worksheet: [resources/labs/ch17/docker-notes.md](https://github.com/crudnicky/agent-to-aws-guide/blob/main/resources/labs/ch17/docker-notes.md)
 
 ---
 

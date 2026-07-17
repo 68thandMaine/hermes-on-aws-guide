@@ -5,7 +5,7 @@ description: "Common failures across the stack — symptom, diagnosis, fix."
 
 # Appendix: Troubleshooting Guide
 
-Distilled from chapter troubleshooting tables and [`infrastructure/hermes/runbooks/`](https://github.com/crudnicky/agent-to-aws-guide/tree/main/infrastructure/hermes/runbooks). When an alert fires, start with **symptom** → **diagnostic command** → **fix** → **chapter** for depth.
+Distilled from chapter troubleshooting tables and [`code/infrastructure/hermes/runbooks/`](https://github.com/crudnicky/agent-to-aws-guide/tree/main/code/infrastructure/hermes/runbooks). When an alert fires, start with **symptom** → **diagnostic command** → **fix** → **chapter** for depth.
 
 :::tip[First checks (any layer)]
 
@@ -135,7 +135,7 @@ kubectl get pods -A | grep -v Running
 | Alerts not firing | Wrong `release` label on rule | `kubectl get prometheusrule -o yaml` | Match Helm release name | 32 |
 | No logs in Loki | Promtail not ready | `kubectl logs -n logging -l app=promtail` | Wait; fix DaemonSet | 33 |
 | Loki datasource error | Wrong URL in Grafana | Test from Grafana pod | `http://logging-loki.logging.svc:3100` | 33 |
-| High CPU on llama-server | Load or bad deploy | Grafana; rollout history | Scale; rollback model — [runbook](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/runbooks/high-cpu-model-server.md) | 32, 40 |
+| High CPU on llama-server | Load or bad deploy | Grafana; rollout history | Scale; rollback model — [runbook](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/hermes/runbooks/high-cpu-model-server.md) | 32, 40 |
 
 ---
 

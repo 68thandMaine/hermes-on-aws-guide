@@ -62,7 +62,7 @@ After completing this chapter, you will be able to:
 export KUBECONFIG=~/.kube/hermes-k3s.yaml
 kubectl get pods -n hermes
 # On EC2 node via SSH:
-ls -lh /models/model.gguf || ./infrastructure/aws/cli/ch37-prepare-model-lab.sh
+ls -lh /models/model.gguf || ./code/infrastructure/aws/cli/ch37-prepare-model-lab.sh
 ```
 
 ---
@@ -111,7 +111,7 @@ We deploy **llama.cpp** directly as `llama-server` because the learning goal is 
 | Requirement | llama.cpp path | Why not Ollama alone |
 |-------------|----------------|----------------------|
 | Explicit GGUF on `/models` | You place files on EBS ([Ch 11](../part-ii-aws/11-persistent-storage.md)) | Ollama manages its own model store |
-| Helm + Deployment + Service | `infrastructure/helm/llama-server/` | Extra abstraction layer around the runtime |
+| Helm + Deployment + Service | `code/infrastructure/helm/llama-server/` | Extra abstraction layer around the runtime |
 | Cluster-internal HTTP only | `ClusterIP`, no Ingress to model | Same possible, but less transparent in labs |
 | CPU/GPU resource limits | `resources` + device plugin ([Ch 38](38-gpu-instances.md)) | Harder to reason about in ops chapters |
 | Swap models like infra | Symlink `model.gguf`, rolling restart | `ollama pull` hides file layout |
@@ -154,12 +154,12 @@ llama.cpp reads GGUF from disk at pod start—**cold load is real latency**.
 On the control plane EC2 (SSH):
 
 ```bash
-chmod +x infrastructure/aws/cli/ch37-prepare-model-lab.sh
-./infrastructure/aws/cli/ch37-prepare-model-lab.sh
+chmod +x code/infrastructure/aws/cli/ch37-prepare-model-lab.sh
+./code/infrastructure/aws/cli/ch37-prepare-model-lab.sh
 
 # Example: point at an existing GGUF under /models/
 sudo ln -sf /models/qwen/your-lab-model.Q4_K_M.gguf /models/model.gguf
-./infrastructure/aws/cli/ch37-prepare-model-lab.sh --check
+./code/infrastructure/aws/cli/ch37-prepare-model-lab.sh --check
 ```
 
 This path maps to **hermes-models** EBS— the physical substrate of reasoning.
@@ -167,12 +167,12 @@ This path maps to **hermes-models** EBS— the physical substrate of reasoning.
 ### Step 2 — Deploy llama-server
 
 ```bash
-helm upgrade --install llama-server infrastructure/helm/llama-server \
+helm upgrade --install llama-server code/infrastructure/helm/llama-server \
   -n hermes \
-  -f infrastructure/helm/llama-server/values.yaml
+  -f code/infrastructure/helm/llama-server/values.yaml
 ```
 
-Chart highlights (`infrastructure/helm/llama-server/`):
+Chart highlights (`code/infrastructure/helm/llama-server/`):
 
 ```yaml
 args:
@@ -210,9 +210,9 @@ Inference stays **inside the trust boundary**—only Hermes components call it.
 ### Step 4 — Disable Model Stub; Rewire hermes-lab
 
 ```bash
-helm upgrade hermes-lab infrastructure/helm/hermes-lab -n hermes \
-  -f infrastructure/helm/hermes-lab/values.yaml \
-  -f infrastructure/helm/hermes-lab/values-with-llama.yaml
+helm upgrade hermes-lab code/infrastructure/helm/hermes-lab -n hermes \
+  -f code/infrastructure/helm/hermes-lab/values.yaml \
+  -f code/infrastructure/helm/hermes-lab/values-with-llama.yaml
 ```
 
 This sets `model.enabled: false`, `model.host: llama-server`, and worker env `LLAMA_SERVER_URL`.
@@ -226,8 +226,8 @@ kubectl exec -n hermes deploy/hermes-api -- env | grep -E 'MODEL_|LLAMA'
 ### Step 5 — First Completion (Inference Proof)
 
 ```bash
-chmod +x infrastructure/aws/cli/ch37-verify-llama-inference.sh
-./infrastructure/aws/cli/ch37-verify-llama-inference.sh
+chmod +x code/infrastructure/aws/cli/ch37-verify-llama-inference.sh
+./code/infrastructure/aws/cli/ch37-verify-llama-inference.sh
 ```
 
 Or from a worker Pod:

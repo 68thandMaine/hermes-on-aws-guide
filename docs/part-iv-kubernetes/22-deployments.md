@@ -169,7 +169,7 @@ On a single-node k3s cluster, three replicas still schedule on **the same node**
 
 Create `~/hermes-platform/manifests/nginx-deployment.yaml` or use the book copy:
 
-**[infrastructure/kubernetes/ch22-nginx-deployment.yaml](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/kubernetes/ch22-nginx-deployment.yaml)**
+**[code/infrastructure/kubernetes/ch22-nginx-deployment.yaml](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/kubernetes/ch22-nginx-deployment.yaml)**
 
 ```yaml
 apiVersion: apps/v1
@@ -200,7 +200,7 @@ spec:
 From the repo root (or path to your copy):
 
 ```bash
-kubectl apply -f infrastructure/kubernetes/ch22-nginx-deployment.yaml
+kubectl apply -f code/infrastructure/kubernetes/ch22-nginx-deployment.yaml
 ```
 
 You are not starting a container. You are registering intent with the API.

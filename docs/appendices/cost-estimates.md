@@ -54,7 +54,7 @@ Same architecture as production; fewer replicas and shorter retention.
 | Synthetic traffic | Minimal | Negligible |
 | **Typical total** | Single-node staging | **~$290–350** |
 
-Staging value is **process** (promotion checklist), not extra hardware—on a lab budget, staging can be the same instance with different Helm values ([`environment-promotion.example.yaml`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/environment-promotion.example.yaml)).
+Staging value is **process** (promotion checklist), not extra hardware—on a lab budget, staging can be the same instance with different Helm values ([`environment-promotion.example.yaml`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/hermes/environment-promotion.example.yaml)).
 
 ---
 

@@ -55,7 +55,7 @@ kubectl get deployment nginx-deployment
 kubectl get pods -l app=nginx
 ```
 
-If the Deployment is missing, apply [ch22-nginx-deployment.yaml](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/kubernetes/ch22-nginx-deployment.yaml) first.
+If the Deployment is missing, apply [ch22-nginx-deployment.yaml](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/kubernetes/ch22-nginx-deployment.yaml) first.
 
 ---
 
@@ -159,7 +159,7 @@ Hermes will never hard-code llama.cpp Pod IPs—it will use a Service name.
 
 ### Step 1 — Create the Service
 
-**[infrastructure/kubernetes/ch23-nginx-service.yaml](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/kubernetes/ch23-nginx-service.yaml)**
+**[code/infrastructure/kubernetes/ch23-nginx-service.yaml](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/kubernetes/ch23-nginx-service.yaml)**
 
 ```yaml
 apiVersion: v1
@@ -181,7 +181,7 @@ spec:
 Apply:
 
 ```bash
-kubectl apply -f infrastructure/kubernetes/ch23-nginx-service.yaml
+kubectl apply -f code/infrastructure/kubernetes/ch23-nginx-service.yaml
 ```
 
 Alternative (imperative, same result):

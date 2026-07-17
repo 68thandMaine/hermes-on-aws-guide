@@ -10,12 +10,12 @@ The [agent-to-aws-guide](https://github.com/crudnicky/agent-to-aws-guide) reposi
 ```text
 agent-to-aws-guide/
 ├── docs/                    # Book content (Docusaurus)
-├── infrastructure/          # IaC, manifests, Helm, Hermes contracts
-├── labs/                    # Local notes templates (your machine)
-├── scripts/                 # Setup and CI helpers
+├── code/infrastructure/          # IaC, manifests, Helm, Hermes contracts
+├── resources/labs/                    # Local notes templates (your machine)
+├── code/scripts/                 # Setup and CI helpers
 ├── .github/workflows/       # CI/CD pipelines
-├── diagrams/                # Architecture source files
-└── static/                  # Site assets
+├── resources/diagrams/                # Architecture source files
+└── code/site/static/        # Site assets
 ```
 
 ---
@@ -39,11 +39,11 @@ Built output: `npm run build` → `build/` (do not edit by hand).
 
 ---
 
-## `infrastructure/` — What you deploy
+## `code/infrastructure/` — What you deploy
 
-See also [`infrastructure/README.md`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/README.md).
+See also [`code/infrastructure/README.md`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/README.md).
 
-### `infrastructure/aws/`
+### `code/infrastructure/aws/`
 
 | Path | Purpose | Chapter |
 |------|---------|---------|
@@ -61,7 +61,7 @@ See also [`infrastructure/README.md`](https://github.com/crudnicky/agent-to-aws-
 | `terraform/modules/secrets/` | Secrets Manager resources | 31 |
 | `terraform/environments/dev/` | Dev Terraform workspace | 29 |
 
-### `infrastructure/kubernetes/`
+### `code/infrastructure/kubernetes/`
 
 Flat YAML manifests applied with `kubectl apply -f`:
 
@@ -80,7 +80,7 @@ Flat YAML manifests applied with `kubectl apply -f`:
 | `ch37-*` GPU device plugin, smoke test | 37 |
 | `ch41-*` Hermes worker RBAC, NetworkPolicy | 41 |
 
-### `infrastructure/helm/`
+### `code/infrastructure/helm/`
 
 | Chart / values | Chapter |
 |----------------|---------|
@@ -95,7 +95,7 @@ Flat YAML manifests applied with `kubectl apply -f`:
 | `qdrant/values-k3s-lab.yaml` | 35 |
 | `llama-server/` + `values-gpu.yaml` | 36–37 |
 
-### `infrastructure/hermes/`
+### `code/infrastructure/hermes/`
 
 Runtime contracts and governance—not application source code:
 
@@ -115,43 +115,43 @@ Runtime contracts and governance—not application source code:
 | `slo.example.yaml` | 40 — SLO targets |
 | `runbooks/high-cpu-model-server.md` | 40 — incident procedure |
 
-### `infrastructure/edr/`
+### `code/infrastructure/edr/`
 
 Engineering Decision Records — *why* major choices were made (SSH keys, storage tiers, k3s, containers).
 
 ---
 
-## `labs/` — Your local notes
+## `resources/labs/` — Your local notes
 
 Templates for **your machine**—never commit secrets:
 
 | Path | Chapter |
 |------|---------|
-| `labs/ch06/platform-design.md` | 6 |
-| `labs/ch08/network-resources.md` | 8 |
-| `labs/ch09/controlplane-notes.md` | 9 |
+| `resources/labs/ch06/platform-design.md` | 6 |
+| `resources/labs/ch08/network-resources.md` | 8 |
+| `resources/labs/ch09/controlplane-notes.md` | 9 |
 
 Operator notes also live in `~/hermes-platform/notes/` (created in Ch 7–9).
 
 ---
 
-## `scripts/` and `.github/`
+## `code/scripts/` and `.github/`
 
 | Path | Purpose |
 |------|---------|
-| `scripts/setup/check-prerequisites.sh` | Ch 1 toolchain verification |
-| `scripts/ci/validate-links.sh` | Link checking |
+| `code/scripts/setup/check-prerequisites.sh` | Ch 1 toolchain verification |
+| `code/scripts/ci/validate-links.sh` | Link checking |
 | `.github/workflows/terraform.yml` | Ch 31 — Terraform CI |
 | `.github/workflows/book-ci.yml` | Docusaurus build on PR |
 
 ---
 
-## `diagrams/` and `static/`
+## `resources/diagrams/` and `code/site/static/`
 
 | Path | Purpose |
 |------|---------|
-| `diagrams/*.mmd` | Mermaid source for architecture figures |
-| `static/img/` | Logo, favicon, social card for the book site |
+| `resources/diagrams/*.mmd` | Mermaid source for architecture figures |
+| `code/site/static/img/` | Logo, favicon, social card for the book site |
 
 ---
 
@@ -172,12 +172,12 @@ Operator notes also live in `~/hermes-platform/notes/` (created in Ch 7–9).
 ```text
 docs/ (you read)
     ↓
-infrastructure/ (you apply)
+code/infrastructure/ (you apply)
     ↓
 Git commit → GitHub Actions → Terraform / Helm → k3s cluster
 ```
 
-The book and the repo stay in sync: every major lab has a corresponding file under `infrastructure/` or `scripts/`.
+The book and the repo stay in sync: every major lab has a corresponding file under `code/infrastructure/` or `code/scripts/`.
 
 ---
 

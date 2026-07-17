@@ -218,7 +218,7 @@ Allow if needed: `sudo ufw allow 80/tcp`.
 
 ### Step 3 — Apply Ingress Rules
 
-**[infrastructure/kubernetes/ch24-nginx-ingress.yaml](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/kubernetes/ch24-nginx-ingress.yaml)**
+**[code/infrastructure/kubernetes/ch24-nginx-ingress.yaml](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/kubernetes/ch24-nginx-ingress.yaml)**
 
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -243,7 +243,7 @@ spec:
 Apply:
 
 ```bash
-kubectl apply -f infrastructure/kubernetes/ch24-nginx-ingress.yaml
+kubectl apply -f code/infrastructure/kubernetes/ch24-nginx-ingress.yaml
 kubectl get ingress nginx-ingress
 ```
 

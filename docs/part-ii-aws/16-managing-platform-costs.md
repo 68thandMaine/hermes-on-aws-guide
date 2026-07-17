@@ -276,7 +276,7 @@ EOF
 Or run:
 
 ```bash
-bash infrastructure/aws/cli/ch16-cost-baseline.sh
+bash code/infrastructure/aws/cli/ch16-cost-baseline.sh
 ```
 
 ### Step 5 — Lab Cost Controls
@@ -333,7 +333,7 @@ On the first of each month (15 minutes):
 5. In Cost Explorer, group last 30 days by service; screenshot or note top three line items
 6. Run `aws ec2 describe-instances` — confirm only expected instances are running
 7. Append baseline to `~/hermes-platform/notes/cost.env`
-8. Read [EDR-0008](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/edr/EDR-0008-cost-governance-baseline.md)
+8. Read [EDR-0008](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/edr/EDR-0008-cost-governance-baseline.md)
 
 **Verification:**
 
@@ -417,7 +417,7 @@ On the first of each month (15 minutes):
 
 ## Engineering Decision Record
 
-**[EDR-0008: Tag-based cost governance baseline for the Hermes lab](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/edr/EDR-0008-cost-governance-baseline.md)**
+**[EDR-0008: Tag-based cost governance baseline for the Hermes lab](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/edr/EDR-0008-cost-governance-baseline.md)**
 
 ---
 

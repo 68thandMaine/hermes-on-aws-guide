@@ -199,7 +199,7 @@ That second answer drives the Part V/VI habit: **push to a registry** the cluste
 **Steps:**
 
 1. Complete Walkthrough Steps 1–4 (skip Step 3 if k3s is not installed; note that in your lab sheet)
-2. Fill [labs/ch19/oci-notes.md](https://github.com/crudnicky/agent-to-aws-guide/blob/main/labs/ch19/oci-notes.md)
+2. Fill [resources/labs/ch19/oci-notes.md](https://github.com/crudnicky/agent-to-aws-guide/blob/main/resources/labs/ch19/oci-notes.md)
 3. Optional reading: skim the OCI image-spec intro linked in Further Reading
 
 ---

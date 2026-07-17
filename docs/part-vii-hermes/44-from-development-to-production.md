@@ -185,7 +185,7 @@ Development  →  Staging  →  Production
 (same images, same charts, different values)
 ```
 
-Reference: [`environment-promotion.example.yaml`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/environment-promotion.example.yaml)
+Reference: [`environment-promotion.example.yaml`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/hermes/environment-promotion.example.yaml)
 
 ```yaml
 production:
@@ -243,7 +243,7 @@ Do not scale the entire platform because one component is hot. Measure, then sca
 
 Before exposing Hermes to real users, verify with **evidence**:
 
-[`production-readiness.example.yaml`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/production-readiness.example.yaml)
+[`production-readiness.example.yaml`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/hermes/production-readiness.example.yaml)
 
 | Area | Must be true |
 |------|--------------|
@@ -252,7 +252,7 @@ Before exposing Hermes to real users, verify with **evidence**:
 | Secrets | AWS SM + ESO; not in Git |
 | Operations | Zero-downtime rollout + rollback tested |
 | Backups | Restore drill completed |
-| Observability | Dashboards, SLOs ([`slo.example.yaml`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/slo.example.yaml)), alerts fired in drill |
+| Observability | Dashboards, SLOs ([`slo.example.yaml`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/hermes/slo.example.yaml)), alerts fired in drill |
 | Logging | Structured worker logs in Loki |
 | Security | Tool policy default-deny; audit reconstructable |
 | Extensions | At least one capability added via Ch 43 checklist |
@@ -437,8 +437,8 @@ If every answer is **yes**, you have built more than an application.
 - [Chapter 41: Operating Hermes in Production](41-operating-hermes-in-production.md)
 - [Chapter 31: GitHub Actions](../part-v-infrastructure/31-github-actions.md)
 - [Chapter 30: Terraform](../part-v-infrastructure/30-terraform.md)
-- [`production-readiness.example.yaml`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/production-readiness.example.yaml)
-- [`environment-promotion.example.yaml`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/environment-promotion.example.yaml)
+- [`production-readiness.example.yaml`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/hermes/production-readiness.example.yaml)
+- [`environment-promotion.example.yaml`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/hermes/environment-promotion.example.yaml)
 
 ---
 

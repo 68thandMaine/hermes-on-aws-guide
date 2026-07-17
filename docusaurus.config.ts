@@ -16,6 +16,7 @@ const config: Config = {
 
   organizationName: '68thandMaine',
   projectName: 'hermes-on-aws-guide',
+  staticDirectories: ['code/site/static'],
 
   onBrokenLinks: 'throw',
   markdown: {
@@ -57,7 +58,7 @@ const config: Config = {
         },
         blog: false,
         theme: {
-          customCss: './src/css/custom.css',
+          customCss: './code/site/src/css/custom.css',
         },
       } satisfies Preset.Options,
     ],

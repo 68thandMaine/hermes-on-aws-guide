@@ -149,10 +149,10 @@ strategy:
 Apply three API replicas:
 
 ```bash
-helm upgrade hermes-lab infrastructure/helm/hermes-lab -n hermes \
-  -f infrastructure/helm/hermes-lab/values.yaml \
-  -f infrastructure/helm/hermes-lab/values-with-llama.yaml \
-  -f infrastructure/helm/hermes-lab/values-production-rollout.yaml
+helm upgrade hermes-lab code/infrastructure/helm/hermes-lab -n hermes \
+  -f code/infrastructure/helm/hermes-lab/values.yaml \
+  -f code/infrastructure/helm/hermes-lab/values-with-llama.yaml \
+  -f code/infrastructure/helm/hermes-lab/values-production-rollout.yaml
 ```
 
 Watch rollout:
@@ -209,7 +209,7 @@ Safe sequence:
 5. Remove compatibility shims in later release
 ```
 
-Task schema ([`task-schema.example.sql`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/task-schema.example.sql)) changes follow the same discipline—especially with distributed tasks ([Ch 40](40-distributed-cognitive-execution.md)).
+Task schema ([`task-schema.example.sql`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/hermes/task-schema.example.sql)) changes follow the same discipline—especially with distributed tasks ([Ch 40](40-distributed-cognitive-execution.md)).
 
 ### Step 6 — Backup Strategy
 
@@ -250,7 +250,7 @@ Scale on **measurements**—[Chapter 44](44-from-development-to-production.md) b
 
 ### Step 9 — Service Level Objectives
 
-Define healthy. Example targets ([`slo.example.yaml`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/slo.example.yaml)):
+Define healthy. Example targets ([`slo.example.yaml`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/hermes/slo.example.yaml)):
 
 | Metric | Target |
 |--------|--------|
@@ -265,7 +265,7 @@ Monitoring without SLOs is dashboards without decisions.
 
 When alerts fire, responders follow **documented steps**—not improvisation.
 
-Example: [`infrastructure/hermes/runbooks/high-cpu-model-server.md`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/runbooks/high-cpu-model-server.md)
+Example: [`code/infrastructure/hermes/runbooks/high-cpu-model-server.md`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/hermes/runbooks/high-cpu-model-server.md)
 
 Link runbooks from Alertmanager annotations ([Ch 33](../part-v-infrastructure/33-monitoring.md)).
 

@@ -191,7 +191,7 @@ kubectl describe storageclass local-path
 
 ### Step 2 — Create PersistentVolumeClaim
 
-**[infrastructure/kubernetes/ch25-app-data-pvc.yaml](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/kubernetes/ch25-app-data-pvc.yaml)**
+**[code/infrastructure/kubernetes/ch25-app-data-pvc.yaml](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/kubernetes/ch25-app-data-pvc.yaml)**
 
 ```yaml
 apiVersion: v1
@@ -210,7 +210,7 @@ spec:
 Apply:
 
 ```bash
-kubectl apply -f infrastructure/kubernetes/ch25-app-data-pvc.yaml
+kubectl apply -f code/infrastructure/kubernetes/ch25-app-data-pvc.yaml
 kubectl get pvc app-data
 ```
 
@@ -225,7 +225,7 @@ app-data   Bound    pvc-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx   1Gi        RWO
 
 ### Step 3 — Mount PVC in a Pod
 
-**[infrastructure/kubernetes/ch25-storage-demo-pod.yaml](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/kubernetes/ch25-storage-demo-pod.yaml)**
+**[code/infrastructure/kubernetes/ch25-storage-demo-pod.yaml](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/kubernetes/ch25-storage-demo-pod.yaml)**
 
 ```yaml
 apiVersion: v1
@@ -252,7 +252,7 @@ spec:
 Apply:
 
 ```bash
-kubectl apply -f infrastructure/kubernetes/ch25-storage-demo-pod.yaml
+kubectl apply -f code/infrastructure/kubernetes/ch25-storage-demo-pod.yaml
 kubectl wait --for=condition=Ready pod/storage-demo --timeout=120s
 ```
 
@@ -276,7 +276,7 @@ The Pod is gone. The PVC—and the data on the PV—remain.
 ### Step 6 — Recreate the Pod
 
 ```bash
-kubectl apply -f infrastructure/kubernetes/ch25-storage-demo-pod.yaml
+kubectl apply -f code/infrastructure/kubernetes/ch25-storage-demo-pod.yaml
 kubectl wait --for=condition=Ready pod/storage-demo --timeout=120s
 kubectl exec storage-demo -- cat /data/hello.txt
 ```

@@ -80,13 +80,15 @@ Gaps are called out in SUMMARY. Do not assume undeclared stubs have content.
 
 ```
 docs/                 Book chapters (edit these)
-infrastructure/       cloud-init, cli, edr, terraform (early IaC artifacts)
-labs/                 Lab worksheets and assets
-diagrams/             Diagram source files
-scripts/ci/           Link validator
+code/infrastructure/  cloud-init, cli, edr, terraform, Helm, Kubernetes
+code/scripts/         Helper and CI scripts
+code/site/            Docusaurus theme CSS and static assets
+resources/labs/       Lab worksheets and assets
+resources/diagrams/   Diagram source files
+resources/glossary/   Source glossary material
+resources/references/ Source bibliography material
 sidebars.ts           Navigation
 docusaurus.config.ts  Site config
-src/css/custom.css    Theme overrides
 ```
 
 ## Common Tasks
@@ -96,7 +98,7 @@ src/css/custom.css    Theme overrides
 1. Read `STYLE_GUIDE.md` section template
 2. Edit the file under `docs/part-*/`
 3. Use Hermes-centric framing where applicable
-4. Add/update lab assets in `labs/chNN/`
+4. Add/update lab assets in `resources/labs/chNN/`
 5. Sync glossary → `docs/appendices/glossary.md`
 6. Update `SUMMARY.md` status
 7. Verify: `npm run build`

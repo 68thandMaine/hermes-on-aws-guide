@@ -189,10 +189,10 @@ You changed desired state directly—no automation.
 
 ### Step 4 — Create HPA
 
-**[ch29-nginx-hpa.yaml](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/kubernetes/ch29-nginx-hpa.yaml)**
+**[ch29-nginx-hpa.yaml](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/kubernetes/ch29-nginx-hpa.yaml)**
 
 ```bash
-kubectl apply -f infrastructure/kubernetes/ch29-nginx-hpa.yaml
+kubectl apply -f code/infrastructure/kubernetes/ch29-nginx-hpa.yaml
 kubectl get hpa nginx-deployment
 ```
 

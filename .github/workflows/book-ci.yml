@@ -29,8 +29,8 @@ jobs:
 
       - name: Validate internal links
         run: |
-          chmod +x scripts/ci/validate-links.sh
-          ./scripts/ci/validate-links.sh
+          chmod +x code/scripts/ci/validate-links.sh
+          ./code/scripts/ci/validate-links.sh
 
   build:
     name: Docusaurus Build

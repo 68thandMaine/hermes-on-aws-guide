@@ -37,18 +37,18 @@ source ~/hermes-platform/notes/controlplane.env        # after Ch 9
 
 | Script | Chapter |
 |--------|---------|
-| `./scripts/setup/check-prerequisites.sh` | 1 |
-| `infrastructure/aws/cli/ch09-provision-controlplane.sh` | 9 |
-| `infrastructure/aws/cli/ch10-establish-trust-remote.sh` | 10 |
-| `infrastructure/aws/cli/ch11-storage-backup-baseline.sh` | 11 |
-| `infrastructure/aws/cli/ch12-install-docker.sh` | 12 |
-| `infrastructure/aws/cli/ch13-install-k3s.sh` | 13 |
-| `infrastructure/aws/cli/ch32-create-hermes-api-secret.sh` | 31 |
-| `infrastructure/aws/cli/ch36-init-hermes-memory-collection.sh` | 35 |
-| `infrastructure/aws/cli/ch36-vector-retrieval-demo.sh` | 35 |
-| `infrastructure/aws/cli/ch37-prepare-model-lab.sh` | 36 |
-| `infrastructure/aws/cli/ch37-verify-llama-inference.sh` | 36 |
-| `infrastructure/aws/cli/ch38-gpu-node-prep.sh` | 37 |
+| `./code/scripts/setup/check-prerequisites.sh` | 1 |
+| `code/infrastructure/aws/cli/ch09-provision-controlplane.sh` | 9 |
+| `code/infrastructure/aws/cli/ch10-establish-trust-remote.sh` | 10 |
+| `code/infrastructure/aws/cli/ch11-storage-backup-baseline.sh` | 11 |
+| `code/infrastructure/aws/cli/ch12-install-docker.sh` | 12 |
+| `code/infrastructure/aws/cli/ch13-install-k3s.sh` | 13 |
+| `code/infrastructure/aws/cli/ch32-create-hermes-api-secret.sh` | 31 |
+| `code/infrastructure/aws/cli/ch36-init-hermes-memory-collection.sh` | 35 |
+| `code/infrastructure/aws/cli/ch36-vector-retrieval-demo.sh` | 35 |
+| `code/infrastructure/aws/cli/ch37-prepare-model-lab.sh` | 36 |
+| `code/infrastructure/aws/cli/ch37-verify-llama-inference.sh` | 36 |
+| `code/infrastructure/aws/cli/ch38-gpu-node-prep.sh` | 37 |
 
 ---
 
@@ -58,7 +58,7 @@ source ~/hermes-platform/notes/controlplane.env        # after Ch 9
 
 ```bash
 git clone <repo-url> && cd agent-to-aws-guide
-./scripts/setup/check-prerequisites.sh
+./code/scripts/setup/check-prerequisites.sh
 aws --version && terraform --version && docker --version && kubectl version --client
 ```
 
@@ -121,7 +121,7 @@ source ~/hermes-platform/notes/network-resources.env
 ### Chapter 9 — EC2 Control Plane
 
 ```bash
-bash infrastructure/aws/cli/ch09-provision-controlplane.sh
+bash code/infrastructure/aws/cli/ch09-provision-controlplane.sh
 aws ec2 wait instance-running --instance-ids "$INSTANCE_ID"
 aws ec2 wait instance-status-ok --instance-ids "$INSTANCE_ID"
 ssh -i ~/.ssh/hermes-controlplane-key.pem ubuntu@${PUBLIC_IP} 'cloud-init status --wait'
@@ -134,13 +134,13 @@ aws ec2 stop-instances --instance-ids "$INSTANCE_ID"   # save cost when idle
 MY_IP=$(curl -s https://checkip.amazonaws.com | tr -d '\n')
 aws ec2 authorize-security-group-ingress --group-id "$HERMES_SG_ID" --protocol tcp --port 22 --cidr "${MY_IP}/32"
 ssh-keygen -R "$HERMES_PUBLIC_IP"
-bash infrastructure/aws/cli/ch10-establish-trust-remote.sh
+bash code/infrastructure/aws/cli/ch10-establish-trust-remote.sh
 ```
 
 ### Chapter 11 — Storage
 
 ```bash
-bash infrastructure/aws/cli/ch11-storage-backup-baseline.sh
+bash code/infrastructure/aws/cli/ch11-storage-backup-baseline.sh
 aws ec2 create-snapshot --volume-id "$MODELS_VOL" --description "hermes-models"
 aws s3 cp manifest.txt "s3://${BUCKET}/manifests/ch11-baseline.txt"
 ssh -i "$KEY" ubuntu@${HERMES_PUBLIC_IP} 'df -h / /models /data'
@@ -149,7 +149,7 @@ ssh -i "$KEY" ubuntu@${HERMES_PUBLIC_IP} 'df -h / /models /data'
 ### Chapter 12 — Docker
 
 ```bash
-bash infrastructure/aws/cli/ch12-install-docker.sh
+bash code/infrastructure/aws/cli/ch12-install-docker.sh
 docker run --rm hello-world
 sudo systemctl is-active docker
 ```
@@ -157,7 +157,7 @@ sudo systemctl is-active docker
 ### Chapter 13 — k3s
 
 ```bash
-bash infrastructure/aws/cli/ch13-install-k3s.sh
+bash code/infrastructure/aws/cli/ch13-install-k3s.sh
 scp -i "$KEY" ubuntu@${HERMES_PUBLIC_IP}:/etc/rancher/k3s/k3s.yaml ~/.kube/hermes-k3s.yaml
 sed -i.bak "s/127.0.0.1/${HERMES_PUBLIC_IP}/" ~/.kube/hermes-k3s.yaml
 export KUBECONFIG=~/.kube/hermes-k3s.yaml
@@ -172,22 +172,22 @@ kubectl get nodes && kubectl get pods -A
 
 ```bash
 kubectl run hello-pod --image=nginx --restart=Never
-kubectl apply -f infrastructure/kubernetes/ch22-nginx-deployment.yaml
+kubectl apply -f code/infrastructure/kubernetes/ch22-nginx-deployment.yaml
 kubectl scale deployment nginx-deployment --replicas=3
 kubectl rollout status deployment/nginx-deployment
-kubectl apply -f infrastructure/kubernetes/ch23-nginx-service.yaml
+kubectl apply -f code/infrastructure/kubernetes/ch23-nginx-service.yaml
 kubectl exec curl-test -- curl -s http://nginx-service/
-kubectl apply -f infrastructure/kubernetes/ch24-nginx-ingress.yaml
+kubectl apply -f code/infrastructure/kubernetes/ch24-nginx-ingress.yaml
 curl -v -H "Host: nginx.local" http://<NODE_IP>/
-kubectl apply -f infrastructure/kubernetes/ch25-app-data-pvc.yaml
+kubectl apply -f code/infrastructure/kubernetes/ch25-app-data-pvc.yaml
 kubectl get pvc && kubectl get storageclass
 ```
 
 ### Chapter 26 — Helm
 
 ```bash
-helm install web infrastructure/helm/nginx-demo
-helm upgrade web infrastructure/helm/nginx-demo --set replicaCount=2
+helm install web code/infrastructure/helm/nginx-demo
+helm upgrade web code/infrastructure/helm/nginx-demo --set replicaCount=2
 helm history web && helm rollback web 1
 helm uninstall web
 ```
@@ -195,25 +195,25 @@ helm uninstall web
 ### Chapter 27 — Config
 
 ```bash
-kubectl apply -f infrastructure/kubernetes/ch27-app-config-configmap.yaml
-kubectl apply -f infrastructure/kubernetes/ch27-app-secret.yaml
-kubectl apply -f infrastructure/kubernetes/ch27-config-demo-pod.yaml
+kubectl apply -f code/infrastructure/kubernetes/ch27-app-config-configmap.yaml
+kubectl apply -f code/infrastructure/kubernetes/ch27-app-secret.yaml
+kubectl apply -f code/infrastructure/kubernetes/ch27-config-demo-pod.yaml
 kubectl logs config-demo
 ```
 
 ### Chapter 28 — Security
 
 ```bash
-kubectl apply -f infrastructure/kubernetes/ch28-rbac-hermes-reader.yaml
+kubectl apply -f code/infrastructure/kubernetes/ch28-rbac-hermes-reader.yaml
 kubectl auth can-i list pods --as=system:serviceaccount:default:hermes-reader
-kubectl apply -f infrastructure/kubernetes/ch28-networkpolicy-nginx.yaml
+kubectl apply -f code/infrastructure/kubernetes/ch28-networkpolicy-nginx.yaml
 ```
 
 ### Chapter 29 — Scaling
 
 ```bash
 kubectl top nodes && kubectl top pods
-kubectl apply -f infrastructure/kubernetes/ch29-nginx-hpa.yaml
+kubectl apply -f code/infrastructure/kubernetes/ch29-nginx-hpa.yaml
 kubectl get hpa nginx-deployment -w
 ```
 
@@ -224,7 +224,7 @@ kubectl get hpa nginx-deployment -w
 ### Chapter 30 — Terraform
 
 ```bash
-cd infrastructure/aws/terraform/environments/dev
+cd code/infrastructure/aws/terraform/environments/dev
 terraform init && terraform plan && terraform apply
 terraform output && terraform destroy
 ```
@@ -232,10 +232,10 @@ terraform output && terraform destroy
 ### Chapter 32 — Secrets
 
 ```bash
-AWS_PROFILE=hermes ./infrastructure/aws/cli/ch32-create-hermes-api-secret.sh
+AWS_PROFILE=hermes ./code/infrastructure/aws/cli/ch32-create-hermes-api-secret.sh
 helm upgrade --install external-secrets external-secrets/external-secrets -n external-secrets --create-namespace
-kubectl apply -f infrastructure/kubernetes/ch32-cluster-secret-store.yaml
-kubectl apply -f infrastructure/kubernetes/ch32-external-secret-hermes-api.yaml
+kubectl apply -f code/infrastructure/kubernetes/ch32-cluster-secret-store.yaml
+kubectl apply -f code/infrastructure/kubernetes/ch32-external-secret-hermes-api.yaml
 kubectl describe externalsecret hermes-api-secret
 ```
 
@@ -244,18 +244,18 @@ kubectl describe externalsecret hermes-api-secret
 ```bash
 helm upgrade --install monitoring prometheus-community/kube-prometheus-stack \
   -n monitoring --create-namespace \
-  -f infrastructure/helm/monitoring/values-k3s-lab.yaml
+  -f code/infrastructure/helm/monitoring/values-k3s-lab.yaml
 kubectl port-forward -n monitoring svc/monitoring-grafana 3000:80
-kubectl apply -f infrastructure/kubernetes/ch33-prometheusrule-hermes-lab.yaml
+kubectl apply -f code/infrastructure/kubernetes/ch33-prometheusrule-hermes-lab.yaml
 ```
 
 ### Chapter 34 — Logging
 
 ```bash
 helm upgrade --install logging grafana/loki-stack -n logging --create-namespace \
-  -f infrastructure/helm/logging/values-k3s-lab.yaml
+  -f code/infrastructure/helm/logging/values-k3s-lab.yaml
 helm upgrade --install tempo grafana/tempo -n logging \
-  -f infrastructure/helm/tempo/values-k3s-lab.yaml
+  -f code/infrastructure/helm/tempo/values-k3s-lab.yaml
 ```
 
 ---
@@ -266,8 +266,8 @@ helm upgrade --install tempo grafana/tempo -n logging \
 
 ```bash
 kubectl create namespace hermes
-helm upgrade --install hermes-lab infrastructure/helm/hermes-lab \
-  -n hermes -f infrastructure/helm/hermes-lab/values.yaml
+helm upgrade --install hermes-lab code/infrastructure/helm/hermes-lab \
+  -n hermes -f code/infrastructure/helm/hermes-lab/values.yaml
 curl -s -H "Host: hermes.local" "http://${NODE_IP}/"
 kubectl logs -n hermes -l app.kubernetes.io/component=worker --tail=5
 ```
@@ -276,31 +276,31 @@ kubectl logs -n hermes -l app.kubernetes.io/component=worker --tail=5
 
 ```bash
 helm upgrade --install hermes-qdrant qdrant/qdrant -n hermes \
-  -f infrastructure/helm/qdrant/values-k3s-lab.yaml
-./infrastructure/aws/cli/ch36-init-hermes-memory-collection.sh
-./infrastructure/aws/cli/ch36-vector-retrieval-demo.sh
+  -f code/infrastructure/helm/qdrant/values-k3s-lab.yaml
+./code/infrastructure/aws/cli/ch36-init-hermes-memory-collection.sh
+./code/infrastructure/aws/cli/ch36-vector-retrieval-demo.sh
 ```
 
 ### Chapter 37 — Model serving
 
 ```bash
-./infrastructure/aws/cli/ch37-prepare-model-lab.sh --check
-helm upgrade --install llama-server infrastructure/helm/llama-server -n hermes \
-  -f infrastructure/helm/llama-server/values.yaml
-helm upgrade hermes-lab infrastructure/helm/hermes-lab -n hermes \
-  -f infrastructure/helm/hermes-lab/values.yaml \
-  -f infrastructure/helm/hermes-lab/values-with-llama.yaml
-./infrastructure/aws/cli/ch37-verify-llama-inference.sh
+./code/infrastructure/aws/cli/ch37-prepare-model-lab.sh --check
+helm upgrade --install llama-server code/infrastructure/helm/llama-server -n hermes \
+  -f code/infrastructure/helm/llama-server/values.yaml
+helm upgrade hermes-lab code/infrastructure/helm/hermes-lab -n hermes \
+  -f code/infrastructure/helm/hermes-lab/values.yaml \
+  -f code/infrastructure/helm/hermes-lab/values-with-llama.yaml
+./code/infrastructure/aws/cli/ch37-verify-llama-inference.sh
 ```
 
 ### Chapter 38 — GPU
 
 ```bash
-NODE_NAME=<node> ./infrastructure/aws/cli/ch38-gpu-node-prep.sh
-kubectl apply -f infrastructure/kubernetes/ch38-nvidia-device-plugin.yaml
-kubectl apply -f infrastructure/kubernetes/ch38-gpu-smoke-test-pod.yaml
-helm upgrade --install llama-server-gpu infrastructure/helm/llama-server -n hermes \
-  -f infrastructure/helm/llama-server/values-gpu.yaml
+NODE_NAME=<node> ./code/infrastructure/aws/cli/ch38-gpu-node-prep.sh
+kubectl apply -f code/infrastructure/kubernetes/ch38-nvidia-device-plugin.yaml
+kubectl apply -f code/infrastructure/kubernetes/ch38-gpu-smoke-test-pod.yaml
+helm upgrade --install llama-server-gpu code/infrastructure/helm/llama-server -n hermes \
+  -f code/infrastructure/helm/llama-server/values-gpu.yaml
 ```
 
 ### Chapter 39 — Task schema
@@ -317,10 +317,10 @@ kubectl exec -n hermes deploy/hermes-postgres -- \
 ### Chapter 41 — Operations
 
 ```bash
-helm upgrade hermes-lab infrastructure/helm/hermes-lab -n hermes \
-  -f infrastructure/helm/hermes-lab/values.yaml \
-  -f infrastructure/helm/hermes-lab/values-with-llama.yaml \
-  -f infrastructure/helm/hermes-lab/values-production-rollout.yaml
+helm upgrade hermes-lab code/infrastructure/helm/hermes-lab -n hermes \
+  -f code/infrastructure/helm/hermes-lab/values.yaml \
+  -f code/infrastructure/helm/hermes-lab/values-with-llama.yaml \
+  -f code/infrastructure/helm/hermes-lab/values-production-rollout.yaml
 kubectl rollout status deployment/hermes-api -n hermes
 kubectl rollout undo deployment/hermes-api -n hermes
 while true; do curl -sf -H "Host: hermes.local" http://$NODE_IP/ || echo FAIL; sleep 0.5; done
@@ -330,10 +330,10 @@ while true; do curl -sf -H "Host: hermes.local" http://$NODE_IP/ || echo FAIL; s
 
 ```bash
 kubectl create configmap hermes-tool-policy \
-  --from-file=policy.yaml=infrastructure/hermes/tool-policy.example.yaml \
+  --from-file=policy.yaml=code/infrastructure/hermes/tool-policy.example.yaml \
   -n hermes --dry-run=client -o yaml | kubectl apply -f -
-kubectl apply -f infrastructure/kubernetes/ch42-rbac-hermes-worker.yaml
-kubectl apply -f infrastructure/kubernetes/ch42-networkpolicy-hermes.yaml
+kubectl apply -f code/infrastructure/kubernetes/ch42-rbac-hermes-worker.yaml
+kubectl apply -f code/infrastructure/kubernetes/ch42-networkpolicy-hermes.yaml
 kubectl auth can-i get secrets --as=system:serviceaccount:hermes:hermes-worker -n hermes
 ```
 
@@ -341,10 +341,10 @@ kubectl auth can-i get secrets --as=system:serviceaccount:hermes:hermes-worker -
 
 ```bash
 kubectl create configmap hermes-tool-registry \
-  --from-file=registry.yaml=infrastructure/hermes/tool-registry.example.yaml \
+  --from-file=registry.yaml=code/infrastructure/hermes/tool-registry.example.yaml \
   -n hermes --dry-run=client -o yaml | kubectl apply -f -
 echo '{"owner":"org","repository":"hermes","title":"Lab"}' \
-  | python3 infrastructure/hermes/tools/github.create-issue.example.py
+  | python3 code/infrastructure/hermes/tools/github.create-issue.example.py
 ```
 
 ### Chapter 44 — Production

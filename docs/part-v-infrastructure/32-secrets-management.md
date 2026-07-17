@@ -197,9 +197,9 @@ CI credentials ([Chapter 31](31-github-actions.md)) remain in GitHub Secrets for
 Use the repo script or CLI directly:
 
 ```bash
-chmod +x infrastructure/aws/cli/ch32-create-hermes-api-secret.sh
+chmod +x code/infrastructure/aws/cli/ch32-create-hermes-api-secret.sh
 SECRET_VALUE="your-lab-key-here" AWS_PROFILE=hermes \
-  ./infrastructure/aws/cli/ch32-create-hermes-api-secret.sh
+  ./code/infrastructure/aws/cli/ch32-create-hermes-api-secret.sh
 ```
 
 Or manually:
@@ -220,7 +220,7 @@ aws secretsmanager describe-secret --secret-id hermes/api-key --region us-west-2
 ### Step 2 — Create Scoped IAM Identity for ESO
 
 1. IAM → Users → **Create user** → `hermes-eso`
-2. Attach inline policy from [`infrastructure/aws/terraform/modules/secrets/iam-eso-read-policy.json`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/aws/terraform/modules/secrets/iam-eso-read-policy.json):
+2. Attach inline policy from [`code/infrastructure/aws/terraform/modules/secrets/iam-eso-read-policy.json`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/aws/terraform/modules/secrets/iam-eso-read-policy.json):
 
 ```json
 {
@@ -264,18 +264,18 @@ kubectl get crd externalsecrets.external-secrets.io
 Copy the example and fill locally:
 
 ```bash
-cp infrastructure/kubernetes/ch32-eso-aws-credentials-secret.example.yaml \
+cp code/infrastructure/kubernetes/ch32-eso-aws-credentials-secret.example.yaml \
    ~/hermes-platform/local/ch31-eso-aws-credentials-secret.yaml
 # Edit placeholders — file stays outside repo
 kubectl apply -f ~/hermes-platform/local/ch31-eso-aws-credentials-secret.yaml
 ```
 
-The example template lives at `infrastructure/kubernetes/ch32-eso-aws-credentials-secret.example.yaml`.
+The example template lives at `code/infrastructure/kubernetes/ch32-eso-aws-credentials-secret.example.yaml`.
 
 ### Step 5 — ClusterSecretStore
 
 ```bash
-kubectl apply -f infrastructure/kubernetes/ch32-cluster-secret-store.yaml
+kubectl apply -f code/infrastructure/kubernetes/ch32-cluster-secret-store.yaml
 kubectl get clustersecretstore aws-secrets-manager
 ```
 
@@ -284,7 +284,7 @@ Status should become **Valid** once credentials and IAM policy are correct.
 ### Step 6 — ExternalSecret Sync
 
 ```bash
-kubectl apply -f infrastructure/kubernetes/ch32-external-secret-hermes-api.yaml
+kubectl apply -f code/infrastructure/kubernetes/ch32-external-secret-hermes-api.yaml
 kubectl get externalsecret hermes-api-secret
 kubectl get secret hermes-api-secret
 ```
@@ -300,7 +300,7 @@ kubectl describe externalsecret hermes-api-secret
 ### Step 7 — Consume in a Pod
 
 ```bash
-kubectl apply -f infrastructure/kubernetes/ch32-external-secret-demo-pod.yaml
+kubectl apply -f code/infrastructure/kubernetes/ch32-external-secret-demo-pod.yaml
 kubectl logs external-secret-demo
 ```
 

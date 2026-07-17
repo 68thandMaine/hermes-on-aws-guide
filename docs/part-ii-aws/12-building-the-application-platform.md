@@ -240,8 +240,8 @@ Platform readiness: security patches applied before running a persistent daemon.
 On the server, or from your laptop:
 
 ```bash
-# From laptop — review infrastructure/aws/cli/ch12-install-docker.sh first
-bash infrastructure/aws/cli/ch12-install-docker.sh
+# From laptop — review code/infrastructure/aws/cli/ch12-install-docker.sh first
+bash code/infrastructure/aws/cli/ch12-install-docker.sh
 ```
 
 Manual equivalent on the server:
@@ -330,7 +330,7 @@ ssh -i "$KEY" ubuntu@${HERMES_PUBLIC_IP} 'docker run --rm hello-world && systemc
 1. Complete Walkthrough Steps 1–6
 2. Run full [Verification](#verification) checklist
 3. Record `docker info` Root Dir in `~/hermes-platform/notes/platform.env`
-4. Read [EDR-0005](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/edr/EDR-0005-containers-as-deployment-unit.md)
+4. Read [EDR-0005](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/edr/EDR-0005-containers-as-deployment-unit.md)
 
 ---
 
@@ -410,7 +410,7 @@ Only then is the platform ready for Kubernetes.
 
 ## Engineering Decision Record
 
-**[EDR-0005: Adopt containers as the deployment unit](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/edr/EDR-0005-containers-as-deployment-unit.md)**
+**[EDR-0005: Adopt containers as the deployment unit](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/edr/EDR-0005-containers-as-deployment-unit.md)**
 
 ---
 

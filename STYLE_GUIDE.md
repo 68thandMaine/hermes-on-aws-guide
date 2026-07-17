@@ -30,7 +30,7 @@ This book builds infrastructure to run **Hermes**—[Nous Research’s Hermes Ag
 | **ULLR is integration context** | ULLR may appear as a data backend Hermes calls; document *integration points*, not ULLR as the primary product |
 | **Every capstone serves the agent** | Weather pipelines, CI/CD, scaling, and DR chapters answer: *how does this help Hermes operate in production?* |
 | **Avoid ULLR-first framing** | Do not title chapters, labs, or Part VII sections around ULLR; use "Hermes agent," "agent tools," "agent data sources" |
-| **Local inference = llama.cpp** | Deploy **llama-server** (llama.cpp HTTP API)—not Ollama. GGUF on `/models`, Helm chart in `infrastructure/helm/llama-server/`. See [Chapter 37](docs/part-vi-ai/37-model-serving.md). |
+| **Local inference = llama.cpp** | Deploy **llama-server** (llama.cpp HTTP API)—not Ollama. GGUF on `/models`, Helm chart in `code/infrastructure/helm/llama-server/`. See [Chapter 37](docs/part-vi-ai/37-model-serving.md). |
 
 When engineering content that touches ULLR, ask:
 
@@ -160,10 +160,10 @@ Use the `usw2a` AZ suffix for `us-west-2a`. This book uses **`us-west-2`** throu
 
 ### Infrastructure Artifacts (Early IaC)
 
-Every **implementation chapter** (Part II+) adds reproducible artifacts under `infrastructure/`:
+Every **implementation chapter** (Part II+) adds reproducible artifacts under `code/infrastructure/`:
 
 ```text
-infrastructure/
+code/infrastructure/
 └── aws/
     ├── cloud-init/     # EC2 user-data — first-boot bootstrap
     ├── cli/              # AWS CLI commands / chapter scripts
@@ -179,12 +179,12 @@ Manual steps are not throwaway—they are the specification Terraform will codif
 
 ### Engineering Decision Records (EDR)
 
-Implementation chapters end with an **Engineering Decision Record** in `infrastructure/edr/`:
+Implementation chapters end with an **Engineering Decision Record** in `code/infrastructure/edr/`:
 
 ```markdown
 ## Engineering Decision Record
 
-**[EDR-NNNN: Title](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/edr/EDR-NNNN-slug.md)**
+**[EDR-NNNN: Title](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/edr/EDR-NNNN-slug.md)**
 ```
 
 Each EDR captures **Context**, **Decision**, **Consequences**, and **Alternatives considered**—mirroring ADRs used in production teams. By the end of the book, readers have infrastructure *and* a documented history of why it was built that way.
@@ -322,7 +322,7 @@ The book is published with [Docusaurus](https://docusaurus.io/). Chapter Markdow
 | Production build | `npm run build` |
 | Add chapter to sidebar | Edit `sidebars.ts` (usually already listed in [SUMMARY.md](SUMMARY.md)) |
 | Site config | `docusaurus.config.ts` |
-| Theme CSS | `src/css/custom.css` |
+| Theme CSS | `code/site/src/css/custom.css` |
 
 ### Chapter Frontmatter
 
@@ -504,7 +504,7 @@ Each chapter is written like an RFC—not in one sitting.
 | 1 | Produce an outline | Section headers + 2–3 bullets per section |
 | 2 | Review outline | Approval or revision notes |
 | 3 | Expand every section | Full prose draft |
-| 4 | Add diagrams | Architecture section + `diagrams/` source files |
+| 4 | Add diagrams | Architecture section + `resources/diagrams/` source files |
 | 5 | Add lab | Hands-on Lab with tested commands |
 | 6 | Add troubleshooting | From actual failures during lab testing |
 | 7 | Add references | Further Reading + Glossary Additions |
@@ -528,7 +528,7 @@ Update [SUMMARY.md](SUMMARY.md) when status changes.
 
 | Type | Use For | Format |
 |------|---------|--------|
-| ASCII art | Network topology, layered stacks | `.txt` in `diagrams/` |
+| ASCII art | Network topology, layered stacks | `.txt` in `resources/diagrams/` |
 | Mermaid | Flows, sequences, decision trees | `.mmd` or fenced block in chapter |
 | Tables | Comparisons, component choices | Markdown tables in chapter |
 
@@ -536,7 +536,7 @@ Update [SUMMARY.md](SUMMARY.md) when status changes.
 
 - Every Architecture section has at least one diagram
 - Keep ASCII width ≤ 80 characters
-- Store reusable sources in `diagrams/` and update [docs/appendices/diagrams.md](docs/appendices/diagrams.md)
+- Store reusable sources in `resources/diagrams/` and update [docs/appendices/diagrams.md](docs/appendices/diagrams.md)
 - GitHub renders Mermaid natively—prefer it for flows
 
 ---
@@ -585,8 +585,8 @@ What to tear down, what to keep for later chapters.
 
 - Test every command before marking the chapter done
 - Never embed secrets—use environment variables, AWS profiles, or Kubernetes Secrets
-- Lab assets live in `labs/chNN/`
-- Document actual resource IDs in gitignored `labs/chNN/local/` files
+- Lab assets live in `resources/labs/chNN/`
+- Document actual resource IDs in gitignored `resources/labs/chNN/local/` files
 
 ---
 

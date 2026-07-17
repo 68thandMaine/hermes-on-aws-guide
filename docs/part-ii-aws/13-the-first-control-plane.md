@@ -304,7 +304,7 @@ Copy/paste install is not instant Kubernetes. The binary downloads, systemd star
 From laptop (review script first):
 
 ```bash
-bash infrastructure/aws/cli/ch13-install-k3s.sh
+bash code/infrastructure/aws/cli/ch13-install-k3s.sh
 ```
 
 Or on the server:
@@ -442,7 +442,7 @@ Node should return **Ready** without manual intervention.
 4. Verify node and `kube-system` pods on the server
 5. Copy kubeconfig; run `kubectl get pods -A` from laptop—**State 3** ontology shift
 6. Reboot test
-7. Read [EDR-0006](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/edr/EDR-0006-single-node-k3s-control-plane.md)
+7. Read [EDR-0006](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/edr/EDR-0006-single-node-k3s-control-plane.md)
 
 **Do not** deploy Hermes, PostgreSQL, or llama.cpp in this lab.
 
@@ -526,7 +526,7 @@ Node should return **Ready** without manual intervention.
 
 ## Engineering Decision Record
 
-**[EDR-0006: Single-node k3s as the Hermes control plane](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/edr/EDR-0006-single-node-k3s-control-plane.md)**
+**[EDR-0006: Single-node k3s as the Hermes control plane](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/edr/EDR-0006-single-node-k3s-control-plane.md)**
 
 ---
 

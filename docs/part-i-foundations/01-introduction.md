@@ -334,18 +334,18 @@ Chapter 1 is conceptual—it frames the problem before any infrastructure exists
    ```
 8. Run the prerequisites checker:
    ```bash
-   ./scripts/setup/check-prerequisites.sh
+   ./code/scripts/setup/check-prerequisites.sh
    ```
 9. Create a working directory for lab artifacts:
    ```bash
-   mkdir -p labs/local
+   mkdir -p resources/labs/local
    ```
 10. Optional: install the GitHub CLI for later CI/CD chapters: `gh --version`
 
 **Verification:**
 
 ```bash
-./scripts/setup/check-prerequisites.sh
+./code/scripts/setup/check-prerequisites.sh
 ```
 
 **Expected output:**
@@ -370,7 +370,7 @@ All prerequisites met. Ready for Lab 1.
 | Docker daemon not running | Docker Desktop not started | Launch Docker Desktop; wait for "running" status |
 | Permission denied on Docker (Linux) | User not in `docker` group | `sudo usermod -aG docker $USER` then log out and back in |
 | `kubectl: command not found` | kubectl not installed | Install via package manager or [kubernetes.io](https://kubernetes.io/docs/tasks/tools/) |
-| Prerequisites script not executable | Missing chmod | Run `chmod +x scripts/setup/check-prerequisites.sh` |
+| Prerequisites script not executable | Missing chmod | Run `chmod +x code/scripts/setup/check-prerequisites.sh` |
 
 **Cleanup:** Nothing to clean up. Keep these tools installed.
 
@@ -378,7 +378,7 @@ All prerequisites met. Ready for Lab 1.
 
 ## Verification
 
-Run `./scripts/setup/check-prerequisites.sh`. All five core tools (Git, AWS CLI, Terraform, Docker, kubectl) must report a version with no errors.
+Run `./code/scripts/setup/check-prerequisites.sh`. All five core tools (Git, AWS CLI, Terraform, Docker, kubectl) must report a version with no errors.
 
 ---
 

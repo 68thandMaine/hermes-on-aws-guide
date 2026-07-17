@@ -159,10 +159,10 @@ Chapter 28 practices the mechanics on nginx—not Hermes yet.
 
 #### Step 1 — Apply Read-Only Role for `hermes-reader`
 
-**[ch28-rbac-hermes-reader.yaml](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/kubernetes/ch28-rbac-hermes-reader.yaml)**
+**[ch28-rbac-hermes-reader.yaml](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/kubernetes/ch28-rbac-hermes-reader.yaml)**
 
 ```bash
-kubectl apply -f infrastructure/kubernetes/ch28-rbac-hermes-reader.yaml
+kubectl apply -f code/infrastructure/kubernetes/ch28-rbac-hermes-reader.yaml
 kubectl get sa hermes-reader
 kubectl describe role pod-reader
 ```
@@ -223,12 +223,12 @@ kubectl delete pod rbac-demo --ignore-not-found
 
 #### Step 4 — Allow-List Ingress to nginx Pods
 
-**[ch28-networkpolicy-nginx.yaml](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/kubernetes/ch28-networkpolicy-nginx.yaml)**
+**[ch28-networkpolicy-nginx.yaml](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/kubernetes/ch28-networkpolicy-nginx.yaml)**
 
 Once a NetworkPolicy selects Pods, **unlisted ingress is denied** for those Pods.
 
 ```bash
-kubectl apply -f infrastructure/kubernetes/ch28-networkpolicy-nginx.yaml
+kubectl apply -f code/infrastructure/kubernetes/ch28-networkpolicy-nginx.yaml
 kubectl get networkpolicy nginx-allow-frontend-only
 ```
 
@@ -269,7 +269,7 @@ kubectl delete pod curl-allowed --ignore-not-found
 
 ```bash
 kubectl delete networkpolicy nginx-allow-frontend-only
-kubectl delete -f infrastructure/kubernetes/ch28-rbac-hermes-reader.yaml
+kubectl delete -f code/infrastructure/kubernetes/ch28-rbac-hermes-reader.yaml
 ```
 
 ---

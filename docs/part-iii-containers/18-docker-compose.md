@@ -264,7 +264,7 @@ docker compose down -v       # removes redis-data too — use when finished
 
 1. Complete Walkthrough Steps 1–5
 2. Add a third service of your choice (e.g. `adminer` or a second alpine “worker” that only sleeps)—keep it educational
-3. Record answers in [labs/ch18/compose-notes.md](https://github.com/crudnicky/agent-to-aws-guide/blob/main/labs/ch18/compose-notes.md)
+3. Record answers in [resources/labs/ch18/compose-notes.md](https://github.com/crudnicky/agent-to-aws-guide/blob/main/resources/labs/ch18/compose-notes.md)
 4. Tear down with `docker compose down -v` when done
 
 ---

@@ -423,7 +423,7 @@ Shows which processes are waiting for inbound TCP connections—equivalent to ch
 5. Test TCP connectivity: `curl -v https://aws.amazon.com 2>&1 | head -30`
 6. Check open ports locally: `ss -tlnp` (Linux) or `netstat -an | grep LISTEN` (macOS)
 7. Calculate a subnet: how many hosts in a `/24`? A `/28`?
-8. Document your answers in `labs/ch04/network-notes.md` (template provided in the repo)
+8. Document your answers in `resources/labs/ch04/network-notes.md` (template provided in the repo)
 
 **Verification:**
 
@@ -443,7 +443,7 @@ dig ec2.us-west-2.amazonaws.com +short
 | `curl: (6) Could not resolve host` | DNS failure | Check `/etc/resolv.conf` or network connection |
 | `ss: command not found` | iproute2 missing | `sudo apt install -y iproute2` on Ubuntu |
 
-**Cleanup:** Nothing to clean up. Keep `labs/ch04/network-notes.md` for reference when configuring Security Groups in Chapter 10.
+**Cleanup:** Nothing to clean up. Keep `resources/labs/ch04/network-notes.md` for reference when configuring Security Groups in Chapter 10.
 
 ---
 

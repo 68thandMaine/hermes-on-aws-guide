@@ -182,12 +182,12 @@ All Hermes workloads live here—RBAC and NetworkPolicy can scope to `namespace:
 
 ### Step 2 — Deploy the Lab Stack
 
-The repo packages the full topology in `infrastructure/helm/hermes-lab/`:
+The repo packages the full topology in `code/infrastructure/helm/hermes-lab/`:
 
 ```bash
-helm upgrade --install hermes-lab infrastructure/helm/hermes-lab \
+helm upgrade --install hermes-lab code/infrastructure/helm/hermes-lab \
   -n hermes \
-  -f infrastructure/helm/hermes-lab/values.yaml
+  -f code/infrastructure/helm/hermes-lab/values.yaml
 ```
 
 Watch rollout:
@@ -425,7 +425,7 @@ Wire API keys via [Chapter 32](../part-v-infrastructure/32-secrets-management.md
 
 - [Chapter 6: Designing the Hermes Platform](../part-i-foundations/06-designing-the-hermes-platform.md)
 - [Chapter 37: Model Serving](37-model-serving.md)
-- [`infrastructure/helm/hermes-lab/README.md`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/helm/hermes-lab/README.md)
+- [`code/infrastructure/helm/hermes-lab/README.md`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/helm/hermes-lab/README.md)
 
 ---
 

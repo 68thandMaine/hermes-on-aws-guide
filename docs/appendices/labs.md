@@ -10,7 +10,7 @@ Hands-on labs for every chapter. Each lab includes an estimated time, goal, step
 ## Lab Directory Structure
 
 ```
-labs/
+resources/labs/
 ├── ch03/          # SSH keys and Linux essentials (local)
 ├── ch04/          # Network diagnostics notes
 ├── ch06/          # Hermes platform design worksheet
@@ -55,7 +55,7 @@ labs/
 | 19 | 19 | Prove OCI portability | 25 min | ✏️ Draft |
 | 20 | 20 | Why Kubernetes Exists (theory worksheet) | 15 min | ✏️ Draft |
 
-*Part VI — llama.cpp (not Ollama):* Labs 36–37 deploy `llama-server` via Helm; scripts in `infrastructure/aws/cli/ch36-*` and `ch37-*`.
+*Part VI — llama.cpp (not Ollama):* Labs 36–37 deploy `llama-server` via Helm; scripts in `code/infrastructure/aws/cli/ch36-*` and `ch37-*`.
 
 | 36 | 36 | Deploy llama.cpp model server | 120 min | ✏️ Draft |
 | 37 | 37 | GPU inference path | 120 min | ✏️ Draft |
@@ -65,9 +65,9 @@ labs/
 
 ## Lab Conventions
 
-- Lab assets go in `labs/chXX/` matching the chapter number
+- Lab assets go in `resources/labs/chXX/` matching the chapter number
 - Never commit secrets — use `.env.example` files and Kubernetes Secrets
-- Document your actual resource IDs in local files (gitignored via `labs/**/local/`)
+- Document your actual resource IDs in local files (gitignored via `resources/labs/**/local/`)
 - Each lab's verification section must be runnable without modification where possible
 
 ## Getting Started

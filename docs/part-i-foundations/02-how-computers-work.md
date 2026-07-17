@@ -427,7 +427,7 @@ Detailed steps, expected output, and platform-specific alternatives are in the l
    ps aux | wc -l
    ```
 
-7. Answer the following in `labs/ch02/machine-profile.md`:
+7. Answer the following in `resources/labs/ch02/machine-profile.md`:
 
    - How many CPU cores do you have?
    - How much RAM is installed? How much is currently in use?
@@ -439,7 +439,7 @@ Detailed steps, expected output, and platform-specific alternatives are in the l
 
 **Verification:**
 
-Your `labs/ch02/machine-profile.md` file exists and answers all five questions with numbers from your machine.
+Your `resources/labs/ch02/machine-profile.md` file exists and answers all five questions with numbers from your machine.
 
 **Expected output (examples — yours will differ):**
 
@@ -466,7 +466,7 @@ Filesystem      Size  Used Avail Use% Mounted on
 | `wc -l` count seems high | Includes header line | Subtract 1, or use `ps aux \| tail -n +2 \| wc -l` |
 | Permission errors | Unlikely for read-only commands | Run without `sudo`; these commands don't require it |
 
-**Cleanup:** Nothing to clean up. Keep `labs/ch02/machine-profile.md`—you may reference it when choosing EC2 instance sizes in Part II.
+**Cleanup:** Nothing to clean up. Keep `resources/labs/ch02/machine-profile.md`—you may reference it when choosing EC2 instance sizes in Part II.
 
 ---
 

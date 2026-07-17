@@ -1,0 +1,23 @@
+# Chapter 28 — NetworkPolicy: only Pods labeled access=frontend may reach nginx:80
+# Prerequisite: nginx workload with label app=nginx (Ch 22–25)
+# Apply: kubectl apply -f code/infrastructure/kubernetes/ch28-networkpolicy-nginx.yaml
+# Note: enforcement depends on k3s CNI — see Chapter 28 troubleshooting.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: nginx-allow-frontend-only
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: nginx
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              access: frontend
+      ports:
+        - protocol: TCP
+          port: 80

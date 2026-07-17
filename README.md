@@ -91,13 +91,15 @@ Read these before contributing or writing.
 ├── docs/                  # Book chapters (Docusaurus content)
 ├── docusaurus.config.ts   # Site configuration
 ├── sidebars.ts            # Navigation sidebar
-├── src/                   # Theme CSS and React components
-├── static/                # Images and favicon
-├── diagrams/              # Architecture and flow diagram sources
-├── labs/                  # Lab assets, configs, starter files
-├── glossary/              # Source glossary (sync to docs/appendices/)
-├── references/            # Source bibliography (sync to docs/appendices/)
-├── scripts/               # Helper and CI scripts
+├── code/                  # Deployable code, scripts, and site assets
+├── code/infrastructure/   # Terraform, Helm, Kubernetes, AWS, Hermes artifacts
+├── code/scripts/          # Helper and CI scripts
+├── code/site/             # Docusaurus theme CSS and static assets
+├── resources/             # Labs, diagram sources, glossary, references
+├── resources/diagrams/    # Architecture and flow diagram sources
+├── resources/labs/        # Lab assets, configs, starter files
+├── resources/glossary/    # Source glossary (sync to docs/appendices/)
+├── resources/references/  # Source bibliography (sync to docs/appendices/)
 ├── .cursor/rules/         # AI assistant rules (Cursor)
 ├── AGENTS.md              # AI orientation (any agent)
 └── .github/workflows/     # Lint, link check, build, and deploy
@@ -177,7 +179,7 @@ Estimated total time to complete all labs: **120–180 hours** (depending on pri
 Verify local tools:
 
 ```bash
-./scripts/setup/check-prerequisites.sh
+./code/scripts/setup/check-prerequisites.sh
 ```
 
 ---

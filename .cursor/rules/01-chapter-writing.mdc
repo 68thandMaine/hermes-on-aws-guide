@@ -38,7 +38,7 @@ description: "One-line summary for search/SEO."
 
 1. At least one `:::note[Why this matters for Hermes]` admonition in Background or Theory
 2. A **Hermes Platform Status** section before What's Next — update checkmarks and progress % (see `STYLE_GUIDE.md` template)
-3. An **Engineering Decision Record** section linking to `infrastructure/edr/EDR-NNNN-*.md`
+3. An **Engineering Decision Record** section linking to `code/infrastructure/edr/EDR-NNNN-*.md`
 
 Part II chapter titles must be platform-first (e.g., "Provisioning Your AWS Account" not "AWS Overview").
 
@@ -58,7 +58,7 @@ Use `hermes-` prefixed names: `hermes-vpc`, `hermes-public-usw2a`, `hermes-igw`,
 
 ## Infrastructure Artifacts
 
-Each implementation chapter adds under `infrastructure/aws/`:
+Each implementation chapter adds under `code/infrastructure/aws/`:
 
 - `cloud-init/` — user-data scripts
 - `cli/` — reproducible CLI / chapter scripts  
@@ -69,7 +69,7 @@ Never commit `.pem` keys.
 
 ## Engineering Decision Records (EDR)
 
-End each implementation chapter with an **Engineering Decision Record** section linking to `infrastructure/edr/EDR-NNNN-slug.md`. Format: Context, Decision, Consequences, Alternatives.
+End each implementation chapter with an **Engineering Decision Record** section linking to `code/infrastructure/edr/EDR-NNNN-slug.md`. Format: Context, Decision, Consequences, Alternatives.
 
 ## Just-in-Time Linux
 
@@ -94,7 +94,7 @@ Readers may proceed to Chapter 6–7 after 3.3 if comfortable with a terminal.
 ## Labs
 
 - Certification-guide format: Goal, Steps, Verification, Expected output, Troubleshooting, Cleanup
-- Assets in `labs/chNN/`
+- Assets in `resources/labs/chNN/`
 - Test commands before marking chapter done
 - Never embed secrets
 
@@ -103,7 +103,7 @@ Readers may proceed to Chapter 6–7 after 3.3 if comfortable with a terminal.
 - At least one diagram in Architecture
 - Mermaid enabled via Docusaurus — use fenced `mermaid` blocks
 - ASCII for network topology (≤80 cols)
-- Store reusable sources in `diagrams/`
+- Store reusable sources in `resources/diagrams/`
 
 ## After Editing
 

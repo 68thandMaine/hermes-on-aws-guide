@@ -1,0 +1,17 @@
+# Chapter 23 — ClusterIP Service for nginx-deployment
+# Prerequisite: kubectl apply -f code/infrastructure/kubernetes/ch22-nginx-deployment.yaml
+# Apply: kubectl apply -f code/infrastructure/kubernetes/ch23-nginx-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+  labels:
+    app: nginx
+spec:
+  type: ClusterIP
+  selector:
+    app: nginx
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80

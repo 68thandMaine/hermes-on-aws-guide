@@ -134,7 +134,7 @@ Suppose Hermes should open GitHub issues from a project-management workflow.
 
 Do not ask the model to "figure out GitHub." Define a **tool contract**—the boundary between reasoning and execution.
 
-Schema: [`github.create-issue.schema.json`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/tools/github.create-issue.schema.json)
+Schema: [`github.create-issue.schema.json`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/hermes/tools/github.create-issue.schema.json)
 
 ```json
 {
@@ -162,7 +162,7 @@ The prompt may describe *when* to create issues. The schema defines *what shape*
 
 Implementation lives in the **worker**, not the model Pod.
 
-Example handler: [`github.create-issue.example.py`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/tools/github.create-issue.example.py)
+Example handler: [`github.create-issue.example.py`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/hermes/tools/github.create-issue.example.py)
 
 Worker responsibilities:
 
@@ -178,7 +178,7 @@ Worker responsibilities:
 # Lab smoke test (sandbox token)
 export GITHUB_TOKEN="$(kubectl get secret hermes-github-token -n hermes -o jsonpath='{.data.token}' | base64 -d)"
 echo '{"owner":"my-org","repository":"hermes","title":"Extension lab"}' \
-  | python3 infrastructure/hermes/tools/github.create-issue.example.py
+  | python3 code/infrastructure/hermes/tools/github.create-issue.example.py
 ```
 
 The language model **never** communicates with `api.github.com`.
@@ -187,7 +187,7 @@ The language model **never** communicates with `api.github.com`.
 
 Registration makes a tool **available** to workers. It does **not** grant permission—that is policy ([Ch 42](42-platform-governance.md)).
 
-Registry: [`tool-registry.example.yaml`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/tool-registry.example.yaml)
+Registry: [`tool-registry.example.yaml`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/hermes/tool-registry.example.yaml)
 
 ```yaml
 tools:
@@ -204,7 +204,7 @@ Deploy as ConfigMap (same pattern as tool policy):
 
 ```bash
 kubectl create configmap hermes-tool-registry \
-  --from-file=registry.yaml=infrastructure/hermes/tool-registry.example.yaml \
+  --from-file=registry.yaml=code/infrastructure/hermes/tool-registry.example.yaml \
   -n hermes --dry-run=client -o yaml | kubectl apply -f -
 ```
 
@@ -220,7 +220,7 @@ kubectl create configmap hermes-tool-registry \
 
 Not every agent should use every tool. Extend policy with new roles:
 
-[`agent-roles-extension.example.yaml`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/agent-roles-extension.example.yaml)
+[`agent-roles-extension.example.yaml`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/hermes/agent-roles-extension.example.yaml)
 
 ```yaml
 agentRoles:
@@ -241,7 +241,7 @@ agentRoles:
 | `summary` | none | Synthesis only |
 | `admin` | k8s, postgres | Requires approval |
 
-A coordinator task ([`coordinator-decomposition.example.json`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/coordinator-decomposition.example.json)) can add a `project` subtask without changing Kubernetes manifests—only policy and registry.
+A coordinator task ([`coordinator-decomposition.example.json`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/hermes/coordinator-decomposition.example.json)) can add a `project` subtask without changing Kubernetes manifests—only policy and registry.
 
 ### Step 5 — Observe Execution
 
@@ -264,9 +264,9 @@ Connect denied attempts to alerts ([Ch 33](../part-v-infrastructure/33-monitorin
 | Integration | Real sandbox API with ESO-injected token |
 | Policy | `summary` role **cannot** call `github.create_issue` |
 | E2E reasoning | Coordinator task → worker loop → issue created → step persisted |
-| Kubernetes | ConfigMap mounted; worker SA unchanged ([Ch 42 RBAC](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/kubernetes/ch42-rbac-hermes-worker.yaml)) |
+| Kubernetes | ConfigMap mounted; worker SA unchanged ([Ch 42 RBAC](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/kubernetes/ch42-rbac-hermes-worker.yaml)) |
 
-Use [`extension-checklist.example.yaml`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/extension-checklist.example.yaml) as a merge gate.
+Use [`extension-checklist.example.yaml`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/hermes/extension-checklist.example.yaml) as a merge gate.
 
 ### Step 7 — Version Capabilities
 
@@ -310,7 +310,7 @@ Before enabling a capability in production, every answer must be **yes**:
 
 | Question | Platform check |
 |----------|----------------|
-| Clear contract? | JSON Schema in `infrastructure/hermes/tools/` |
+| Clear contract? | JSON Schema in `code/infrastructure/hermes/tools/` |
 | Authenticated? | `secretRef` in registry + ESO `ExternalSecret` |
 | Authorized? | `agent_role` entry in tool-policy |
 | Observable? | Log event + metric + audit step |
@@ -419,8 +419,8 @@ These principles let you add NOAA, Jira, GitHub, AWS operations, or entirely new
 - [Chapter 39: The Hermes Reasoning Loop](../part-vi-ai/39-ai-agent-architecture.md)
 - [Chapter 40: Distributed Cognitive Execution](40-distributed-cognitive-execution.md)
 - [Chapter 42: Security, Governance, and Trust](42-platform-governance.md)
-- [`tool-registry.example.yaml`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/tool-registry.example.yaml)
-- [`extension-checklist.example.yaml`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/hermes/extension-checklist.example.yaml)
+- [`tool-registry.example.yaml`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/hermes/tool-registry.example.yaml)
+- [`extension-checklist.example.yaml`](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/hermes/extension-checklist.example.yaml)
 
 ---
 

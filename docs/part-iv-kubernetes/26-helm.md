@@ -93,7 +93,7 @@ Manual YAML works for learning. Production systems need:
 ### What a Chart Is
 
 ```text
-infrastructure/helm/nginx-demo/
+code/infrastructure/helm/nginx-demo/
   Chart.yaml          ← chart metadata
   values.yaml         ← default configuration
   values-lab-scale.yaml
@@ -148,7 +148,7 @@ Both talk to the same API. Helm adds **system lifecycle**.
 
 ### nginx-demo Chart (This Book)
 
-The chart in `infrastructure/helm/nginx-demo/` packages what you built manually in Chapters 21–23:
+The chart in `code/infrastructure/helm/nginx-demo/` packages what you built manually in Chapters 21–23:
 
 | Template | Chapter equivalent |
 |----------|-------------------|
@@ -192,7 +192,7 @@ Expected: `version.BuildInfo{Version:"v3.x"...}`
 From the repository root:
 
 ```bash
-helm template web infrastructure/helm/nginx-demo
+helm template web code/infrastructure/helm/nginx-demo
 ```
 
 Review rendered YAML—same objects you wrote by hand, with values filled in.
@@ -200,13 +200,13 @@ Review rendered YAML—same objects you wrote by hand, with values filled in.
 Override replicas:
 
 ```bash
-helm template web infrastructure/helm/nginx-demo --set replicaCount=2
+helm template web code/infrastructure/helm/nginx-demo --set replicaCount=2
 ```
 
 ### Step 3 — Install the Release
 
 ```bash
-helm install web infrastructure/helm/nginx-demo
+helm install web code/infrastructure/helm/nginx-demo
 ```
 
 Helm applies Deployment, Service, and Ingress in one operation.
@@ -234,8 +234,8 @@ Expected: **200**
 Scale to 2 replicas via values file:
 
 ```bash
-helm upgrade web infrastructure/helm/nginx-demo \
-  -f infrastructure/helm/nginx-demo/values-lab-scale.yaml
+helm upgrade web code/infrastructure/helm/nginx-demo \
+  -f code/infrastructure/helm/nginx-demo/values-lab-scale.yaml
 helm history web
 kubectl get pods -l app.kubernetes.io/instance=web
 ```
@@ -243,7 +243,7 @@ kubectl get pods -l app.kubernetes.io/instance=web
 Or inline:
 
 ```bash
-helm upgrade web infrastructure/helm/nginx-demo --set replicaCount=2
+helm upgrade web code/infrastructure/helm/nginx-demo --set replicaCount=2
 ```
 
 ### Step 6 — Rollback
@@ -281,7 +281,7 @@ Helm removes resources it created for that release.
 
 1. Install Helm 3; confirm `KUBECONFIG`
 2. Remove conflicting manual nginx resources (prerequisites)
-3. `helm install web infrastructure/helm/nginx-demo`
+3. `helm install web code/infrastructure/helm/nginx-demo`
 4. `curl http://nginx.local/` → 200
 5. `helm upgrade` with `values-lab-scale.yaml` (2 replicas)
 6. `helm rollback web 1`

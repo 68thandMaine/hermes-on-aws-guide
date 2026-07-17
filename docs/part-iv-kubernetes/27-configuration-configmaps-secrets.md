@@ -124,7 +124,7 @@ Pods read values at **startup**. Changing a ConfigMap/Secret does **not** hot-re
 
 ### Step 1 — Create ConfigMap
 
-**[ch27-app-config-configmap.yaml](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/kubernetes/ch27-app-config-configmap.yaml)**
+**[ch27-app-config-configmap.yaml](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/kubernetes/ch27-app-config-configmap.yaml)**
 
 ```yaml
 apiVersion: v1
@@ -137,13 +137,13 @@ data:
 ```
 
 ```bash
-kubectl apply -f infrastructure/kubernetes/ch27-app-config-configmap.yaml
+kubectl apply -f code/infrastructure/kubernetes/ch27-app-config-configmap.yaml
 kubectl get configmap app-config -o yaml
 ```
 
 ### Step 2 — Create Secret
 
-**[ch27-app-secret.yaml](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/kubernetes/ch27-app-secret.yaml)**
+**[ch27-app-secret.yaml](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/kubernetes/ch27-app-secret.yaml)**
 
 Using `stringData` lets you avoid manual base64 in the lab:
 
@@ -158,7 +158,7 @@ stringData:
 ```
 
 ```bash
-kubectl apply -f infrastructure/kubernetes/ch27-app-secret.yaml
+kubectl apply -f code/infrastructure/kubernetes/ch27-app-secret.yaml
 kubectl get secret app-secret
 ```
 
@@ -166,12 +166,12 @@ Never commit real production secrets to git.
 
 ### Step 3 — Pod With Env and Volume Injection
 
-**[ch27-config-demo-pod.yaml](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/kubernetes/ch27-config-demo-pod.yaml)**
+**[ch27-config-demo-pod.yaml](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/kubernetes/ch27-config-demo-pod.yaml)**
 
 Apply:
 
 ```bash
-kubectl apply -f infrastructure/kubernetes/ch27-config-demo-pod.yaml
+kubectl apply -f code/infrastructure/kubernetes/ch27-config-demo-pod.yaml
 kubectl wait --for=condition=Ready pod/config-demo --timeout=60s
 ```
 
@@ -191,7 +191,7 @@ Expected logs include `LOG_LEVEL=debug`, `API_URL=...`, `API_KEY=hello_world`, a
 kubectl patch configmap app-config --type merge \
   -p '{"data":{"LOG_LEVEL":"info"}}'
 kubectl delete pod config-demo
-kubectl apply -f infrastructure/kubernetes/ch27-config-demo-pod.yaml
+kubectl apply -f code/infrastructure/kubernetes/ch27-config-demo-pod.yaml
 kubectl logs config-demo
 ```
 

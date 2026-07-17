@@ -424,7 +424,7 @@ EOF
 Or run the chapter script:
 
 ```bash
-bash infrastructure/aws/cli/ch15-cloudwatch-baseline.sh
+bash code/infrastructure/aws/cli/ch15-cloudwatch-baseline.sh
 ```
 
 (Script creates IAM profile, alarms, and prints server-side agent install commands.)
@@ -449,7 +449,7 @@ bash infrastructure/aws/cli/ch15-cloudwatch-baseline.sh
 6. Create alarms: `hermes-cpu-high`, `hermes-data-disk-low`, `hermes-status-failed`
 7. Build dashboard `hermes-controlplane` with CPU and disk widgets
 8. Run Logs Insights query: `fields @timestamp, @message | filter @message like /k3s/ | sort @timestamp desc | limit 20`
-9. Read [EDR-0007](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/edr/EDR-0007-aws-cloudwatch-baseline.md)
+9. Read [EDR-0007](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/edr/EDR-0007-aws-cloudwatch-baseline.md)
 
 **Verification:**
 
@@ -534,7 +534,7 @@ bash infrastructure/aws/cli/ch15-cloudwatch-baseline.sh
 
 ## Engineering Decision Record
 
-**[EDR-0007: AWS CloudWatch baseline for the control plane host](https://github.com/crudnicky/agent-to-aws-guide/blob/main/infrastructure/edr/EDR-0007-aws-cloudwatch-baseline.md)**
+**[EDR-0007: AWS CloudWatch baseline for the control plane host](https://github.com/crudnicky/agent-to-aws-guide/blob/main/code/infrastructure/edr/EDR-0007-aws-cloudwatch-baseline.md)**
 
 ---
 

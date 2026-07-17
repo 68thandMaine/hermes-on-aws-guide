@@ -175,14 +175,14 @@ kubectl label node <gpu-node-name> accelerator=nvidia --overwrite
 Helper script:
 
 ```bash
-chmod +x infrastructure/aws/cli/ch38-gpu-node-prep.sh
-NODE_NAME=<gpu-node-name> ./infrastructure/aws/cli/ch38-gpu-node-prep.sh
+chmod +x code/infrastructure/aws/cli/ch38-gpu-node-prep.sh
+NODE_NAME=<gpu-node-name> ./code/infrastructure/aws/cli/ch38-gpu-node-prep.sh
 ```
 
 ### Step 4 — NVIDIA Device Plugin
 
 ```bash
-kubectl apply -f infrastructure/kubernetes/ch38-nvidia-device-plugin.yaml
+kubectl apply -f code/infrastructure/kubernetes/ch38-nvidia-device-plugin.yaml
 ```
 
 Verify allocatable GPUs:
@@ -194,7 +194,7 @@ kubectl get nodes -o custom-columns=NAME:.metadata.name,GPU:.status.allocatable.
 Optional smoke test:
 
 ```bash
-kubectl apply -f infrastructure/kubernetes/ch38-gpu-smoke-test-pod.yaml
+kubectl apply -f code/infrastructure/kubernetes/ch38-gpu-smoke-test-pod.yaml
 kubectl logs -n hermes gpu-smoke-test
 kubectl delete pod -n hermes gpu-smoke-test
 ```
@@ -205,9 +205,9 @@ Second Helm release—CUDA image, GPU limits, node selector:
 
 ```bash
 # Ensure /models/model.gguf on GPU node (copy or symlink)
-helm upgrade --install llama-server-gpu infrastructure/helm/llama-server \
+helm upgrade --install llama-server-gpu code/infrastructure/helm/llama-server \
   -n hermes \
-  -f infrastructure/helm/llama-server/values-gpu.yaml
+  -f code/infrastructure/helm/llama-server/values-gpu.yaml
 ```
 
 Key scheduling fragment from `values-gpu.yaml`:
@@ -230,10 +230,10 @@ CPU path remains: `llama-server` on control plane ([Chapter 37](37-model-serving
 ### Step 6 — Dual-Path Worker Wiring
 
 ```bash
-helm upgrade hermes-lab infrastructure/helm/hermes-lab -n hermes \
-  -f infrastructure/helm/hermes-lab/values.yaml \
-  -f infrastructure/helm/hermes-lab/values-with-llama.yaml \
-  -f infrastructure/helm/hermes-lab/values-dual-inference.yaml
+helm upgrade hermes-lab code/infrastructure/helm/hermes-lab -n hermes \
+  -f code/infrastructure/helm/hermes-lab/values.yaml \
+  -f code/infrastructure/helm/hermes-lab/values-with-llama.yaml \
+  -f code/infrastructure/helm/hermes-lab/values-dual-inference.yaml
 ```
 
 Worker env:

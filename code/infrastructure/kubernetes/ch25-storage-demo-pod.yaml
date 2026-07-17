@@ -1,0 +1,24 @@
+# Chapter 25 — Pod that writes to app-data PVC
+# Prerequisite: kubectl apply -f code/infrastructure/kubernetes/ch25-app-data-pvc.yaml
+# Apply: kubectl apply -f code/infrastructure/kubernetes/ch25-storage-demo-pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: storage-demo
+  labels:
+    app: storage-demo
+spec:
+  containers:
+    - name: app
+      image: busybox:1.36
+      command:
+        - sh
+        - -c
+        - echo "hello from $(date -Iseconds)" >> /data/hello.txt && tail -f /dev/null
+      volumeMounts:
+        - name: storage
+          mountPath: /data
+  volumes:
+    - name: storage
+      persistentVolumeClaim:
+        claimName: app-data

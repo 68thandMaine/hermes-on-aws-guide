@@ -107,7 +107,7 @@ Do not remove, rename, or reorder sections.
 
 - Prefer Mermaid for flows (GitHub renders natively)
 - Use ASCII art for network topology (≤ 80 columns wide)
-- Store reusable sources in `diagrams/` and update [docs/appendices/diagrams.md](docs/appendices/diagrams.md)
+- Store reusable sources in `resources/diagrams/` and update [docs/appendices/diagrams.md](docs/appendices/diagrams.md)
 
 ---
 
@@ -116,7 +116,7 @@ Do not remove, rename, or reorder sections.
 Every PR runs:
 
 1. **Markdown lint** — formatting and style rules (`.markdownlint.json`)
-2. **Internal link validation** — `scripts/ci/validate-links.sh`
+2. **Internal link validation** — `code/scripts/ci/validate-links.sh`
 3. **Docusaurus build** — `npm ci && npm run build`
 
 Preview the site locally:
